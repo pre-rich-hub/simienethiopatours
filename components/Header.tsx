@@ -12,6 +12,7 @@ const links = [
   { href: "/simien-mountains", label: "Simien" },
   { href: "/treks", label: "Journeys" },
   { href: "/gondar", label: "Gondar" },
+  { href: "/beyond-the-trail", label: "Experiences" },
   { href: "/about", label: "Our story" },
   { href: "/travel-guide", label: "Field notes" },
 ];

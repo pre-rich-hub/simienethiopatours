@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Check, CircleAlert } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
+import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { journeys } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -18,15 +19,21 @@ export default function TreksPage() {
       <div className="page-hero__content shell"><div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Journeys</span></div><p className="eyebrow">Private · flexible · locally guided</p><h1 className="display">Find your way <em>into Simien.</em></h1><p className="lead">Choose by the time you have, how you want to walk and what you want to feel. Every route is refined around current conditions.</p></div>
     </section>
     <section className="section">
-      <div className="shell intro-grid"><div><p className="eyebrow eyebrow--copper">The collection</p><h2 className="section-title">Five clear ways to <em>begin.</em></h2></div><p className="lead">These are starting points, not fixed conveyor belts. We can adjust pace, camping, Gondar time and special interests after a real conversation.</p></div>
+      <div className="shell intro-grid"><div><p className="eyebrow eyebrow--copper">The collection</p><h2 className="section-title">Five clear ways to <em>begin.</em></h2></div><p className="lead">From a first mountain encounter to a longer expedition, choose a route around your time, walking experience and interests. Camping, Gondar time and the daily pace are planned with you.</p></div>
       <div className="shell journey-list">
         {journeys.map((journey, index) => <article className="journey-row" id={journey.slug} key={journey.slug}>
           <div className="journey-row__number">0{index + 1}</div>
           <div className="journey-row__image image-frame"><Image src={journey.image} alt={`Simien landscape for ${journey.title}`} fill sizes="(max-width: 720px) 100vw, 38vw" /></div>
-          <div className="journey-row__copy"><span>{journey.duration} · {journey.style}</span><h2>{journey.title}</h2><p>{journey.summary}</p><dl><div><dt>Walking</dt><dd>{journey.difficulty}</dd></div><div><dt>Best fit</dt><dd>{journey.fit}</dd></div></dl><Link className="button button--dark" href={`/plan?journey=${journey.slug}`}>Ask about this journey <ArrowUpRight /></Link></div>
+          <div className="journey-row__copy"><span>{journey.duration} · {journey.style}</span><h2>{journey.title}</h2><p>{journey.summary}</p><dl><div><dt>Walking</dt><dd>{journey.difficulty}</dd></div><div><dt>Best fit</dt><dd>{journey.fit}</dd></div></dl><div className="journey-detail-links"><Link className="text-link" href={journey.href}>Read the itinerary <ArrowUpRight /></Link></div><Link className="button button--dark" href={`/plan?journey=${journey.slug}`}>Ask about this journey <ArrowUpRight /></Link></div>
         </article>)}
       </div>
     </section>
+    <section className="section section--paper"><div className="shell"><SectionIntro tag="Culture, light and mountain days" title="Connect the" accent="chapters." /><FeatureGrid columns={2} items={[
+      { title: "Royal City & Mountain Adventure", tag: "5 days / 4 nights", body: "One Gondar hotel night, then three camping nights on the classic trail through Sankaber, Geech, Imet Gogo and Chenek.", href: "/treks/5-day-gondar-simien", linkLabel: "Read the five-day trekking journey" },
+      { title: "Gondar, Heritage & Simien", tag: "5 days / 4 nights", body: "Castles, churches and Woleka heritage lead into two nights in the mountains. Adapt the walking and comfort to your pace.", href: "/treks/gondar-heritage-simien", linkLabel: "Read the five-day itinerary" },
+      { title: "Photography journeys", tag: "1–5 days", body: "Create more time for wildlife, landscapes and the changing light on a photography-focused mountain journey.", href: "/simien-photography-tour" },
+      { title: "Beyond the trail", tag: "Make the journey your own", body: "Add festivals, local food, running, village experiences and time to discover Gondar.", href: "/beyond-the-trail" },
+    ]} /></div></section>
     <section className="section section--paper honest-section">
       <div className="shell honest-grid"><div><p className="eyebrow eyebrow--copper">Before you choose</p><h2 className="section-title">An honest route is a <em>better route.</em></h2></div><div className="honest-points"><p><Check />We explain daily effort, camping and altitude in plain language.</p><p><Check />We confirm the route against current weather, trail and road conditions.</p><p><Check />We never guarantee a wild animal sighting.</p><p><CircleAlert />Prices are quoted personally because group size, season and logistics change the real cost.</p></div></div>
     </section>

@@ -1,0 +1,68 @@
+import type { ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight, ChevronDown } from "@/components/Icon";
+import { site } from "@/lib/site";
+
+export type Feature = { title: string; body: string; tag?: string; href?: string; linkLabel?: string; id?: string };
+export type ItineraryDay = { title: string; subtitle: string; paragraphs: string[]; overnight?: string; notes?: string[]; stages?: { label: string; body: string }[] };
+
+export function EditorialHero({ eyebrow, title, accent, lead, image, parent = { label: "Experiences", href: "/beyond-the-trail" } }: {
+  eyebrow: string; title: string; accent: string; lead: string;
+  image?: { src: string; alt: string }; parent?: { label: string; href: string };
+}) {
+  return <section className={image ? "page-hero--image editorial-hero" : "page-hero editorial-hero"}>
+    {image && <Image src={image.src} alt={image.alt} fill priority sizes="100vw" />}
+    <div className={`shell ${image ? "page-hero__content" : ""}`}>
+      <div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><Link href={parent.href}>{parent.label}</Link></div>
+      <p className="eyebrow">{eyebrow}</p>
+      <h1 className="display">{title} <em>{accent}</em></h1>
+      <p className="lead">{lead}</p>
+    </div>
+  </section>;
+}
+
+export function SectionIntro({ tag, title, accent }: { tag: string; title: string; accent?: string }) {
+  return <div className="content-heading"><p className="eyebrow eyebrow--copper">{tag}</p><h2 className="section-title">{title} {accent && <em>{accent}</em>}</h2></div>;
+}
+
+export function StorySection({ id, tag, title, accent, paragraphs, children, paper = false }: {
+  id?: string; tag: string; title: string; accent?: string; paragraphs: string[]; children?: ReactNode; paper?: boolean;
+}) {
+  return <section id={id} className={`section ${paper ? "section--paper" : ""}`}>
+    <div className="shell editorial-grid"><SectionIntro tag={tag} title={title} accent={accent} /><div className="prose">{paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{children}</div></div>
+  </section>;
+}
+
+export function FeatureGrid({ items, columns = 3 }: { items: readonly Feature[]; columns?: 2 | 3 }) {
+  return <div className={`content-grid content-grid--${columns}`}>
+    {items.map((item, index) => <article className="content-card" id={item.id} key={item.title}>
+      <span className="eyebrow eyebrow--copper">{item.tag || String(index + 1).padStart(2, "0")}</span>
+      <h3>{item.title}</h3><p>{item.body}</p>
+      {item.href && <Link href={item.href} className="text-link">{item.linkLabel || "Explore experience"}<ArrowUpRight /></Link>}
+    </article>)}
+  </div>;
+}
+
+export function AtAGlance({ facts }: { facts: readonly { label: string; value: string }[] }) {
+  return <dl className="trip-facts shell">{facts.map((fact) => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>;
+}
+
+export function Itinerary({ days, id = "itinerary" }: { days: readonly ItineraryDay[]; id?: string }) {
+  return <div className="itinerary" id={id}>{days.map((day, index) => <details key={day.title} className="itinerary__day" open={index === 0}>
+    <summary><span className="itinerary__number">Day {String(index + 1).padStart(2, "0")}</span><span><strong>{day.title}</strong><small>{day.subtitle}</small></span><ChevronDown /></summary>
+    <div className="itinerary__body">{day.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      {day.stages && <ol className="editorial-list">{day.stages.map((stage) => <li key={stage.label}><strong>{stage.label}</strong><p>{stage.body}</p></li>)}</ol>}
+      {day.notes && <ul className="editorial-list">{day.notes.map((note) => <li key={note}>{note}</li>)}</ul>}
+      {day.overnight && <p className="itinerary__overnight"><b>Overnight</b> {day.overnight}</p>}
+    </div>
+  </details>)}</div>;
+}
+
+export function PageLinks({ items }: { items: { href: string; label: string }[] }) {
+  return <nav className="page-links shell" aria-label="On this page">{items.map((item) => <a key={item.href} href={item.href}>{item.label}<ArrowUpRight size={13} /></a>)}</nav>;
+}
+
+export function PlanningCall({ title, eyebrow = "Personally planned in Gondar", experience, label = "Plan with Tevan" }: { title: string; eyebrow?: string; experience?: string; label?: string }) {
+  return <section className="inline-cta"><div className="shell"><p>{eyebrow}</p><h2>{title}</h2><Link className="button button--copper" href={experience ? `/plan?experience=${experience}` : "/plan"}>{label}<ArrowUpRight /></Link><a className="inline-contact" href={site.whatsapp} target="_blank" rel="noreferrer">Chat with Tevan on WhatsApp</a></div></section>;
+}

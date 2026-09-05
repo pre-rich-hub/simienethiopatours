@@ -77,7 +77,7 @@ export function DurationSelector() {
 
             return (
               <article className="journey-choice-card" key={journey.slug}>
-                <Link className="journey-choice-card__image" href={`/treks#${journey.slug}`} aria-label={`Explore ${journey.title}`}>
+                <Link className="journey-choice-card__image" href={journey.href} aria-label={`Explore ${journey.title}`}>
                   <Image
                     src={journey.image}
                     alt={`Simien Mountains landscape featured in ${journey.title}`}
@@ -93,7 +93,7 @@ export function DurationSelector() {
                   </div>
                   <h3>{journey.title}</h3>
                   <p>{journey.summary}</p>
-                  <Link className="journey-choice-card__link" href={`/treks#${journey.slug}`}>
+                  <Link className="journey-choice-card__link" href={journey.href}>
                     Explore journey <ArrowUpRight />
                   </Link>
                 </div>

@@ -23,6 +23,9 @@ export function Footer() {
           <Link href="/simien-mountains">The Simien</Link>
           <Link href="/treks">Journeys</Link>
           <Link href="/gondar">Gondar</Link>
+          <Link href="/beyond-the-trail">Beyond the trail</Link>
+          <Link href="/festival-journeys">Festival journeys</Link>
+          <Link href="/where-to-stay-gondar-simien">Where to stay</Link>
           <Link href="/travel-guide">Field notes</Link>
         </div>
         <div className="footer__column">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight, CheckCircle2, Compass, Map, Mountain, Route, TentTree } from "@/components/Icon";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { DurationSelector } from "@/components/DurationSelector";
 import { journeys, site, sourceLinks } from "@/lib/site";
 
@@ -145,6 +146,11 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="section section--paper"><div className="shell"><SectionIntro tag="10 · Beyond the trail" title="More ways to" accent="travel deeper." /><FeatureGrid items={[
+          { title: "Living culture & festivals", body: "Connect Gondar’s celebrations with the Simien Mountains, local stories and time to understand what you are seeing.", href: "/festival-journeys" },
+          { title: "Running & photography", body: "Find quieter Gondar paths or build a mountain journey around the photographs you hope to make.", href: "/beyond-the-trail" },
+          { title: "Your stay, thoughtfully planned", body: "Bring together city hotels, mountain lodges and camping around the experience you want.", href: "/where-to-stay-gondar-simien" },
+        ]} /></div></section>
         <section className="final-call">
           <Image src="/images/simien-panorama.jpg" alt="A wide panorama of the Simien Mountains escarpment" fill sizes="100vw" />
           <div className="final-call__veil" />

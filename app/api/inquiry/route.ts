@@ -23,6 +23,11 @@ export async function POST(request: Request) {
     group: String(body.group || "").slice(0, 80),
     duration: String(body.duration || "").slice(0, 80),
     interests: String(body.interests || "").slice(0, 160),
+    experience: String(body.experience || "").slice(0, 120),
+    accommodation: String(body.accommodation || "").slice(0, 120),
+    gondarNights: String(body.gondarNights || "").slice(0, 8),
+    simienNights: String(body.simienNights || "").slice(0, 8),
+    budget: String(body.budget || "").slice(0, 200),
     message: String(body.message || "").slice(0, 3000),
     submittedAt: new Date().toISOString(),
   };

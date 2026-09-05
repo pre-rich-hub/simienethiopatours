@@ -87,7 +87,7 @@ export function JourneyDropdown() {
         type="button"
         aria-expanded={expanded}
         aria-controls="journey-menu"
-        aria-current={pathname === "/treks" ? "page" : undefined}
+        aria-current={pathname.startsWith("/treks") ? "page" : undefined}
         onClick={() => { clearTimer(); setExpanded((value) => !value); }}
         onKeyDown={(event) => {
           if (event.key !== "ArrowDown") return;
@@ -120,11 +120,17 @@ export function JourneyDropdown() {
             <h2>Find your way<br /><em>into Simien.</em></h2>
             <p className="journey-menu__description">From a first mountain trek to a summit journey, find a starting point for your time, curiosity and pace.</p>
             <Link className="text-link" href="/treks">Explore all journeys <ArrowUpRight /></Link>
+            <div className="journey-menu__extra">
+              <Link href="/treks/10-day-simien-ras-dashen">10-day Simien & Ras Dashen expedition ↗</Link>
+              <Link href="/treks/5-day-gondar-simien">5-day Royal City & Mountain Adventure ↗</Link>
+              <Link href="/treks/gondar-heritage-simien">5-day Gondar, Heritage & Simien ↗</Link>
+              <Link href="/beyond-the-trail">Beyond the trail: all experiences ↗</Link>
+            </div>
           </div>
 
           <div className="journey-menu__cards">
             {featuredJourneys.map((journey) => (
-              <Link className="journey-menu-card" href={`/treks#${journey.slug}`} key={journey.slug}>
+              <Link className="journey-menu-card" href={journey.href} key={journey.slug}>
                 <div className="journey-menu-card__image">
                   <Image src={journey.image} alt="" fill sizes="(min-width: 1440px) 280px, 22vw" />
                   <span>{journey.duration}</span>
