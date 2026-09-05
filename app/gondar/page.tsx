@@ -1,0 +1,18 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "@/components/Icon";
+import { PageShell } from "@/components/PageShell";
+import { sourceLinks } from "@/lib/site";
+
+export const metadata: Metadata = { title: "Gondar | The Royal Gateway to Simien", description: "Explore Gondar's Fasil Ghebbi, local life and its role as the cultural and practical gateway to the Simien Mountains.", alternates: { canonical: "/gondar" } };
+
+export default function GondarPage() {
+  return <PageShell lightHeader={false}>
+    <section className="page-hero--image"><Image src="/images/fasil-ghebbi.jpg" alt="Stone arches at the royal fortress of Fasil Ghebbi in Gondar" fill priority sizes="100vw" /><div className="page-hero__content shell"><div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Gondar</span></div><p className="eyebrow">The royal city · The road north</p><h1 className="display">Where the mountain <em>journey begins.</em></h1><p className="lead">History, living streets, coffee and the practical first chapter of every Simien journey.</p></div></section>
+    <section className="section"><div className="shell editorial-grid"><div><span className="chapter-index">01</span><h2 className="section-title">More than a stop <em>before the trek.</em></h2></div><div className="prose"><p>Gondar was an imperial capital from the seventeenth century, and Fasil Ghebbi remains its remarkable stone centre. Within the fortress walls, palaces, churches and other buildings reflect the city’s layered architectural history.</p><p>But the most memorable city experience is not only architectural. It is also morning streets, markets, food, coffee and conversations that give the mountain journey its human beginning.</p><a className="source-link" href={sourceLinks.gondarUnesco} target="_blank" rel="noreferrer">Historical source: UNESCO World Heritage Centre ↗</a></div></div></section>
+    <section className="section section--paper"><div className="shell gondar-experiences"><article><span>01</span><h2>Royal Gondar</h2><p>Walk the Fasil Ghebbi ensemble with context—not just names and dates—and connect its history to the city around it.</p></article><article><span>02</span><h2>Hidden Gondar</h2><p>Move beyond the main sights into food, coffee, markets and daily life, always with respect and local guidance.</p></article><article><span>03</span><h2>Kosoye highlands</h2><p>Slow the transition from city to mountain through nearby rural landscapes and community encounters arranged with consent.</p></article><article><span>04</span><h2>The road to Simien</h2><p>Leave Gondar for the climb north through farmland toward Debark, the practical gateway to the national park.</p></article></div></section>
+    <section className="split-image-story"><div className="image-frame"><Image src="/images/road-to-simien.jpg" alt="Women drawing water in the northern Ethiopian highlands" fill sizes="(max-width: 720px) 100vw, 55vw" /></div><div><p className="eyebrow eyebrow--copper">City → farmland → highlands</p><h2>The road is part of the story.</h2><p>Gondar gives context to the mountains: where supplies are checked, journeys meet, and the highland geography begins to unfold.</p><a href={sourceLinks.gondarTourism} target="_blank" rel="noreferrer" className="text-link">Gondar tourism source <ArrowUpRight /></a></div></section>
+    <section className="inline-cta"><div className="shell"><p>Build a combined journey</p><h2>Castles first. Escarpment next.</h2><Link className="button button--copper" href="/plan">Plan Gondar + Simien <ArrowUpRight /></Link></div></section>
+  </PageShell>;
+}
