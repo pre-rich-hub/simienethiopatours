@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SectionIntro } from "@/components/Editorial";
 import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
+import { ReviewsShowcase } from "@/components/ReviewsShowcase";
 import { DurationSelector } from "@/components/DurationSelector";
 import { journeys, site, sourceLinks } from "@/lib/site";
 
@@ -152,10 +153,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section gondar-home">
-          <div className="shell gondar-home__grid">
-            <div className="gondar-home__copy"><p className="eyebrow eyebrow--copper">09 · Before the trail</p><h2 className="section-title">Gondar, through <em>local eyes.</em></h2><p className="lead">A royal city of stone, living streets, coffee and conversation. Explore Fasil Ghebbi, then understand Gondar as the beginning of a northward mountain journey—not a monument detached from it.</p><p className="source-note">Fasil Ghebbi was inscribed on UNESCO’s World Heritage List in 1979. <a href={sourceLinks.gondarUnesco} target="_blank" rel="noreferrer">UNESCO source ↗</a></p><Link className="button button--dark" href="/gondar">Discover Gondar</Link></div>
-            <div className="image-frame gondar-home__image"><Image src="/images/fasil-ghebbi.jpg" alt="Looking through the ruined stone vault of Iyasu's Palace at Fasil Ghebbi in Gondar" fill sizes="(max-width: 720px) 100vw, 50vw" /><span className="image-caption">Fasil Ghebbi · Gondar</span></div>
+        <section className="section reviews-home" id="reviews">
+          <div className="shell">
+            <div className="reviews-home__heading"><SectionIntro tag="09 · Traveler reviews" title="Their journeys." accent="In their own words." /><div><p className="lead">Independent feedback from travelers who met Tevan in Gondar and experienced northern Ethiopia with local guidance.</p><Link className="text-link" href="/reviews">See all traveler reviews <ArrowUpRight /></Link></div></div>
+            <ReviewsShowcase />
           </div>
         </section>
 

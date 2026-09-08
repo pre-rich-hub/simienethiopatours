@@ -32,6 +32,7 @@ export function Footer() {
         <div className="footer__column">
           <h3>Company</h3>
           <Link href="/about">Meet Tevan</Link>
+          <Link href="/reviews">Traveler reviews</Link>
           <Link href="/about#local">Tevan Local</Link>
           <Link href="/photo-credits">Photo credits</Link>
           <a href={site.operatorSite} target="_blank" rel="noreferrer">Operating company <ArrowUpRight size={12} /></a>
