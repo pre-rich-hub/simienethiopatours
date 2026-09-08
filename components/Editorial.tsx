@@ -67,6 +67,13 @@ export function Itinerary({ days, id = "itinerary" }: { days: readonly Itinerary
   </details>)}</div>;
 }
 
+export function Faq({ items, id = "faq" }: { items: readonly { q: string; a: string }[]; id?: string }) {
+  return <div className="faq-list" id={id}>{items.map((item) => <details className="faq-item" key={item.q}>
+    <summary>{item.q}<ChevronDown /></summary>
+    <p>{item.a}</p>
+  </details>)}</div>;
+}
+
 export function PageLinks({ items }: { items: { href: string; label: string }[] }) {
   return <nav className="page-links shell" aria-label="On this page">{items.map((item) => <a key={item.href} href={item.href}>{item.label}<ArrowUpRight size={13} /></a>)}</nav>;
 }

@@ -22,6 +22,7 @@ export function Footer() {
           <h3>Discover</h3>
           <Link href="/simien-mountains">The Simien</Link>
           <Link href="/treks">Journeys</Link>
+          <Link href="/ras-dashen">Ras Dashen</Link>
           <Link href="/gondar">Gondar</Link>
           <Link href="/beyond-the-trail">Beyond the trail</Link>
           <Link href="/festival-journeys">Festival journeys</Link>
@@ -34,6 +35,7 @@ export function Footer() {
           <Link href="/about">Meet Tevan</Link>
           <Link href="/reviews">Traveler reviews</Link>
           <Link href="/about#local">Tevan Local</Link>
+          <Link href="/whats-included">What's included</Link>
           <Link href="/photo-credits">Photo credits</Link>
           <a href={site.operatorSite} target="_blank" rel="noreferrer">Operating company <ArrowUpRight size={12} /></a>
         </div>

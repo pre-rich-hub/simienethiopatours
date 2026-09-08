@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, CheckCircle2, Compass, Map, Mountain, Route, TentTree } from "@/components/Icon";
+import { ArrowUpRight, CheckCircle2, Compass, Map, Mountain, Route, TentTree } from "@/components/Icon";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SectionIntro } from "@/components/Editorial";
@@ -20,16 +20,12 @@ export default function Home() {
             <div className="hero__veil" /><div className="hero__grain" />
           </div>
           <div className="hero__content">
-            <p className="eyebrow">Gondar · Northern Ethiopia · 13°14′N</p>
             <h1 className="display">Your local gateway to the <em>Simien Mountains.</em></h1>
-            <p className="hero__lead">Discover Gondar. Explore Simien. Travel deeper with a local team that walks the trails, knows the mountain and handles the details behind the journey.</p>
+            <p className="hero__lead">Discover Gondar. Explore Simien. Travel deeper with a local team that knows the mountain and handles the details.</p>
             <div className="hero__actions">
               <Link className="button button--copper" href="/simien-mountains">Explore the Simien <ArrowUpRight size={16} /></Link>
-              <Link className="button button--outline" href="/plan">Plan your journey</Link>
             </div>
-            <div className="hero__proof"><span>Locally owned</span><span>Based in Gondar</span><span>Simien specialists</span></div>
           </div>
-          <a className="hero__scroll" href="#journey">Scroll to discover <ArrowDown size={15} /></a>
         </section>
 
         <section className="home-trust" aria-label="Trust markers">
@@ -134,9 +130,6 @@ export default function Home() {
             <div><TentTree /><h3>Prepared behind the scenes</h3><p>Guides, scouts, cooks, drivers, mule handlers, food and camp equipment coordinated before you reach the trail.</p></div>
             <div><Compass /><h3>First-hand guidance</h3><p>Advice shaped around your time, ability and interests—not an itinerary pushed onto every traveler.</p></div>
             <div><Mountain /><h3>Respect for the mountain</h3><p>Altitude, weather and wildlife are treated honestly. The route can flex when real conditions require judgment.</p></div>
-          </div>
-          <div className="shell review-band">
-            <span>Traveler story · December 2025</span><blockquote>“The team under Tevan was well organized… the landscape of Simien National Park is really spectacular.”</blockquote><a href={site.tripadvisor} target="_blank" rel="noreferrer">Read Michael’s full verified review on Tripadvisor <ArrowUpRight /></a>
           </div>
         </section>
 

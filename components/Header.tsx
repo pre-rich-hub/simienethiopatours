@@ -31,9 +31,9 @@ const megaMenus: Record<string, React.ComponentProps<typeof NavMegaMenu>> = {
     exploreLabel: "Explore the Simien Mountains",
     extraLinks: [
       { href: "/treks", label: "Choose a Simien trek" },
-      { href: "/beyond-the-trail", label: "Beyond the trail: all experiences" },
+      { href: "/where-to-stay-gondar-simien", label: "Where to stay: Gondar & Simien" },
+      { href: "/whats-included", label: "What's included on every journey" },
       { href: "/gondar", label: "Gondar: the royal city" },
-      { href: "/plan", label: "Plan your Simien journey" },
     ],
     cards: simienMenuCards,
   },
@@ -47,10 +47,10 @@ const megaMenus: Record<string, React.ComponentProps<typeof NavMegaMenu>> = {
     exploreHref: "/treks",
     exploreLabel: "Explore all journeys",
     extraLinks: [
+      { href: "/ras-dashen", label: "Ras Dashen: Ethiopia's highest mountain" },
       { href: "/treks/10-day-simien-ras-dashen", label: "10-day Simien & Ras Dashen expedition" },
-      { href: "/treks/5-day-gondar-simien", label: "5-day Royal City & Mountain Adventure" },
       { href: "/treks/gondar-heritage-simien", label: "5-day Gondar, Heritage & Simien" },
-      { href: "/beyond-the-trail", label: "Beyond the trail: all experiences" },
+      { href: "/whats-included", label: "What's included on every journey" },
     ],
     cards: journeyMenuCards,
   },
@@ -154,7 +154,7 @@ export function Header({ light = false }: { light?: boolean }) {
           <LanguageSwitcher mobile />
           <p>Start with a simple question. Tevan and the local team will help shape the rest.</p>
           <Link className="button button--dark" href="/plan" onClick={() => setOpen(false)}>Plan your journey</Link>
-          <a href={site.whatsapp} target="_blank" rel="noreferrer">WhatsApp {site.phoneDisplay}</a>
+          <a className="text-link" href={site.whatsapp} target="_blank" rel="noreferrer">WhatsApp {site.phoneDisplay}<ArrowUpRight /></a>
         </div>
       </dialog>
     </>

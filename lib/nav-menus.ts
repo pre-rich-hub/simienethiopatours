@@ -31,13 +31,13 @@ export const simienMenuCards: NavMegaMenuCard[] = [
     image: "/images/road-to-simien.jpg",
   },
   {
-    slug: "where-to-stay",
-    href: "/where-to-stay-gondar-simien",
-    tag: "Plan your stay",
-    title: "Where to Stay",
-    style: "Gondar · Simien · Debark",
-    summary: "Compare accommodation options across every stage of your trip, from city hotels to mountain camps.",
-    image: "/images/simien-panorama.jpg",
+    slug: "ras-dashen",
+    href: "/ras-dashen",
+    tag: "Highest peak",
+    title: "Ras Dashen",
+    style: "Ethiopia's highest mountain",
+    summary: "You don't just climb Ras Dashen — you cross the Simien Mountains. Difficulty, altitude and route, honestly explained.",
+    image: "/images/giant-lobelia.jpg",
   },
 ];
 
