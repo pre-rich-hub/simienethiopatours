@@ -8,20 +8,25 @@ export type TravelerReview = {
   title?: string;
   text: string;
   avatarTone: "clay" | "sky" | "forest" | "sand" | "slate" | "berry";
+  translatedFrom?: string;
 };
 
 // Review copy transcribed from the supplied Tripadvisor and Google review reference.
+// Non-English originals are translated into English below (translatedFrom notes the source language);
+// reviews left mid-sentence in the source material are trimmed to the last complete, faithful clause
+// rather than fabricating an ending. Two Tripadvisor entries used the reviewer's anonymized platform
+// handle rather than a name, so they're labeled "Tripadvisor Traveler" instead of showing the raw handle.
 export const travelerReviews: readonly TravelerReview[] = [
-  { name: "Margherita F", initials: "MF", date: "7 months ago", source: "Tripadvisor", title: "Conoscere la vera Gondar e la sua gente", text: "Tesema è una guida preparata, seria, simpatica e disponibile…", avatarTone: "berry" },
-  { name: "NorthStar687124211…", initials: "N", date: "7 months ago", source: "Tripadvisor", title: "A spasso per Gondar con il nostro amico Tesema", text: "Il nostro soggiorno a Gondar è stato magnifico grazie a…", avatarTone: "sand" },
-  { name: "Voyage583300535…", initials: "V", date: "7 months ago", source: "Tripadvisor", title: "Exceptional Service with Simien Ethio Tours – Highly Recommended in Gondar!", text: "我們最近參加了 Simien Ethio Tours…", avatarTone: "sky" },
+  { name: "Margherita F", initials: "MF", date: "7 months ago", source: "Tripadvisor", title: "Getting to Know the Real Gondar and Its People", text: "Tesema is a knowledgeable, professional, friendly and helpful guide.", avatarTone: "berry", translatedFrom: "Italian" },
+  { name: "Tripadvisor Traveler", initials: "T", date: "7 months ago", source: "Tripadvisor", title: "Wandering Around Gondar with Our Friend Tesema", text: "Our stay in Gondar was wonderful.", avatarTone: "sand", translatedFrom: "Italian" },
+  { name: "Tripadvisor Traveler", initials: "T", date: "7 months ago", source: "Tripadvisor", title: "Exceptional Service with Simien Ethio Tours – Highly Recommended in Gondar!", text: "We recently joined Simien Ethio Tours.", avatarTone: "sky", translatedFrom: "Chinese" },
   { name: "Romain GC", initials: "RG", date: "5 months ago", source: "Tripadvisor", title: "Travel to Ethiopia", text: "Tesema is a great person. He gave me a lot of good advice. Nice visit.", avatarTone: "slate" },
-  { name: "Marek C", initials: "MC", date: "6 months ago", source: "Tripadvisor", title: "Simien", text: "Velmi prijemny vylet kusok od mesta Gondar, kde je tiez mozne vidiet Gelaty, kedze je t…", avatarTone: "forest" },
-  { name: "Voken Granger", initials: "V", date: "7 months ago", source: "Google", text: "Tevan回覆非常迅速，十分友善，即時回應需求，來到Gondar旅遊可以跟他們談談，有時候會有驚喜，包含價格！", avatarTone: "forest" },
-  { name: "高慶樺", initials: "高", date: "7 months ago", source: "Google", text: "在貢德爾 (Gondar) 旅遊的首選：專業、誠信且超值的 Simien Ethio Tours！…", avatarTone: "sand" },
-  { name: "Tyrell Heaton", initials: "TH", date: "7 months ago", source: "Google", text: "My wife and I visited Gonder and were greeted by Tessema upon our arrival to town. He is an exceptional host and pays…", avatarTone: "sky" },
-  { name: "Margherita Ferrari", initials: "M", date: "7 months ago", source: "Google", text: "Tesema (Tevan) was extremely kind and helpful. He organized a city tour for us, saving us money on transportation and…", avatarTone: "clay" },
-  { name: "Eugenio Capra", initials: "E", date: "7 months ago", source: "Google", text: "Esperienza ottima, bene organizzata con persone gentili e disponibili. Ogni promessa mantenuta. Molto soddisfatto…", avatarTone: "slate" },
+  { name: "Marek C", initials: "MC", date: "6 months ago", source: "Tripadvisor", title: "Simien", text: "A very pleasant trip a short distance from Gondar, where you can also see geladas.", avatarTone: "forest", translatedFrom: "Slovak" },
+  { name: "Voken Granger", initials: "VG", date: "7 months ago", source: "Google", text: "Tevan replies very quickly and is very friendly, responding to needs right away. If you're traveling to Gondar, you can talk to them — sometimes there are pleasant surprises, including with pricing!", avatarTone: "forest", translatedFrom: "Chinese" },
+  { name: "高慶樺", initials: "高", date: "7 months ago", source: "Google", text: "The top choice for touring Gondar: professional, trustworthy and great value — Simien Ethio Tours!", avatarTone: "sand", translatedFrom: "Chinese" },
+  { name: "Tyrell Heaton", initials: "TH", date: "7 months ago", source: "Google", text: "My wife and I visited Gonder and were greeted by Tessema upon our arrival to town. He is an exceptional host.", avatarTone: "sky" },
+  { name: "Margherita Ferrari", initials: "M", date: "7 months ago", source: "Google", text: "Tesema (Tevan) was extremely kind and helpful. He organized a city tour for us, saving us money on transportation.", avatarTone: "clay" },
+  { name: "Eugenio Capra", initials: "E", date: "7 months ago", source: "Google", text: "Excellent experience, well organized with kind and helpful people. Every promise was kept. Very satisfied.", avatarTone: "slate", translatedFrom: "Italian" },
   { name: "Sasa Lazic", initials: "S", date: "7 months ago", source: "Google", text: "Tesema is a very professional and knowledgeable guide… and also a master tea maker.", avatarTone: "berry" },
 ];
 

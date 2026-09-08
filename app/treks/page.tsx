@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Check, CircleAlert } from "@/components/Icon";
+import { ArrowUpRight, Check, CircleAlert, Compass, Mountain } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { journeys } from "@/lib/site";
@@ -23,8 +23,8 @@ export default function TreksPage() {
       <div className="shell journey-list">
         {journeys.map((journey, index) => <article className="journey-row" id={journey.slug} key={journey.slug}>
           <div className="journey-row__number">0{index + 1}</div>
-          <div className="journey-row__image image-frame"><Image src={journey.image} alt={`Simien landscape for ${journey.title}`} fill sizes="(max-width: 720px) 100vw, 38vw" /></div>
-          <div className="journey-row__copy"><span>{journey.duration} · {journey.style}</span><h2>{journey.title}</h2><p>{journey.summary}</p><dl><div><dt>Walking</dt><dd>{journey.difficulty}</dd></div><div><dt>Best fit</dt><dd>{journey.fit}</dd></div></dl><div className="journey-detail-links"><Link className="text-link" href={journey.href}>Read the itinerary <ArrowUpRight /></Link></div><Link className="button button--dark" href={`/plan?journey=${journey.slug}`}>Ask about this journey <ArrowUpRight /></Link></div>
+          <div className="journey-row__image image-frame"><Image src={journey.image} alt={`Simien landscape for ${journey.title}`} fill sizes="(max-width: 720px) 100vw, 38vw" /><span className="journey-row__duration">{journey.duration}</span></div>
+          <div className="journey-row__copy"><span>{journey.duration} · {journey.style}</span><h2>{journey.title}</h2><p>{journey.summary}</p><dl className="journey-row__facts"><div><Mountain size={20} /><div><dt>Walking</dt><dd>{journey.difficulty}</dd></div></div><div><Compass size={20} /><div><dt>Best fit</dt><dd>{journey.fit}</dd></div></div></dl><div className="journey-detail-links"><Link className="text-link" href={journey.href}>Read the itinerary <ArrowUpRight /></Link></div><Link className="button button--dark" href={`/plan?journey=${journey.slug}`}>Ask about this journey <ArrowUpRight /></Link></div>
         </article>)}
       </div>
     </section>

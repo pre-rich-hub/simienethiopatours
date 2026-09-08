@@ -44,7 +44,7 @@ export default function Home() {
 
         <section className="section journey-arc" id="journey">
           <div className="shell intro-grid">
-            <div><p className="eyebrow eyebrow--copper">01 · The way north</p><h2 className="section-title">The journey changes <em>before your eyes.</em></h2></div>
+            <div><p className="eyebrow eyebrow--copper">The way north</p><h2 className="section-title">The journey changes <em>before your eyes.</em></h2></div>
             <p className="lead">Gondar is the cultural and practical doorway. Then the city loosens its hold: farmland, villages, climbing road, Debark—and finally a horizon cut open by the Simien escarpment.</p>
           </div>
           <div className="journey-arc__visual shell">
@@ -59,14 +59,14 @@ export default function Home() {
 
         <section className="section section--paper discover-section">
           <div className="shell discover-section__heading">
-            <div><p className="eyebrow eyebrow--copper">02 · Find your horizon</p><h2 className="section-title">Where will the mountains <em>take you?</em></h2></div>
+            <div><p className="eyebrow eyebrow--copper">Find your horizon</p><h2 className="section-title">Where will the mountains <em>take you?</em></h2></div>
             <p className="lead">Not a checklist. Three different ways to feel the scale of the landscape.</p>
           </div>
           <div className="discover-grid shell">
             <Link href="/simien-mountains#imet-gogo" className="discover-card discover-card--tall">
               <Image src="/images/imet-gogo.jpg" alt="Rocky promontory at Imet Gogo above the Simien escarpment" fill sizes="(max-width: 720px) 100vw, 43vw" />
               <div>
-                <span>01 · Simien icon</span><h3>Imet Gogo</h3><p>Walk into the view.</p>
+                <span>Simien icon</span><h3>Imet Gogo</h3><p>Walk into the view.</p>
                 <div className="discover-card__details"><div><p>Walk from Geech to a dramatic viewpoint overlooking the Simien escarpments, deep valleys and distant ridges. Take time to pause and enjoy the panorama.</p></div></div>
                 <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
               </div>
@@ -74,7 +74,7 @@ export default function Home() {
             <Link href="/simien-mountains#wildlife" className="discover-card">
               <Image src="/images/gelada-troop.jpg" alt="A wild troop of geladas grazing in the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 28vw" />
               <div>
-                <span>02 · Wildlife</span><h3>Gelada country</h3><p>Observe. Never stage.</p>
+                <span>Wildlife</span><h3>Gelada country</h3><p>Observe. Never stage.</p>
                 <div className="discover-card__details"><div><p>Watch wild geladas graze and interact on the highland grasslands. Explore with a local guide, giving each troop space to go about its day.</p></div></div>
                 <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
               </div>
@@ -82,7 +82,7 @@ export default function Home() {
             <Link href="/treks#ras-dashen" className="discover-card">
               <Image src="/images/giant-lobelia.jpg" alt="Giant lobelias across the high Afroalpine landscape of the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 28vw" />
               <div>
-                <span>03 · High country</span><h3>Ras Dashen</h3><p>The summit journey.</p>
+                <span>High country</span><h3>Ras Dashen</h3><p>The summit journey.</p>
                 <div className="discover-card__details"><div><p>Journey through giant-lobelia country and remote mountain landscapes on a demanding multi-day trek, with time to acclimatize before the summit approach.</p></div></div>
                 <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
               </div>
@@ -92,7 +92,7 @@ export default function Home() {
 
         <section className="section time-section" id="journey-collections">
           <div className="shell time-section__intro">
-            <p className="eyebrow eyebrow--copper">03 · Choose with clarity</p>
+            <p className="eyebrow eyebrow--copper">Choose with clarity</p>
             <h2 className="section-title">How do you want to <em>meet the mountains?</em></h2>
             <p className="lead">From a first encounter to a full highland expedition, begin with the experience that feels like yours. Every journey is privately refined around your time and pace.</p>
           </div>
@@ -101,7 +101,7 @@ export default function Home() {
 
         <section className="section featured-journeys">
           <div className="shell featured-journeys__header">
-            <div><p className="eyebrow eyebrow--copper">04 · Signature journeys</p><h2 className="section-title">Possibilities, <em>not packages.</em></h2></div>
+            <div><p className="eyebrow eyebrow--copper">Signature journeys</p><h2 className="section-title">Possibilities, <em>not packages.</em></h2></div>
             <Link className="text-link" href="/treks">View every journey <ArrowUpRight /></Link>
           </div>
           <div className="shell journey-mosaic">
@@ -116,28 +116,20 @@ export default function Home() {
 
         <section className="section reviews-home" id="reviews">
           <div className="shell">
-            <div className="reviews-home__heading"><SectionIntro tag="05 · Traveler reviews" title="Their journeys." accent="In their own words." /><div><p className="lead">Independent feedback from travelers who met Tevan in Gondar and experienced northern Ethiopia with local guidance.</p><Link className="text-link" href="/reviews">See all traveler reviews <ArrowUpRight /></Link></div></div>
+            <div className="reviews-home__heading"><SectionIntro tag="Traveler reviews" title="Their journeys." accent="In their own words." /><div><p className="lead">Independent feedback from travelers who met Tevan in Gondar and experienced northern Ethiopia with local guidance.</p><Link className="text-link" href="/reviews">See all traveler reviews <ArrowUpRight /></Link></div></div>
             <ReviewsShowcase />
-          </div>
-        </section>
-
-        <section className="wildlife-section" id="wildlife">
-          <div className="wildlife-section__image"><Image src="/images/gelada-troop.jpg" alt="A troop of geladas feeding naturally in highland grass" fill sizes="100vw" /></div>
-          <div className="wildlife-section__content shell">
-            <p className="eyebrow">06 · Wildlife above the clouds</p><h2>Wildlife does not <em>perform for us.</em></h2><p>Geladas graze the high plateaus. Walia ibex move across distant cliffs. Ethiopian wolves belong to a fragile Afroalpine world. We watch patiently, keep respectful distance and never guarantee a sighting.</p>
-            <a className="text-link text-link--light" href={sourceLinks.simienUnesco} target="_blank" rel="noreferrer">Explore UNESCO’s park profile <ArrowUpRight /></a>
           </div>
         </section>
 
         <section className="section tevan-section">
           <div className="shell tevan-section__grid">
             <div className="tevan-section__portrait image-frame"><Image src="/images/tevan-founder.jpg" alt="Tesema ‘Tevan’ Mulualem on a trail in the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 42vw" /><span className="image-caption">Tevan · Founder & local guide</span></div>
-            <div className="tevan-section__copy"><p className="eyebrow eyebrow--copper">07 · The mountains I call home</p><blockquote>“Knowing a place is different from simply knowing the way through it.”</blockquote><p>My name is Tesema “Tevan” Mulualem. I built Gondar Simien Tours around a simple idea: help people experience the place I know—not just visit it. That means honest routes, real preparation and space for the moments no itinerary can schedule.</p><div className="tevan-section__links"><Link className="button button--dark" href="/about">Read Tevan’s story</Link><Link className="text-link" href="/plan">Plan with Tevan <ArrowUpRight /></Link></div><div className="credential"><CheckCircle2 /><span>Nationally certified professional guide<br/><a href={sourceLinks.operatorAbout} target="_blank" rel="noreferrer">View verified credentials</a></span></div></div>
+            <div className="tevan-section__copy"><p className="eyebrow eyebrow--copper">The mountains I call home</p><blockquote>“Knowing a place is different from simply knowing the way through it.”</blockquote><p>My name is Tesema “Tevan” Mulualem. I built Gondar Simien Tours around a simple idea: help people experience the place I know—not just visit it. That means honest routes, real preparation and space for the moments no itinerary can schedule.</p><div className="tevan-section__links"><Link className="button button--dark" href="/about">Read Tevan’s story</Link><Link className="text-link" href="/plan">Plan with Tevan <ArrowUpRight /></Link></div><div className="credential"><CheckCircle2 /><span>Nationally certified professional guide<br/><a href={sourceLinks.operatorAbout} target="_blank" rel="noreferrer">View verified credentials</a></span></div></div>
           </div>
         </section>
 
         <section className="section proof-section section--paper">
-          <div className="shell proof-section__heading"><p className="eyebrow eyebrow--copper">08 · Proof, not promises</p><h2 className="section-title">If we say it, <em>we should show it.</em></h2></div>
+          <div className="shell proof-section__heading"><p className="eyebrow eyebrow--copper">Proof, not promises</p><h2 className="section-title">If we say it, <em>we should show it.</em></h2></div>
           <div className="shell proof-grid">
             <div><TentTree /><h3>Prepared behind the scenes</h3><p>Guides, scouts, cooks, drivers, mule handlers, food and camp equipment coordinated before you reach the trail.</p></div>
             <div><Compass /><h3>First-hand guidance</h3><p>Advice shaped around your time, ability and interests—not an itinerary pushed onto every traveler.</p></div>
@@ -150,7 +142,7 @@ export default function Home() {
 
         <section className="section section--dark trail-proof">
           <div className="shell trail-proof__grid">
-            <div className="trail-proof__copy"><p className="eyebrow eyebrow--copper">09 · Route intelligence</p><h2 className="section-title">We walk the trails <em>we sell.</em></h2><p className="lead lead--light">Good planning is honest about what is known, what changes, and what still needs checking. Route decisions account for walking comfort, altitude, weather and current local conditions.</p><Link className="text-link text-link--light" href="/travel-guide">Read the field notes <ArrowUpRight /></Link></div>
+            <div className="trail-proof__copy"><p className="eyebrow eyebrow--copper">Route intelligence</p><h2 className="section-title">We walk the trails <em>we sell.</em></h2><p className="lead lead--light">Good planning is honest about what is known, what changes, and what still needs checking. Route decisions account for walking comfort, altitude, weather and current local conditions.</p><Link className="text-link text-link--light" href="/travel-guide">Read the field notes <ArrowUpRight /></Link></div>
             <div className="route-card">
               <div className="route-card__top"><span><Route />Simien Essential</span><b>Field knowledge</b></div>
               <div className="route-card__map" aria-hidden="true"><svg viewBox="0 0 500 240"><path d="M21 190C83 158 92 98 153 121s73 83 130 43 94-134 193-103"/><circle cx="21" cy="190" r="6"/><circle cx="153" cy="121" r="6"/><circle cx="283" cy="164" r="6"/><circle cx="476" cy="61" r="6"/></svg><span className="pin pin--a">Gondar</span><span className="pin pin--b">Sankaber</span><span className="pin pin--c">Geech</span><span className="pin pin--d">Imet Gogo</span></div>
@@ -160,7 +152,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section section--paper"><div className="shell"><SectionIntro tag="10 · Beyond the trail" title="More ways to" accent="travel deeper." /><ExperiencePhotoCards items={[
+        <section className="section section--paper"><div className="shell"><SectionIntro tag="Beyond the trail" title="More ways to" accent="travel deeper." /><ExperiencePhotoCards items={[
           { title: "Living culture & festivals", tag: "Celebrate · Understand · Connect", body: "Connect Gondar’s celebrations with the Simien Mountains, local stories and time to understand what you are seeing.", href: "/festival-journeys", image: { src: "/images/fasil-ghebbi.jpg", alt: "Gondar's historic royal city, the setting for cultural journeys", caption: "Gondar · Living culture" } },
           { title: "Running & photography", tag: "Move · Observe · Create", body: "Find quieter Gondar paths or build a mountain journey around the photographs you hope to make.", href: "/beyond-the-trail", image: { src: "/images/simien-panorama.jpg", alt: "Open highland landscapes for active and photography journeys", caption: "Highland paths · Changing light" } },
           { title: "Your stay, thoughtfully planned", tag: "Gondar · Lodge · Camp", body: "Bring together city hotels, mountain lodges and camping around the experience you want.", href: "/where-to-stay-gondar-simien", image: { src: "/images/geech-camp.jpg", alt: "Tents at Geech camp in the Simien Mountains", caption: "Mountain nights · Geech" } },

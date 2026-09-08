@@ -49,10 +49,10 @@ export function ReviewsShowcase() {
           <SourceMark source={summary.source} />
         </div>
         <div className="review-card-rail">
-          {reviews.map((review) => <article className="traveler-review-card" key={`${review.source}-${review.name}`}>
+          {reviews.map((review) => <article className="traveler-review-card" key={`${review.source}-${review.name}-${review.title ?? review.text}`}>
             <header>
               <span className={`review-avatar review-avatar--${review.avatarTone}`} aria-hidden="true">{review.initials}</span>
-              <span className="review-author"><strong>{review.name}</strong><small>{review.date}</small></span>
+              <span className="review-author"><strong>{review.name}</strong><small>{review.date}{review.translatedFrom ? ` · Translated from ${review.translatedFrom}` : ""}</small></span>
               <SourceMark source={review.source} />
             </header>
             <Rating source={review.source} badge />

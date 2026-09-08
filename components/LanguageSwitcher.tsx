@@ -70,6 +70,7 @@ export function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
       <p>Language</p>
       {languages.map((language) => <a
         key={language.code}
+        className={language.code === "en" ? "is-active" : undefined}
         href={languageUrl(language.code)}
         hrefLang={language.code}
         lang={language.code}
