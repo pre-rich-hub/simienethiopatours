@@ -1190,7 +1190,8 @@ body { font-size: 16px; line-height: 1.65; }
 .experience-photo-card__body .eyebrow { margin: 0 0 17px; font-size: 10.5px; }
 .experience-photo-card__body h3 { margin: 0 0 16px; font-size: clamp(33px, 2.7vw, 41px); line-height: 1.02; letter-spacing: -.03em; }
 .experience-photo-card__body > p:not(.eyebrow) { margin: 0 0 27px; color: var(--stone); font-size: 15px; line-height: 1.82; }
-.experience-photo-card__body .text-link { margin-top: auto; font-size: 11.5px; }
+.experience-photo-card__body .text-link { align-self: center; justify-content: center; width: 100%; margin-top: auto; padding-top: 22px; padding-bottom: 0; border-top: 1px solid rgba(23,25,22,.12); border-bottom: 0; font-size: 10.5px; letter-spacing: .18em; }
+.experience-photo-card__body .text-link:hover { color: var(--copper); }
 .experience-photo-grid--compact .experience-photo-card__image { min-height: 265px; }
 .experience-photo-grid--compact .experience-photo-card__body { min-height: 275px; }
 @media (hover: hover) {
@@ -1216,23 +1217,25 @@ body { font-size: 16px; line-height: 1.65; }
 .reviews-home__heading, .reviews-page__heading { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr); gap: 7vw; align-items: end; margin-bottom: 58px; }
 .reviews-home__heading .lead, .reviews-page__heading .lead { margin: 0 0 24px; }
 .reviews-home__heading .text-link { font-size: 11.5px; }
+.reviews-home__heading .section-title { font-size: clamp(2.5rem, 4vw, 4.3rem); }
+.reviews-home__heading { margin-bottom: 46px; }
 .reviews-showcase { display: grid; gap: 28px; }
 .review-source-row { min-width: 0; display: grid; grid-template-columns: 255px minmax(0, 1fr); gap: 24px; align-items: stretch; }
 .review-source-summary { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 34px 24px; background: var(--ink); color: white; text-align: center; }
-.review-source-summary > p { margin: 0 0 20px; color: var(--ivory); font-size: 14px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
-.review-source-summary > span:not(.review-rating):not(.review-source-mark) { margin: 14px 0 22px; color: rgba(255,255,255,.76); font-size: 14px; }
+.review-source-summary > p { margin: 0 0 20px; color: var(--ivory); font-size: 15px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
+.review-source-summary > span:not(.review-rating):not(.review-source-mark) { margin: 16px 0 24px; color: rgba(255,255,255,.76); font-size: 15px; }
 .review-source-summary > span strong { color: white; }
-.review-rating { display: flex; align-items: center; gap: 5px; }
+.review-rating { display: flex; align-items: center; gap: 6px; }
 .review-rating i { display: grid; place-items: center; font-style: normal; }
-.review-rating--tripadvisor i { width: 22px; height: 22px; position: relative; border: 2px solid var(--copper); border-radius: 50%; }
-.review-rating--tripadvisor i::after { width: 10px; height: 10px; border-radius: 50%; background: var(--copper); content: ""; }
-.review-rating--google { gap: 2px; color: #d8983f; }
-.review-rating--google i { font-size: 24px; line-height: 1; }
-.review-source-mark { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
+.review-rating--tripadvisor i { width: 27px; height: 27px; position: relative; border: 2px solid var(--copper); border-radius: 50%; }
+.review-rating--tripadvisor i::after { width: 12px; height: 12px; border-radius: 50%; background: var(--copper); content: ""; }
+.review-rating--google { gap: 3px; color: #d8983f; }
+.review-rating--google i { font-size: 30px; line-height: 1; }
+.review-source-mark { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; }
 .review-source-mark b { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--copper); color: white; font-size: 15px; font-weight: 700; }
 .review-source-mark--google b { background: var(--ivory); color: var(--copper); font-family: var(--serif); font-size: 21px; }
 .review-card-rail { min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.traveler-review-card { min-width: 0; min-height: 300px; display: flex; flex-direction: column; align-items: flex-start; padding: 28px; border: 1px solid rgba(23,25,22,.09); background: var(--paper); box-shadow: 0 13px 34px rgba(23,25,22,.055); transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .35s ease; }
+.traveler-review-card { min-width: 0; min-height: 300px; display: flex; flex-direction: column; align-items: flex-start; padding: 28px; border: 1px solid rgba(23,25,22,.09); border-radius: 14px; background: var(--paper); box-shadow: 0 13px 34px rgba(23,25,22,.055); transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .35s ease; }
 .traveler-review-card header { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 13px; align-items: center; margin-bottom: 22px; }
 .review-avatar { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; color: white; font-size: 15px; font-weight: 700; letter-spacing: .03em; }
 .review-avatar--clay { background: #b95e37; }
@@ -1282,20 +1285,20 @@ body { font-size: 16px; line-height: 1.65; }
 }
 
 /* Transparent review rows with a fixed source summary and a scrolling card rail */
-.review-source-row { display: grid; grid-template-columns: 235px minmax(0, 1fr); gap: 24px; align-items: stretch; overflow: visible; padding: 0; border: 0; }
-.review-source-summary { min-width: 0; min-height: 300px; padding: 32px 22px; border: 0; background: transparent; color: var(--ink); }
+.review-source-row { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 24px; align-items: center; overflow: visible; padding: 0; border: 0; }
+.review-source-summary { min-width: 0; min-height: auto; padding: 38px 26px; border: 1px solid rgba(23,25,22,.08); border-radius: 14px; background: var(--paper); color: var(--ink); box-shadow: 0 14px 32px rgba(23,25,22,.055); }
 .review-source-summary > p { color: var(--ink); }
 .review-source-summary > span:not(.review-rating):not(.review-source-mark) { color: var(--stone); }
 .review-source-summary > span strong { color: var(--ink); }
 .review-source-mark--google b { border: 1px solid rgba(179,119,67,.35); background: transparent; }
-.review-card-rail { min-width: 0; display: flex; gap: 18px; overflow-x: auto; padding: 0 0 14px; scroll-snap-type: x proximity; scrollbar-color: rgba(179,119,67,.42) transparent; scrollbar-width: thin; }
-.traveler-review-card { min-width: min(335px, 78vw); min-height: 300px; flex: 0 0 min(335px, 78vw); padding: 29px; border: 0; background: transparent; box-shadow: none; scroll-snap-align: start; }
+.review-card-rail { min-width: 0; display: flex; gap: 18px; overflow-x: auto; padding: 4px 4px 14px; scroll-snap-type: x proximity; scrollbar-color: rgba(179,119,67,.42) transparent; scrollbar-width: thin; }
+.traveler-review-card { min-width: min(335px, 78vw); min-height: 300px; flex: 0 0 min(335px, 78vw); padding: 29px; border: 1px solid rgba(23,25,22,.07); border-radius: 14px; background: var(--paper); box-shadow: 0 10px 26px rgba(23,25,22,.05); scroll-snap-align: start; }
 @media (hover: hover) {
-  .traveler-review-card:hover { box-shadow: none; }
+  .traveler-review-card:hover { box-shadow: 0 20px 42px rgba(23,25,22,.1); }
 }
 @media (max-width: 720px) {
   .review-source-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 0; padding: 0; }
-  .review-source-summary { min-width: 0; min-height: auto; display: grid; grid-template-columns: 1fr auto; gap: 10px 16px; align-items: center; justify-items: start; padding: 24px 0; text-align: left; }
+  .review-source-summary { min-width: 0; min-height: auto; display: grid; grid-template-columns: 1fr auto; gap: 10px 16px; align-items: center; justify-items: start; padding: 22px 20px; text-align: left; }
   .review-source-summary > p { margin: 0 0 20px; }
   .review-source-summary > p { margin: 0; }
   .review-source-summary > .review-rating { justify-self: end; }
@@ -1310,13 +1313,40 @@ body { font-size: 16px; line-height: 1.65; }
 .review-rating--tripadvisor i::after { background: #00aa6c; }
 .review-rating--google { color: #f4b400; }
 .review-check { width: 18px; height: 18px; display: grid; place-items: center; margin-left: 6px; border-radius: 50%; background: #4285f4; color: white; font-size: 11px; font-weight: 800; line-height: 1; }
-.tripadvisor-logo, .google-g-logo { width: 30px; height: 30px; flex: 0 0 auto; }
+.tripadvisor-logo, .google-g-logo { width: 36px; height: 36px; flex: 0 0 auto; }
 .tripadvisor-logo { color: #00aa6c; }
-.review-source-label { color: var(--ink); font-size: 15px; font-weight: 750; letter-spacing: -.02em; }
-.google-wordmark { display: inline-flex; align-items: baseline; gap: 0; font-size: 24px; font-weight: 600; letter-spacing: -.08em; }
+.review-source-label { color: var(--ink); font-size: 17px; font-weight: 750; letter-spacing: -.02em; }
+.google-wordmark { display: inline-flex; align-items: baseline; gap: 0; font-size: 28px; font-weight: 600; letter-spacing: -.08em; }
 .google-wordmark i { font-style: normal; }
 .google-wordmark i:nth-child(1), .google-wordmark i:nth-child(4) { color: #4285f4; }
 .google-wordmark i:nth-child(2), .google-wordmark i:nth-child(6) { color: #ea4335; }
 .google-wordmark i:nth-child(3) { color: #fbbc05; }
 .google-wordmark i:nth-child(5) { color: #34a853; }
 .traveler-review-card header .tripadvisor-logo, .traveler-review-card header .google-g-logo { width: 27px; height: 27px; }
+
+/* Floating contact launcher */
+.floating-contact { position: fixed; right: 22px; bottom: 22px; z-index: 70; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+.floating-contact__button { width: 58px; height: 58px; display: grid; place-items: center; border: 0; border-radius: 50%; color: white; cursor: pointer; box-shadow: 0 14px 30px rgba(23,25,22,.24); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+.floating-contact__button:hover { transform: translateY(-3px) scale(1.045); box-shadow: 0 20px 40px rgba(23,25,22,.3); }
+.floating-contact__button--whatsapp { background: #25d366; }
+.floating-contact__whatsapp-icon { width: 28px; height: 28px; }
+.floating-contact__button--chat { background: var(--ink); }
+.floating-contact__panel { position: absolute; right: 0; bottom: 82px; width: 300px; max-width: calc(100vw - 44px); padding: 22px; border: 1px solid rgba(23,25,22,.08); border-radius: 16px; background: var(--ivory); color: var(--ink); box-shadow: 0 28px 60px rgba(23,25,22,.22); visibility: hidden; opacity: 0; transform: translateY(12px) scale(.96); transform-origin: bottom right; transition: opacity .3s var(--ease-soft), transform .35s var(--ease), visibility 0s .35s; }
+.floating-contact__panel.is-open { visibility: visible; opacity: 1; transform: translateY(0) scale(1); transition-delay: 0s; }
+.floating-contact__panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.floating-contact__panel-header span { font-size: 13px; font-weight: 700; letter-spacing: .03em; }
+.floating-contact__panel-header button { display: grid; place-items: center; width: 26px; height: 26px; border: 0; border-radius: 50%; background: transparent; color: var(--stone); cursor: pointer; transition: background .25s ease, color .25s ease; }
+.floating-contact__panel-header button:hover { color: var(--ink); background: var(--paper); }
+.floating-contact__panel > p { margin: 0 0 18px; color: var(--stone); font-size: 12.5px; line-height: 1.6; }
+.floating-contact__links { display: grid; gap: 8px; }
+.floating-contact__links a { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 15px; border-radius: 10px; background: var(--paper); color: var(--ink); font-size: 12px; font-weight: 600; letter-spacing: .02em; transition: background .25s ease, color .25s ease; }
+.floating-contact__links a:hover { background: var(--copper); color: white; }
+@media (max-width: 720px) {
+  .floating-contact { right: 16px; bottom: 16px; gap: 12px; }
+  .floating-contact__button { width: 52px; height: 52px; }
+  .floating-contact__whatsapp-icon { width: 25px; height: 25px; }
+  .floating-contact__panel { bottom: 74px; width: min(300px, calc(100vw - 32px)); padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-contact__button, .floating-contact__panel { transition: none; }
+}

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { FloatingContact } from "@/components/FloatingContact";
 import "@fontsource/cormorant-garamond/400.css";
 import "@fontsource/cormorant-garamond/500.css";
 import "@fontsource/cormorant-garamond/600.css";
@@ -41,5 +42,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     address: { "@type": "PostalAddress", streetAddress: "Fasil Castle Street", addressLocality: "Gondar", addressCountry: "ET" },
     areaServed: ["Gondar", "Simien Mountains National Park", "Northern Ethiopia"],
   };
-  return <html lang="en" data-scroll-behavior="smooth"><body><a className="skip-link" href="#main-content">Skip to content</a>{children}<ScrollReveal /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }} /></body></html>;
+  return <html lang="en" data-scroll-behavior="smooth"><body><a className="skip-link" href="#main-content">Skip to content</a>{children}<FloatingContact /><ScrollReveal /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }} /></body></html>;
 }

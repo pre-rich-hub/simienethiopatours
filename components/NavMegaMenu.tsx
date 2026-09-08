@@ -5,17 +5,38 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown } from "@/components/Icon";
-import { journeys } from "@/lib/site";
 
-const featuredJourneys = journeys.slice(1, 4);
+export type NavMegaMenuCard = {
+  slug: string;
+  href: string;
+  tag: string;
+  title: string;
+  style: string;
+  summary: string;
+  image: string;
+};
 
-export function JourneyDropdown() {
+export type NavMegaMenuProps = {
+  id: string;
+  label: string;
+  matchPath: string;
+  eyebrow: string;
+  heading: React.ReactNode;
+  description: string;
+  exploreHref: string;
+  exploreLabel: string;
+  extraLinks: { href: string; label: string }[];
+  cards: NavMegaMenuCard[];
+};
+
+export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, description, exploreHref, exploreLabel, extraLinks, cards }: NavMegaMenuProps) {
   const [expanded, setExpanded] = useState(false);
   const pathname = usePathname();
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const focusFirstRef = useRef(false);
+  const menuId = `${id}-menu`;
 
   function clearTimer() {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -86,8 +107,8 @@ export function JourneyDropdown() {
         className="desktop-nav__trigger"
         type="button"
         aria-expanded={expanded}
-        aria-controls="journey-menu"
-        aria-current={pathname.startsWith("/treks") ? "page" : undefined}
+        aria-controls={menuId}
+        aria-current={pathname === matchPath ? "page" : undefined}
         onClick={() => { clearTimer(); setExpanded((value) => !value); }}
         onKeyDown={(event) => {
           if (event.key !== "ArrowDown") return;
@@ -101,13 +122,13 @@ export function JourneyDropdown() {
           }
         }}
       >
-        Journeys <ChevronDown size={12} />
+        {label} <ChevronDown size={12} />
       </button>
 
       <div
         className="journey-menu"
-        id="journey-menu"
-        aria-label="Explore our journeys"
+        id={menuId}
+        aria-label={`Explore ${label}`}
         aria-hidden={!expanded}
         inert={!expanded}
         onClick={(event) => {
@@ -116,29 +137,26 @@ export function JourneyDropdown() {
       >
         <div className="journey-menu__inner shell">
           <div className="journey-menu__intro">
-            <p className="eyebrow eyebrow--copper">Signature journeys</p>
-            <h2>Find your way<br /><em>into Simien.</em></h2>
-            <p className="journey-menu__description">From a first mountain trek to a summit journey, find a starting point for your time, curiosity and pace.</p>
-            <Link className="text-link" href="/treks">Explore all journeys <ArrowUpRight /></Link>
+            <p className="eyebrow eyebrow--copper">{eyebrow}</p>
+            <h2>{heading}</h2>
+            <p className="journey-menu__description">{description}</p>
+            <Link className="text-link" href={exploreHref}>{exploreLabel} <ArrowUpRight /></Link>
             <div className="journey-menu__extra">
-              <Link href="/treks/10-day-simien-ras-dashen">10-day Simien & Ras Dashen expedition ↗</Link>
-              <Link href="/treks/5-day-gondar-simien">5-day Royal City & Mountain Adventure ↗</Link>
-              <Link href="/treks/gondar-heritage-simien">5-day Gondar, Heritage & Simien ↗</Link>
-              <Link href="/beyond-the-trail">Beyond the trail: all experiences ↗</Link>
+              {extraLinks.map((link) => <Link key={link.href} href={link.href}>{link.label} ↗</Link>)}
             </div>
           </div>
 
           <div className="journey-menu__cards">
-            {featuredJourneys.map((journey) => (
-              <Link className="journey-menu-card" href={journey.href} key={journey.slug}>
+            {cards.map((card) => (
+              <Link className="journey-menu-card" href={card.href} key={card.slug}>
                 <div className="journey-menu-card__image">
-                  <Image src={journey.image} alt="" fill sizes="(min-width: 1440px) 280px, 22vw" />
-                  <span>{journey.duration}</span>
+                  <Image src={card.image} alt="" fill sizes="(min-width: 1440px) 280px, 22vw" />
+                  <span>{card.tag}</span>
                 </div>
-                <h3>{journey.title}</h3>
-                <p className="journey-menu-card__style">{journey.style} · Private</p>
-                <p className="journey-menu-card__summary">{journey.summary}</p>
-                <div className="journey-menu-card__footer"><span>Explore journey</span><ArrowUpRight size={16} /></div>
+                <h3>{card.title}</h3>
+                <p className="journey-menu-card__style">{card.style}</p>
+                <p className="journey-menu-card__summary">{card.summary}</p>
+                <div className="journey-menu-card__footer"><span>Explore</span><ArrowUpRight size={16} /></div>
               </Link>
             ))}
           </div>
