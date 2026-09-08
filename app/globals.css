@@ -1294,14 +1294,15 @@ body { font-size: 16px; line-height: 1.65; }
   .traveler-review-card:hover { box-shadow: none; }
 }
 @media (max-width: 720px) {
-  .review-source-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px; margin: 0; padding: 0; }
-  .review-source-summary { min-width: 0; min-height: 315px; display: flex; align-items: center; justify-content: center; padding: 24px 4px 24px 0; text-align: left; }
+  .review-source-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 0; padding: 0; }
+  .review-source-summary { min-width: 0; min-height: auto; display: grid; grid-template-columns: 1fr auto; gap: 10px 16px; align-items: center; justify-items: start; padding: 24px 0; text-align: left; }
   .review-source-summary > p { margin: 0 0 20px; }
-  .review-source-summary > .review-rating { justify-self: auto; }
-  .review-source-summary > span:not(.review-rating):not(.review-source-mark) { margin: 14px 0 22px; }
-  .review-source-summary > .review-source-mark { justify-self: auto; }
-  .review-card-rail { margin: 0; padding-right: 20px; }
-  .traveler-review-card { min-width: 310px; flex-basis: 310px; }
+  .review-source-summary > p { margin: 0; }
+  .review-source-summary > .review-rating { justify-self: end; }
+  .review-source-summary > span:not(.review-rating):not(.review-source-mark) { margin: 0; }
+  .review-source-summary > .review-source-mark { justify-self: end; }
+  .review-card-rail { width: calc(100vw - 20px); margin-right: calc((100vw - var(--shell)) / -2); padding-right: 20px; }
+  .traveler-review-card { min-width: min(330px, 84vw); flex-basis: min(330px, 84vw); }
 }
 
 /* Platform marks and rating colors */

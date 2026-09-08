@@ -114,15 +114,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section section--dark trail-proof">
-          <div className="shell trail-proof__grid">
-            <div className="trail-proof__copy"><p className="eyebrow eyebrow--copper">05 · Route intelligence</p><h2 className="section-title">We walk the trails <em>we sell.</em></h2><p className="lead lead--light">Good planning is honest about what is known, what changes, and what still needs checking. Route decisions account for walking comfort, altitude, weather and current local conditions.</p><Link className="text-link text-link--light" href="/travel-guide">Read the field notes <ArrowUpRight /></Link></div>
-            <div className="route-card">
-              <div className="route-card__top"><span><Route />Simien Essential</span><b>Field knowledge</b></div>
-              <div className="route-card__map" aria-hidden="true"><svg viewBox="0 0 500 240"><path d="M21 190C83 158 92 98 153 121s73 83 130 43 94-134 193-103"/><circle cx="21" cy="190" r="6"/><circle cx="153" cy="121" r="6"/><circle cx="283" cy="164" r="6"/><circle cx="476" cy="61" r="6"/></svg><span className="pin pin--a">Gondar</span><span className="pin pin--b">Sankaber</span><span className="pin pin--c">Geech</span><span className="pin pin--d">Imet Gogo</span></div>
-              <dl><div><dt>Walking time</dt><dd>Route dependent</dd></div><div><dt>Trail condition</dt><dd>Checked before departure</dd></div><div><dt>GPS data</dt><dd>Survey in progress</dd></div></dl>
-              <small>No invented kilometre or elevation figures. Final route confirmed for current conditions.</small>
-            </div>
+        <section className="section reviews-home" id="reviews">
+          <div className="shell">
+            <div className="reviews-home__heading"><SectionIntro tag="05 · Traveler reviews" title="Their journeys." accent="In their own words." /><div><p className="lead">Independent feedback from travelers who met Tevan in Gondar and experienced northern Ethiopia with local guidance.</p><Link className="text-link" href="/reviews">See all traveler reviews <ArrowUpRight /></Link></div></div>
+            <ReviewsShowcase />
           </div>
         </section>
 
@@ -153,10 +148,15 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section reviews-home" id="reviews">
-          <div className="shell">
-            <div className="reviews-home__heading"><SectionIntro tag="09 · Traveler reviews" title="Their journeys." accent="In their own words." /><div><p className="lead">Independent feedback from travelers who met Tevan in Gondar and experienced northern Ethiopia with local guidance.</p><Link className="text-link" href="/reviews">See all traveler reviews <ArrowUpRight /></Link></div></div>
-            <ReviewsShowcase />
+        <section className="section section--dark trail-proof">
+          <div className="shell trail-proof__grid">
+            <div className="trail-proof__copy"><p className="eyebrow eyebrow--copper">09 · Route intelligence</p><h2 className="section-title">We walk the trails <em>we sell.</em></h2><p className="lead lead--light">Good planning is honest about what is known, what changes, and what still needs checking. Route decisions account for walking comfort, altitude, weather and current local conditions.</p><Link className="text-link text-link--light" href="/travel-guide">Read the field notes <ArrowUpRight /></Link></div>
+            <div className="route-card">
+              <div className="route-card__top"><span><Route />Simien Essential</span><b>Field knowledge</b></div>
+              <div className="route-card__map" aria-hidden="true"><svg viewBox="0 0 500 240"><path d="M21 190C83 158 92 98 153 121s73 83 130 43 94-134 193-103"/><circle cx="21" cy="190" r="6"/><circle cx="153" cy="121" r="6"/><circle cx="283" cy="164" r="6"/><circle cx="476" cy="61" r="6"/></svg><span className="pin pin--a">Gondar</span><span className="pin pin--b">Sankaber</span><span className="pin pin--c">Geech</span><span className="pin pin--d">Imet Gogo</span></div>
+              <dl><div><dt>Walking time</dt><dd>Route dependent</dd></div><div><dt>Trail condition</dt><dd>Checked before departure</dd></div><div><dt>GPS data</dt><dd>Survey in progress</dd></div></dl>
+              <small>No invented kilometre or elevation figures. Final route confirmed for current conditions.</small>
+            </div>
           </div>
         </section>
 
