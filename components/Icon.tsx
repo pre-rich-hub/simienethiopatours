@@ -8,6 +8,7 @@ function Svg({ size = 20, children, ...props }: Props) {
 
 export const ArrowUpRight = (p: Props) => <Svg {...p}><path d="M7 17 17 7M7 7h10v10" /></Svg>;
 export const ArrowRight = (p: Props) => <Svg {...p}><path d="M5 12h14M13 6l6 6-6 6" /></Svg>;
+export const ArrowLeft = (p: Props) => <Svg {...p}><path d="M19 12H5m6 6-6-6 6-6" /></Svg>;
 export const ArrowDown = (p: Props) => <Svg {...p}><path d="M12 5v14M6 13l6 6 6-6" /></Svg>;
 export const ChevronDown = (p: Props) => <Svg {...p}><path d="m6 9 6 6 6-6" /></Svg>;
 export const Menu = (p: Props) => <Svg {...p}><path d="M4 7h16M4 12h16M4 17h16" /></Svg>;

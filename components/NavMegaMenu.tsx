@@ -53,6 +53,35 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
     if (timerRef.current) clearTimeout(timerRef.current);
   }, []);
 
+  // Attached natively (not via JSX onPointerEnter/onPointerLeave): React's synthetic
+  // pointer enter/leave delegation can miss the transition when the pointer moves in
+  // coarse jumps instead of a dense continuous path — which is how touchscreen hover
+  // simulation tends to behave, unlike a physical mouse. Native listeners on the DOM
+  // node itself fire reliably regardless.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    function handlePointerEnter(event: PointerEvent) {
+      if (event.pointerType !== "mouse") return;
+      clearTimer();
+      timerRef.current = setTimeout(() => setExpanded(true), 120);
+    }
+
+    function handlePointerLeave(event: PointerEvent) {
+      if (event.pointerType !== "mouse") return;
+      clearTimer();
+      if (!root!.contains(document.activeElement)) timerRef.current = setTimeout(close, 200);
+    }
+
+    root.addEventListener("pointerenter", handlePointerEnter);
+    root.addEventListener("pointerleave", handlePointerLeave);
+    return () => {
+      root.removeEventListener("pointerenter", handlePointerEnter);
+      root.removeEventListener("pointerleave", handlePointerLeave);
+    };
+  }, []);
+
   useEffect(() => {
     if (!expanded) return;
 
@@ -88,42 +117,34 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
       ref={rootRef}
       className="journeys-dropdown"
       data-open={expanded}
-      onPointerEnter={(event) => {
-        if (event.pointerType !== "mouse") return;
-        clearTimer();
-        timerRef.current = setTimeout(() => setExpanded(true), 120);
-      }}
-      onPointerLeave={(event) => {
-        if (event.pointerType !== "mouse") return;
-        clearTimer();
-        if (!rootRef.current?.contains(document.activeElement)) timerRef.current = setTimeout(close, 200);
-      }}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) close();
       }}
     >
-      <button
-        ref={triggerRef}
-        className="desktop-nav__trigger"
-        type="button"
-        aria-expanded={expanded}
-        aria-controls={menuId}
-        aria-current={pathname === matchPath ? "page" : undefined}
-        onClick={() => { clearTimer(); setExpanded((value) => !value); }}
-        onKeyDown={(event) => {
-          if (event.key !== "ArrowDown") return;
-          event.preventDefault();
-          clearTimer();
-          if (expanded) {
-            rootRef.current?.querySelector<HTMLAnchorElement>(".journey-menu a")?.focus({ preventScroll: true });
-          } else {
-            focusFirstRef.current = true;
-            setExpanded(true);
-          }
-        }}
-      >
-        {label} <ChevronDown size={12} />
-      </button>
+      <span className="desktop-nav__trigger" aria-expanded={expanded} aria-current={pathname === matchPath ? "page" : undefined}>
+        <Link href={matchPath} onClick={close}>{label}</Link>
+        <button
+          ref={triggerRef}
+          type="button"
+          aria-label={`${label} menu`}
+          aria-expanded={expanded}
+          aria-controls={menuId}
+          onClick={() => { clearTimer(); setExpanded((value) => !value); }}
+          onKeyDown={(event) => {
+            if (event.key !== "ArrowDown") return;
+            event.preventDefault();
+            clearTimer();
+            if (expanded) {
+              rootRef.current?.querySelector<HTMLAnchorElement>(".journey-menu a")?.focus({ preventScroll: true });
+            } else {
+              focusFirstRef.current = true;
+              setExpanded(true);
+            }
+          }}
+        >
+          <ChevronDown size={12} />
+        </button>
+      </span>
 
       <div
         className="journey-menu"

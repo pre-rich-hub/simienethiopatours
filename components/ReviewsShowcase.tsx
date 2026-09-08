@@ -1,6 +1,8 @@
-import { ArrowUpRight } from "@/components/Icon";
-import { reviewSources, travelerReviews, type ReviewSource } from "@/lib/reviews";
-import { site } from "@/lib/site";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight } from "@/components/Icon";
+import { reviewSources, travelerReviews, type ReviewSource, type TravelerReview } from "@/lib/reviews";
 
 function Rating({ source, badge = false }: { source: ReviewSource; badge?: boolean }) {
   return <span className={`review-rating review-rating--${source.toLowerCase()}`} aria-label="5 out of 5">
@@ -37,6 +39,58 @@ function SourceMark({ source }: { source: ReviewSource }) {
   </span>;
 }
 
+function ReviewRail({ reviews }: { reviews: readonly TravelerReview[] }) {
+  const railRef = useRef<HTMLDivElement>(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(true);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    function update() {
+      const { scrollLeft, scrollWidth, clientWidth } = rail!;
+      setAtStart(scrollLeft <= 1);
+      setAtEnd(scrollLeft + clientWidth >= scrollWidth - 1);
+    }
+
+    update();
+    rail.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      rail.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  function scrollByAmount(direction: 1 | -1) {
+    const rail = railRef.current;
+    if (!rail) return;
+    rail.scrollBy({ left: direction * rail.clientWidth * 0.8, behavior: "smooth" });
+  }
+
+  return <div className="review-rail-wrap">
+    <button type="button" className="review-rail-nav review-rail-nav--prev" aria-label="Scroll reviews left" onClick={() => scrollByAmount(-1)} disabled={atStart}>
+      <ArrowLeft />
+    </button>
+    <div className="review-card-rail" ref={railRef}>
+      {reviews.map((review) => <article className="traveler-review-card" key={`${review.source}-${review.name}-${review.title ?? review.text}`}>
+        <header>
+          <span className={`review-avatar review-avatar--${review.avatarTone}`} aria-hidden="true">{review.initials}</span>
+          <span className="review-author"><strong>{review.name}</strong><small>{review.date}{review.translatedFrom ? ` · Translated from ${review.translatedFrom}` : ""}</small></span>
+          <SourceMark source={review.source} />
+        </header>
+        <Rating source={review.source} badge />
+        {review.title && <h3>{review.title}</h3>}
+        <blockquote>{review.text}</blockquote>
+      </article>)}
+    </div>
+    <button type="button" className="review-rail-nav review-rail-nav--next" aria-label="Scroll reviews right" onClick={() => scrollByAmount(1)} disabled={atEnd}>
+      <ArrowRight />
+    </button>
+  </div>;
+}
+
 export function ReviewsShowcase() {
   return <div className="reviews-showcase">
     {reviewSources.map((summary) => {
@@ -48,23 +102,8 @@ export function ReviewsShowcase() {
           <span>Based on <strong>{summary.total} reviews</strong></span>
           <SourceMark source={summary.source} />
         </div>
-        <div className="review-card-rail">
-          {reviews.map((review) => <article className="traveler-review-card" key={`${review.source}-${review.name}-${review.title ?? review.text}`}>
-            <header>
-              <span className={`review-avatar review-avatar--${review.avatarTone}`} aria-hidden="true">{review.initials}</span>
-              <span className="review-author"><strong>{review.name}</strong><small>{review.date}{review.translatedFrom ? ` · Translated from ${review.translatedFrom}` : ""}</small></span>
-              <SourceMark source={review.source} />
-            </header>
-            <Rating source={review.source} badge />
-            {review.title && <h3>{review.title}</h3>}
-            <blockquote>{review.text}</blockquote>
-          </article>)}
-        </div>
+        <ReviewRail reviews={reviews} />
       </section>;
     })}
-    <div className="reviews-showcase__footer">
-      <p>Continue to Tripadvisor for more traveler feedback and the latest review details.</p>
-      <a className="text-link" href={site.tripadvisor} target="_blank" rel="noreferrer">Visit our Tripadvisor profile <ArrowUpRight /></a>
-    </div>
   </div>;
 }

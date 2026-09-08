@@ -8,8 +8,8 @@ const targets = [
   ".intro-grid > *", ".editorial-grid > *", ".discover-section__heading > *",
   ".time-section__intro", ".featured-journeys__header > *", ".trail-proof__copy",
   ".tevan-section__copy", ".proof-section__heading > *", ".proof-grid > div",
-  ".gondar-home__copy", ".final-call__content", ".journey-row__copy",
-  ".notes-grid article", ".gondar-experiences article", ".inline-cta .shell",
+  ".gondar-home__copy", ".final-call__content", ".journey-card",
+  ".notes-grid article", ".gondar-experiences article", ".inline-cta .shell", ".gallery-tile",
 ].map((selector) => `main ${selector}`).join(", ");
 
 export function ScrollReveal() {

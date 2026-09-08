@@ -46,14 +46,17 @@ export function SimienPhotoCards({ items, photoSet, columns = 3 }: { items: read
         <div className="simien-photo-card__image">
           <Image src={photo.src} alt={photo.alt} fill sizes={columns === 2 ? "(max-width: 720px) 100vw, 50vw" : "(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"} />
           <span className="simien-photo-card__shade" />
-          <span className="simien-photo-card__index">{String(index + 1).padStart(2, "0")}</span>
-          <span className="simien-photo-card__caption">{photo.caption}</span>
+          <span className="simien-photo-card__badge">{photoSet}</span>
+          <div className="simien-photo-card__overlay">
+            <p className="simien-photo-card__eyebrow">{item.tag || photo.caption}</p>
+            <h3>{item.title}</h3>
+          </div>
         </div>
         <div className="simien-photo-card__body">
-          <p className="eyebrow eyebrow--copper">{item.tag || photoSet}</p>
-          <h3>{item.title}</h3>
           <p>{item.body}</p>
-          {item.href && <Link className="text-link" href={item.href}>{item.linkLabel || "Explore experience"}<ArrowUpRight /></Link>}
+          {item.href && <div className="simien-photo-card__footer">
+            <Link className="simien-photo-card__explore" href={item.href}>{item.linkLabel || "Explore experience"}<ArrowUpRight /></Link>
+          </div>}
         </div>
       </article>;
     })}

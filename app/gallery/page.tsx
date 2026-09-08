@@ -22,7 +22,7 @@ export default function GalleryPage() {
       <div className="gallery-intro__top"><p className="eyebrow eyebrow--copper">Gondar & the Simien Mountains</p><span>A visual collection · 01—08</span></div>
       <div className="gallery-intro__body">
         <h1 id="gallery-heading">A little closer to<br /><em>extraordinary.</em></h1>
-        <div><p>Beyond the map, before the journey. A glimpse of the landscapes, everyday encounters and quiet moments that stay with you.</p><span className="gallery-intro__invitation">Our world, through the lens <span aria-hidden="true">↙</span></span></div>
+        <div><p>Beyond the map, before the journey. A glimpse of the landscapes, everyday encounters and quiet moments that stay with you.</p><span className="gallery-intro__invitation">Our world, through the lens <ArrowUpRight size={20} style={{ transform: "rotate(225deg)" }} /></span></div>
       </div>
     </section>
     <Gallery />

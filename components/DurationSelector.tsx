@@ -10,7 +10,6 @@ const collections = [
   { id: "first-encounters", label: "First Encounters", journeys: [0, 1, 2] },
   { id: "signature-treks", label: "Signature Treks", journeys: [1, 2, 3] },
   { id: "summit-and-beyond", label: "Summit & Beyond", journeys: [2, 3, 4] },
-  { id: "made-for-you", label: "Made for You", journeys: [0, 2, 4] },
 ] as const;
 
 export function DurationSelector() {
@@ -48,6 +47,7 @@ export function DurationSelector() {
       <div ref={tabsRef} className="journey-discovery__tabs" role="tablist" aria-label="Explore journey collections">
         {collections.map((item, index) => (
           <button
+            type="button"
             id={`journey-tab-${item.id}`}
             key={item.id}
             className={index === active ? "is-active" : ""}

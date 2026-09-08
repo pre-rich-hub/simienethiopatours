@@ -20,11 +20,28 @@ export default function TreksPage() {
     </section>
     <section className="section">
       <div className="shell intro-grid"><div><p className="eyebrow eyebrow--copper">The collection</p><h2 className="section-title">Five clear ways to <em>begin.</em></h2></div><p className="lead">From a first mountain encounter to a longer expedition, choose a route around your time, walking experience and interests. Camping, Gondar time and the daily pace are planned with you.</p></div>
-      <div className="shell journey-list">
-        {journeys.map((journey, index) => <article className="journey-row" id={journey.slug} key={journey.slug}>
-          <div className="journey-row__number">0{index + 1}</div>
-          <div className="journey-row__image image-frame"><Image src={journey.image} alt={`Simien landscape for ${journey.title}`} fill sizes="(max-width: 720px) 100vw, 38vw" /><span className="journey-row__duration">{journey.duration}</span></div>
-          <div className="journey-row__copy"><span>{journey.duration} · {journey.style}</span><h2>{journey.title}</h2><p>{journey.summary}</p><dl className="journey-row__facts"><div><Mountain size={20} /><div><dt>Walking</dt><dd>{journey.difficulty}</dd></div></div><div><Compass size={20} /><div><dt>Best fit</dt><dd>{journey.fit}</dd></div></div></dl><div className="journey-detail-links"><Link className="text-link" href={journey.href}>Read the itinerary <ArrowUpRight /></Link></div><Link className="button button--dark" href={`/plan?journey=${journey.slug}`}>Ask about this journey <ArrowUpRight /></Link></div>
+      <div className="shell journey-grid">
+        {journeys.map((journey) => <article className="journey-card" id={journey.slug} key={journey.slug}>
+          <div className="journey-card__image">
+            <Image src={journey.image} alt={`Simien landscape for ${journey.title}`} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+            <span className="journey-card__shade" />
+            <span className="journey-card__badge">{journey.duration}</span>
+            <div className="journey-card__overlay">
+              <p className="journey-card__eyebrow">{journey.style}</p>
+              <h2>{journey.title}</h2>
+            </div>
+          </div>
+          <div className="journey-card__body">
+            <p>{journey.summary}</p>
+            <dl className="journey-card__facts">
+              <div><Mountain size={18} /><div><dt>Walking</dt><dd>{journey.difficulty}</dd></div></div>
+              <div><Compass size={18} /><div><dt>Best fit</dt><dd>{journey.fit}</dd></div></div>
+            </dl>
+            <div className="journey-card__footer">
+              <Link className="journey-card__explore" href={journey.href}>Read the itinerary <ArrowUpRight /></Link>
+              <Link className="button button--dark button--small" href={`/plan?journey=${journey.slug}`}>Ask about this journey <ArrowUpRight size={15} /></Link>
+            </div>
+          </div>
         </article>)}
       </div>
     </section>
