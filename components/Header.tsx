@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ArrowUpRight } from "@/components/Icon";
+import { Menu, X, ArrowUpRight } from "@/components/Icon";
 import { useEffect, useRef, useState } from "react";
 import { BrandMark } from "./BrandMark";
 import { JourneyDropdown } from "./JourneyDropdown";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { site } from "@/lib/site";
 
 const links = [
@@ -14,7 +15,7 @@ const links = [
   { href: "/gondar", label: "Gondar" },
   { href: "/beyond-the-trail", label: "Experiences" },
   { href: "/about", label: "Our story" },
-  { href: "/travel-guide", label: "Field notes" },
+  { href: "/gallery", label: "Gallery" },
 ];
 
 export function Header({ light = false }: { light?: boolean }) {
@@ -57,7 +58,7 @@ export function Header({ light = false }: { light?: boolean }) {
     <>
       <header className={`site-header ${light ? "site-header--light" : ""} ${scrolled ? "is-scrolled" : ""}`}>
         <div className="site-header__inner">
-          <BrandMark inverse={!light && !scrolled} />
+          <BrandMark onDark={!light && !scrolled} />
           <nav className="desktop-nav" aria-label="Primary navigation">
             {links.map((link) => (
               link.href === "/treks"
@@ -66,9 +67,7 @@ export function Header({ light = false }: { light?: boolean }) {
             ))}
           </nav>
           <div className="header-actions">
-            <a className="header-phone" href={`tel:${site.phone}`} aria-label={`Call ${site.phoneDisplay}`}>
-              <Phone size={15} /> <span>{site.phoneDisplay}</span>
-            </a>
+            <LanguageSwitcher />
             <Link className="button button--small button--copper" href="/plan">
               Plan with Tevan <ArrowUpRight size={15} />
             </Link>
@@ -97,6 +96,7 @@ export function Header({ light = false }: { light?: boolean }) {
           ))}
         </nav>
         <div className="mobile-menu__contact">
+          <LanguageSwitcher mobile />
           <p>Start with a simple question. Tevan and the local team will help shape the rest.</p>
           <Link className="button button--dark" href="/plan" onClick={() => setOpen(false)}>Plan your journey</Link>
           <a href={site.whatsapp} target="_blank" rel="noreferrer">WhatsApp {site.phoneDisplay}</a>

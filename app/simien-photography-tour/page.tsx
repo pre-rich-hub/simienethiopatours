@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 import { EditorialHero, FeatureGrid, PageLinks, PlanningCall, SectionIntro, StorySection } from "@/components/Editorial";
+import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
 import { PhotoJournal } from "@/components/PhotoJournal";
 
 export const metadata: Metadata = { title: "Simien Mountains Photography Tour | Wildlife & Landscapes", description: "Photograph Simien landscapes, geladas, highland life and changing light with local guides. One-day experiences and longer photography journeys from Gondar.", alternates: { canonical: "/simien-photography-tour" } };
@@ -16,10 +17,10 @@ export default function PhotographyPage() {
       "Bring a phone, a small camera or a full photography kit. This is a locally guided journey built around your photographic interests; professional photography tuition is only included if specifically arranged with a qualified photographer.",
     ]} />
     <section className="section section--paper" id="journal"><div className="shell"><SectionIntro tag="A photographer’s field journal" title="Look beyond" accent="the postcard." /><PhotoJournal /></div></section>
-    <section className="section" id="routes"><div className="shell"><SectionIntro tag="Choose your story" title="One day or" accent="a little deeper." /><FeatureGrid items={[
-      { title: "A first day in Simien", tag: "1 day · Gondar → Simien → Gondar", body: "A focused day for escarpment landscapes, viewpoints and opportunities to observe geladas. Timing is built around the return journey; evening light is included only where practical.", href: "/plan?experience=photo-day", linkLabel: "Plan a photography day" },
-      { title: "Wildlife & landscape", tag: "2–3 days", body: "Stay in the mountains for more time observing wildlife, exploring viewpoints and working with morning and evening light. Locations depend on your base, walking ability and access.", href: "/plan?experience=photo-wildlife", linkLabel: "Plan 2–3 days" },
-      { title: "Photography expedition", tag: "4–5 days", body: "Build time to wait, walk and explore alternative viewpoints around Sankaber, Geech, Imet Gogo and Chenek. Choose your balance of wildlife, landscape, camp life and community encounters.", href: "/plan?experience=photo-expedition", linkLabel: "Plan an expedition" },
+    <section className="section" id="routes"><div className="shell"><SectionIntro tag="Choose your story" title="One day or" accent="a little deeper." /><ExperiencePhotoCards items={[
+      { title: "A first day in Simien", tag: "1 day · Gondar → Simien → Gondar", body: "A focused day for escarpment landscapes, viewpoints and opportunities to observe geladas. Timing is built around the return journey; evening light is included only where practical.", href: "/plan?experience=photo-day", linkLabel: "Plan a photography day", image: { src: "/images/imet-gogo.jpg", alt: "The layered escarpments at Imet Gogo", caption: "One day · Landscape focus" } },
+      { title: "Wildlife & landscape", tag: "2–3 days", body: "Stay in the mountains for more time observing wildlife, exploring viewpoints and working with morning and evening light. Locations depend on your base, walking ability and access.", href: "/plan?experience=photo-wildlife", linkLabel: "Plan 2–3 days", image: { src: "/images/gelada-troop.jpg", alt: "Wild geladas grazing naturally in the Simien highlands", caption: "Wildlife · Watched patiently" } },
+      { title: "Photography expedition", tag: "4–5 days", body: "Build time to wait, walk and explore alternative viewpoints around Sankaber, Geech, Imet Gogo and Chenek. Choose your balance of wildlife, landscape, camp life and community encounters.", href: "/plan?experience=photo-expedition", linkLabel: "Plan an expedition", image: { src: "/images/geech-camp.jpg", alt: "Tents in the Simien highlands for a multi-day photography route", caption: "Mountain nights · Changing light" } },
     ]} /></div></section>
     <section className="section section--paper" id="light"><div className="shell"><SectionIntro tag="Follow the light" title="The same place." accent="A changing story." /><FeatureGrid columns={2} items={[
       { title: "Early morning", body: "Cool air, long shadows and softer light can reveal layers of ridges. An overnight mountain stay makes an early start easier to build into the route." },

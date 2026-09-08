@@ -7,6 +7,7 @@ import "@fontsource/cormorant-garamond/400-italic.css";
 import "@fontsource/manrope/400.css";
 import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/600.css";
+import "@fontsource/manrope/700.css";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://gondarsimientours.com";
@@ -40,5 +41,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     address: { "@type": "PostalAddress", streetAddress: "Fasil Castle Street", addressLocality: "Gondar", addressCountry: "ET" },
     areaServed: ["Gondar", "Simien Mountains National Park", "Northern Ethiopia"],
   };
-  return <html lang="en"><body><a className="skip-link" href="#main-content">Skip to content</a>{children}<ScrollReveal /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }} /></body></html>;
+  return <html lang="en" data-scroll-behavior="smooth"><body><a className="skip-link" href="#main-content">Skip to content</a>{children}<ScrollReveal /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }} /></body></html>;
 }

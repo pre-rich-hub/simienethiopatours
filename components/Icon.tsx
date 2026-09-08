@@ -24,4 +24,5 @@ export const Route = (p: Props) => <Svg {...p}><circle cx="5" cy="6" r="2" /><ci
 export const TentTree = (p: Props) => <Svg {...p}><path d="m3 20 8-14 8 14H3ZM11 6v14M7.5 20 11 14l3.5 6" /></Svg>;
 export const Clock = (p: Props) => <Svg {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></Svg>;
 export const MessageCircle = (p: Props) => <Svg {...p}><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.45L3 21l2.05-5.4A8.5 8.5 0 1 1 21 11.5Z" /></Svg>;
+export const Globe = (p: Props) => <Svg {...p}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18" /></Svg>;
 export const LoaderCircle = (p: Props) => <Svg {...p}><path d="M21 12a9 9 0 1 1-6.2-8.56" /></Svg>;

@@ -14,7 +14,7 @@ export function Footer() {
       </div>
       <div className="footer__main shell">
         <div className="footer__intro">
-          <BrandMark inverse />
+          <BrandMark onDark />
           <p>Locally planned journeys from Gondar into the wild highlands of the Simien Mountains.</p>
           <Link className="text-link text-link--light" href="/plan">Plan with Tevan <ArrowUpRight /></Link>
         </div>
@@ -26,6 +26,7 @@ export function Footer() {
           <Link href="/beyond-the-trail">Beyond the trail</Link>
           <Link href="/festival-journeys">Festival journeys</Link>
           <Link href="/where-to-stay-gondar-simien">Where to stay</Link>
+          <Link href="/gallery">Gallery</Link>
           <Link href="/travel-guide">Field notes</Link>
         </div>
         <div className="footer__column">

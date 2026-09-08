@@ -3,7 +3,8 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight, CheckCircle2, Compass, Map, Mountain, Route, TentTree } from "@/components/Icon";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { FeatureGrid, SectionIntro } from "@/components/Editorial";
+import { SectionIntro } from "@/components/Editorial";
+import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
 import { DurationSelector } from "@/components/DurationSelector";
 import { journeys, site, sourceLinks } from "@/lib/site";
 
@@ -63,15 +64,27 @@ export default function Home() {
           <div className="discover-grid shell">
             <Link href="/simien-mountains#imet-gogo" className="discover-card discover-card--tall">
               <Image src="/images/imet-gogo.jpg" alt="Rocky promontory at Imet Gogo above the Simien escarpment" fill sizes="(max-width: 720px) 100vw, 43vw" />
-              <div><span>01 · Simien icon</span><h3>Imet Gogo</h3><p>Walk into the view.</p><ArrowUpRight /></div>
+              <div>
+                <span>01 · Simien icon</span><h3>Imet Gogo</h3><p>Walk into the view.</p>
+                <div className="discover-card__details"><div><p>Walk from Geech to a dramatic viewpoint overlooking the Simien escarpments, deep valleys and distant ridges. Take time to pause and enjoy the panorama.</p></div></div>
+                <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
+              </div>
             </Link>
             <Link href="/simien-mountains#wildlife" className="discover-card">
               <Image src="/images/gelada-troop.jpg" alt="A wild troop of geladas grazing in the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 28vw" />
-              <div><span>02 · Wildlife</span><h3>Gelada country</h3><p>Observe. Never stage.</p><ArrowUpRight /></div>
+              <div>
+                <span>02 · Wildlife</span><h3>Gelada country</h3><p>Observe. Never stage.</p>
+                <div className="discover-card__details"><div><p>Watch wild geladas graze and interact on the highland grasslands. Explore with a local guide, giving each troop space to go about its day.</p></div></div>
+                <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
+              </div>
             </Link>
             <Link href="/treks#ras-dashen" className="discover-card">
               <Image src="/images/giant-lobelia.jpg" alt="Giant lobelias across the high Afroalpine landscape of the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 28vw" />
-              <div><span>03 · High country</span><h3>Ras Dashen</h3><p>The summit journey.</p><ArrowUpRight /></div>
+              <div>
+                <span>03 · High country</span><h3>Ras Dashen</h3><p>The summit journey.</p>
+                <div className="discover-card__details"><div><p>Journey through giant-lobelia country and remote mountain landscapes on a demanding multi-day trek, with time to acclimatize before the summit approach.</p></div></div>
+                <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
+              </div>
             </Link>
           </div>
         </section>
@@ -146,10 +159,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section section--paper"><div className="shell"><SectionIntro tag="10 · Beyond the trail" title="More ways to" accent="travel deeper." /><FeatureGrid items={[
-          { title: "Living culture & festivals", body: "Connect Gondar’s celebrations with the Simien Mountains, local stories and time to understand what you are seeing.", href: "/festival-journeys" },
-          { title: "Running & photography", body: "Find quieter Gondar paths or build a mountain journey around the photographs you hope to make.", href: "/beyond-the-trail" },
-          { title: "Your stay, thoughtfully planned", body: "Bring together city hotels, mountain lodges and camping around the experience you want.", href: "/where-to-stay-gondar-simien" },
+        <section className="section section--paper"><div className="shell"><SectionIntro tag="10 · Beyond the trail" title="More ways to" accent="travel deeper." /><ExperiencePhotoCards items={[
+          { title: "Living culture & festivals", tag: "Celebrate · Understand · Connect", body: "Connect Gondar’s celebrations with the Simien Mountains, local stories and time to understand what you are seeing.", href: "/festival-journeys", image: { src: "/images/fasil-ghebbi.jpg", alt: "Gondar's historic royal city, the setting for cultural journeys", caption: "Gondar · Living culture" } },
+          { title: "Running & photography", tag: "Move · Observe · Create", body: "Find quieter Gondar paths or build a mountain journey around the photographs you hope to make.", href: "/beyond-the-trail", image: { src: "/images/simien-panorama.jpg", alt: "Open highland landscapes for active and photography journeys", caption: "Highland paths · Changing light" } },
+          { title: "Your stay, thoughtfully planned", tag: "Gondar · Lodge · Camp", body: "Bring together city hotels, mountain lodges and camping around the experience you want.", href: "/where-to-stay-gondar-simien", image: { src: "/images/geech-camp.jpg", alt: "Tents at Geech camp in the Simien Mountains", caption: "Mountain nights · Geech" } },
         ]} /></div></section>
         <section className="final-call">
           <Image src="/images/simien-panorama.jpg" alt="A wide panorama of the Simien Mountains escarpment" fill sizes="100vw" />

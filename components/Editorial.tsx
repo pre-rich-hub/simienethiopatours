@@ -26,11 +26,19 @@ export function SectionIntro({ tag, title, accent }: { tag: string; title: strin
   return <div className="content-heading"><p className="eyebrow eyebrow--copper">{tag}</p><h2 className="section-title">{title} {accent && <em>{accent}</em>}</h2></div>;
 }
 
-export function StorySection({ id, tag, title, accent, paragraphs, children, paper = false }: {
+export function StorySection({ id, tag, title, accent, paragraphs, children, paper = false, image }: {
   id?: string; tag: string; title: string; accent?: string; paragraphs: string[]; children?: ReactNode; paper?: boolean;
+  image?: { src: string; alt: string; caption?: string; position?: string };
 }) {
+  const content = <><SectionIntro tag={tag} title={title} accent={accent} /><div className="prose">{paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{children}</div></>;
+  if (image) return <section id={id} className={`section story-section-photo ${paper ? "section--paper" : ""}`}>
+    <div className="shell story-section-photo__layout">
+      <div className="story-section-photo__image image-frame"><Image src={image.src} alt={image.alt} fill sizes="(max-width: 720px) 100vw, 48vw" style={{ objectPosition: image.position || "center" }} />{image.caption && <span className="image-caption">{image.caption}</span>}</div>
+      <div className="story-section-photo__content">{content}</div>
+    </div>
+  </section>;
   return <section id={id} className={`section ${paper ? "section--paper" : ""}`}>
-    <div className="shell editorial-grid"><SectionIntro tag={tag} title={title} accent={accent} /><div className="prose">{paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{children}</div></div>
+    <div className="shell editorial-grid">{content}</div>
   </section>;
 }
 

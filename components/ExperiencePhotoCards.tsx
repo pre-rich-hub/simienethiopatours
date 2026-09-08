@@ -1,0 +1,37 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "@/components/Icon";
+
+export type ExperiencePhotoItem = {
+  title: string;
+  body: string;
+  tag?: string;
+  href?: string;
+  linkLabel?: string;
+  image: { src: string; alt: string; caption: string; position?: string };
+};
+
+export function ExperiencePhotoCards({ items, compact = false }: { items: readonly ExperiencePhotoItem[]; compact?: boolean }) {
+  return <div className={`experience-photo-grid ${compact ? "experience-photo-grid--compact" : ""}`}>
+    {items.map((item, index) => <article className="experience-photo-card" key={item.title}>
+      <div className="experience-photo-card__image">
+        <Image
+          src={item.image.src}
+          alt={item.image.alt}
+          fill
+          sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
+          style={{ objectPosition: item.image.position || "center" }}
+        />
+        <span className="experience-photo-card__shade" />
+        <span className="experience-photo-card__number">{String(index + 1).padStart(2, "0")}</span>
+        <span className="experience-photo-card__caption">{item.image.caption}</span>
+      </div>
+      <div className="experience-photo-card__body">
+        <p className="eyebrow eyebrow--copper">{item.tag || "Personally arranged"}</p>
+        <h3>{item.title}</h3>
+        <p>{item.body}</p>
+        {item.href && <Link href={item.href} className="text-link">{item.linkLabel || "Explore experience"}<ArrowUpRight /></Link>}
+      </div>
+    </article>)}
+  </div>;
+}

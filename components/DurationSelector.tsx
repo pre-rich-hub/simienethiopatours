@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { ArrowUpRight } from "@/components/Icon";
+import { ArrowRight, ArrowUpRight, Compass, Mountain } from "@/components/Icon";
 import { journeys } from "@/lib/site";
 
 const collections = [
@@ -84,17 +84,27 @@ export function DurationSelector() {
                     fill
                     sizes="(max-width: 720px) 82vw, (max-width: 1000px) 340px, 31vw"
                   />
-                  <span>0{cardIndex + 1}</span>
+                  <span className="journey-choice-card__duration">{journey.duration}</span>
+                  <span className="journey-choice-card__number">0{cardIndex + 1}</span>
+                  <div className="journey-choice-card__title">
+                    <span>{journey.style}</span>
+                    <h3>{journey.title}</h3>
+                  </div>
                 </Link>
                 <div className="journey-choice-card__body">
-                  <div className="journey-choice-card__meta">
-                    <b>{journey.duration}</b>
-                    <span>{journey.style}</span>
-                  </div>
-                  <h3>{journey.title}</h3>
                   <p>{journey.summary}</p>
+                  <div className="journey-choice-card__facts">
+                    <div>
+                      <Mountain />
+                      <span><small>Difficulty</small><b>{journey.difficulty}</b></span>
+                    </div>
+                    <div>
+                      <Compass />
+                      <span><small>Best for</small><b>{journey.fit}</b></span>
+                    </div>
+                  </div>
                   <Link className="journey-choice-card__link" href={journey.href}>
-                    Explore journey <ArrowUpRight />
+                    Explore journey <ArrowRight />
                   </Link>
                 </div>
               </article>
