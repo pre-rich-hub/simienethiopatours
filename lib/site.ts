@@ -9,6 +9,13 @@ export const site = {
   tripadvisor:
     "https://www.tripadvisor.com/Attraction_Review-g317059-d32805557-Reviews-Tesema_Travels-Gonder_Amhara_Region.html",
   operatorSite: "https://simienethiotours.com/",
+  social: {
+    x: "#",
+    instagram: "#",
+    facebook: "#",
+    tiktok: "#",
+    youtube: "#",
+  },
 } as const;
 
 export const journeys = [

@@ -14,7 +14,6 @@ const links = [
   { href: "/simien-mountains", label: "Simien" },
   { href: "/treks", label: "Journeys" },
   { href: "/gondar", label: "Gondar" },
-  { href: "/beyond-the-trail", label: "Experiences" },
   { href: "/about", label: "Our story" },
   { href: "/gallery", label: "Gallery" },
 ];
@@ -32,7 +31,6 @@ const megaMenus: Record<string, React.ComponentProps<typeof NavMegaMenu>> = {
     extraLinks: [
       { href: "/treks", label: "Choose a Simien trek" },
       { href: "/where-to-stay-gondar-simien", label: "Where to stay: Gondar & Simien" },
-      { href: "/whats-included", label: "What's included on every journey" },
       { href: "/gondar", label: "Gondar: the royal city" },
     ],
     cards: simienMenuCards,
@@ -47,6 +45,7 @@ const megaMenus: Record<string, React.ComponentProps<typeof NavMegaMenu>> = {
     exploreHref: "/treks",
     exploreLabel: "Explore all journeys",
     extraLinks: [
+      { href: "/beyond-the-trail", label: "Experiences: festivals, food & local life" },
       { href: "/ras-dashen", label: "Ras Dashen: Ethiopia's highest mountain" },
       { href: "/treks/10-day-simien-ras-dashen", label: "10-day Simien & Ras Dashen expedition" },
       { href: "/treks/gondar-heritage-simien", label: "5-day Gondar, Heritage & Simien" },
@@ -64,10 +63,8 @@ const megaMenus: Record<string, React.ComponentProps<typeof NavMegaMenu>> = {
     exploreHref: "/gondar",
     exploreLabel: "Explore Gondar",
     extraLinks: [
-      { href: "/where-to-stay-gondar-simien", label: "Where to stay: Gondar & Simien" },
       { href: "/festival-journeys", label: "Festivals & holiday journeys" },
       { href: "/treks/5-day-gondar-simien", label: "5-day Royal City & Mountain Adventure" },
-      { href: "/beyond-the-trail", label: "Beyond the trail: all experiences" },
     ],
     cards: gondarMenuCards,
   },

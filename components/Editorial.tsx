@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 export type Feature = { title: string; body: string; tag?: string; href?: string; linkLabel?: string; id?: string };
 export type ItineraryDay = { title: string; subtitle: string; paragraphs: string[]; overnight?: string; notes?: string[]; stages?: { label: string; body: string }[] };
 
-export function EditorialHero({ eyebrow, title, accent, lead, image, parent = { label: "Experiences", href: "/beyond-the-trail" } }: {
+export function EditorialHero({ eyebrow, title, accent, lead, image, parent = { label: "Journeys", href: "/treks" } }: {
   eyebrow: string; title: string; accent: string; lead: string;
   image?: { src: string; alt: string }; parent?: { label: string; href: string };
 }) {

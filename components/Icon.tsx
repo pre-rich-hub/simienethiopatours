@@ -27,3 +27,9 @@ export const Clock = (p: Props) => <Svg {...p}><circle cx="12" cy="12" r="9" /><
 export const MessageCircle = (p: Props) => <Svg {...p}><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.45L3 21l2.05-5.4A8.5 8.5 0 1 1 21 11.5Z" /></Svg>;
 export const Globe = (p: Props) => <Svg {...p}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18" /></Svg>;
 export const LoaderCircle = (p: Props) => <Svg {...p}><path d="M21 12a9 9 0 1 1-6.2-8.56" /></Svg>;
+
+export const XLogo = (p: Props) => <Svg {...p}><path d="m5 4 14.5 16M19 4 4.5 20" /></Svg>;
+export const Instagram = (p: Props) => <Svg {...p}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none" /></Svg>;
+export const Facebook = (p: Props) => <Svg {...p}><path d="M15 3h-2a4 4 0 0 0-4 4v3H6v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3Z" /></Svg>;
+export const Youtube = (p: Props) => <Svg {...p}><rect x="2.5" y="6" width="19" height="12" rx="4" /><path d="M9.75 15.02 15.5 11.75 9.75 8.48Z" fill="currentColor" stroke="none" /></Svg>;
+export const Tiktok = (p: Props) => <Svg {...p}><path d="M9 19a3.2 3.2 0 1 0 3.2-3.2" /><path d="M12.2 15.8V4h2.4" /><path d="M14.6 6.4c.4 2 2 3.6 4 4" /></Svg>;

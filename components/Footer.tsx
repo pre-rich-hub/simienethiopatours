@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail, Phone } from "@/components/Icon";
 import { BrandMark } from "./BrandMark";
+import { NewsletterForm } from "./NewsletterForm";
+import { FacebookBadge, InstagramBadge, TiktokBadge, XBadge, YoutubeBadge } from "./SocialBadges";
 import { site } from "@/lib/site";
 
 export function Footer() {
@@ -17,6 +19,13 @@ export function Footer() {
           <BrandMark onDark />
           <p>Locally planned journeys from Gondar into the wild highlands of the Simien Mountains.</p>
           <Link className="text-link text-link--light" href="/plan">Plan with Tevan <ArrowUpRight /></Link>
+          <div className="footer__social" aria-label="Follow us on social media">
+            <a href={site.social.instagram} target="_blank" rel="noreferrer" aria-label="Follow on Instagram"><InstagramBadge /></a>
+            <a href={site.social.youtube} target="_blank" rel="noreferrer" aria-label="Follow on YouTube"><YoutubeBadge /></a>
+            <a href={site.social.facebook} target="_blank" rel="noreferrer" aria-label="Follow on Facebook"><FacebookBadge /></a>
+            <a href={site.social.tiktok} target="_blank" rel="noreferrer" aria-label="Follow on TikTok"><TiktokBadge /></a>
+            <a href={site.social.x} target="_blank" rel="noreferrer" aria-label="Follow on X"><XBadge /></a>
+          </div>
         </div>
         <div className="footer__column">
           <h3>Discover</h3>
@@ -46,6 +55,12 @@ export function Footer() {
           <a href={`mailto:${site.email}`}><Mail />{site.email}</a>
           <a href={site.whatsapp} target="_blank" rel="noreferrer">WhatsApp us <ArrowUpRight size={14} /></a>
         </div>
+      </div>
+      <div className="footer__newsletter shell">
+        <div>
+          <h3>Subscribe to our newsletter for curated travel stories</h3>
+        </div>
+        <NewsletterForm />
       </div>
       <div className="footer__bottom shell">
         <p>© {new Date().getFullYear()} Gondar Simien Tours. Operated by {site.legalOperator}.</p>

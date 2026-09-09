@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import { AtAGlance, EditorialHero, FeatureGrid, Itinerary, PageLinks, PlanningCall, SectionIntro, StorySection } from "@/components/Editorial";
+import { BookingCard } from "@/components/BookingCard";
+import { CircleAlert } from "@/components/Icon";
 import { detailedJourneys } from "@/lib/itineraries";
 
 export const dynamicParams = false;
@@ -20,14 +22,17 @@ export default async function JourneyPage({ params }: { params: Promise<{ slug: 
   return <PageShell lightHeader={false}>
     <EditorialHero eyebrow={journey.duration} title={journey.heroTitle} accent={journey.heroAccent} lead={journey.description} image={{ src: journey.image, alt: journey.imageAlt }} parent={{ label: "Journeys", href: "/treks" }} />
     <AtAGlance facts={journey.facts} />
-    {journey.notice && <div className="shell"><p className="content-note">{journey.notice}</p></div>}
+    {journey.notice && <div className="shell"><div className="itinerary-notice"><CircleAlert size={20} /><p>{journey.notice}</p></div></div>}
     <PageLinks items={[{ label: "The journey", href: "#journey" }, { label: "Day by day", href: "#day-by-day" }, { label: "Highlights", href: "#highlights" }, { label: "Preparation & inclusions", href: "#preparation" }]} />
     <StorySection id="journey" tag="The journey" title="Let the story" accent="unfold." paragraphs={journey.introduction} />
-    <section className="section section--paper" id="day-by-day"><div className="shell">
-      <SectionIntro tag={journey.duration} title="Your journey," accent="day by day." />
-      <ol className="route-sequence" aria-label="Proposed route">{journey.route.map((stop, index) => <li key={`${stop}-${index}`}>{stop}</li>)}</ol>
-      <Itinerary days={journey.days} />
-      <p className="content-note">The route is a planning outline. Daily walking, campsite choices and transfers are confirmed for your group and current conditions.</p>
+    <section className="section section--paper" id="day-by-day"><div className="shell itinerary-split">
+      <div className="itinerary-split__main">
+        <SectionIntro tag={journey.duration} title="Your journey," accent="day by day." />
+        <ol className="route-sequence" aria-label="Proposed route">{journey.route.map((stop, index) => <li key={`${stop}-${index}`}>{stop}</li>)}</ol>
+        <Itinerary days={journey.days} />
+        <p className="content-note">The route is a planning outline. Daily walking, campsite choices and transfers are confirmed for your group and current conditions.</p>
+      </div>
+      <aside className="itinerary-split__aside"><BookingCard journey={journey} /></aside>
     </div></section>
     <section className="section" id="highlights"><div className="shell"><SectionIntro tag="Along the way" title="The moments" accent="that stay with you." /><FeatureGrid items={journey.highlights} /></div></section>
     <section className="section section--paper" id="preparation"><div className="shell editorial-grid">
