@@ -43,8 +43,10 @@ function ReviewRail({ reviews }: { reviews: readonly TravelerReview[] }) {
   const railRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const rail = railRef.current;
     if (!rail) return;
 
@@ -70,7 +72,7 @@ function ReviewRail({ reviews }: { reviews: readonly TravelerReview[] }) {
   }
 
   return <div className="review-rail-wrap">
-    <button type="button" className="review-rail-nav review-rail-nav--prev" aria-label="Scroll reviews left" onClick={() => scrollByAmount(-1)} disabled={atStart}>
+    <button type="button" className="review-rail-nav review-rail-nav--prev" aria-label="Scroll reviews left" onClick={() => scrollByAmount(-1)} disabled={mounted && atStart}>
       <ArrowLeft />
     </button>
     <div className="review-card-rail" ref={railRef}>
@@ -85,7 +87,7 @@ function ReviewRail({ reviews }: { reviews: readonly TravelerReview[] }) {
         <blockquote>{review.text}</blockquote>
       </article>)}
     </div>
-    <button type="button" className="review-rail-nav review-rail-nav--next" aria-label="Scroll reviews right" onClick={() => scrollByAmount(1)} disabled={atEnd}>
+    <button type="button" className="review-rail-nav review-rail-nav--next" aria-label="Scroll reviews right" onClick={() => scrollByAmount(1)} disabled={mounted && atEnd}>
       <ArrowRight />
     </button>
   </div>;

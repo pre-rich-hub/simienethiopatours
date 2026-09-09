@@ -60,6 +60,7 @@ export const detailedJourneys: JourneyDetail[] = [
     heroTitle: "From the city of emperors", heroAccent: "to the highlands.",
     description: "Five days connecting Gondar’s royal history, Woleka heritage and the landscapes, wildlife and local life of the Simien Mountains.",
     image: "/images/fasil-ghebbi.jpg", imageAlt: "Stone royal architecture at Fasil Ghebbi in Gondar", duration: "5 days · 4 nights",
+    notice: "Mountain visits are selected as a workable route, rather than a promise to reach every named viewpoint in one day. Weather, wildlife and access vary, and your final quote confirms the actual daily arrangements.",
     route: ["Gondar", "Fasil Ghebbi", "Debre Berhan Selassie", "Kuskuam", "Woleka", "Debark", "Simien Mountains", "Gondar"],
     facts: [
       { label: "Duration", value: "5 days / 4 nights" }, { label: "Start & finish", value: "Gondar" },
@@ -85,7 +86,7 @@ export const detailedJourneys: JourneyDetail[] = [
       { title: "More adventure", body: "Extend the mountain section or discuss a separate Ras Dashen expedition." },
       { title: "More comfort", body: "Discuss accommodation and transport choices that fit your preferred balance of comfort and exploration." },
     ],
-    preparation: ["Mountain visits are selected as a workable route, rather than a promise to reach every named viewpoint in one day.", "Guides explain local customs, respectful photography and the context of community visits. Follow the wishes of hosts and ask before photographing people.", "Weather, wildlife and access vary. Your final quote confirms accommodation, daily arrangements and the mountain route."],
+    preparation: ["Guides explain local customs, respectful photography and the context of community visits. Follow the wishes of hosts and ask before photographing people."],
     inclusions: ["Gondar arrival and departure arrangements as agreed", "Local guiding for city, heritage and mountain experiences", "Private transport between Gondar, Woleka, Debark and the mountains", "Two Gondar nights and two mountain nights in the agreed accommodation", "Site entry, park arrangements, meals and any camping support as specified in your quotation"],
   },
 ];
