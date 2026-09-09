@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ---------------------------------------------------------------------------
+// AUTH
+// ---------------------------------------------------------------------------
+
+model Admin {
+  id            Int     @id @default(autoincrement())
+  name          String?
+  email         String? @unique
+  passwordHash  String? @map("password_hash")
+  profilePicUrl String? @map("profile_pic_url")
+  tokenVersion  Int     @default(0) @map("token_version")
+
+  @@map("admin_table")
+}
+
+// ---------------------------------------------------------------------------
+// CATALOG — Customize these models per client (tours, products, services, etc.)
+// ---------------------------------------------------------------------------
+
+model Tour {
+  id            Int      @id @default(autoincrement())
+  destinationId Int?     @map("destination_id")
+  slug          String   @unique @db.VarChar(255)
+  tourName      String   @map("tour_name")
+  adultPrice    Decimal? @map("adult_price") @db.Decimal(10, 2)
+  childPrice    Decimal? @map("child_price") @db.Decimal(10, 2)
+  discount      String?
+  rating        Decimal? @db.Decimal(3, 1)
+  noOfRates     Int?     @map("no_of_rates")
+  isFeatured    Boolean? @default(false) @map("is_featured")
+  overview      String?  @db.Text
+  included      String?  @db.Text
+  excluded      String?  @db.Text
+  itinerary     String?  @db.Text
+  journeyMap    String?  @map("journey_map") @db.Text
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  destination  Destination?         @relation(fields: [destinationId], references: [id], onDelete: SetNull)
+  gallery      Gallery[]
+  bookings     Booking[]
+  categories   TourCategoryJunction[]
+  destinations TourDestinationJunction[]
+  blockedDates TourBlockedDate[]
+
+  @@map("tours")
+}
+
+model Destination {
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique @db.VarChar(255)
+  destinationName String   @map("destination_name")
+  description     String?  @db.Text
+  imageUrl        String?  @map("image_url")
+  tours           Tour[]
+  tourLinks       TourDestinationJunction[]
+
+  @@map("destinations")
+}
+
+model TourDestinationJunction {
+  tourId        Int         @map("tour_id")
+  destinationId Int         @map("destination_id")
+  tour          Tour        @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+
+  @@id([tourId, destinationId])
+  @@index([destinationId])
+  @@map("tour_destination_junction")
+}
+
+model TourCategory {
+  id           Int                    @id @default(autoincrement())
+  categoryName String                 @map("category_name")
+  createdAt    DateTime?              @map("created_at")
+  tours        TourCategoryJunction[]
+
+  @@map("tour_category")
+}
+
+model TourCategoryJunction {
+  tourId     Int          @map("tour_id")
+  categoryId Int          @map("category_id")
+  tour       Tour         @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  category   TourCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([tourId, categoryId])
+  @@map("tour_category_junction")
+}
+
+model Gallery {
+  id       Int     @id @default(autoincrement())
+  imageUrl String  @map("image_url")
+  tourId   Int?    @map("tour_id")
+  tour     Tour?   @relation(fields: [tourId], references: [id], onDelete: Cascade)
+
+  @@map("gallery")
+}
+
+model TourBlockedDate {
+  id     Int      @id @default(autoincrement())
+  tourId Int      @map("tour_id")
+  tour   Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  date   DateTime @db.Date
+  reason String?
+
+  @@unique([tourId, date])
+  @@index([tourId, date])
+  @@map("tour_blocked_dates")
+}
+
+// ---------------------------------------------------------------------------
+// BUSINESS
+// ---------------------------------------------------------------------------
+
+model Booking {
+  id         Int       @id @default(autoincrement())
+  tourId     Int?      @map("tour_id")
+  fullName   String    @map("full_name")
+  email      String
+  phone      String
+  country    String
+  chosenDate DateTime  @map("chosen_date") @db.Date
+  adults     Int       @map("no_of_adults")
+  children   Int       @map("no_of_children")
+  status     String?   @default("Pending")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  tour       Tour?     @relation(fields: [tourId], references: [id], onDelete: SetNull)
+
+  @@map("bookings")
+}
+
+model Contact {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String
+  message   String    @db.Text
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@map("contacts")
+}
+
+// ---------------------------------------------------------------------------
+// CONTENT
+// ---------------------------------------------------------------------------
+
+model Blog {
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique @db.VarChar(255)
+  blogTitle   String        @map("blog_title")
+  description String?       @db.Text
+  content     String?       @db.Text
+  imageUrl    String?       @map("image_url")
+  categoryId  Int?
+  category    BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  @@map("blog")
+}
+
+model BlogCategory {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  slug  String @unique @db.VarChar(255)
+  posts Blog[]
+
+  @@map("blog_category")
+}
+
+model Subscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("subscribers")
+}
+
+model Testimonial {
+  id           Int    @id @default(autoincrement())
+  message      String @db.Text
+  reviewerName String @map("reviewer_name")
+  profession   String?
+
+  @@map("testimonials")
+}
+
+// ---------------------------------------------------------------------------
+// STORAGE
+// ---------------------------------------------------------------------------
+
+model MediaAsset {
+  id           String   @id @default(uuid()) @db.Uuid
+  content      Bytes
+  mimeType     String   @map("mime_type")
+  originalName String?  @map("original_name")
+  size         Int
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("media_assets")
+}
+
+// ---------------------------------------------------------------------------
+// AI ASSISTANT — session + usage tracking
+// ---------------------------------------------------------------------------
+
+model ChatSession {
+  id           String        @id @default(uuid()) @db.Uuid
+  ipHash       String?       @map("ip_hash")
+  messageCount Int           @default(0) @map("message_count")
+  tokenCount   Int           @default(0) @map("token_count")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  messages     ChatMessage[]
+
+  @@map("chat_sessions")
+}
+
+model ChatMessage {
+  id         Int         @id @default(autoincrement())
+  sessionId  String      @map("session_id") @db.Uuid
+  session    ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role       String
+  content    String      @db.Text
+  tokenCount Int         @default(0) @map("token_count")
+  createdAt  DateTime    @default(now()) @map("created_at")
+
+  @@index([sessionId, id])
+  @@map("chat_messages")
+}
+
+model ChatDailyUsage {
+  id         Int      @id @default(autoincrement())
+  date       DateTime @unique @db.Date
+  tokenCount Int      @default(0) @map("token_count")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("chat_daily_usage")
+}
