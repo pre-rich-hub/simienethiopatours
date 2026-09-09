@@ -723,7 +723,7 @@ p { text-wrap: pretty; }
 .itinerary__body .editorial-list li p { margin: 6px 0 22px; }
 .itinerary-notice { display: flex; gap: 16px; align-items: flex-start; margin: 34px 0 0; padding: 20px 24px; border: 1px solid rgba(179,119,67,.35); border-radius: 4px; background: rgba(179,119,67,.07); }
 .itinerary-notice svg { flex: 0 0 auto; margin-top: 2px; color: var(--copper); }
-.itinerary-notice p { margin: 0; color: var(--ink); font-size: 13px; line-height: 1.75; }
+.itinerary-notice p { margin: 0; color: var(--ink); font-size: 16px; line-height: 1.75; }
 .trip-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-block: 0; padding-block: 24px; border-bottom: 1px solid var(--line); }
 .trip-facts > div { padding: 22px 28px; border-right: 1px solid var(--line); }
 .trip-facts > div:nth-child(3n) { border-right: 0; }
@@ -779,7 +779,7 @@ p { text-wrap: pretty; }
 .faq-item summary svg { flex: 0 0 auto; color: var(--copper); transition: transform .3s var(--ease); }
 .faq-item[open] summary svg { transform: rotate(180deg); }
 .faq-item:hover summary { color: var(--copper); }
-.faq-item p { max-width: 680px; margin: 0 0 26px; color: var(--stone); font-size: 14px; line-height: 1.85; }
+.faq-item p { max-width: 680px; margin: 0 0 26px; color: var(--stone); font-size: 17px; line-height: 1.85; }
 .inclusions-list { border-top: 1px solid var(--line); }
 .inclusion-item { border-bottom: 1px solid var(--line); }
 .inclusion-item summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 30px 0; cursor: pointer; list-style: none; transition: color .3s var(--ease-soft); }
@@ -791,11 +791,11 @@ p { text-wrap: pretty; }
 .inclusion-item[open] summary svg { transform: rotate(180deg); }
 .inclusion-item:hover summary strong { color: var(--copper); }
 .inclusion-item__body { max-width: 920px; padding: 0 0 36px; }
-.inclusion-item__intro { max-width: 680px; margin: 0 0 26px; color: var(--stone); font-size: 14px; line-height: 1.85; }
+.inclusion-item__intro { max-width: 680px; margin: 0 0 26px; color: var(--stone); font-size: 17px; line-height: 1.85; }
 .inclusion-item__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
 .inclusion-item__grid h4 { margin: 0 0 16px; color: var(--stone); font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .inclusion-item__grid ul { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
-.inclusion-item__grid li { display: flex; align-items: flex-start; gap: 10px; color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
+.inclusion-item__grid li { display: flex; align-items: flex-start; gap: 10px; color: var(--ink-soft); font-size: 16px; line-height: 1.6; }
 .inclusion-item__grid li svg { flex: 0 0 auto; width: 15px; margin-top: 3px; }
 .inclusion-item__grid--included li svg { color: var(--teal); }
 .inclusion-item__grid--excluded li { color: var(--stone); }
@@ -862,7 +862,7 @@ p { text-wrap: pretty; }
 .journey-menu__extra { display: grid; gap: 14px; margin-top: 25px; }
 .journey-menu__extra a { color: var(--stone); font-size: 10px; line-height: 1.5; }
 .journey-menu__extra a:hover { color: var(--teal); }
-.form-context { grid-column: 1 / -1; margin: 0; padding: 18px 20px; border-left: 2px solid var(--copper); background: var(--paper); color: var(--stone); font-size: 12px; line-height: 1.7; }
+.form-context { grid-column: 1 / -1; margin: 0; padding: 18px 20px; border-left: 2px solid var(--copper); background: var(--paper); color: var(--stone); font-size: 15px; line-height: 1.7; }
 @media (max-width: 900px) {
   .content-grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .trip-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1042,7 +1042,7 @@ p { text-wrap: pretty; }
 
 /* Sitewide readability: a larger, calmer editorial type scale */
 :root { --stone: #575950; }
-body { font-size: 16px; line-height: 1.65; }
+body { font-size: 18px; line-height: 1.65; }
 .eyebrow { font-size: 12px; letter-spacing: .18em; line-height: 1.55; }
 .button { font-size: 12px; }
 .button--small { font-size: 11px; }
@@ -1050,14 +1050,14 @@ body { font-size: 16px; line-height: 1.65; }
 .desktop-nav > a, .desktop-nav__trigger, .language-switcher__trigger { font-size: 11px; }
 .mobile-menu nav a { font-size: 32px; }
 .mobile-menu nav a span { font-size: 10px; }
-.mobile-menu__contact p { font-size: 16px; }
+.mobile-menu__contact p { font-size: 18px; }
 .mobile-menu__contact .text-link { font-size: 12.5px; }
 
-.hero__lead { max-width: 650px; font-size: 18px; line-height: 1.8; }
-.lead { font-size: clamp(1.12rem, 1.45vw, 1.38rem); }
-.prose p { font-size: 17px; line-height: 1.9; }
+.hero__lead { max-width: 650px; font-size: 21px; line-height: 1.8; }
+.lead { font-size: clamp(1.3rem, 1.6vw, 1.6rem); }
+.prose p { font-size: 20px; line-height: 1.9; }
 .prose .source-link { font-size: 11px; }
-.content-lead { font-size: 17px; }
+.content-lead { font-size: 20px; }
 .journey-menu__description,
 .journey-menu-card__summary,
 .honest-points p,
@@ -1075,9 +1075,9 @@ body { font-size: 16px; line-height: 1.65; }
 .gallery-next > div > p:not(.eyebrow),
 .gallery-field-notes > p,
 .gallery-viewer__caption p:not(.eyebrow),
-.simien-reason-card__body > p:not(.eyebrow) { font-size: 15px; line-height: 1.85; }
-.tevan-section__copy > p:not(.eyebrow), .legal-copy p { font-size: 17px; }
-.proof-grid p, .journey-choice-card__body > p { font-size: 15px; }
+.simien-reason-card__body > p:not(.eyebrow) { font-size: 18px; line-height: 1.85; }
+.tevan-section__copy > p:not(.eyebrow), .legal-copy p { font-size: 20px; }
+.proof-grid p, .journey-choice-card__body > p { font-size: 18px; }
 
 .journey-menu__intro .eyebrow,
 .journey-menu-card__style,
@@ -1148,41 +1148,41 @@ body { font-size: 16px; line-height: 1.65; }
 .footer__column h3 { font-size: 11px; }
 .footer__bottom { font-size: 11px; }
 .journey-arc__aside p, .journey-arc__aside li span { font-size: 10.5px; }
-.discover-card__details p { font-size: 15px; }
+.discover-card__details p { font-size: 18px; }
 .discover-card .discover-card__cta { font-size: 12.5px; }
 .journey-discovery__tabs button { font-size: 13px; }
 .journey-choice-card__title > span { font-size: 10px; }
 .journey-choice-card__facts b { font-size: 12px; }
-.journey-tile__overlay p { font-size: 14px; }
+.journey-tile__overlay p { font-size: 17px; }
 .route-card small, .source-note { font-size: 12px; }
 .credential { font-size: 12px; }
-.credits-list em, .content-note { font-size: 13px; }
+.credits-list em, .content-note { font-size: 16px; }
 .credits-note { font-size: 12px; }
 .form-field input, .form-field select, .form-field textarea { font-size: 16px; }
-.editorial-list, .itinerary__body > p { font-size: 16px; }
+.editorial-list, .itinerary__body > p { font-size: 19px; }
 .itinerary__day summary small, .experience-facts dd { font-size: 13px; }
 .itinerary__body .itinerary__overnight { font-size: 14px; }
 .editorial-table caption { font-size: 14px; }
-.editorial-table th, .editorial-table td { font-size: 15px; }
+.editorial-table th, .editorial-table td { font-size: 17px; }
 .editorial-table thead th { font-size: 11px; }
 .filter-count, .gallery-colophon { font-size: 12px; }
 .gondar-experience-selector .experience-facts dd { font-size: 13px; }
 .gallery-field-notes > p { max-width: 350px; }
 
 @media (max-width: 720px) {
-  body { font-size: 16px; }
+  body { font-size: 18px; }
   .eyebrow { font-size: 10.5px; }
-  .hero__lead { font-size: 16px; }
-  .content-lead, .prose p { font-size: 16px; }
+  .hero__lead { font-size: 19px; }
+  .content-lead, .prose p { font-size: 19px; }
   .home-trust span, .home-trust a { font-size: 9px; }
   .trust-rail span { font-size: 9.5px; }
   .page-links a { min-height: 36px; font-size: 10px; }
   .itinerary__day summary strong { font-size: 28px; }
   .itinerary__number { font-size: 10px; }
-  .itinerary__body > p { font-size: 15px; }
-  .editorial-table th, .editorial-table td { font-size: 14px; }
+  .itinerary__body > p { font-size: 18px; }
+  .editorial-table th, .editorial-table td { font-size: 16px; }
   .gallery-intro__top .eyebrow { font-size: 10px; }
-  .gallery-intro__body p { font-size: 15px; }
+  .gallery-intro__body p { font-size: 18px; }
   .gallery-count { font-size: 10px; }
   .gallery-colophon { font-size: 11px; }
 }
@@ -1220,7 +1220,7 @@ body { font-size: 16px; line-height: 1.65; }
 .story-section-photo__content .content-heading { margin-bottom: 0; }
 .story-section-photo__content .section-title { font-size: clamp(3.2rem, 4.8vw, 5.2rem); }
 .story-section-photo__content .prose { max-width: 600px; padding-top: 38px; }
-.story-section-photo__content .prose p { font-size: 17px; }
+.story-section-photo__content .prose p { font-size: 19px; }
 
 @media (max-width: 1100px) {
   .simien-photo-grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1237,7 +1237,7 @@ body { font-size: 16px; line-height: 1.65; }
   .story-section-photo__content { padding: 0; }
   .story-section-photo__content .section-title { font-size: clamp(2.8rem, 13vw, 4rem); }
   .story-section-photo__content .prose { padding-top: 28px; }
-  .story-section-photo__content .prose p { font-size: 16px; }
+  .story-section-photo__content .prose p { font-size: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .simien-photo-card, .simien-photo-card__image img { transition: none; }
@@ -1255,7 +1255,7 @@ body { font-size: 16px; line-height: 1.65; }
 .gondar-experience-card__body .gondar-card__header { margin-bottom: 20px; }
 .gondar-experience-card__body .gondar-card__header .eyebrow { max-width: 100%; margin: 0; font-size: 10.5px; }
 .gondar-experience-card__body h3 { max-width: 570px; margin: 0 0 18px; font-size: clamp(38px, 3.2vw, 48px); line-height: 1; letter-spacing: -.03em; }
-.gondar-experience-card__body > p { max-width: 590px; margin: 0 0 29px; color: var(--stone); font-size: 15px; line-height: 1.85; }
+.gondar-experience-card__body > p { max-width: 590px; margin: 0 0 29px; color: var(--stone); font-size: 18px; line-height: 1.85; }
 .gondar-experience-card__body .experience-facts { margin: auto 0 28px; padding: 18px 20px; border: 1px solid rgba(36,58,48,.12); background: rgba(36,58,48,.035); }
 .gondar-experience-card__body .experience-facts > div { grid-template-columns: 72px minmax(0, 1fr); padding-block: 10px; border-color: rgba(36,58,48,.12); }
 .gondar-experience-card__body .experience-facts > div:first-child { border-top: 0; }
@@ -1290,7 +1290,7 @@ body { font-size: 16px; line-height: 1.65; }
 .experience-photo-card__body { min-height: 355px; display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 31px 31px 30px; }
 .experience-photo-card__body .eyebrow { margin: 0 0 17px; font-size: 10.5px; }
 .experience-photo-card__body h3 { margin: 0 0 16px; font-size: clamp(33px, 2.7vw, 41px); line-height: 1.02; letter-spacing: -.03em; }
-.experience-photo-card__body > p:not(.eyebrow) { margin: 0 0 27px; color: var(--stone); font-size: 15px; line-height: 1.82; }
+.experience-photo-card__body > p:not(.eyebrow) { margin: 0 0 27px; color: var(--stone); font-size: 18px; line-height: 1.82; }
 .experience-photo-card__body .text-link { align-self: center; justify-content: center; width: 100%; margin-top: auto; padding-top: 22px; padding-bottom: 0; border-top: 1px solid rgba(23,25,22,.12); border-bottom: 0; font-size: 10.5px; letter-spacing: .18em; }
 .experience-photo-card__body .text-link:hover { color: var(--copper); }
 .experience-photo-grid--compact .experience-photo-card__image { min-height: 265px; }
@@ -1355,7 +1355,7 @@ body { font-size: 16px; line-height: 1.65; }
 .traveler-review-card > .review-rating--tripadvisor i::after { width: 6px; height: 6px; }
 .traveler-review-card > .review-rating--google i { font-size: 16px; }
 .traveler-review-card h3 { margin: 0 0 6px; font-size: 13.5px; font-weight: 650; line-height: 1.35; }
-.traveler-review-card blockquote { margin: 0; color: var(--ink-soft); font: 15px/1.55 var(--serif); }
+.traveler-review-card blockquote { margin: 0; color: var(--ink-soft); font: 18px/1.55 var(--serif); }
 @media (max-width: 1100px) {
   .reviews-home__heading, .reviews-page__heading { grid-template-columns: 1fr; gap: 28px; }
   .review-source-row { grid-template-columns: 210px minmax(0, 1fr); }
@@ -1368,7 +1368,7 @@ body { font-size: 16px; line-height: 1.65; }
   .review-source-summary > .review-rating { justify-self: end; }
   .review-source-summary > span:not(.review-rating):not(.review-source-mark) { margin: 0; }
   .review-source-summary > .review-source-mark { justify-self: end; }
-  .traveler-review-card blockquote { font-size: 16px; }
+  .traveler-review-card blockquote { font-size: 18px; }
 }
 
 /* Transparent review rows with a fixed source summary and a scrolling card rail */
