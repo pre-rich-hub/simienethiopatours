@@ -1,0 +1,59 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { useEffect, useState, type ReactNode } from "react";
+import { AdminSidebar, AdminTopbar } from "@/components/admin/ui";
+import { adminRequestClient } from "@/lib/admin/client";
+import "./admin.css";
+
+type Admin = { id: number; email: string; name: string | null };
+
+const LOGIN_PATH = "/admin/login";
+
+export default function AdminLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const isLogin = pathname === LOGIN_PATH;
+  const [admin, setAdmin] = useState<Admin | null>(null);
+  const [loading, setLoading] = useState(!isLogin);
+
+  useEffect(() => {
+    if (isLogin) return;
+    let cancelled = false;
+    adminRequestClient<Admin>("/api/v1/auth/me")
+      .then((data) => {
+        if (cancelled) return;
+        if (!data) {
+          window.location.href = "/admin/login";
+          return;
+        }
+        setAdmin(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        if (!cancelled) window.location.href = "/admin/login";
+      });
+    return () => { cancelled = true; };
+  }, [isLogin, pathname]);
+
+  if (isLogin) {
+    return <>{children}</>;
+  }
+
+  if (loading) {
+    return (
+      <div className="admin-loading" style={{ minHeight: "100dvh", display: "grid", placeItems: "center" }}>
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <div className="admin-shell">
+      <AdminSidebar currentPath={pathname} />
+      <div className="admin-main">
+        <AdminTopbar userName={admin?.name || admin?.email} />
+        <div className="admin-page">{children}</div>
+      </div>
+    </div>
+  );
+}
