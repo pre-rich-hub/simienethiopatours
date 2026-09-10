@@ -46,7 +46,7 @@ const envSchema = z.object({
   GEMINI_API_KEY: z.string().optional().default(""),
   ASSISTANT_MODEL: z.string().default("gemini-3.6-flash"),
   ASSISTANT_MAX_MESSAGES: z.coerce.number().int().positive().default(30),
-  ASSISTANT_MAX_OUTPUT_TOKENS: z.coerce.number().int().positive().default(600),
+  ASSISTANT_MAX_OUTPUT_TOKENS: z.coerce.number().int().positive().default(1000),
   ASSISTANT_MAX_HISTORY_MESSAGES: z.coerce.number().int().positive().default(10),
   ASSISTANT_MAX_CONTEXT_CHARS: z.coerce.number().int().positive().default(40000),
   ASSISTANT_MAX_DAILY_TOKENS: z.coerce.number().int().positive().default(200000),

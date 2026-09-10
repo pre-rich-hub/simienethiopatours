@@ -143,27 +143,36 @@ async function handleChatRequest(req: Request, res: Response): Promise<void> {
       },
     });
 
+    const onClose = () => result.abort();
+    res.on("close", onClose);
+
     try {
       for await (const delta of stream) {
         sseWrite(res, "delta", { text: delta.text });
       }
     } catch (error) {
-      sseWrite(res, "error", {
-        success: false,
-        message: error instanceof Error ? error.message : "Assistant reply failed",
-        errors: [],
-      });
+      if (!res.destroyed && !res.writableEnded) {
+        sseWrite(res, "error", {
+          success: false,
+          message: error instanceof Error ? error.message : "Assistant reply failed",
+          errors: [],
+        });
+      }
       res.end();
       return;
+    } finally {
+      res.off("close", onClose);
     }
 
     const usage = await loadUsage(result.sessionId);
-    sseWrite(res, "done", {
-      sessionId: result.sessionId,
-      messageId: result.messageId,
-      handoff: { type: "none" },
-      usage,
-    });
+    if (!res.destroyed && !res.writableEnded) {
+      sseWrite(res, "done", {
+        sessionId: result.sessionId,
+        messageId: result.messageId,
+        handoff: { type: "none" },
+        usage,
+      });
+    }
     res.end();
   } catch (error) {
     const status = error instanceof HttpError ? error.status : 500;
