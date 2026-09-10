@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { prisma } from "../../config/database.js";
 import { ok } from "../../utils/api-response.js";
+import { setPublicCache } from "../../utils/serializers.js";
 
 export const contentRouter = Router();
 
@@ -17,9 +18,11 @@ contentRouter.get("/", async (_req, res, next) => {
         title: true,
         date: true,
         avatarTone: true,
+        translatedFrom: true,
       },
       orderBy: { id: "asc" },
     });
+    setPublicCache(res);
     ok(res, testimonials, "Testimonials fetched");
   } catch (error) {
     next(error);

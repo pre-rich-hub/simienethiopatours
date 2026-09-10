@@ -43,6 +43,27 @@ model Tour {
   excluded      String?  @db.Text
   itinerary     String?  @db.Text
   journeyMap    String?  @map("journey_map") @db.Text
+
+  // Editorial fields (P1 content pipeline) — mirrors frontend JourneyDetail
+  heroTitle   String?  @map("hero_title") @db.VarChar(500)
+  heroAccent  String?  @map("hero_accent") @db.VarChar(500)
+  image       String?  @db.VarChar(500)
+  imageAlt    String?  @map("image_alt") @db.VarChar(500)
+  duration    String?  @db.VarChar(255)
+  style       String?  @db.VarChar(255)
+  difficulty  String?  @db.VarChar(255)
+  fit         String?  @db.VarChar(500)
+  inquiry     String?  @db.VarChar(255)
+  notice      String?  @db.Text
+  route       String?  @db.Text // JSON string[]
+  facts       String?  @db.Text // JSON {label,value}[]
+  introduction String? @db.Text // JSON string[]
+  highlights  String?  @db.Text // JSON Feature[]
+  preparation String?  @db.Text // JSON string[]
+  related     String?  @db.Text // JSON Feature[]
+  isPublished Boolean  @default(false) @map("is_published")
+  sortOrder   Int      @default(0) @map("sort_order")
+
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
@@ -82,6 +103,7 @@ model TourDestinationJunction {
 model TourCategory {
   id           Int                    @id @default(autoincrement())
   categoryName String                 @map("category_name")
+  slug         String?                @unique @db.VarChar(255)
   createdAt    DateTime?              @map("created_at")
   tours        TourCategoryJunction[]
 
@@ -101,9 +123,17 @@ model TourCategoryJunction {
 model Gallery {
   id       Int     @id @default(autoincrement())
   imageUrl String  @map("image_url")
+  title    String? @db.VarChar(255)
+  location String? @db.VarChar(255)
+  category String? @db.VarChar(255)
+  alt      String? @db.VarChar(500)
+  story    String? @db.Text
+  href     String? @db.VarChar(500)
+  link     String? @db.VarChar(255)
   tourId   Int?    @map("tour_id")
   tour     Tour?   @relation(fields: [tourId], references: [id], onDelete: Cascade)
 
+  @@unique([imageUrl])
   @@map("gallery")
 }
 
@@ -161,6 +191,7 @@ model Blog {
   description String?       @db.Text
   content     String?       @db.Text
   imageUrl    String?       @map("image_url")
+  href        String?       @db.VarChar(500)
   categoryId  Int?
   category    BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   createdAt   DateTime      @default(now()) @map("created_at")
@@ -186,14 +217,15 @@ model Subscriber {
 }
 
 model Testimonial {
-  id           Int     @id @default(autoincrement())
-  message      String  @db.Text
-  reviewerName String  @map("reviewer_name")
-  profession   String?
-  source       String?
-  title        String?
-  date         String?
-  avatarTone   String? @map("avatar_tone")
+  id             Int     @id @default(autoincrement())
+  message        String  @db.Text
+  reviewerName   String  @map("reviewer_name")
+  profession     String?
+  source         String?
+  title          String?
+  date           String?
+  avatarTone     String? @map("avatar_tone")
+  translatedFrom String? @map("translated_from") @db.VarChar(100)
 
   @@unique([reviewerName, message])
   @@map("testimonials")

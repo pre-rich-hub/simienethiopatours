@@ -32,12 +32,14 @@ const envSchema = z.object({
   EMAIL_PROVIDER: z.enum(["smtp", "resend"]).default("smtp"),
   RESEND_API_KEY: z.string().optional().default(""),
   ADMIN_EMAIL: z.string().optional().default(""),
+  ADMIN_PASSWORD: z.string().optional().default(""),
   EMAIL_ENABLED: z.preprocess(envBoolean, z.boolean()).default(false),
 
   // File uploads
-  UPLOAD_ROOT: z.string().default("."),
+  UPLOAD_ROOT: z.string().default("uploads"),
   PUBLIC_FILE_BASE_URL: z.string().optional().default(""),
   MAX_UPLOAD_MB: z.coerce.number().positive().default(4),
+  STORAGE_DRIVER: z.enum(["local", "cloudinary"]).default("local"),
 
   // AI assistant
   ASSISTANT_ENABLED: z.preprocess(envBoolean, z.boolean()).default(false),
