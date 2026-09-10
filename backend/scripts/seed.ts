@@ -1,9 +1,10 @@
 /**
- * Seed catalog data (tours, destinations) from the frontend content files.
+ * Seed catalog and content data (tours, destinations, testimonials, blog
+ * posts) from the frontend content files.
  *
- * Idempotent: every row is upserted by its unique slug, so running this
- * multiple times converges on the same rows. Blog posts are intentionally
- * not seeded.
+ * Idempotent: every row is upserted by its unique key — slug for tours,
+ * destinations and blog posts, reviewerName + message for testimonials —
+ * so running this multiple times converges on the same rows.
  *
  * The frontend data modules are imported via the `@/*` path alias defined
  * in tsconfig.json. The ambient declarations in scripts/types.d.ts let
@@ -13,6 +14,9 @@ import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { detailedJourneys, timkatDays } from "@/lib/itineraries";
 import { moreSimienPlaces } from "@/lib/simien-guide";
+import { travelerReviews } from "@/lib/reviews";
+import { fieldNotes } from "@/lib/field-notes";
+import { experienceLinks, gondarExperiences } from "@/lib/experiences";
 
 const prisma = new PrismaClient();
 
@@ -144,6 +148,18 @@ const destinations: DestinationSeed[] = [
   },
 ];
 
+async function getOrCreateCategory(name: string, slug: string) {
+  const category = await prisma.blogCategory.upsert({
+    where: { slug },
+    update: { name },
+    create: { name, slug },
+  });
+  categoryCount += 1;
+  return category;
+}
+
+let categoryCount = 0;
+
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
@@ -184,8 +200,106 @@ async function main(): Promise<void> {
     destinationCount += 1;
   }
 
+  // Testimonials. translatedFrom is NOT a column in the schema, so the source
+  // language note is dropped in the DB copy; the reviews carousel no longer
+  // displays it for DB-rendered rows. message stores only the review text —
+  // title lives in its own column and the carousel renders it as the card h3,
+  // so prefixing it here would make the blockquote repeat the title.
+  let testimonialCount = 0;
+  for (const review of travelerReviews) {
+    const message = review.text;
+    const data = {
+      source: review.source,
+      title: review.title ?? null,
+      date: review.date,
+      avatarTone: review.avatarTone,
+    };
+    await prisma.testimonial.upsert({
+      where: { reviewerName_message: { reviewerName: review.name, message } },
+      update: data,
+      create: { reviewerName: review.name, message, ...data },
+    });
+    testimonialCount += 1;
+  }
+
+  // Blog posts: field notes and experiences enrich the assistant context.
+  // Blog.slug is unique, so every entry needs its own slug. The
+  // "Gondar, Heritage & Simien" link and the "Gondar & Simien combination"
+  // experience both derive the slug "gondar-heritage-simien"; the link keeps
+  // it and the experience's slug is derived from its full href path
+  // ("treks-gondar-heritage-simien") so both rows exist.
+  const slugFromHref = (href: string): string => {
+    const segments = href.split("/").filter(Boolean);
+    const last = segments[segments.length - 1] ?? "";
+    return last.split("#")[0];
+  };
+
+  const fieldNotesCategory = await getOrCreateCategory("Field notes", "field-notes");
+  const experiencesCategory = await getOrCreateCategory("Experiences", "experiences");
+
+  let fieldNoteCount = 0;
+  for (const note of fieldNotes) {
+    const slug = note.tag.toLowerCase();
+    const data = {
+      blogTitle: note.title,
+      description: note.body,
+      content: note.body,
+      imageUrl: null,
+      categoryId: fieldNotesCategory.id,
+    };
+    await prisma.blog.upsert({
+      where: { slug },
+      update: data,
+      create: { slug, ...data },
+    });
+    fieldNoteCount += 1;
+  }
+
+  let experienceCount = 0;
+  for (const link of experienceLinks) {
+    const slug = slugFromHref(link.href);
+    const data = {
+      blogTitle: link.title,
+      description: link.body,
+      content: link.body,
+      imageUrl: null,
+      categoryId: experiencesCategory.id,
+    };
+    await prisma.blog.upsert({
+      where: { slug },
+      update: data,
+      create: { slug, ...data },
+    });
+    experienceCount += 1;
+  }
+
+  for (const experience of gondarExperiences) {
+    const slug = experience.id === "gondar-heritage-simien"
+      ? "treks-gondar-heritage-simien"
+      : experience.id;
+    const content = `${experience.body}\n\nSuitable for: ${experience.fit}`;
+    const data = {
+      blogTitle: experience.title,
+      description: experience.body,
+      content,
+      imageUrl: null,
+      categoryId: experiencesCategory.id,
+    };
+    await prisma.blog.upsert({
+      where: { slug },
+      update: data,
+      create: { slug, ...data },
+    });
+    experienceCount += 1;
+  }
+
+  const blogCount = fieldNoteCount + experienceCount;
+
   console.log(
-    `Seed complete: ${tourCount} tours upserted, ${destinationCount} destinations upserted.`,
+    `Seed complete: ${tourCount} tours upserted, ${destinationCount} destinations upserted, ` +
+      `${testimonialCount} testimonials upserted, ${blogCount} blog posts upserted ` +
+      `(${fieldNoteCount} field notes, ${experienceCount} experiences), ` +
+      `${categoryCount} categories upserted.`,
   );
 }
 

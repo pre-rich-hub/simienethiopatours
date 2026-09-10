@@ -186,11 +186,16 @@ model Subscriber {
 }
 
 model Testimonial {
-  id           Int    @id @default(autoincrement())
-  message      String @db.Text
-  reviewerName String @map("reviewer_name")
+  id           Int     @id @default(autoincrement())
+  message      String  @db.Text
+  reviewerName String  @map("reviewer_name")
   profession   String?
+  source       String?
+  title        String?
+  date         String?
+  avatarTone   String? @map("avatar_tone")
 
+  @@unique([reviewerName, message])
   @@map("testimonials")
 }
 
