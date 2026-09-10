@@ -1467,6 +1467,11 @@ body { font-size: 18px; line-height: 1.65; }
 .assistant-chat__close { display: grid; place-items: center; flex: 0 0 auto; width: 26px; height: 26px; border: 0; border-radius: 50%; background: transparent; color: var(--stone); cursor: pointer; transition: background-color .28s var(--ease-soft), color .28s var(--ease-soft); }
 .assistant-chat__close:hover { color: var(--ink); background: var(--paper); }
 .assistant-chat__thread { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 9px; padding: 16px 18px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.assistant-chat__chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.assistant-chat__chip { padding: 8px 12px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); color: var(--ink-soft); font-size: 11px; line-height: 1.45; text-align: left; cursor: pointer; transition: border-color .28s var(--ease-soft), background-color .28s var(--ease-soft), color .28s var(--ease-soft); }
+.assistant-chat__chip:hover:not(:disabled) { border-color: var(--copper); background: var(--ivory); color: var(--ink); }
+.assistant-chat__chip:focus-visible { outline-offset: 2px; }
+.assistant-chat__chip:disabled { opacity: .55; cursor: not-allowed; }
 .assistant-chat__message { max-width: 88%; padding: 10px 14px; border-radius: 3px; font-size: 13px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: break-word; }
 .assistant-chat__message--user { align-self: flex-end; background: var(--teal); color: white; }
 .assistant-chat__message--assistant { align-self: flex-start; background: var(--paper); color: var(--ink); }
@@ -1494,5 +1499,5 @@ body { font-size: 18px; line-height: 1.65; }
   .assistant-chat { width: min(360px, calc(100vw - 32px)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .assistant-chat, .assistant-chat__close, .assistant-chat__send, .assistant-chat__reset, .assistant-chat__input { transition: none; }
+  .assistant-chat, .assistant-chat__close, .assistant-chat__send, .assistant-chat__reset, .assistant-chat__input, .assistant-chat__chip { transition: none; }
 }

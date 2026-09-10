@@ -1,0 +1,10 @@
+// Field notes for the travel guide. Kept in lib/ (no React) so the
+// catalog seed can import the same copy into the Blog table.
+export const fieldNotes = [
+  { tag: "Timing", title: "When should you come?", body: "June to August is the main rainy period and brings greener, cloudier landscapes. September and October often stay green as rain eases. November to February is generally drier with cold mountain nights. March to May feels warmer and different again. Conditions vary—ask what kind of experience you want, not only for a ‘best month’." },
+  { tag: "Altitude", title: "Go slowly. Say how you feel.", body: "Much of a Simien journey is above 3,000 metres, and summit routes go higher. Hydrate, pace yourself and tell your guide if you feel unwell. Seek personal advice from a qualified travel-health professional before a high-altitude trek." },
+  { tag: "Packing", title: "Pack for altitude, not only Africa.", body: "Bring a warm insulating layer, weatherproof shell, comfortable trekking trousers, suitable shoes or boots, warm sleeping clothes, hat, gloves, sun protection, a reusable bottle and a small daypack. Your final list should match the route and season." },
+  { tag: "Wildlife", title: "An encounter, never a promise.", body: "Geladas, Walia ibex, Ethiopian wolves and highland birds move on their own terms. Good wildlife watching means patience, distance and no guaranteed sighting." },
+  { tag: "Access", title: "Gondar is the practical gateway.", body: "Most journeys begin in Gondar and continue by road toward Debark and the park. Road time and exact access can change, so the local team reconfirms current logistics before departure." },
+  { tag: "Difficulty", title: "The right trek is personal.", body: "Duration alone does not define difficulty. Daily walking, steep ground, altitude, sleep, weather and your experience all matter. Be honest about your pace; a well-matched route is more rewarding than the longest one." },
+] as const;

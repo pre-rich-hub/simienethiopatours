@@ -127,6 +127,12 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
     const text = input.trim();
     if (!text || streaming) return;
 
+    await sendMessage(text);
+  };
+
+  const sendMessage = async (text: string) => {
+    if (!text || streaming) return;
+
     if (!sessionIdRef.current) sessionIdRef.current = crypto.randomUUID();
     const controller = new AbortController();
     abortRef.current = controller;
@@ -197,6 +203,10 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
     }
   };
 
+  const handleChipClick = (text: string) => {
+    sendMessage(text);
+  };
+
   const handleStartOver = () => {
     abortInFlight();
     sessionIdRef.current = crypto.randomUUID();
@@ -227,9 +237,29 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
 
       <div className="assistant-chat__thread" ref={threadRef} role="log" aria-live="polite" aria-label="Chat messages">
         {messages.length === 0 ? (
-          <div className="assistant-chat__message assistant-chat__message--assistant">
-            Hello! I can answer questions about our treks, Simien Mountains destinations and travel planning. What would you like to know?
-          </div>
+          <>
+            <div className="assistant-chat__message assistant-chat__message--assistant">
+              Hello! I can answer questions about our treks, Simien Mountains destinations and travel planning. What would you like to know?
+            </div>
+            <div className="assistant-chat__chips" role="group" aria-label="Suggested questions">
+              {[
+                "Which trek is best for 3 or 4 days?",
+                "What wildlife can I see in the Simien Mountains?",
+                "Can I attempt the Ras Dashen summit?",
+                "What should I pack for a Simien trek?",
+              ].map((label) => (
+                <button
+                  key={label}
+                  type="button"
+                  className="assistant-chat__chip"
+                  onClick={() => handleChipClick(label)}
+                  disabled={streaming}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </>
         ) : (
           messages.map((message, index) => {
             if (message.role === "error") {
