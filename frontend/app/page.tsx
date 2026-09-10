@@ -7,9 +7,13 @@ import { SectionIntro } from "@/components/Editorial";
 import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
 import { ReviewsShowcase } from "@/components/ReviewsShowcase";
 import { DurationSelector } from "@/components/DurationSelector";
-import { journeys, site, sourceLinks } from "@/lib/site";
+import { site, sourceLinks } from "@/lib/site";
+import { cms } from "@/lib/cms";
 
-export default function Home() {
+export default async function Home() {
+  const allTours = await cms.getAllTours();
+  const featuredTours = await cms.getFeaturedTours();
+
   return (
     <>
       <Header />
@@ -92,7 +96,7 @@ export default function Home() {
             <h2 className="section-title">How do you want to <em>meet the mountains?</em></h2>
             <p className="lead">From a first encounter to a full highland expedition, begin with the experience that feels like yours. Every journey is privately refined around your time and pace.</p>
           </div>
-          <div className="shell"><DurationSelector /></div>
+          <div className="shell"><DurationSelector tours={allTours} /></div>
         </section>
 
         <section className="section featured-journeys">
@@ -101,7 +105,7 @@ export default function Home() {
             <Link className="text-link" href="/treks">View every journey <ArrowUpRight /></Link>
           </div>
           <div className="shell journey-mosaic">
-            {journeys.slice(1, 4).map((journey, index) => (
+            {featuredTours.map((journey, index) => (
               <Link id={journey.slug} key={journey.slug} className={`journey-tile journey-tile--${index + 1}`} href={`/treks#${journey.slug}`}>
                 <Image src={journey.image} alt={`Landscape associated with ${journey.title}`} fill sizes="(max-width: 720px) 100vw, 45vw" />
                 <div className="journey-tile__overlay"><span>{journey.duration} · {journey.difficulty}</span><h3>{journey.title}</h3><p>{journey.summary}</p><b>Discover <ArrowUpRight /></b></div>
@@ -119,8 +123,8 @@ export default function Home() {
 
         <section className="section tevan-section">
           <div className="shell tevan-section__grid">
-            <div className="tevan-section__portrait image-frame"><Image src="/images/tevan-founder.jpg" alt="Tesema ‘Tevan’ Mulualem on a trail in the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 42vw" /><span className="image-caption">Tevan · Founder & local guide</span></div>
-            <div className="tevan-section__copy"><p className="eyebrow eyebrow--copper">The mountains I call home</p><blockquote>“Knowing a place is different from simply knowing the way through it.”</blockquote><p>My name is Tesema “Tevan” Mulualem. I built Gondar Simien Tours around a simple idea: help people experience the place I know—not just visit it. That means honest routes, real preparation and space for the moments no itinerary can schedule.</p><div className="tevan-section__links"><Link className="button button--dark" href="/about">Read Tevan’s story</Link><Link className="text-link" href="/plan">Plan with Tevan <ArrowUpRight /></Link></div><div className="credential"><CheckCircle2 /><span>Nationally certified professional guide<br/><a href={sourceLinks.operatorAbout} target="_blank" rel="noreferrer">View verified credentials</a></span></div></div>
+            <div className="tevan-section__portrait image-frame"><Image src="/images/tevan-founder.jpg" alt="Tesema 'Tevan' Mulualem on a trail in the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 42vw" /><span className="image-caption">Tevan · Founder & local guide</span></div>
+            <div className="tevan-section__copy"><p className="eyebrow eyebrow--copper">The mountains I call home</p><blockquote>"Knowing a place is different from simply knowing the way through it."</blockquote><p>My name is Tesema "Tevan" Mulualem. I built Gondar Simien Tours around a simple idea: help people experience the place I know—not just visit it. That means honest routes, real preparation and space for the moments no itinerary can schedule.</p><div className="tevan-section__links"><Link className="button button--dark" href="/about">Read Tevan's story</Link><Link className="text-link" href="/plan">Plan with Tevan <ArrowUpRight /></Link></div><div className="credential"><CheckCircle2 /><span>Nationally certified professional guide<br/><a href={sourceLinks.operatorAbout} target="_blank" rel="noreferrer">View verified credentials</a></span></div></div>
           </div>
         </section>
 
@@ -146,7 +150,7 @@ export default function Home() {
         </section>
 
         <section className="section section--paper"><div className="shell"><SectionIntro tag="Beyond the trail" title="More ways to" accent="travel deeper." /><ExperiencePhotoCards items={[
-          { title: "Living culture & festivals", tag: "Celebrate · Understand · Connect", body: "Connect Gondar’s celebrations with the Simien Mountains, local stories and time to understand what you are seeing.", href: "/festival-journeys", image: { src: "/images/fasil-ghebbi.jpg", alt: "Gondar's historic royal city, the setting for cultural journeys", caption: "Gondar · Living culture" } },
+          { title: "Living culture & festivals", tag: "Celebrate · Understand · Connect", body: "Connect Gondar's celebrations with the Simien Mountains, local stories and time to understand what you are seeing.", href: "/festival-journeys", image: { src: "/images/fasil-ghebbi.jpg", alt: "Gondar's historic royal city, the setting for cultural journeys", caption: "Gondar · Living culture" } },
           { title: "Running & photography", tag: "Move · Observe · Create", body: "Find quieter Gondar paths or build a mountain journey around the photographs you hope to make.", href: "/beyond-the-trail", image: { src: "/images/simien-panorama.jpg", alt: "Open highland landscapes for active and photography journeys", caption: "Highland paths · Changing light" } },
           { title: "Your stay, thoughtfully planned", tag: "Gondar · Lodge · Camp", body: "Bring together city hotels, mountain lodges and camping around the experience you want.", href: "/where-to-stay-gondar-simien", image: { src: "/images/geech-camp.jpg", alt: "Tents at Geech camp in the Simien Mountains", caption: "Mountain nights · Geech" } },
         ]} /></div></section>

@@ -79,6 +79,30 @@ export const journeys = [
     image: "/images/simien-panorama.jpg",
     fit: "Experienced trekkers who value depth",
   },
+  {
+    slug: "5-day-gondar-simien",
+    href: "/treks/5-day-gondar-simien",
+    duration: "5 days",
+    title: "Royal City & Mountain Adventure",
+    style: "City & trail",
+    difficulty: "Moderate to challenging",
+    summary:
+      "Gondar's royal heritage followed by three camping nights on the classic Simien escarpment through Sankaber, Geech, Imet Gogo and Chenek.",
+    image: "/images/fasil-ghebbi.jpg",
+    fit: "Travelers who want culture and trekking in one trip",
+  },
+  {
+    slug: "gondar-heritage-simien",
+    href: "/treks/gondar-heritage-simien",
+    duration: "5 days",
+    title: "Gondar, Heritage & Simien",
+    style: "Heritage & mountains",
+    difficulty: "Adapted to your ability",
+    summary:
+      "Royal castles, Woleka heritage and adaptable mountain days in the Simien highlands with two city and two mountain nights.",
+    image: "/images/fasil-ghebbi.jpg",
+    fit: "Culture-focused travelers with flexible pacing",
+  },
 ] as const;
 
 export const sourceLinks = {

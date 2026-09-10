@@ -4,25 +4,62 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, X } from "@/components/Icon";
+import { photographs, type Photograph } from "@/lib/gallery-data";
 
-const photographs = [
-  { src: "/images/imet-gogo.jpg", title: "At the edge of forever", location: "Imet Gogo", category: "Landscapes", alt: "Rocky Imet Gogo promontory above the deep Simien valleys", story: "Ridges unfold beyond the escarpment. At Imet Gogo, the scale of the mountains invites you to stop walking and simply look.", href: "/simien-mountains", link: "Discover the Simien" },
-  { src: "/images/gelada-troop.jpg", title: "In wild company", location: "Simien highlands", category: "Wildlife", alt: "Wild geladas gathered in the grass of the Simien highlands", story: "A troop grazes, rests and moves through the highland grass. Keep a respectful distance and let their everyday rhythm set the pace.", href: "/simien-mountains", link: "Meet the mountains" },
-  { src: "/images/fasil-ghebbi.jpg", title: "Stories set in stone", location: "Fasil Ghebbi · Gondar", category: "Culture & life", alt: "Stone vaults and royal architecture at Fasil Ghebbi in Gondar", story: "Stone passageways and royal architecture hold another side of the highlands. Gondar gives the journey a beginning long before the first trail.", href: "/gondar", link: "Explore Gondar" },
-  { src: "/images/geech-camp.jpg", title: "Room to slow down", location: "Geech camp", category: "On the trail", alt: "Colourful trekking tents pitched at Geech camp in the Simien Mountains", story: "A tent, open country and time to settle in. Mountain camps bring the small moments between walking days into view.", href: "/treks", link: "Find your trek" },
-  { src: "/images/road-to-simien.jpg", title: "The life between", location: "The road to Simien", category: "Culture & life", alt: "Women collecting water along the road to the Simien Mountains", story: "The road to the mountains passes through a lived-in landscape. Conversations and permission come first when photographing the people who call it home.", href: "/beyond-the-trail", link: "Go beyond the trail" },
-  { src: "/images/giant-lobelia.jpg", title: "Wonder in the details", location: "Simien highlands", category: "Landscapes", alt: "Giant lobelias growing in the open Simien highlands", story: "Look away from the horizon for a moment. The sculptural forms of giant lobelias give the highland landscape a character all its own.", href: "/simien-photography-tour", link: "Explore photography journeys" },
-  { src: "/images/chenek-camp.jpg", title: "Where the trail takes you", location: "Chenek camp", category: "On the trail", alt: "Mountain landscape around Chenek camp in the Simien Mountains", story: "The country around Chenek is a reason to linger. Each turn of the trail offers another perspective on the escarpment.", href: "/treks", link: "Explore the journeys" },
-  { src: "/images/simien-panorama.jpg", title: "Some things need to be felt.", location: "Simien Mountains · Ethiopia", category: "Landscapes", alt: "An expansive panorama of the Simien Mountains and their layered valleys", story: "A photograph offers a glimpse. The open space, the mountain air and the feeling of standing here belong to the journey itself.", href: "/plan", link: "Plan your own moment" },
-];
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+type ApiGalleryItem = {
+  imageUrl: string;
+  title: string;
+  location: string;
+  category: string;
+  alt: string;
+  story: string;
+  href: string;
+  link: string;
+};
+
 const categories = ["All photographs", "Landscapes", "Wildlife", "Culture & life", "On the trail"];
 
 export function Gallery() {
+  const [photos, setPhotos] = useState<readonly Photograph[]>(photographs);
   const [category, setCategory] = useState(categories[0]);
   const [selected, setSelected] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const filtered = photographs.filter((photo) => category === categories[0] || photo.category === category);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const response = await fetch(`${API_BASE}/api/v1/gallery`);
+        if (!response.ok) throw new Error(`Gallery request failed: ${response.status}`);
+        const body = (await response.json()) as { status?: unknown; data?: ApiGalleryItem[] };
+        const items = Array.isArray(body?.data) ? body.data : [];
+        if (!cancelled && items.length > 0) {
+          setPhotos(
+            items.map((item): Photograph => ({
+              src: item.imageUrl,
+              title: item.title,
+              location: item.location,
+              category: item.category,
+              alt: item.alt,
+              story: item.story,
+              href: item.href,
+              link: item.link,
+            })),
+          );
+        }
+      } catch {
+        // Backend unreachable — bundled photographs already set as initial state.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const filtered = photos.filter((photo) => category === categories[0] || photo.category === category);
   const photo = selected === null ? null : filtered[selected];
   const isOpen = selected !== null;
 

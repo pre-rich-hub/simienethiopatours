@@ -4,7 +4,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Compass, Mountain } from "@/components/Icon";
-import { journeys } from "@/lib/site";
+import { journeys as bundledJourneys } from "@/lib/site";
+
+type JourneyOption = {
+  slug: string;
+  href: string;
+  title: string;
+  image: string;
+  duration: string;
+  style: string;
+  difficulty: string;
+  summary: string;
+  fit: string;
+};
 
 const collections = [
   { id: "first-encounters", label: "First Encounters", journeys: [0, 1, 2] },
@@ -12,7 +24,22 @@ const collections = [
   { id: "summit-and-beyond", label: "Summit & Beyond", journeys: [2, 3, 4] },
 ] as const;
 
-export function DurationSelector() {
+export function DurationSelector({ tours }: { tours?: JourneyOption[] }) {
+  // Use server-provided tours when available, fall back to bundled site.ts data.
+  const items: readonly JourneyOption[] = tours && tours.length > 0
+    ? tours
+    : bundledJourneys.map((j) => ({
+        slug: j.href.replace("/treks/", ""),
+        href: j.href,
+        title: j.title,
+        image: j.image,
+        duration: j.duration,
+        style: j.style,
+        difficulty: j.difficulty,
+        summary: j.summary,
+        fit: j.fit,
+      }));
+
   const [active, setActive] = useState(1);
   const collection = collections[active];
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -73,7 +100,8 @@ export function DurationSelector() {
       >
         <div className="journey-discovery__grid">
           {collection.journeys.map((journeyIndex, cardIndex) => {
-            const journey = journeys[journeyIndex];
+            const journey = items[journeyIndex];
+            if (!journey) return null;
 
             return (
               <article className="journey-choice-card" key={journey.slug}>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, Check, CircleAlert, Compass, Mountain } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
-import { journeys } from "@/lib/site";
+import { cms } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Simien Mountains Treks & Private Journeys",
@@ -12,14 +12,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/treks" },
 };
 
-export default function TreksPage() {
+export default async function TreksPage() {
+  const journeys = await cms.getAllTours();
+
   return <PageShell lightHeader={false}>
     <section className="page-hero--image">
       <Image src="/images/simien-panorama.jpg" alt="Wide panorama across the Simien Mountains" fill priority sizes="100vw" />
       <div className="page-hero__content shell"><div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Journeys</span></div><p className="eyebrow">Private · flexible · locally guided</p><h1 className="display">Find your way <em>into Simien.</em></h1><p className="lead">Choose by the time you have, how you want to walk and what you want to feel. Every route is refined around current conditions.</p></div>
     </section>
     <section className="section">
-      <div className="shell intro-grid"><div><p className="eyebrow eyebrow--copper">The collection</p><h2 className="section-title">Five clear ways to <em>begin.</em></h2></div><p className="lead">From a first mountain encounter to a longer expedition, choose a route around your time, walking experience and interests. Camping, Gondar time and the daily pace are planned with you.</p></div>
+      <div className="shell intro-grid"><div><p className="eyebrow eyebrow--copper">The collection</p><h2 className="section-title">{journeys.length} clear way{journeys.length !== 1 ? "s" : ""} to <em>begin.</em></h2></div><p className="lead">From a first mountain encounter to a longer expedition, choose a route around your time, walking experience and interests. Camping, Gondar time and the daily pace are planned with you.</p></div>
       <div className="shell journey-grid">
         {journeys.map((journey) => <article className="journey-card" id={journey.slug} key={journey.slug}>
           <div className="journey-card__image">

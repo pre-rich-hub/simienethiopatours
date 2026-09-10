@@ -6,19 +6,36 @@ import { AtAGlance, EditorialHero, FeatureGrid, Itinerary, PageLinks, PlanningCa
 import { BookingCard } from "@/components/BookingCard";
 import { CircleAlert } from "@/components/Icon";
 import { detailedJourneys } from "@/lib/itineraries";
+import { cms } from "@/lib/cms";
 
-export const dynamicParams = false;
-export function generateStaticParams() { return detailedJourneys.map(({ slug }) => ({ slug })); }
+export const dynamicParams = true;
+
+// Pre-render bundled slugs at build time. DB-only tours are rendered at
+// request time via dynamicParams = true.
+export function generateStaticParams() {
+  return detailedJourneys.map(({ slug }) => ({ slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const journey = detailedJourneys.find((item) => item.slug === slug);
-  return journey ? { title: journey.title, description: journey.description, alternates: { canonical: `/treks/${slug}` } } : {};
+  const journey = await cms.getTourBySlug(slug);
+  if (!journey) return {};
+  return {
+    title: journey.title,
+    description: journey.description,
+    alternates: { canonical: `/treks/${slug}` },
+  };
 }
 
 export default async function JourneyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const journey = detailedJourneys.find((item) => item.slug === slug);
+
+  // 1. Try the CMS (API with bundled fallback).
+  const journey = await cms.getTourBySlug(slug);
+
+  // 2. If neither API nor bundle has this slug, 404.
   if (!journey) notFound();
+
   return <PageShell lightHeader={false}>
     <EditorialHero eyebrow={journey.duration} title={journey.heroTitle} accent={journey.heroAccent} lead={journey.description} image={{ src: journey.image, alt: journey.imageAlt }} parent={{ label: "Journeys", href: "/treks" }} />
     <AtAGlance facts={journey.facts} />

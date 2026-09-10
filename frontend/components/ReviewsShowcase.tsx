@@ -16,13 +16,12 @@ type TestimonialRow = {
   title: string | null;
   date: string | null;
   avatarTone: string | null;
+  translatedFrom: string | null;
 };
 
 const AVATAR_TONES: TravelerReview["avatarTone"][] = ["clay", "sky", "forest", "sand", "slate", "berry"];
 
-// The DB has no initials column, so avatar initials come from the first
-// letters of the name words. translatedFrom is not in the schema either;
-// DB-rendered cards simply skip the "Translated from" note.
+// Avatar initials come from the first letters of the name words.
 function toReview(row: TestimonialRow): TravelerReview | null {
   if (row.source !== "Tripadvisor" && row.source !== "Google") return null;
   const tone = AVATAR_TONES.includes(row.avatarTone as TravelerReview["avatarTone"])
@@ -41,6 +40,7 @@ function toReview(row: TestimonialRow): TravelerReview | null {
     title: row.title ?? undefined,
     text: row.message,
     avatarTone: tone,
+    translatedFrom: row.translatedFrom ?? undefined,
   };
 }
 

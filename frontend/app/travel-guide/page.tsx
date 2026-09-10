@@ -5,14 +5,16 @@ import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { sourceLinks } from "@/lib/site";
-import { fieldNotes } from "@/lib/field-notes";
+import { cms } from "@/lib/cms";
 
 export const metadata: Metadata = { title: "Simien Field Notes | Practical Travel Guide", description: "Plain-language planning notes for Simien seasons, altitude, packing, wildlife and travel from Gondar.", alternates: { canonical: "/travel-guide" } };
 
-export default function GuidePage() {
+export default async function GuidePage() {
+  const notes = await cms.getFieldNotes();
+
   return <PageShell>
     <section className="page-hero guide-hero"><div className="shell guide-hero__grid"><div><div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Field notes</span></div><p className="eyebrow eyebrow--copper">Practical knowledge · honest preparation</p><h1 className="display">Before the <em>mountain.</em></h1><p className="lead">The useful things to know before Gondar becomes a road, and the road becomes a trail.</p></div><div className="image-frame"><Image src="/images/geech-camp.jpg" alt="Colorful tents at Geech camp in the Simien Mountains" fill priority sizes="(max-width: 720px) 100vw, 42vw" /></div></div></section>
-    <section className="section"><div className="shell notes-grid">{fieldNotes.map((note, index) => <article key={note.title} id={note.tag.toLowerCase()}><span>0{index+1} · {note.tag}</span><h2>{note.title}</h2><p>{note.body}</p></article>)}</div></section>
+    <section className="section"><div className="shell notes-grid">{notes.map((note, index) => <article key={note.title} id={note.tag.toLowerCase()}><span>0{index+1} · {note.tag}</span><h2>{note.title}</h2><p>{note.body}</p></article>)}</div></section>
     <section className="section section--paper"><div className="shell"><SectionIntro tag="Plan the whole journey" title="Before, during" accent="and after the trail." /><FeatureGrid items={[
       { title: "Where to stay", body: "Compare Gondar hotels and guesthouses, Debark stops, Simien lodges and trekking camps around your itinerary.", href: "/where-to-stay-gondar-simien" },
       { title: "Festival dates & journeys", body: "Find the dated festival calendar and plan Timkat, Genna, Meskel or Enkutatash with time in the mountains.", href: "/festival-journeys" },
