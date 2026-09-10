@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, MessageCircle, X } from "@/components/Icon";
+import { MessageCircle, X } from "@/components/Icon";
 import { site } from "@/lib/site";
+import { AssistantChat } from "@/components/AssistantChat";
 
 function WhatsappIcon() {
   return <svg viewBox="0 0 32 32" aria-hidden="true" className="floating-contact__whatsapp-icon">
@@ -31,24 +31,7 @@ export function FloatingContact() {
 
   return (
     <div ref={rootRef} className="floating-contact">
-      <div className={`floating-contact__panel ${open ? "is-open" : ""}`} role="dialog" aria-label="Contact options" aria-hidden={!open} inert={!open}>
-        <div className="floating-contact__panel-header">
-          <span>Start a conversation</span>
-          <button type="button" onClick={() => setOpen(false)} aria-label="Close contact options"><X size={16} /></button>
-        </div>
-        <p>Tevan and the local team usually reply within a day.</p>
-        <div className="floating-contact__links">
-          <a href={site.whatsapp} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
-            <span>WhatsApp {site.phoneDisplay}</span><ArrowUpRight size={14} />
-          </a>
-          <Link href="/plan" onClick={() => setOpen(false)}>
-            <span>Plan your journey</span><ArrowUpRight size={14} />
-          </Link>
-          <a href={`mailto:${site.email}`} onClick={() => setOpen(false)}>
-            <span>Email us</span><ArrowUpRight size={14} />
-          </a>
-        </div>
-      </div>
+      <AssistantChat open={open} onClose={() => setOpen(false)} />
 
       <a
         className="floating-contact__button floating-contact__button--whatsapp"
@@ -66,7 +49,7 @@ export function FloatingContact() {
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-haspopup="dialog"
-        aria-label={open ? "Close contact options" : "Open contact options"}
+        aria-label={open ? "Close AI chat" : "Open AI chat"}
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
       </button>

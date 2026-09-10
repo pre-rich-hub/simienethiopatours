@@ -1443,3 +1443,56 @@ body { font-size: 18px; line-height: 1.65; }
 @media (prefers-reduced-motion: reduce) {
   .floating-contact__button, .floating-contact__panel { transition: none; }
 }
+
+/* Assistant chat panel */
+.assistant-chat {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  max-width: calc(100vw - 44px);
+  height: min(540px, calc(100dvh - 160px));
+  padding: 0;
+  overflow: hidden;
+}
+.assistant-chat__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.assistant-chat__title { margin: 0; font-family: var(--serif); font-size: 20px; font-weight: 500; letter-spacing: -.01em; line-height: 1.15; }
+.assistant-chat__subtitle { margin: 5px 0 0; color: var(--stone); font-size: 11px; line-height: 1.55; }
+.assistant-chat__close { display: grid; place-items: center; flex: 0 0 auto; width: 26px; height: 26px; border: 0; border-radius: 50%; background: transparent; color: var(--stone); cursor: pointer; transition: background-color .28s var(--ease-soft), color .28s var(--ease-soft); }
+.assistant-chat__close:hover { color: var(--ink); background: var(--paper); }
+.assistant-chat__thread { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 9px; padding: 16px 18px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.assistant-chat__message { max-width: 88%; padding: 10px 14px; border-radius: 3px; font-size: 13px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: break-word; }
+.assistant-chat__message--user { align-self: flex-end; background: var(--teal); color: white; }
+.assistant-chat__message--assistant { align-self: flex-start; background: var(--paper); color: var(--ink); }
+.assistant-chat__message--error { align-self: flex-start; max-width: 92%; border: 1px solid rgba(156,92,70,.35); background: rgba(156,92,70,.06); color: var(--clay); }
+.assistant-chat__message--error p { margin: 0; }
+.assistant-chat__error-links { display: flex; gap: 16px; margin-top: 9px; }
+.assistant-chat__error-links a { border-bottom: 1px solid currentColor; padding-bottom: 1px; font-weight: 600; }
+.assistant-chat__error-links a:hover { color: var(--ink); }
+.assistant-chat__toolbar { display: flex; justify-content: flex-end; padding: 2px 16px 6px; }
+.assistant-chat__reset { padding: 4px 2px; border: 0; background: transparent; color: var(--stone); font-size: 10px; letter-spacing: .04em; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; transition: color .28s var(--ease-soft); }
+.assistant-chat__reset:hover { color: var(--ink); }
+.assistant-chat__composer { display: flex; gap: 8px; padding: 10px 16px 14px; border-top: 1px solid var(--line); }
+.assistant-chat__input { flex: 1; min-width: 0; padding: 11px 13px; border: 1px solid var(--line); border-radius: 3px; background: var(--ivory); color: var(--ink); font-size: 13px; transition: border-color .28s var(--ease-soft); }
+.assistant-chat__input::placeholder { color: var(--stone-light); }
+.assistant-chat__input:focus { outline: 2px solid var(--copper); outline-offset: 1px; border-color: transparent; }
+.assistant-chat__input:disabled { opacity: .65; }
+.assistant-chat__send { flex: 0 0 auto; padding: 0 16px; border: 0; border-radius: 3px; background: var(--teal); color: white; font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; cursor: pointer; transition: background-color .3s var(--ease-soft), opacity .3s var(--ease-soft); }
+.assistant-chat__send:hover:not(:disabled) { background: var(--highland); }
+.assistant-chat__send:disabled { opacity: .55; cursor: not-allowed; }
+.assistant-chat__footer { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; padding: 9px 16px 12px; border-top: 1px solid var(--line); color: var(--stone); font-size: 10.5px; }
+.assistant-chat__footer a { display: inline-flex; align-items: center; gap: 3px; border-bottom: 1px solid currentColor; padding-bottom: 1px; color: var(--ink); }
+.assistant-chat__footer a:hover { color: var(--copper); }
+.assistant-chat__footer svg { width: 12px; height: 12px; }
+@media (max-width: 720px) {
+  .assistant-chat { width: min(360px, calc(100vw - 32px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .assistant-chat, .assistant-chat__close, .assistant-chat__send, .assistant-chat__reset, .assistant-chat__input { transition: none; }
+}
