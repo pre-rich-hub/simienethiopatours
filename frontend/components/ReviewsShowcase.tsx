@@ -2,47 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "@/components/Icon";
-import { reviewSources, travelerReviews, type ReviewSource, type TravelerReview } from "@/lib/reviews";
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
-// Shape of the public testimonials endpoint: GET {base}/api/v1/testimonials
-// returns { status, message, data: TestimonialRow[] }.
-type TestimonialRow = {
-  id: number;
-  reviewerName: string;
-  message: string;
-  source: string | null;
-  title: string | null;
-  date: string | null;
-  avatarTone: string | null;
-  translatedFrom: string | null;
-};
-
-const AVATAR_TONES: TravelerReview["avatarTone"][] = ["clay", "sky", "forest", "sand", "slate", "berry"];
-
-// Avatar initials come from the first letters of the name words.
-function toReview(row: TestimonialRow): TravelerReview | null {
-  if (row.source !== "Tripadvisor" && row.source !== "Google") return null;
-  const tone = AVATAR_TONES.includes(row.avatarTone as TravelerReview["avatarTone"])
-    ? (row.avatarTone as TravelerReview["avatarTone"])
-    : "slate";
-  return {
-    name: row.reviewerName,
-    initials: row.reviewerName
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((word) => word[0] ?? "")
-      .join("")
-      .toUpperCase(),
-    date: row.date ?? "",
-    source: row.source,
-    title: row.title ?? undefined,
-    text: row.message,
-    avatarTone: tone,
-    translatedFrom: row.translatedFrom ?? undefined,
-  };
-}
+import { reviewSources, type ReviewSource, type TravelerReview } from "@/lib/reviews";
 
 function Rating({ source, badge = false }: { source: ReviewSource; badge?: boolean }) {
   return <span className={`review-rating review-rating--${source.toLowerCase()}`} aria-label="5 out of 5">
@@ -133,34 +93,7 @@ function ReviewRail({ reviews }: { reviews: readonly TravelerReview[] }) {
   </div>;
 }
 
-export function ReviewsShowcase() {
-  // null = still loading. The component has no skeleton state of its own, so
-  // nothing renders until the fetch settles: DB rows on success, the bundled
-  // reviews unchanged when the backend is unreachable or returns non-200.
-  const [reviews, setReviews] = useState<readonly TravelerReview[] | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const response = await fetch(`${API_BASE}/api/v1/testimonials`);
-        if (!response.ok) throw new Error(`Testimonials request failed: ${response.status}`);
-        const body = (await response.json()) as { status?: unknown; data?: TestimonialRow[] };
-        const mapped = (Array.isArray(body?.data) ? body.data : [])
-          .map(toReview)
-          .filter((review): review is TravelerReview => review !== null);
-        if (!cancelled) setReviews(mapped.length > 0 ? mapped : travelerReviews);
-      } catch {
-        if (!cancelled) setReviews(travelerReviews);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  if (reviews === null) return null;
-
+export function ReviewsShowcase({ reviews }: { reviews: readonly TravelerReview[] }) {
   return <div className="reviews-showcase">
     {reviewSources.map((summary) => {
       const sourceReviews = reviews.filter((review) => review.source === summary.source);

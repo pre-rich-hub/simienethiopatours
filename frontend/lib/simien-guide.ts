@@ -3,9 +3,9 @@ import type { Feature } from "@/components/Editorial";
 export const simienReasons: Feature[] = [
   { title: "The trekker", tag: "Escarpments & trails", body: "Walk from open plateaus into a landscape of cliffs and deep valleys. Choose a short introduction or consecutive days on the trail.", href: "/treks" },
   { title: "The wildlife lover", tag: "Time to observe", body: "Leave room to watch geladas, look for Walia ibex in suitable habitat and notice highland birdlife. Encounters follow the animals’ own rhythms.", href: "#wildlife", linkLabel: "Meet the wildlife" },
-  { title: "The photographer", tag: "Light & landscape", body: "Build your days around the subjects that interest you: escarpments, giant lobelias, wildlife or the changing mountain light.", href: "/simien-photography-tour" },
+  { title: "The photographer", tag: "Light & landscape", body: "Build your days around the subjects that interest you: escarpments, giant lobelias, wildlife or the changing mountain light.", href: "/gallery" },
   { title: "The mountain walker", tag: "Higher ambitions", body: "Discuss Bwahit or a Ras Dashen expedition with time for preparation, acclimatization and a complete return route.", href: "/treks/ras-dashen-challenge" },
-  { title: "The curious traveler", tag: "A living highland", body: "Discover how communities farm, work and live around the mountains through local interpretation and respectfully arranged visits.", href: "/beyond-the-trail#local-experiences" },
+  { title: "The curious traveler", tag: "A living highland", body: "Discover how communities farm, work and live around the mountains through local interpretation and respectfully arranged visits.", href: "/gondar#experiences" },
   { title: "The traveler with one day", tag: "A first encounter", body: "Travel from Gondar for selected viewpoints, wildlife watching and a walk, then return to the city without camping.", href: "/treks/simien-day-trip" },
 ];
 
@@ -32,10 +32,10 @@ export const simienWildlife: Feature[] = [
 ];
 
 export const simienPlanning: Feature[] = [
-  { title: "Getting here", body: "Start in Gondar, travel north to Debark and continue into the park after local arrangements. Transfers and the first walking point depend on your itinerary.", href: "/travel-guide#access", linkLabel: "Plan the approach" },
-  { title: "Season & weather", body: "The right time depends on your priorities: walking conditions, greener landscapes, photography or a quieter visit. Ask about conditions for your travel dates.", href: "/travel-guide#timing", linkLabel: "Read the seasonal notes" },
-  { title: "Packing & camping", body: "Prepare for changing weather and cold mountain nights. Confirm which camping equipment is supplied and what you need to carry personally.", href: "/travel-guide#packing", linkLabel: "Prepare your kit" },
-  { title: "Walking difficulty", body: "Consider daily effort, altitude and terrain alongside the number of days. Share your experience so the team can recommend an appropriate route.", href: "/travel-guide#difficulty", linkLabel: "Understand the walking" },
-  { title: "Where to stay", body: "Connect your Gondar hotel, any Debark stop and your mountain lodge or camps with the walking route.", href: "/where-to-stay-gondar-simien", linkLabel: "Explore accommodation" },
+  { title: "Getting here", body: "Start in Gondar, travel north to Debark and continue into the park after local arrangements. Transfers and the first walking point depend on your itinerary.", href: "/plan", linkLabel: "Plan the approach" },
+  { title: "Season & weather", body: "The right time depends on your priorities: walking conditions, greener landscapes, photography or a quieter visit. Ask about conditions for your travel dates.", href: "/plan", linkLabel: "Ask about your dates" },
+  { title: "Packing & camping", body: "Prepare for changing weather and cold mountain nights. Confirm which camping equipment is supplied and what you need to carry personally.", href: "/plan", linkLabel: "Ask about your kit" },
+  { title: "Walking difficulty", body: "Consider daily effort, altitude and terrain alongside the number of days. Share your experience so the team can recommend an appropriate route.", href: "/plan", linkLabel: "Discuss the walking" },
+  { title: "Where to stay", body: "Connect your Gondar hotel, any Debark stop and your mountain lodge or camps with the walking route.", href: "/plan", linkLabel: "Plan your stays" },
   { title: "What will it cost?", body: "Group size, transport, route, nights, equipment and meal arrangements shape the quote. Ask for an itemized plan for your dates.", href: "/plan", linkLabel: "Request a personal quote" },
 ];

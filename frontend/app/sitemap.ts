@@ -13,19 +13,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/simien-mountains",
     "/treks",
     "/gondar",
-    "/ras-dashen",
-    "/whats-included",
     "/about",
-    "/reviews",
     "/gallery",
-    "/travel-guide",
     "/plan",
-    "/photo-credits",
-    "/beyond-the-trail",
-    "/festival-journeys",
-    "/gondar-running-experience",
-    "/simien-photography-tour",
-    "/where-to-stay-gondar-simien",
+    "/privacy",
+    "/terms",
   ];
 
   const allPaths = [...staticPaths, ...tourPaths];

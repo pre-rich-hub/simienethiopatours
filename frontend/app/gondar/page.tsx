@@ -37,7 +37,7 @@ export default function GondarPage() {
         { title: "Gorgora & Lake Tana", body: "For travelers with more time, Lake Tana and Gorgora offer a different side of northern Ethiopia — water, history and quieter landscapes." },
       ]} />
     </div></section>
-    <section className="split-image-story" id="countryside"><div className="image-frame"><Image src="/images/road-to-simien.jpg" alt="Everyday life in the northern Ethiopian highlands" fill sizes="(max-width: 720px) 100vw, 55vw" /></div><div><p className="eyebrow eyebrow--copper">City edge → countryside → local life</p><h2>A different way to move through Gondar.</h2><p>Explore Kosoye’s surrounding countryside at walking pace, or join a local running guide on quieter paths and dirt tracks. Routes follow your ability, interests and the conditions on the day.</p><Link href="/gondar-running-experience" className="text-link">Discover hidden Gondar running</Link></div></section>
+    <section className="split-image-story" id="countryside"><div className="image-frame"><Image src="/images/road-to-simien.jpg" alt="Everyday life in the northern Ethiopian highlands" fill sizes="(max-width: 720px) 100vw, 55vw" /></div><div><p className="eyebrow eyebrow--copper">City edge → countryside → local life</p><h2>A different way to move through Gondar.</h2><p>Explore Kosoye’s surrounding countryside at walking pace, or join a local running guide on quieter paths and dirt tracks. Routes follow your ability, interests and the conditions on the day.</p><Link href="/plan?experience=gondar-running" className="text-link">Ask about countryside running</Link></div></section>
     <section className="section section--paper" id="before-simien"><div className="shell">
       <SectionIntro tag="Before you trek Simien" title="Your time in Gondar" accent="is also your preparation." />
       <p className="content-lead">You shouldn’t have to arrive and figure everything out yourself. Before heading toward the mountains, we help you understand the practical side of the journey.</p>
@@ -47,13 +47,13 @@ export default function GondarPage() {
         { title: "What we provide", body: "Your guide, support team, camping system and other equipment included in your booking." },
         { title: "How it works", body: "Where you meet, when you leave, how transport works and what happens once you reach the mountains." },
       ]} />
-      <p className="content-note">Read more on the <Link href="/travel-guide">travel guide</Link>, or see exactly what’s included on each journey in our <Link href="/whats-included">inclusions guide</Link>.</p>
+      <p className="content-note">Tell us your dates and walking comfort, and we will explain what is included before you book.</p>
     </div></section>
     <StorySection id="simien" tag="History today. Highlands tomorrow." title="Gondar is where" accent="the journey begins." image={{ src: "/images/imet-gogo.jpg", alt: "The Simien escarpment beyond Gondar", caption: "Gondar → Simien Mountains" }} paragraphs={[
       "Start with the royal city, food and coffee, then follow the road through farmland and Debark into the Simien Mountains. Escarpments, geladas, camping and highland walking become the next chapter.",
       "Our five-day Gondar, Heritage & Simien journey connects city history, Woleka and two mountain nights. Add more time for culture, photography or a longer trek when you want the story to continue.",
       "For a more active five-day adventure, begin with one night in Gondar and follow the classic camping route through Sankaber, Geech, Imet Gogo and Chenek, with three nights in the mountains. Travelers with a summit in mind can continue the story toward Ras Dashen.",
-    ]}><Link className="text-link" href="/treks/5-day-gondar-simien">Explore the Royal City & Mountain Adventure</Link><p><Link className="text-link" href="/treks/gondar-heritage-simien">Explore the heritage-focused journey</Link></p><p><Link className="text-link" href="/ras-dashen">Explore the Ras Dashen trek</Link></p></StorySection>
+    ]}><Link className="text-link" href="/treks/5-day-gondar-simien">Explore the Royal City & Mountain Adventure</Link><p><Link className="text-link" href="/treks/gondar-heritage-simien">Explore the heritage-focused journey</Link></p><p><Link className="text-link" href="/treks/ras-dashen-challenge">Explore the Ras Dashen trek</Link></p></StorySection>
     <section className="section"><div className="shell editorial-grid">
       <div><SectionIntro tag="Travel local" title="Leave something" accent="behind." /></div>
       <div className="prose">

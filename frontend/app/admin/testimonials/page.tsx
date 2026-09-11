@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
-import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminBadge, AdminNotice } from "@/components/admin/ui";
+import { useState, type FormEvent } from "react";
+import { adminMutate } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminBadge,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  AdminSearch, AdminNotice, adminFormSection, adminFormGrid, adminFormActions, adminTableActions,
+} from "@/components/admin/ui";
 
 type Testimonial = {
   id: number;
@@ -17,12 +23,11 @@ type Testimonial = {
 };
 
 export default function AdminTestimonialsPage() {
-  const [items, setItems] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { items, setItems, loading, error, reload } = useAdminList<Testimonial>("/api/v1/admin/testimonials");
+  const [search, setSearch] = useState("");
   const [editing, setEditing] = useState<Testimonial | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  // form
   const [message, setMessage] = useState("");
   const [reviewerName, setReviewerName] = useState("");
   const [profession, setProfession] = useState("");
@@ -32,22 +37,19 @@ export default function AdminTestimonialsPage() {
   const [avatarTone, setAvatarTone] = useState("");
   const [translatedFrom, setTranslatedFrom] = useState("");
   const [saving, setSaving] = useState(false);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
-  function load() {
-    adminRequestClient<Testimonial[]>("/api/v1/admin/testimonials")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => { load(); }, []);
+  const filtered = items.filter((t) => {
+    if (!search) return true;
+    const q = search.toLowerCase();
+    return [t.reviewerName, t.title, t.message, t.source].some((v) => (v || "").toLowerCase().includes(q));
+  });
 
   function openNew() {
     setEditing(null);
     setMessage(""); setReviewerName(""); setProfession(""); setSource("");
     setTitle(""); setDate(""); setAvatarTone(""); setTranslatedFrom("");
-    setNotice(null);
+    setFormError(null);
     setShowForm(true);
   }
 
@@ -57,16 +59,16 @@ export default function AdminTestimonialsPage() {
     setProfession(t.profession || ""); setSource(t.source || "");
     setTitle(t.title || ""); setDate(t.date || "");
     setAvatarTone(t.avatarTone || ""); setTranslatedFrom(t.translatedFrom || "");
-    setNotice(null);
+    setFormError(null);
     setShowForm(true);
   }
 
-  function cancel() { setShowForm(false); setEditing(null); setNotice(null); }
+  function cancel() { setShowForm(false); setEditing(null); setFormError(null); }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSaving(true);
-    setNotice(null);
+    setFormError(null);
     try {
       const payload = {
         message, reviewerName,
@@ -85,12 +87,12 @@ export default function AdminTestimonialsPage() {
         json: payload,
       });
       if (result === null) return;
-      setNotice({ type: "success", msg: editing ? "Testimonial updated." : "Testimonial created." });
+      adminToast("success", editing ? "Testimonial updated." : "Testimonial created.");
       setShowForm(false);
       setEditing(null);
-      load();
+      await reload();
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Save failed" });
+      setFormError(err instanceof Error ? err.message : "Save failed");
     }
     setSaving(false);
   }
@@ -101,33 +103,32 @@ export default function AdminTestimonialsPage() {
       const result = await adminMutate(`/api/v1/admin/testimonials/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((t) => t.id !== id));
-      setNotice({ type: "success", msg: "Testimonial deleted." });
+      adminToast("success", "Testimonial deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Testimonials</h1>
-        <div className="admin-page-header__actions">
-          <AdminButton variant="primary" onClick={openNew}>New testimonial</AdminButton>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Testimonials"
+        actions={<AdminButton variant="primary" onClick={openNew}>New testimonial</AdminButton>}
+      />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      <AdminSearch value={search} onChange={setSearch} placeholder="Search reviewer, title, or message..." />
 
       {showForm && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={editing ? "Edit testimonial" : "New testimonial"}>
+            {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
             <form onSubmit={handleSubmit}>
-              <AdminField label="Message" className="admin-form-section">
+              <AdminField label="Message" className={adminFormSection}>
                 <AdminTextarea required value={message} onChange={(e) => setMessage(e.target.value)} />
               </AdminField>
-              <div className="admin-form-grid">
+              <div className={adminFormGrid}>
                 <AdminField label="Reviewer name">
                   <AdminInput required value={reviewerName} onChange={(e) => setReviewerName(e.target.value)} />
                 </AdminField>
@@ -144,13 +145,13 @@ export default function AdminTestimonialsPage() {
                   <AdminInput value={date} onChange={(e) => setDate(e.target.value)} placeholder="e.g. January 2026" />
                 </AdminField>
                 <AdminField label="Avatar tone">
-                  <AdminInput value={avatarTone} onChange={(e) => setAvatarTone(e.target.value)} placeholder="e.g. warm, professional" />
+                  <AdminInput value={avatarTone} onChange={(e) => setAvatarTone(e.target.value)} placeholder="e.g. clay, sky, forest" />
                 </AdminField>
                 <AdminField label="Translated from">
                   <AdminInput value={translatedFrom} onChange={(e) => setTranslatedFrom(e.target.value)} placeholder="e.g. Amharic, N/A" />
                 </AdminField>
               </div>
-              <div className="admin-form-actions" style={{ marginTop: 16 }}>
+              <div className={`${adminFormActions} mt-4`}>
                 <AdminButton type="submit" disabled={saving}>{saving ? "Saving..." : editing ? "Update" : "Create"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancel}>Cancel</AdminButton>
               </div>
@@ -159,47 +160,34 @@ export default function AdminTestimonialsPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
-        {items.length === 0 ? (
-          <div className="admin-empty">No testimonials yet.</div>
+      <AdminCard flush>
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : filtered.length === 0 ? (
+          <AdminEmpty>{items.length === 0 ? "No testimonials yet." : "No testimonials match your search."}</AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Title</th>
-                  <th>Profession</th>
-                  <th>Source</th>
-                  <th>Date</th>
-                  <th>Translated</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((t) => (
-                  <tr key={t.id}>
-                    <td style={{ fontWeight: 600 }}>{t.reviewerName}</td>
-                    <td>{t.title || "—"}</td>
-                    <td>{t.profession || "—"}</td>
-                    <td>{t.source || "—"}</td>
-                    <td>{t.date || "—"}</td>
-                    <td>
-                      {t.translatedFrom && <AdminBadge variant="amber">{t.translatedFrom}</AdminBadge>}
-                    </td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openEdit(t)}>Edit</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(t.id, t.reviewerName)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Name", "Message", "Title", "Source", "Date", "Translated", ""]}>
+            {filtered.map((t) => (
+              <AdminTableRow key={t.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{t.reviewerName}</AdminTd>
+                <AdminTd truncate>{t.message}</AdminTd>
+                <AdminTd>{t.title || "—"}</AdminTd>
+                <AdminTd>{t.source || "—"}</AdminTd>
+                <AdminTd>{t.date || "—"}</AdminTd>
+                <AdminTd>
+                  {t.translatedFrom && <AdminBadge variant="amber">{t.translatedFrom}</AdminBadge>}
+                </AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => openEdit(t)}>Edit</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(t.id, t.reviewerName)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

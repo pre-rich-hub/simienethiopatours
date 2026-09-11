@@ -33,7 +33,7 @@ export default function AboutPage() {
       "Before you arrive, routes are planned, transport is organized, food is prepared and the mountain team is coordinated. Weather and equipment need attention long before the first walking day.",
       "A tent matters when the wind moves through camp. A sleeping system matters when the temperature drops. Cooking equipment matters when dinner is being prepared after a long day on the trail. We prepare, check, clean, maintain and organize the gear before it becomes part of your journey.",
       "Your final quotation explains the camping and sleeping equipment included. Tell us your comfort needs and ask about anything you plan to bring or hire.",
-    ]}><Link className="text-link" href="/travel-guide#packing">Read the preparation notes</Link></StorySection>
+    ]}><Link className="text-link" href="/plan">Ask about preparation</Link></StorySection>
     <section className="section"><div className="shell founder-note"><p className="eyebrow eyebrow--copper">A note from Tevan</p><blockquote>“I have walked these mountains many times. But guiding has taught me that you never really see a place the same way twice. A traveler asks a question. Someone notices something you’ve walked past a hundred times. The light reaches the valley differently. Suddenly, you are seeing your own home through someone else’s eyes.”</blockquote><p>I want to share a place that means something to me. I hope that when you leave, the Simien means something to you too.</p><span>Tesema “Tevan” · Founder & local guide · Gondar, Ethiopia</span></div></section>
     <PlanningCall title="Before you book, tell me your story." eyebrow="Your time · Your curiosity · Your pace" label="Plan your journey with Tevan" />
   </PageShell>;

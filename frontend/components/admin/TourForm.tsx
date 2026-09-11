@@ -3,10 +3,14 @@
 import { type FormEvent, type ReactNode, useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
+import { cn } from "@/lib/utils";
 import {
   AdminButton, AdminField, AdminInput, AdminTextarea, AdminSelect,
   AdminToggle, AdminNotice, AdminAddRow, AdminRepeaterItem, Plus, Trash2,
   ChevronUp, ChevronDown,
+  adminFormSection, adminFormGrid, adminFormTitle, adminFormDesc, adminDivider,
+  adminCheckGrid, adminCheckbox, adminCheckboxChecked, adminRepeater,
+  adminImagePreview,
 } from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
@@ -132,15 +136,15 @@ function ListRepeater({
   placeholder?: string;
 }) {
   return (
-    <div className="admin-repeater">
+    <div className={adminRepeater}>
       {value.map((item, i) => (
-        <div key={i} className="admin-repeater__item">
+        <div key={i} className="grid grid-cols-[1fr_auto] items-start gap-2">
           <AdminInput
             value={item}
             placeholder={placeholder}
             onChange={(e) => { const next = [...value]; next[i] = e.target.value; onChange(next); }}
           />
-          <div className="admin-repeater__reorder">
+          <div className="flex gap-1">
             {i > 0 && (
               <AdminButton variant="secondary" size="small" onClick={() => { const next = [...value]; [next[i - 1], next[i]] = [next[i], next[i - 1]]; onChange(next); }}>
                 <ChevronUp size={14} />
@@ -176,12 +180,12 @@ function FactRepeater({
     onChange(next);
   }
   return (
-    <div className="admin-repeater">
+    <div className={adminRepeater}>
       {value.map((f, i) => (
-        <div key={i} className="admin-repeater__item admin-repeater__item--pair">
+        <div key={i} className="grid grid-cols-[1fr_1fr_auto] items-start gap-2">
           <AdminInput value={f.label} placeholder="Label" onChange={(e) => update(i, "label", e.target.value)} />
           <AdminInput value={f.value} placeholder="Value" onChange={(e) => update(i, "value", e.target.value)} />
-          <div className="admin-repeater__reorder">
+          <div className="flex gap-1">
             <AdminButton variant="danger" size="small" onClick={() => onChange(value.filter((_, j) => j !== i))}>
               <Trash2 size={14} />
             </AdminButton>
@@ -208,9 +212,9 @@ function TitleBodyRepeater({
     onChange(next as TitleBody[] | RelatedItem[]);
   }
   return (
-    <div className="admin-repeater">
+    <div className={adminRepeater}>
       {value.map((item, i) => (
-        <div key={i} className="admin-repeater__item--day">
+        <div key={i} className="flex flex-col gap-3 border border-line bg-white p-5">
           <AdminField label="Title">
             <AdminInput value={item.title} onChange={(e) => update(i, "title", e.target.value)} />
           </AdminField>
@@ -277,11 +281,11 @@ function ItineraryEditor({
   }
 
   return (
-    <div className="admin-repeater">
+    <div className={adminRepeater}>
       {value.map((day, i) => (
-        <div key={i} className="admin-repeater__item--day">
-          <div className="admin-repeater__day-header">
-            <span className="admin-repeater__day-number">Day {i + 1}</span>
+        <div key={i} className="flex flex-col gap-3 border border-line bg-white p-5">
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-serif text-sm font-medium text-copper">Day {i + 1}</span>
             <div style={{ display: "flex", gap: 4 }}>
               {i > 0 && (
                 <AdminButton variant="secondary" size="small" onClick={() => moveDay(i, -1)}>
@@ -298,7 +302,7 @@ function ItineraryEditor({
               </AdminButton>
             </div>
           </div>
-          <div className="admin-form-grid">
+          <div className={adminFormGrid}>
             <AdminField label="Title">
               <AdminInput value={day.title} onChange={(e) => updateDay(i, { title: e.target.value })} />
             </AdminField>
@@ -327,13 +331,13 @@ function ItineraryEditor({
           {/* Stages */}
           <div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-              <span className="admin-label">Stages</span>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-stone">Stages</span>
               <AdminButton variant="secondary" size="small" onClick={() => addStage(i)}>
                 <Plus size={14} /> Add stage
               </AdminButton>
             </div>
             {day.stages.map((stage, si) => (
-              <div key={si} className="admin-repeater__item" style={{ marginBottom: 8 }}>
+              <div key={si} className="grid grid-cols-[1fr_auto] items-start gap-2" style={{ marginBottom: 8 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 8, width: "100%" }}>
                   <AdminInput value={stage.label} placeholder="Stage label" onChange={(e) => updateStage(i, si, "label", e.target.value)} />
                   <AdminInput value={stage.body} placeholder="Stage body" onChange={(e) => updateStage(i, si, "body", e.target.value)} />
@@ -416,6 +420,7 @@ export default function TourForm({
 
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ tourTitle?: string; tourDestination?: string }>({});
 
   const imagePreview = useFilePreview(form.tourImageFile, form.image);
 
@@ -425,6 +430,15 @@ export default function TourForm({
 
   const handleSave = useCallback(async (e: FormEvent) => {
     e.preventDefault();
+    const nextErrors: { tourTitle?: string; tourDestination?: string } = {};
+    if (!form.tourTitle.trim()) nextErrors.tourTitle = "Tour name is required.";
+    if (!form.tourDestination) nextErrors.tourDestination = "Choose a destination.";
+    setFieldErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setNotice({ type: "error", msg: "Please fix the highlighted fields before saving." });
+      return;
+    }
+
     setSaving(true);
     setNotice(null);
 
@@ -485,13 +499,13 @@ export default function TourForm({
 
   return (
     <form onSubmit={handleSave}>
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
       {/* Basics */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Basics</h3>
-        <div className="admin-form-grid" style={{ marginBottom: 20 }}>
-          <AdminField label="Tour name">
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Basics</h3>
+        <div className={adminFormGrid} style={{ marginBottom: 20 }}>
+          <AdminField label="Tour name" error={fieldErrors.tourTitle}>
             <AdminInput required value={form.tourTitle} onChange={(e) => set("tourTitle", e.target.value)} />
           </AdminField>
           {!isNew && typeof initialData?.slug === "string" && (
@@ -500,18 +514,18 @@ export default function TourForm({
             </AdminField>
           )}
         </div>
-        <div className="admin-form-grid" style={{ marginBottom: 20 }}>
-          <AdminField label="Destination">
+        <div className={adminFormGrid} style={{ marginBottom: 20 }}>
+          <AdminField label="Destination" error={fieldErrors.tourDestination}>
             <AdminSelect value={form.tourDestination} onChange={(e) => set("tourDestination", e.target.value)} placeholder="Select destination">
               {destinations.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
             </AdminSelect>
           </AdminField>
           <AdminField label="Categories">
-            <div className="admin-check-grid">
+            <div className={adminCheckGrid}>
               {categories.map((c) => {
                 const checked = form.tourCategories.includes(c.id);
                 return (
-                  <label key={c.id} className={`admin-checkbox ${checked ? "admin-checkbox--checked" : ""}`}>
+                  <label key={c.id} className={cn(adminCheckbox, checked && adminCheckboxChecked)}>
                     <input
                       type="checkbox"
                       checked={checked}
@@ -528,13 +542,13 @@ export default function TourForm({
             </div>
           </AdminField>
         </div>
-        <div className="admin-form-grid" style={{ marginBottom: 20 }}>
+        <div className={adminFormGrid} style={{ marginBottom: 20 }}>
           <AdminField label="Additional destinations">
-            <div className="admin-check-grid">
+            <div className={adminCheckGrid}>
               {destinations.map((d) => {
                 const checked = form.tourDestinations.includes(d.id);
                 return (
-                  <label key={d.id} className={`admin-checkbox ${checked ? "admin-checkbox--checked" : ""}`}>
+                  <label key={d.id} className={cn(adminCheckbox, checked && adminCheckboxChecked)}>
                     <input
                       type="checkbox"
                       checked={checked}
@@ -551,7 +565,7 @@ export default function TourForm({
             </div>
           </AdminField>
         </div>
-        <div className="admin-form-grid" style={{ marginBottom: 20 }}>
+        <div className={adminFormGrid} style={{ marginBottom: 20 }}>
           <AdminField label="Adult price">
             <AdminInput type="number" step="0.01" value={form.adultPrice} onChange={(e) => set("adultPrice", e.target.value)} />
           </AdminField>
@@ -571,7 +585,7 @@ export default function TourForm({
             <AdminInput type="number" min="0" value={form.sortOrder} onChange={(e) => set("sortOrder", e.target.value)} />
           </AdminField>
         </div>
-        <div className="admin-form-grid" style={{ marginBottom: 20 }}>
+        <div className={adminFormGrid} style={{ marginBottom: 20 }}>
           <AdminField label="Duration">
             <AdminInput value={form.duration} placeholder="e.g. 5 days · 4 nights" onChange={(e) => set("duration", e.target.value)} />
           </AdminField>
@@ -588,39 +602,69 @@ export default function TourForm({
         <AdminField label="Overview">
           <AdminTextarea value={form.tourOverview} rows={4} onChange={(e) => set("tourOverview", e.target.value)} />
         </AdminField>
-        <div className="admin-form-grid" style={{ marginTop: 20 }}>
+        <div className={adminFormGrid} style={{ marginTop: 20 }}>
           <AdminToggle checked={form.isFeatured} onChange={(v) => set("isFeatured", v)} label="Featured" />
-          <AdminToggle checked={form.isPublished} onChange={(v) => set("isPublished", v)} label="Published" />
+          <AdminField
+            label="Visibility"
+            hint={form.isPublished
+              ? "Published tours appear on the public site when the API is healthy."
+              : "Draft tours stay in admin only. They will not appear on the public site."}
+          >
+            <div className="flex items-center gap-3">
+              <AdminToggle checked={form.isPublished} onChange={(v) => set("isPublished", v)} label="Published" />
+              <span className={cn(
+                "rounded-sm px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em]",
+                form.isPublished ? "bg-teal/12 text-teal" : "bg-copper/12 text-copper",
+              )}>
+                {form.isPublished ? "Live" : "Draft"}
+              </span>
+            </div>
+          </AdminField>
         </div>
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Image */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Image</h3>
-        <div className="admin-image-row">
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Image</h3>
+        <div className="flex items-start gap-4">
           {(form.tourImageFile || form.image) && (
             <img
-              className="admin-image-preview"
+              className={adminImagePreview}
               src={imagePreview}
               alt="Preview"
             />
           )}
           <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
-            <AdminField label="Upload file">
+            <AdminField
+              label="Upload file"
+              hint={form.tourImageFile
+                ? `New file selected: ${form.tourImageFile.name}. Save to replace the current image.`
+                : form.image
+                  ? "Upload a file to replace the current image, or keep the URL below."
+                  : "JPEG, PNG, WebP or AVIF."}
+            >
               <input
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/avif"
                 onChange={(e) => set("tourImageFile", e.target.files?.[0] ?? null)}
               />
             </AdminField>
-            <AdminField label="Or paste image URL">
+            {form.tourImageFile && (
+              <AdminButton variant="secondary" size="small" onClick={() => set("tourImageFile", null)}>
+                Clear new file
+              </AdminButton>
+            )}
+            <AdminField
+              label="Or paste image URL"
+              hint={form.image && !form.tourImageFile ? `Current image: ${form.image}` : undefined}
+            >
               <AdminInput value={form.image} placeholder="https://..." onChange={(e) => set("image", e.target.value)} />
             </AdminField>
           </div>
         </div>
-        <div className="admin-form-grid" style={{ marginTop: 20 }}>
+        <div className={adminFormGrid} style={{ marginTop: 20 }}>
           <AdminField label="Hero title">
             <AdminInput value={form.heroTitle} onChange={(e) => set("heroTitle", e.target.value)} />
           </AdminField>
@@ -633,11 +677,11 @@ export default function TourForm({
         </div>
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Editorial: Inquiry & Notice */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Inquiry & Notice</h3>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Inquiry & Notice</h3>
         <AdminField label="Inquiry slug (links to plan page)">
           <AdminInput value={form.inquiry} placeholder="e.g. simien-day" onChange={(e) => set("inquiry", e.target.value)} />
         </AdminField>
@@ -648,89 +692,89 @@ export default function TourForm({
         </div>
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Route */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Route</h3>
-        <p className="admin-form-section__desc">List of stops shown on the tour page (e.g. Gondar, Debark, Sankaber).</p>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Route</h3>
+        <p className={adminFormDesc}>List of stops shown on the tour page (e.g. Gondar, Debark, Sankaber).</p>
         <ListRepeater value={form.route} onChange={(v) => set("route", v)} placeholder="Stop name" />
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Facts */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Facts</h3>
-        <p className="admin-form-section__desc">Key facts displayed in the &ldquo;At a glance&rdquo; grid.</p>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Facts</h3>
+        <p className={adminFormDesc}>Key facts displayed in the &ldquo;At a glance&rdquo; grid.</p>
         <FactRepeater value={form.facts} onChange={(v) => set("facts", v)} />
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Introduction */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Introduction</h3>
-        <p className="admin-form-section__desc">Opening paragraphs for &ldquo;The journey&rdquo; section.</p>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Introduction</h3>
+        <p className={adminFormDesc}>Opening paragraphs for &ldquo;The journey&rdquo; section.</p>
         <ListRepeater value={form.introduction} onChange={(v) => set("introduction", v)} placeholder="Paragraph" />
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Itinerary */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Itinerary</h3>
-        <p className="admin-form-section__desc">Day-by-day breakdown. Paragraphs split on blank lines. Stages are optional sub-stops within a day.</p>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Itinerary</h3>
+        <p className={adminFormDesc}>Day-by-day breakdown. Paragraphs split on blank lines. Stages are optional sub-stops within a day.</p>
         <ItineraryEditor value={form.itinerary} onChange={(v) => set("itinerary", v)} />
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Highlights */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Highlights</h3>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Highlights</h3>
         <TitleBodyRepeater value={form.highlights} onChange={(v) => set("highlights", v as TitleBody[])} />
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Preparation */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Preparation</h3>
-        <p className="admin-form-section__desc">Advice and expectations shown in &ldquo;Before you choose&rdquo;.</p>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Preparation</h3>
+        <p className={adminFormDesc}>Advice and expectations shown in &ldquo;Before you choose&rdquo;.</p>
         <ListRepeater value={form.preparation} onChange={(v) => set("preparation", v)} placeholder="Preparation note" />
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Included / Excluded */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Included & Excluded</h3>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Included & Excluded</h3>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
           <div>
-            <span className="admin-label" style={{ display: "block", marginBottom: 8 }}>Included</span>
+            <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.08em] text-stone">Included</span>
             <ListRepeater value={form.tourIncluded} onChange={(v) => set("tourIncluded", v)} placeholder="Included item" />
           </div>
           <div>
-            <span className="admin-label" style={{ display: "block", marginBottom: 8 }}>Excluded</span>
+            <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.08em] text-stone">Excluded</span>
             <ListRepeater value={form.tourExcluded} onChange={(v) => set("tourExcluded", v)} placeholder="Excluded item" />
           </div>
         </div>
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Related */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Related tours</h3>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Related tours</h3>
         <TitleBodyRepeater value={form.related} onChange={(v) => set("related", v as RelatedItem[])} showHref />
       </div>
 
-      <hr className="admin-form-divider" />
+      <hr className={adminDivider} />
 
       {/* Journey map */}
-      <div className="admin-form-section">
-        <h3 className="admin-form-section__title">Journey map</h3>
+      <div className={adminFormSection}>
+        <h3 className={adminFormTitle}>Journey map</h3>
         <AdminField label="Map URL or description">
           <AdminInput value={form.tourMap} onChange={(e) => set("tourMap", e.target.value)} />
         </AdminField>

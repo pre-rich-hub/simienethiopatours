@@ -4,61 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, X } from "@/components/Icon";
-import { photographs, type Photograph } from "@/lib/gallery-data";
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
-type ApiGalleryItem = {
-  imageUrl: string;
-  title: string;
-  location: string;
-  category: string;
-  alt: string;
-  story: string;
-  href: string;
-  link: string;
-};
+import { type Photograph } from "@/lib/gallery-data";
 
 const categories = ["All photographs", "Landscapes", "Wildlife", "Culture & life", "On the trail"];
 
-export function Gallery() {
-  const [photos, setPhotos] = useState<readonly Photograph[]>(photographs);
+export function Gallery({ photographs }: { photographs: readonly Photograph[] }) {
   const [category, setCategory] = useState(categories[0]);
   const [selected, setSelected] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const response = await fetch(`${API_BASE}/api/v1/gallery`);
-        if (!response.ok) throw new Error(`Gallery request failed: ${response.status}`);
-        const body = (await response.json()) as { status?: unknown; data?: ApiGalleryItem[] };
-        const items = Array.isArray(body?.data) ? body.data : [];
-        if (!cancelled && items.length > 0) {
-          setPhotos(
-            items.map((item): Photograph => ({
-              src: item.imageUrl,
-              title: item.title,
-              location: item.location,
-              category: item.category,
-              alt: item.alt,
-              story: item.story,
-              href: item.href,
-              link: item.link,
-            })),
-          );
-        }
-      } catch {
-        // Backend unreachable — bundled photographs already set as initial state.
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+  const photos = photographs;
   const filtered = photos.filter((photo) => category === categories[0] || photo.category === category);
   const photo = selected === null ? null : filtered[selected];
   const isOpen = selected !== null;
@@ -94,7 +50,7 @@ export function Gallery() {
         <span className="gallery-tile__bottom"><span>{item.location}</span><span className="gallery-tile__expand" aria-hidden="true"><ArrowUpRight size={18} /></span></span>
       </button>)}
     </div>
-    <div className="gallery-colophon shell"><span>A glimpse of the place. A beginning for your journey.</span><Link href="/photo-credits">Photography & credits <ArrowUpRight size={13} /></Link></div>
+    <div className="gallery-colophon shell"><span>A glimpse of the place. A beginning for your journey.</span></div>
     <dialog ref={dialogRef} className="gallery-viewer" aria-labelledby="gallery-photo-title" aria-describedby="gallery-photo-story" onCancel={(event) => { event.preventDefault(); setSelected(null); }} onClick={(event) => { if (event.target === event.currentTarget) setSelected(null); }} onKeyDown={(event) => { if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } }}>
       {photo && <>
         <div className="gallery-viewer__top"><span>{String((selected ?? 0) + 1).padStart(2, "0")} / {String(filtered.length).padStart(2, "0")} <span> · {photo.category}</span></span><button type="button" aria-label="Close photograph" onClick={() => setSelected(null)} autoFocus><X size={22} /></button></div>

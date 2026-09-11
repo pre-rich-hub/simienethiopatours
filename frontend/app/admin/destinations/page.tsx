@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminNotice } from "@/components/admin/ui";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  AdminNotice, adminFormSection, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
+} from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
 type Destination = {
@@ -15,29 +21,17 @@ type Destination = {
 };
 
 export default function AdminDestinationsPage() {
-  const [items, setItems] = useState<Destination[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { items, setItems, loading, error, reload } = useAdminList<Destination>("/api/v1/admin/destinations");
   const [editing, setEditing] = useState<Destination | null>(null);
   const [showForm, setShowForm] = useState(false);
-
-  // form state
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [existingImage, setExistingImage] = useState("");
   const [saving, setSaving] = useState(false);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const imagePreview = useFilePreview(file, existingImage);
-
-  function load() {
-    adminRequestClient<Destination[]>("/api/v1/admin/destinations")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => { load(); }, []);
 
   function openNew() {
     setEditing(null);
@@ -45,30 +39,40 @@ export default function AdminDestinationsPage() {
     setDesc("");
     setFile(null);
     setExistingImage("");
-    setNotice(null);
+    setFormError(null);
     setShowForm(true);
   }
 
-  function openEdit(d: Destination) {
-    setEditing(d);
-    setName(d.name);
-    setDesc(d.description || "");
-    setFile(null);
-    setExistingImage(d.imageUrl || "");
-    setNotice(null);
+  async function openEdit(d: Destination) {
     setShowForm(true);
+    setFormError(null);
+    setFile(null);
+    try {
+      const full = await adminRequestClient<Destination>(`/api/v1/admin/destinations/${d.id}`);
+      const row = full ?? d;
+      setEditing(row);
+      setName(row.name);
+      setDesc(row.description || "");
+      setExistingImage(row.imageUrl || "");
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : "Failed to load destination");
+      setEditing(d);
+      setName(d.name);
+      setDesc(d.description || "");
+      setExistingImage(d.imageUrl || "");
+    }
   }
 
   function cancel() {
     setShowForm(false);
     setEditing(null);
-    setNotice(null);
+    setFormError(null);
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSaving(true);
-    setNotice(null);
+    setFormError(null);
     try {
       const fd = new FormData();
       fd.append("destinationName", name);
@@ -83,64 +87,62 @@ export default function AdminDestinationsPage() {
         formData: fd,
       });
       if (result === null) return;
-      setNotice({ type: "success", msg: editing ? "Destination updated." : "Destination created." });
+      adminToast("success", editing ? "Destination updated." : "Destination created.");
       setShowForm(false);
       setEditing(null);
-      load();
+      await reload();
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Save failed" });
+      setFormError(err instanceof Error ? err.message : "Save failed");
     }
     setSaving(false);
   }
 
-  async function handleDelete(id: number, name: string) {
-    if (!window.confirm(`Delete "${name}"? This cannot be undone.`)) return;
+  async function handleDelete(id: number, destName: string) {
+    if (!window.confirm(`Delete "${destName}"? This cannot be undone.`)) return;
     try {
       const result = await adminMutate(`/api/v1/admin/destinations/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((d) => d.id !== id));
-      setNotice({ type: "success", msg: "Destination deleted." });
+      adminToast("success", "Destination deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Destinations</h1>
-        <div className="admin-page-header__actions">
-          <AdminButton variant="primary" onClick={openNew}>New destination</AdminButton>
-        </div>
-      </div>
-
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      <AdminPageHeader
+        title="Destinations"
+        actions={<AdminButton variant="primary" onClick={openNew}>New destination</AdminButton>}
+      />
 
       {showForm && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={editing ? "Edit destination" : "New destination"}>
+            {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
             <form onSubmit={handleSubmit}>
-              <AdminField label="Name" className="admin-form-section">
+              <AdminField label="Name" className={adminFormSection}>
                 <AdminInput required value={name} onChange={(e) => setName(e.target.value)} />
               </AdminField>
-              <AdminField label="Description" className="admin-form-section">
+              {editing && (
+                <AdminField label="Slug" className={adminFormSection}>
+                  <AdminInput readOnly value={editing.slug} />
+                </AdminField>
+              )}
+              <AdminField label="Description" className={adminFormSection}>
                 <AdminTextarea value={desc} onChange={(e) => setDesc(e.target.value)} />
               </AdminField>
-              <div className="admin-file-row">
-                <AdminField label="Image">
-                  <input type="file" accept="image/*" className="admin-input" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+              <div className={adminFileRow}>
+                <AdminField label="Image" hint={existingImage && !file ? `Current image: ${existingImage}` : undefined}>
+                  <AdminInput type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
                 </AdminField>
                 {(file || existingImage) && (
-                  <img
-                    className="admin-image-preview"
-                    src={imagePreview}
-                    alt="Preview"
-                  />
+                  <img className={adminImagePreview} src={imagePreview} alt="Preview" />
                 )}
               </div>
-              <div className="admin-form-actions">
+              <div className={adminFormActions}>
                 <AdminButton type="submit" disabled={saving}>{saving ? "Saving..." : editing ? "Update" : "Create"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancel}>Cancel</AdminButton>
               </div>
@@ -149,45 +151,33 @@ export default function AdminDestinationsPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
-        {items.length === 0 ? (
-          <div className="admin-empty">No destinations yet. Create your first destination.</div>
+      <AdminCard flush>
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : items.length === 0 ? (
+          <AdminEmpty>No destinations yet. Create your first destination.</AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Slug</th>
-                  <th>Description</th>
-                  <th>Tours</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((d) => (
-                  <tr key={d.id}>
-                    <td>
-                      {d.imageUrl && <img className="admin-thumb" src={d.imageUrl} alt={d.name} />}
-                    </td>
-                    <td style={{ fontWeight: 600 }}>{d.name}</td>
-                    <td className="admin-table__slug">{d.slug}</td>
-                    <td className="admin-table__truncate">{d.description || "—"}</td>
-                    <td>{d.tourCount}</td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openEdit(d)}>Edit</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(d.id, d.name)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Image", "Name", "Slug", "Description", "Tours", ""]}>
+            {items.map((d) => (
+              <AdminTableRow key={d.id} className="hover:bg-copper/3">
+                <AdminTd>
+                  {d.imageUrl && <img className={adminThumb} src={d.imageUrl} alt={d.name} />}
+                </AdminTd>
+                <AdminTd className="font-semibold">{d.name}</AdminTd>
+                <AdminTd slug>{d.slug}</AdminTd>
+                <AdminTd truncate>{d.description || "—"}</AdminTd>
+                <AdminTd>{d.tourCount}</AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => void openEdit(d)}>Edit</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(d.id, d.name)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

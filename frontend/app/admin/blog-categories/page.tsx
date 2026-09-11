@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
-import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminNotice } from "@/components/admin/ui";
+import { useState, type FormEvent } from "react";
+import { adminMutate } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  AdminNotice, adminFormSection, adminFormActions, adminTableActions,
+} from "@/components/admin/ui";
 
 type BlogCategory = {
   id: number;
@@ -12,38 +18,27 @@ type BlogCategory = {
 };
 
 export default function AdminBlogCategoriesPage() {
-  const [items, setItems] = useState<BlogCategory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { items, setItems, loading, error, reload } = useAdminList<BlogCategory>("/api/v1/admin/blog-categories");
   const [editing, setEditing] = useState<BlogCategory | null>(null);
   const [showForm, setShowForm] = useState(false);
-
   const [name, setName] = useState("");
   const [saving, setSaving] = useState(false);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
-
-  function load() {
-    adminRequestClient<BlogCategory[]>("/api/v1/admin/blog-categories")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => { load(); }, []);
+  const [formError, setFormError] = useState<string | null>(null);
 
   function openNew() {
-    setEditing(null); setName(""); setNotice(null); setShowForm(true);
+    setEditing(null); setName(""); setFormError(null); setShowForm(true);
   }
 
   function openEdit(c: BlogCategory) {
-    setEditing(c); setName(c.name); setNotice(null); setShowForm(true);
+    setEditing(c); setName(c.name); setFormError(null); setShowForm(true);
   }
 
-  function cancel() { setShowForm(false); setEditing(null); setNotice(null); }
+  function cancel() { setShowForm(false); setEditing(null); setFormError(null); }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSaving(true);
-    setNotice(null);
+    setFormError(null);
     try {
       const path = editing
         ? `/api/v1/admin/blog-categories/${editing.id}`
@@ -53,10 +48,10 @@ export default function AdminBlogCategoriesPage() {
         json: { name },
       });
       if (result === null) return;
-      setNotice({ type: "success", msg: editing ? "Category updated." : "Category created." });
-      setShowForm(false); setEditing(null); load();
+      adminToast("success", editing ? "Category updated." : "Category created.");
+      setShowForm(false); setEditing(null); await reload();
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Save failed" });
+      setFormError(err instanceof Error ? err.message : "Save failed");
     }
     setSaving(false);
   }
@@ -67,38 +62,35 @@ export default function AdminBlogCategoriesPage() {
       const result = await adminMutate(`/api/v1/admin/blog-categories/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((c) => c.id !== id));
-      setNotice({ type: "success", msg: "Category deleted." });
+      adminToast("success", "Category deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Blog categories</h1>
-        <div className="admin-page-header__actions">
-          <AdminButton variant="primary" onClick={openNew}>New category</AdminButton>
-        </div>
-      </div>
-
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      <AdminPageHeader
+        title="Blog categories"
+        actions={<AdminButton variant="primary" onClick={openNew}>New category</AdminButton>}
+      />
 
       {showForm && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={editing ? "Edit category" : "New category"}>
+            {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
             <form onSubmit={handleSubmit}>
               <AdminField label="Name">
                 <AdminInput required value={name} onChange={(e) => setName(e.target.value)} />
               </AdminField>
               {editing && (
-                <AdminField label="Slug (auto-generated)" className="admin-form-section">
+                <AdminField label="Slug (auto-generated)" className={adminFormSection}>
                   <AdminInput readOnly value={editing.slug} />
                 </AdminField>
               )}
-              <div className="admin-form-actions" style={{ marginTop: 16 }}>
+              <div className={`${adminFormActions} mt-4`}>
                 <AdminButton type="submit" disabled={saving}>{saving ? "Saving..." : editing ? "Update" : "Create"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancel}>Cancel</AdminButton>
               </div>
@@ -107,39 +99,29 @@ export default function AdminBlogCategoriesPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
-        {items.length === 0 ? (
-          <div className="admin-empty">No blog categories yet.</div>
+      <AdminCard flush>
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : items.length === 0 ? (
+          <AdminEmpty>No blog categories yet.</AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Slug</th>
-                  <th>Posts</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((c) => (
-                  <tr key={c.id}>
-                    <td style={{ fontWeight: 600 }}>{c.name}</td>
-                    <td className="admin-table__slug">{c.slug}</td>
-                    <td>{c.postCount}</td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openEdit(c)}>Edit</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(c.id, c.name)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Name", "Slug", "Posts", ""]}>
+            {items.map((c) => (
+              <AdminTableRow key={c.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{c.name}</AdminTd>
+                <AdminTd slug>{c.slug}</AdminTd>
+                <AdminTd>{c.postCount}</AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => openEdit(c)}>Edit</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(c.id, c.name)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

@@ -12,6 +12,8 @@ import {
 import { blogRouter } from "./modules/blog/blog.routes.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
 import { adminRouter } from "./modules/admin/admin.routes.js";
+import { contactsRouter } from "./modules/public-forms/contacts.routes.js";
+import { subscribersRouter } from "./modules/public-forms/subscribers.routes.js";
 
 export function registerRoutes(app: Express) {
   app.use("/health", healthRouter);
@@ -25,4 +27,6 @@ export function registerRoutes(app: Express) {
   app.use("/api/v1/blog-categories", blogCategoriesRouter);
   app.use("/api/v1/auth", authRouter);
   app.use("/api/v1/admin", adminRouter);
+  app.use("/api/v1/contacts", contactsRouter);
+  app.use("/api/v1/subscribers", subscribersRouter);
 }

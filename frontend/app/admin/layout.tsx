@@ -2,9 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { AdminSidebar, AdminTopbar } from "@/components/admin/ui";
+import { AdminSidebar, AdminTopbar, AdminLoading } from "@/components/admin/ui";
 import { adminRequestClient } from "@/lib/admin/client";
-import "./admin.css";
+import { Toaster } from "@/components/ui/toast";
 
 type Admin = { id: number; email: string; name: string | null };
 
@@ -19,7 +19,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (isLogin) return;
     let cancelled = false;
-    adminRequestClient<Admin>("/api/v1/auth/me")
+    adminRequestClient<Admin>("/api/v1/auth/me", { redirectOn401: false })
       .then((data) => {
         if (cancelled) return;
         if (!data) {
@@ -36,24 +36,22 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   }, [isLogin, pathname]);
 
   if (isLogin) {
-    return <>{children}</>;
+    return <Toaster>{children}</Toaster>;
   }
 
   if (loading) {
-    return (
-      <div className="admin-loading" style={{ minHeight: "100dvh", display: "grid", placeItems: "center" }}>
-        Loading...
-      </div>
-    );
+    return <AdminLoading>Loading...</AdminLoading>;
   }
 
   return (
-    <div className="admin-shell">
-      <AdminSidebar currentPath={pathname} />
-      <div className="admin-main">
-        <AdminTopbar userName={admin?.name || admin?.email} />
-        <div className="admin-page">{children}</div>
+    <Toaster>
+      <div className="grid min-h-dvh md:grid-cols-[256px_1fr]">
+        <AdminSidebar currentPath={pathname} />
+        <div className="min-h-dvh bg-paper md:col-start-2">
+          <AdminTopbar userName={admin?.name || admin?.email} />
+          <div className="p-5 md:p-8">{children}</div>
+        </div>
       </div>
-    </div>
+    </Toaster>
   );
 }

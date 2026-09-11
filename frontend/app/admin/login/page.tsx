@@ -1,8 +1,8 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import "../admin.css";
+import { AdminButton, AdminField, AdminInput, AdminNotice } from "@/components/admin/ui";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -11,7 +11,13 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [expired, setExpired] = useState(false);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setExpired(params.get("expired") === "1");
+  }, []);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -38,39 +44,33 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="admin-login">
-      <form className="admin-login__card" onSubmit={handleSubmit}>
-        <span className="admin-login__wordmark">Simien Ethio Tours</span>
-        {error && <div className="admin-login__error">{error}</div>}
-        <div className="admin-field" style={{ marginBottom: 16 }}>
-          <label className="admin-label">Email</label>
-          <input
-            className="admin-input"
+    <div className="grid min-h-dvh place-items-center bg-paper p-6">
+      <form className="w-full max-w-[420px] border border-line bg-ivory px-10 py-[52px]" onSubmit={handleSubmit}>
+        <span className="mb-9 block text-center font-serif text-[32px] font-medium leading-[1.1] tracking-[-0.03em] text-highland">Simien Ethio Tours</span>
+        {expired && !error && (
+          <AdminNotice variant="error" className="mb-5">Your session expired. Sign in again to continue.</AdminNotice>
+        )}
+        {error && <AdminNotice variant="error" className="mb-5">{error}</AdminNotice>}
+        <AdminField label="Email" className="mb-4">
+          <AdminInput
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoFocus
           />
-        </div>
-        <div className="admin-field" style={{ marginBottom: 28 }}>
-          <label className="admin-label">Password</label>
-          <input
-            className="admin-input"
+        </AdminField>
+        <AdminField label="Password" className="mb-7">
+          <AdminInput
             type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-        </div>
-        <button
-          type="submit"
-          className="admin-button admin-button--primary"
-          disabled={busy}
-          style={{ width: "100%" }}
-        >
+        </AdminField>
+        <AdminButton type="submit" disabled={busy} className="w-full">
           {busy ? "Signing in..." : "Sign in"}
-        </button>
+        </AdminButton>
       </form>
     </div>
   );

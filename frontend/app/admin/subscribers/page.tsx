@@ -1,8 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminNotice } from "@/components/admin/ui";
+import { useState } from "react";
+import { adminMutate } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
+import {
+  AdminButton, AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminCard,
+  AdminSearch, AdminListTable, AdminTableRow, AdminTd,
+} from "@/components/admin/ui";
 
 type Subscriber = {
   id: number;
@@ -11,18 +16,10 @@ type Subscriber = {
 };
 
 export default function AdminSubscribersPage() {
-  const [items, setItems] = useState<Subscriber[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const { items, setItems, loading, error, reload } = useAdminList<Subscriber>("/api/v1/admin/subscribers");
+  const [search, setSearch] = useState("");
 
-  function load() {
-    adminRequestClient<Subscriber[]>("/api/v1/admin/subscribers")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => { load(); }, []);
+  const filtered = items.filter((s) => !search || s.email.toLowerCase().includes(search.toLowerCase()));
 
   async function handleDelete(id: number, email: string) {
     if (!window.confirm(`Remove subscriber "${email}"?`)) return;
@@ -30,55 +27,50 @@ export default function AdminSubscribersPage() {
       const result = await adminMutate(`/api/v1/admin/subscribers/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((s) => s.id !== id));
-      setNotice({ type: "success", msg: "Subscriber removed." });
+      adminToast("success", "Subscriber removed.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Subscribers</h1>
-      </div>
+      <AdminPageHeader title="Subscribers" />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      <AdminSearch value={search} onChange={setSearch} placeholder="Search by email..." />
 
-      <div className="admin-card admin-card--flush">
-        {items.length === 0 ? (
-          <div className="admin-empty">
-            <p style={{ margin: "0 0 8px" }}>No subscribers yet.</p>
-            <p style={{ margin: 0, fontSize: 13 }}>Subscribers will appear here when visitors sign up through your site.</p>
-          </div>
+      <AdminCard flush>
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : filtered.length === 0 ? (
+          <AdminEmpty>
+            {items.length === 0 ? (
+              <>
+                <p className="mb-2">No subscribers yet.</p>
+                <p className="m-0 text-[13px]">Subscribers will appear here when visitors sign up through your site.</p>
+              </>
+            ) : (
+              "No subscribers match your search."
+            )}
+          </AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Subscribed</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((s) => (
-                  <tr key={s.id}>
-                    <td style={{ fontWeight: 600 }}>{s.email}</td>
-                    <td>{new Date(s.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      <AdminButton variant="danger" size="small" onClick={() => handleDelete(s.id, s.email)}>
-                        Remove
-                      </AdminButton>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Email", "Subscribed", ""]}>
+            {filtered.map((s) => (
+              <AdminTableRow key={s.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{s.email}</AdminTd>
+                <AdminTd>{new Date(s.createdAt).toLocaleDateString()}</AdminTd>
+                <AdminTd>
+                  <AdminButton variant="danger" size="small" onClick={() => handleDelete(s.id, s.email)}>
+                    Remove
+                  </AdminButton>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

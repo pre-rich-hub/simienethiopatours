@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import TourForm from "@/components/admin/TourForm";
 import { adminRequestClient } from "@/lib/admin/client";
+import { AdminCard, AdminEmpty, AdminError, AdminLoading, AdminPageHeader } from "@/components/admin/ui";
 
 type Option = { id: number; name: string };
 
@@ -16,8 +17,10 @@ export default function AdminTourEditPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
+  const load = useCallback(() => {
     if (!tourId) return;
+    setLoading(true);
+    setError("");
     Promise.all([
       adminRequestClient<Record<string, unknown>>(`/api/v1/admin/tours/${tourId}`),
       adminRequestClient<Option[]>("/api/v1/admin/destinations"),
@@ -33,23 +36,20 @@ export default function AdminTourEditPage() {
       .finally(() => setLoading(false));
   }, [tourId]);
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
-  if (error) return <div className="admin-empty">{error}</div>;
-  if (!tour) return <div className="admin-empty">Tour not found.</div>;
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  if (loading) return <AdminLoading />;
+  if (error) return <AdminError onRetry={load}>{error}</AdminError>;
+  if (!tour) return <AdminEmpty>Tour not found.</AdminEmpty>;
 
   return (
     <>
-      <div className="admin-page-header">
-        <div className="admin-tour-header">
-          <h1>Edit tour</h1>
-          {typeof tour.slug === "string" && <span className="admin-tour-header__slug">/{tour.slug}</span>}
-        </div>
-      </div>
-      <div className="admin-card">
-        <div className="admin-card__body">
-          <TourForm tourId={tourId} initialData={tour} destinations={destinations} categories={categories} />
-        </div>
-      </div>
+      <AdminPageHeader title="Edit tour" slug={typeof tour.slug === "string" ? `/${tour.slug}` : undefined} />
+      <AdminCard>
+        <TourForm tourId={tourId} initialData={tour} destinations={destinations} categories={categories} />
+      </AdminCard>
     </>
   );
 }

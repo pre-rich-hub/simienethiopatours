@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { Gallery } from "@/components/Gallery";
+import { buttonVariants } from "@/components/ui/button";
+import { cms } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Gallery | Gondar & the Simien Mountains",
@@ -16,7 +18,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const photographs = await cms.getGallery();
+
   return <PageShell>
     <section className="gallery-intro shell" aria-labelledby="gallery-heading">
       <div className="gallery-intro__top"><p className="eyebrow eyebrow--copper">Gondar & the Simien Mountains</p><span>A visual collection · 01—08</span></div>
@@ -25,10 +29,10 @@ export default function GalleryPage() {
         <div><p>Beyond the map, before the journey. A glimpse of the landscapes, everyday encounters and quiet moments that stay with you.</p><span className="gallery-intro__invitation">Our world, through the lens <ArrowUpRight size={20} style={{ transform: "rotate(225deg)" }} /></span></div>
       </div>
     </section>
-    <Gallery />
+    <Gallery photographs={photographs} />
     <section className="gallery-next shell" aria-labelledby="gallery-next-heading">
-      <div><p className="eyebrow eyebrow--copper">From a photograph to a memory</p><h2 id="gallery-next-heading">Imagine yourself <em>here.</em></h2><p>Tell us what caught your eye. We’ll help you find your own way into the highlands.</p><Link className="button button--dark" href="/plan">Make it your journey <ArrowUpRight size={16} /></Link></div>
-      <aside className="gallery-field-notes"><span className="eyebrow eyebrow--copper">A little preparation</span><h3>Before you go,<br /><em>get to know.</em></h3><p>Seasons, packing, altitude and life on the trail. Our Field Notes bring the practical side into focus.</p><Link className="text-link" href="/travel-guide">Explore Field Notes <ArrowUpRight size={16} /></Link></aside>
+      <div><p className="eyebrow eyebrow--copper">From a photograph to a memory</p><h2 id="gallery-next-heading">Imagine yourself <em>here.</em></h2><p>Tell us what caught your eye. We’ll help you find your own way into the highlands.</p><Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan">Make it your journey <ArrowUpRight size={16} /></Link></div>
+      <aside className="gallery-field-notes"><span className="eyebrow eyebrow--copper">A little preparation</span><h3>Before you go,<br /><em>ask us.</em></h3><p>Seasons, packing, altitude and life on the trail. Tell us what you are imagining and we will help you prepare.</p><Link className="text-link" href="/plan">Start the planner <ArrowUpRight size={16} /></Link></aside>
     </section>
   </PageShell>;
 }

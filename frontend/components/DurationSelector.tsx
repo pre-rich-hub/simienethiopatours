@@ -5,6 +5,7 @@ import Link from "next/link";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Compass, Mountain } from "@/components/Icon";
 import { journeys as bundledJourneys } from "@/lib/site";
+import { buttonVariants } from "@/components/ui/button";
 
 type JourneyOption = {
   slug: string;
@@ -142,7 +143,7 @@ export function DurationSelector({ tours }: { tours?: JourneyOption[] }) {
       </div>
 
       <div className="journey-discovery__action">
-        <Link className="button button--dark" href="/treks">View all journeys <ArrowUpRight /></Link>
+        <Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/treks">View all journeys <ArrowUpRight /></Link>
       </div>
     </div>
   );

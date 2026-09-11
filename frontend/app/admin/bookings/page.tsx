@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminBadge, AdminSelect, AdminNotice } from "@/components/admin/ui";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
+import {
+  AdminButton, AdminCard, AdminSelect,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  adminTableActions,
+} from "@/components/admin/ui";
 
 type Booking = {
   id: number;
@@ -20,30 +26,35 @@ type Booking = {
 };
 
 export default function AdminBookingsPage() {
-  const [items, setItems] = useState<Booking[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const { items, setItems, loading, error, reload } = useAdminList<Booking>("/api/v1/admin/bookings");
+  const [detail, setDetail] = useState<Booking | null>(null);
+  const [detailLoading, setDetailLoading] = useState(false);
 
-  function load() {
-    adminRequestClient<Booking[]>("/api/v1/admin/bookings")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+  async function openDetail(id: number) {
+    setDetailLoading(true);
+    try {
+      const row = await adminRequestClient<Booking>(`/api/v1/admin/bookings/${id}`);
+      if (row) setDetail(row);
+    } catch (err) {
+      adminToast("error", err instanceof Error ? err.message : "Failed to load booking");
+    }
+    setDetailLoading(false);
   }
 
-  useEffect(() => { load(); }, []);
-
-  async function handleStatus(id: number, status: string) {
+  async function handleStatus(id: number, status: string, current: string) {
+    if (status === current) return;
+    if (!window.confirm(`Change booking status to ${status}?`)) return;
     try {
-      const result = await adminMutate(`/api/v1/admin/bookings/${id}/status`, {
+      const result = await adminMutate<Booking>(`/api/v1/admin/bookings/${id}/status`, {
         method: "PUT",
         json: { status },
       });
       if (result === null) return;
       setItems((prev) => prev.map((b) => b.id === id ? { ...b, status } : b));
-      setNotice({ type: "success", msg: `Booking marked as ${status}.` });
+      if (detail?.id === id) setDetail((prev) => prev ? { ...prev, status } : prev);
+      adminToast("success", `Booking marked as ${status}.`);
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Failed" });
+      adminToast("error", err instanceof Error ? err.message : "Failed");
     }
   }
 
@@ -53,76 +64,80 @@ export default function AdminBookingsPage() {
       const result = await adminMutate(`/api/v1/admin/bookings/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((b) => b.id !== id));
-      setNotice({ type: "success", msg: "Booking deleted." });
+      if (detail?.id === id) setDetail(null);
+      adminToast("success", "Booking deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Bookings</h1>
-      </div>
+      <AdminPageHeader title="Bookings" />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {detail && (
+        <div className="mb-6">
+          <AdminCard title={`Booking #${detail.id}`} actions={<AdminButton variant="secondary" size="small" onClick={() => setDetail(null)}>Close</AdminButton>}>
+            {detailLoading ? (
+              <p className="m-0 text-sm text-stone">Loading…</p>
+            ) : (
+              <dl className="m-0 grid grid-cols-[140px_1fr] gap-x-4 gap-y-2 text-sm">
+                <dt className="text-stone">Name</dt><dd className="m-0 font-semibold">{detail.fullName}</dd>
+                <dt className="text-stone">Email</dt><dd className="m-0">{detail.email}</dd>
+                <dt className="text-stone">Phone</dt><dd className="m-0">{detail.phone}</dd>
+                <dt className="text-stone">Country</dt><dd className="m-0">{detail.country}</dd>
+                <dt className="text-stone">Tour</dt><dd className="m-0">{detail.tour?.name || "—"}</dd>
+                <dt className="text-stone">Date</dt><dd className="m-0">{new Date(detail.chosenDate).toLocaleDateString()}</dd>
+                <dt className="text-stone">People</dt><dd className="m-0">{detail.adults} adult{detail.adults === 1 ? "" : "s"}{detail.children > 0 ? `, ${detail.children} child${detail.children === 1 ? "" : "ren"}` : ""}</dd>
+                <dt className="text-stone">Status</dt><dd className="m-0">{detail.status}</dd>
+                <dt className="text-stone">Created</dt><dd className="m-0">{new Date(detail.createdAt).toLocaleString()}</dd>
+              </dl>
+            )}
+          </AdminCard>
+        </div>
+      )}
 
-      <div className="admin-card admin-card--flush">
-        {items.length === 0 ? (
-          <div className="admin-empty">
-            <p style={{ margin: "0 0 8px" }}>No bookings yet.</p>
-            <p style={{ margin: 0, fontSize: 13 }}>Bookings will appear here when customers submit the booking form on your site.</p>
-          </div>
+      <AdminCard flush>
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : items.length === 0 ? (
+          <AdminEmpty>
+            <p className="mb-2">No bookings yet.</p>
+            <p className="m-0 text-[13px]">Bookings will appear here when customers submit the booking form on your site.</p>
+          </AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Tour</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Date</th>
-                  <th>People</th>
-                  <th>Status</th>
-                  <th>Created</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((b) => (
-                  <tr key={b.id}>
-                    <td style={{ fontWeight: 600 }}>{b.fullName}</td>
-                    <td>{b.tour?.name || "—"}</td>
-                    <td>{b.email}</td>
-                    <td>{b.phone}</td>
-                    <td>{new Date(b.chosenDate).toLocaleDateString()}</td>
-                    <td>{b.adults}A{b.children > 0 ? ` + ${b.children}C` : ""}</td>
-                    <td>
-                      <AdminSelect
-                        value={b.status}
-                        onChange={(e) => handleStatus(b.id, e.target.value)}
-                      >
-                        <option value="Pending">Pending</option>
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Cancelled">Cancelled</option>
-                      </AdminSelect>
-                    </td>
-                    <td>{new Date(b.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      <AdminButton variant="danger" size="small" onClick={() => handleDelete(b.id)}>
-                        Delete
-                      </AdminButton>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Name", "Tour", "Email", "Phone", "Date", "People", "Status", "Created", ""]}>
+            {items.map((b) => (
+              <AdminTableRow key={b.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{b.fullName}</AdminTd>
+                <AdminTd>{b.tour?.name || "—"}</AdminTd>
+                <AdminTd>{b.email}</AdminTd>
+                <AdminTd>{b.phone}</AdminTd>
+                <AdminTd>{new Date(b.chosenDate).toLocaleDateString()}</AdminTd>
+                <AdminTd>{b.adults}A{b.children > 0 ? ` + ${b.children}C` : ""}</AdminTd>
+                <AdminTd>
+                  <AdminSelect value={b.status} onChange={(e) => handleStatus(b.id, e.target.value, b.status)}>
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </AdminSelect>
+                </AdminTd>
+                <AdminTd>{new Date(b.createdAt).toLocaleDateString()}</AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => void openDetail(b.id)}>View</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(b.id)}>
+                      Delete
+                    </AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }
