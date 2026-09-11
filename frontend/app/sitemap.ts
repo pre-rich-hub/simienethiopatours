@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { cms } from "@/lib/cms";
+import { gondarPlacePath, gondarPlaces } from "@/lib/gondar-destinations";
 import { simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -9,6 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const tours = await cms.getAllTours();
   const tourPaths = tours.map((t) => `/treks/${t.slug}`);
   const simienPlacePaths = simienPlaces.map((place) => simienPlacePath(place.slug));
+  const gondarPlacePaths = gondarPlaces.map((place) => gondarPlacePath(place.slug));
 
   const staticPaths = [
     "",
@@ -21,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/privacy",
     "/terms",
     ...simienPlacePaths,
+    ...gondarPlacePaths,
   ];
 
   const allPaths = [...staticPaths, ...tourPaths];

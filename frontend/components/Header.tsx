@@ -64,7 +64,7 @@ const megaMenus: Record<string, React.ComponentProps<typeof NavMegaMenu>> = {
     exploreHref: "/gondar",
     exploreLabel: "Explore Gondar",
     extraLinks: [
-      { href: "/gondar#experiences", label: "Gondar experiences" },
+      { href: "/gondar/gondar", label: "Gondar: the royal city" },
       { href: "/treks/5-day-gondar-simien", label: "5-day Royal City & Mountain Adventure" },
     ],
     cards: gondarMenuCards,
