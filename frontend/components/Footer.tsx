@@ -31,21 +31,14 @@ export function Footer() {
           <h3 className="mb-3 font-sans text-[10px] font-semibold tracking-[0.15em] text-white uppercase max-[720px]:text-[11px]">Discover</h3>
           <Link href="/simien-mountains">The Simien</Link>
           <Link href="/treks">Journeys</Link>
-          <Link href="/ras-dashen">Ras Dashen</Link>
           <Link href="/gondar">Gondar</Link>
-          <Link href="/beyond-the-trail">Beyond the trail</Link>
-          <Link href="/festival-journeys">Festival journeys</Link>
-          <Link href="/where-to-stay-gondar-simien">Where to stay</Link>
           <Link href="/gallery">Gallery</Link>
-          <Link href="/travel-guide">Field notes</Link>
+          <Link href="/plan">Plan a journey</Link>
         </div>
         <div className="flex flex-col items-start gap-3.5 text-xs [&_a]:inline-flex [&_a]:items-center [&_a]:gap-1.5 [&_a]:transition-colors hover:[&_a]:text-white max-[720px]:text-sm">
           <h3 className="mb-3 font-sans text-[10px] font-semibold tracking-[0.15em] text-white uppercase max-[720px]:text-[11px]">Company</h3>
           <Link href="/about">Meet Tevan</Link>
-          <Link href="/reviews">Traveler reviews</Link>
           <Link href="/about#local">Tevan Local</Link>
-          <Link href="/whats-included">What's included</Link>
-          <Link href="/photo-credits">Photo credits</Link>
           <a href={site.operatorSite} target="_blank" rel="noreferrer">Operating company <ArrowUpRight size={12} /></a>
         </div>
         <div className="flex flex-col items-start gap-3.5 text-xs [&_a]:inline-flex [&_a]:items-center [&_a]:gap-1.5 [&_a]:transition-colors hover:[&_a]:text-white max-[1100px]:col-span-2 max-[1100px]:col-start-2 max-[720px]:col-span-full max-[720px]:text-sm">

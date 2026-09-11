@@ -1,9 +1,9 @@
 export const experienceLinks = [
   { title: "Gondar, Heritage & Simien", tag: "5 days · 4 nights", body: "Castles, churches and Woleka heritage, followed by two nights in the Simien highlands.", href: "/treks/gondar-heritage-simien" },
   { title: "The full Simien expedition", tag: "10 days · 9 nights", body: "Walk the escarpment, attempt Ras Dashen and continue through the valleys toward Adi Arkay.", href: "/treks/10-day-simien-ras-dashen" },
-  { title: "Festivals & holiday journeys", tag: "Living culture", body: "Experience Timkat, Genna, Meskel or Enkutatash with local interpretation and time in the mountains.", href: "/festival-journeys" },
-  { title: "Hidden Gondar running", tag: "Easy · Active · Trail", body: "Follow quieter paths, farmland and highland views with a local running guide, at your own pace.", href: "/gondar-running-experience" },
-  { title: "Simien photography", tag: "1 to 5 days · Flexible", body: "Build a journey around landscapes, wildlife and changing light, with time to walk, watch and wait.", href: "/simien-photography-tour" },
+  { title: "Festivals & holiday journeys", tag: "Living culture", body: "Experience Timkat, Genna, Meskel or Enkutatash with local interpretation and time in the mountains.", href: "/gondar" },
+  { title: "Hidden Gondar running", tag: "Easy · Active · Trail", body: "Follow quieter paths, farmland and highland views with a local running guide, at your own pace.", href: "/gondar#countryside" },
+  { title: "Simien photography", tag: "1 to 5 days · Flexible", body: "Build a journey around landscapes, wildlife and changing light, with time to walk, watch and wait.", href: "/gallery" },
   { title: "Gondar through local eyes", tag: "History · Food · Community", body: "Connect royal heritage with coffee, markets, neighbourhoods and the countryside around the city.", href: "/gondar#experiences" },
 ] as const;
 

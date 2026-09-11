@@ -192,14 +192,14 @@ function apiGalleryToPhotograph(item: ApiGalleryItem): Photograph {
   };
 }
 
-// Field note shape expected by the travel-guide page.
+// Field note shape used by CMS fallbacks and backend seed.
 export type FieldNote = {
   tag: string;
   title: string;
   body: string;
 };
 
-// Experience link shape expected by beyond-the-trail / gondar pages.
+// Experience link shape used by the Gondar page and CMS fallbacks.
 export type ExperienceLink = {
   title: string;
   tag: string;

@@ -126,18 +126,9 @@ For CMS, admin, and AI chat against live data, run the backend in [`../backend`]
 | `/treks` | Journey listing |
 | `/treks/[slug]` | Trek / itinerary detail |
 | `/gondar` | Royal city and gateway |
-| `/beyond-the-trail` | Experiences and local services |
-| `/festival-journeys` | Festival calendar and itineraries |
-| `/gondar-running-experience` | Running options |
-| `/simien-photography-tour` | Photography trips |
-| `/where-to-stay-gondar-simien` | Accommodation guidance |
 | `/about` | Operator and founder story |
-| `/travel-guide` | Practical field notes |
 | `/plan` | Inquiry planner |
 | `/gallery` | Photo gallery |
-| `/reviews` | Traveler reviews |
-| `/whats-included` | Inclusions overview |
-| `/photo-credits` | Image authors and licenses |
 | `/privacy`, `/terms` | Legal |
 
 ### Admin
@@ -178,6 +169,6 @@ SEO foundations already in place include App Router metadata patterns, `sitemap.
 - Brand, operator, founder, and contact facts live in [`lib/site.ts`](lib/site.ts).
 - Do not invent prices, review counts, wildlife guarantees, or unverified trail metrics.
 - Travel facts should link to UNESCO, official tourism sources, or the operator.
-- Photo authors, licenses, and files are listed at `/photo-credits`.
+- Photo authors, licenses, and files are listed in [`research-notes.md`](research-notes.md).
 - Editorial mapping: [`content-map.md`](content-map.md).
 - Research synthesis: [`research-notes.md`](research-notes.md).

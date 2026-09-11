@@ -94,7 +94,7 @@ export function Gallery() {
         <span className="gallery-tile__bottom"><span>{item.location}</span><span className="gallery-tile__expand" aria-hidden="true"><ArrowUpRight size={18} /></span></span>
       </button>)}
     </div>
-    <div className="gallery-colophon shell"><span>A glimpse of the place. A beginning for your journey.</span><Link href="/photo-credits">Photography & credits <ArrowUpRight size={13} /></Link></div>
+    <div className="gallery-colophon shell"><span>A glimpse of the place. A beginning for your journey.</span></div>
     <dialog ref={dialogRef} className="gallery-viewer" aria-labelledby="gallery-photo-title" aria-describedby="gallery-photo-story" onCancel={(event) => { event.preventDefault(); setSelected(null); }} onClick={(event) => { if (event.target === event.currentTarget) setSelected(null); }} onKeyDown={(event) => { if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } }}>
       {photo && <>
         <div className="gallery-viewer__top"><span>{String((selected ?? 0) + 1).padStart(2, "0")} / {String(filtered.length).padStart(2, "0")} <span> · {photo.category}</span></span><button type="button" aria-label="Close photograph" onClick={() => setSelected(null)} autoFocus><X size={22} /></button></div>

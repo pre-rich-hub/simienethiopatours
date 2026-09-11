@@ -14,7 +14,7 @@ export const journeyMenuCards: NavMegaMenuCard[] = journeys.slice(1, 4).map((jou
 export const simienMenuCards: NavMegaMenuCard[] = [
   {
     slug: "simien-photography",
-    href: "/simien-photography-tour",
+    href: "/gallery",
     tag: "Photography",
     title: "Simien Photography Tour",
     style: "1–5 days · Flexible",
@@ -23,7 +23,7 @@ export const simienMenuCards: NavMegaMenuCard[] = [
   },
   {
     slug: "festival-journeys",
-    href: "/festival-journeys",
+    href: "/gondar",
     tag: "Living culture",
     title: "Festivals & Holiday Journeys",
     style: "Timkat · Genna · Meskel",
@@ -32,7 +32,7 @@ export const simienMenuCards: NavMegaMenuCard[] = [
   },
   {
     slug: "ras-dashen",
-    href: "/ras-dashen",
+    href: "/treks/ras-dashen-challenge",
     tag: "Highest peak",
     title: "Ras Dashen",
     style: "Ethiopia's highest mountain",
@@ -53,7 +53,7 @@ export const gondarMenuCards: NavMegaMenuCard[] = [
   },
   {
     slug: "gondar-running",
-    href: "/gondar-running-experience",
+    href: "/gondar#countryside",
     tag: "Easy · Active · Trail",
     title: "Hidden Gondar Running",
     style: "Countryside routes",

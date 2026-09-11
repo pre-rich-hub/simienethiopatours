@@ -29,7 +29,7 @@ export default function GalleryPage() {
     <Gallery />
     <section className="gallery-next shell" aria-labelledby="gallery-next-heading">
       <div><p className="eyebrow eyebrow--copper">From a photograph to a memory</p><h2 id="gallery-next-heading">Imagine yourself <em>here.</em></h2><p>Tell us what caught your eye. We’ll help you find your own way into the highlands.</p><Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan">Make it your journey <ArrowUpRight size={16} /></Link></div>
-      <aside className="gallery-field-notes"><span className="eyebrow eyebrow--copper">A little preparation</span><h3>Before you go,<br /><em>get to know.</em></h3><p>Seasons, packing, altitude and life on the trail. Our Field Notes bring the practical side into focus.</p><Link className="text-link" href="/travel-guide">Explore Field Notes <ArrowUpRight size={16} /></Link></aside>
+      <aside className="gallery-field-notes"><span className="eyebrow eyebrow--copper">A little preparation</span><h3>Before you go,<br /><em>ask us.</em></h3><p>Seasons, packing, altitude and life on the trail. Tell us what you are imagining and we will help you prepare.</p><Link className="text-link" href="/plan">Start the planner <ArrowUpRight size={16} /></Link></aside>
     </section>
   </PageShell>;
 }
