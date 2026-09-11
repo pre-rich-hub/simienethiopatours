@@ -1,62 +1,119 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
-import { AtAGlance, EditorialHero, FeatureGrid, Itinerary, PageLinks, PlanningCall, SectionIntro, StorySection } from "@/components/Editorial";
-import { BookingCard } from "@/components/BookingCard";
-import { CircleAlert } from "@/components/Icon";
-import { detailedJourneys } from "@/lib/itineraries";
-import { cms } from "@/lib/cms";
+import { EditorialHero, Itinerary, SectionIntro, StorySection } from "@/components/Editorial";
+import { getJourneyPackage, journeyPackagePath, journeyPackages } from "@/lib/journey-packages";
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 
-// Pre-render bundled slugs at build time. DB-only tours are rendered at
-// request time via dynamicParams = true.
 export function generateStaticParams() {
-  return detailedJourneys.map(({ slug }) => ({ slug }));
+  return journeyPackages.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const journey = await cms.getTourBySlug(slug);
+  const journey = getJourneyPackage(slug);
   if (!journey) return {};
   return {
-    title: journey.title,
-    description: journey.description,
-    alternates: { canonical: `/treks/${slug}` },
+    title: `${journey.name} | Journeys`,
+    description: journey.overview[0],
+    alternates: { canonical: journeyPackagePath(journey.slug) },
   };
 }
 
 export default async function JourneyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-
-  // 1. Try the CMS (API with bundled fallback).
-  const journey = await cms.getTourBySlug(slug);
-
-  // 2. If neither API nor bundle has this slug, 404.
+  const journey = getJourneyPackage(slug);
   if (!journey) notFound();
 
-  return <PageShell lightHeader={false}>
-    <EditorialHero eyebrow={journey.duration} title={journey.heroTitle} accent={journey.heroAccent} lead={journey.description} image={{ src: journey.image, alt: journey.imageAlt }} parent={{ label: "Journeys", href: "/treks" }} />
-    <AtAGlance facts={journey.facts} />
-    {journey.notice && <div className="shell"><div className="itinerary-notice"><CircleAlert size={20} /><p>{journey.notice}</p></div></div>}
-    <PageLinks items={[{ label: "The journey", href: "#journey" }, { label: "Day by day", href: "#day-by-day" }, { label: "Highlights", href: "#highlights" }, { label: "Preparation & inclusions", href: "#preparation" }]} />
-    <StorySection id="journey" tag="The journey" title="Let the story" accent="unfold." paragraphs={journey.introduction} />
-    <section className="section section--paper" id="day-by-day"><div className="shell itinerary-split">
-      <div className="itinerary-split__main">
-        <SectionIntro tag={journey.duration} title="Your journey," accent="day by day." />
-        <ol className="route-sequence" aria-label="Proposed route">{journey.route.map((stop, index) => <li key={`${stop}-${index}`}>{stop}</li>)}</ol>
-        <Itinerary days={journey.days} />
-        <p className="content-note">The route is a planning outline. Daily walking, campsite choices and transfers are confirmed for your group and current conditions.</p>
-      </div>
-      <aside className="itinerary-split__aside"><BookingCard journey={journey} /></aside>
-    </div></section>
-    <section className="section" id="highlights"><div className="shell"><SectionIntro tag="Along the way" title="The moments" accent="that stay with you." /><FeatureGrid items={journey.highlights} /></div></section>
-    <section className="section section--paper" id="preparation"><div className="shell editorial-grid">
-      <div><SectionIntro tag="Before you choose" title="Good preparation." accent="Clear expectations." /><div className="prose">{journey.preparation.map((item) => <p key={item}>{item}</p>)}<Link className="text-link" href="/plan">Ask about stays and logistics</Link></div></div>
-      <div className="prose"><h2 className="content-subtitle">What your package can include</h2><ul className="editorial-list">{journey.inclusions.map((item) => <li key={item}>{item}</li>)}</ul>{journey.exclusions && <><h3 className="content-subtitle">Not included unless agreed</h3><ul className="editorial-list">{journey.exclusions.map((item) => <li key={item}>{item}</li>)}</ul></>}<p>Exact inclusions, exclusions and prices are confirmed in your personal quotation. Tell us your dates, group size, preferred comfort and walking experience.</p><h3 className="content-subtitle">Continue the story</h3><p>Add local Gondar experiences or discuss an onward journey to Lalibela, Axum, Bahir Dar or Danakil, subject to current access and the time available.</p><Link className="text-link" href="/gondar">Explore Gondar</Link></div>
-    </div></section>
-    {journey.related && <section className="section"><div className="shell"><SectionIntro tag="Find your fit" title="Another way" accent="into Simien." /><FeatureGrid items={journey.related} /></div></section>}
-    <PlanningCall title="Tell Tevan what you want the journey to feel like." experience={journey.inquiry} label="Plan this journey" />
-  </PageShell>;
+  const lead = [journey.duration, journey.route, journey.difficulty].filter(Boolean).join(" · ");
+
+  return (
+    <PageShell lightHeader={false}>
+      <EditorialHero
+        eyebrow="Journeys"
+        title={journey.heroTitle}
+        accent={journey.heroAccent}
+        lead={lead}
+        image={{ src: journey.image, alt: journey.imageAlt }}
+        parent={{ label: "Journeys", href: "/treks" }}
+      />
+
+      <StorySection id="overview" tag="Overview" title={journey.name} paragraphs={journey.overview} />
+
+      {journey.highlights.length > 0 && (
+        <section className="section section--paper" id="highlights">
+          <div className="shell">
+            <SectionIntro tag="Highlights" title="Highlights" />
+            <div className={`dest-highlights dest-highlights--${journey.highlights.length > 1 ? "2" : "1"}`}>
+              {journey.highlights.map((item, index) => (
+                <article className="dest-highlight" key={item}>
+                  <span className="eyebrow eyebrow--copper">{String(index + 1).padStart(2, "0")}</span>
+                  <p>{item}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className={`section ${journey.highlights.length ? "" : "section--paper"}`} id="itinerary">
+        <div className="shell">
+          <SectionIntro tag="Itinerary" title="Itinerary" />
+          {journey.itineraryMode === "days" && journey.days && (
+            <Itinerary days={journey.days} id="day-by-day" />
+          )}
+          {journey.itineraryMode === "segments" && journey.segments && (
+            <ol className="editorial-list dest-things">
+              {journey.segments.map((segment) => (
+                <li key={segment.label}>
+                  <strong>{segment.label}</strong> {segment.body}
+                </li>
+              ))}
+            </ol>
+          )}
+          {journey.itineraryMode === "outline" && journey.outline && (
+            <div className="prose">
+              {journey.outline.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="section section--paper" id="included">
+        <div className="shell editorial-grid">
+          <div>
+            <SectionIntro tag="Included" title="Included" />
+            <ul className="editorial-list dest-things">
+              {journey.included.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <SectionIntro tag="Excluded" title="Excluded" />
+            <ul className="editorial-list dest-things">
+              {journey.excluded.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="shell content-note">
+          {journey.includedNote && <p>{journey.includedNote}</p>}
+          <p>Exact inclusions in a booking are confirmed in the final quotation.</p>
+        </div>
+      </section>
+
+      <p className="shell dest-back">
+        <Link className="text-link" href="/treks">
+          All journeys <ArrowUpRight />
+        </Link>
+      </p>
+    </PageShell>
+  );
 }

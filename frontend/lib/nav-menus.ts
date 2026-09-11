@@ -1,15 +1,34 @@
 import type { NavMegaMenuCard } from "@/components/NavMegaMenu";
-import { journeys } from "@/lib/site";
 
-export const journeyMenuCards: NavMegaMenuCard[] = journeys.slice(1, 4).map((journey) => ({
-  slug: journey.slug,
-  href: journey.href,
-  tag: journey.duration,
-  title: journey.title,
-  style: `${journey.style} · Private`,
-  summary: journey.summary,
-  image: journey.image,
-}));
+export const journeyMenuCards: NavMegaMenuCard[] = [
+  {
+    slug: "4-day-simien-classic",
+    href: "/treks/4-day-simien-classic",
+    tag: "4 Days / 3 Nights",
+    title: "4-Day Simien Classic",
+    style: "Sankaber · Geech · Chenek",
+    summary: "The signature classic corridor trek through Sankaber, Geech, Imet Gogo and Chenek.",
+    image: "/images/imet-gogo.jpg",
+  },
+  {
+    slug: "ras-dashen-challenge",
+    href: "/treks/ras-dashen-challenge",
+    tag: "Challenging",
+    title: "Ras Dashen Challenge",
+    style: "Summit attempt",
+    summary: "Classic corridor into Chenek, then Ambiko for a Ras Dashen summit attempt. Success is not guaranteed.",
+    image: "/images/giant-lobelia.jpg",
+  },
+  {
+    slug: "10-day-simien-ras-dashen",
+    href: "/treks/10-day-simien-ras-dashen",
+    tag: "10 Days / 9 Nights",
+    title: "10-Day Simien Expedition",
+    style: "Full crossing",
+    summary: "Classic corridor, Ras Dashen summit attempt, then the quieter eastern transect to Adi Arkay.",
+    image: "/images/simien-panorama.jpg",
+  },
+];
 
 export const simienMenuCards: NavMegaMenuCard[] = [
   {

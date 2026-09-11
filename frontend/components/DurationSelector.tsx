@@ -3,46 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight, Compass, Mountain } from "@/components/Icon";
-import { journeys as bundledJourneys } from "@/lib/site";
+import { ArrowRight, ArrowUpRight } from "@/components/Icon";
+import { homeClarityCollections } from "@/lib/home-cards";
 import { buttonVariants } from "@/components/ui/button";
 
-type JourneyOption = {
-  slug: string;
-  href: string;
-  title: string;
-  image: string;
-  duration: string;
-  style: string;
-  difficulty: string;
-  summary: string;
-  fit: string;
-};
-
-const collections = [
-  { id: "first-encounters", label: "First Encounters", journeys: [0, 1, 2] },
-  { id: "signature-treks", label: "Signature Treks", journeys: [1, 2, 3] },
-  { id: "summit-and-beyond", label: "Summit & Beyond", journeys: [2, 3, 4] },
-] as const;
-
-export function DurationSelector({ tours }: { tours?: JourneyOption[] }) {
-  // Use server-provided tours when available, fall back to bundled site.ts data.
-  const items: readonly JourneyOption[] = tours && tours.length > 0
-    ? tours
-    : bundledJourneys.map((j) => ({
-        slug: j.href.replace("/treks/", ""),
-        href: j.href,
-        title: j.title,
-        image: j.image,
-        duration: j.duration,
-        style: j.style,
-        difficulty: j.difficulty,
-        summary: j.summary,
-        fit: j.fit,
-      }));
-
-  const [active, setActive] = useState(1);
-  const collection = collections[active];
+export function DurationSelector() {
+  const [active, setActive] = useState(0);
+  const collection = homeClarityCollections[active];
   const tabsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,17 +30,17 @@ export function DurationSelector({ tours }: { tours?: JourneyOption[] }) {
     const next = event.key === "Home"
       ? 0
       : event.key === "End"
-        ? collections.length - 1
-        : (index + (event.key === "ArrowRight" ? 1 : -1) + collections.length) % collections.length;
+        ? homeClarityCollections.length - 1
+        : (index + (event.key === "ArrowRight" ? 1 : -1) + homeClarityCollections.length) % homeClarityCollections.length;
 
     setActive(next);
-    document.getElementById(`journey-tab-${collections[next].id}`)?.focus({ preventScroll: true });
+    document.getElementById(`journey-tab-${homeClarityCollections[next].id}`)?.focus({ preventScroll: true });
   }
 
   return (
     <div className="journey-discovery">
-      <div ref={tabsRef} className="journey-discovery__tabs" role="tablist" aria-label="Explore journey collections">
-        {collections.map((item, index) => (
+      <div ref={tabsRef} className="journey-discovery__tabs" role="tablist" aria-label="Choose a journey by time, interest or effort">
+        {homeClarityCollections.map((item, index) => (
           <button
             type="button"
             id={`journey-tab-${item.id}`}
@@ -100,45 +67,29 @@ export function DurationSelector({ tours }: { tours?: JourneyOption[] }) {
         key={collection.id}
       >
         <div className="journey-discovery__grid">
-          {collection.journeys.map((journeyIndex, cardIndex) => {
-            const journey = items[journeyIndex];
-            if (!journey) return null;
-
-            return (
-              <article className="journey-choice-card" key={journey.slug}>
-                <Link className="journey-choice-card__image" href={journey.href} aria-label={`Explore ${journey.title}`}>
-                  <Image
-                    src={journey.image}
-                    alt={`Simien Mountains landscape featured in ${journey.title}`}
-                    fill
-                    sizes="(max-width: 720px) 82vw, (max-width: 1000px) 340px, 31vw"
-                  />
-                  <span className="journey-choice-card__duration">{journey.duration}</span>
-                  <span className="journey-choice-card__number">0{cardIndex + 1}</span>
-                  <div className="journey-choice-card__title">
-                    <span>{journey.style}</span>
-                    <h3>{journey.title}</h3>
-                  </div>
-                </Link>
-                <div className="journey-choice-card__body">
-                  <p>{journey.summary}</p>
-                  <div className="journey-choice-card__facts">
-                    <div>
-                      <Mountain />
-                      <span><small>Difficulty</small><b>{journey.difficulty}</b></span>
-                    </div>
-                    <div>
-                      <Compass />
-                      <span><small>Best for</small><b>{journey.fit}</b></span>
-                    </div>
-                  </div>
-                  <Link className="journey-choice-card__link" href={journey.href}>
-                    Explore journey <ArrowRight />
-                  </Link>
+          {collection.cards.map((card, cardIndex) => (
+            <article className="journey-choice-card" key={card.title}>
+              <Link className="journey-choice-card__image" href={card.href} aria-label={`Explore ${card.title}`}>
+                <Image
+                  src={card.image}
+                  alt={card.imageAlt}
+                  fill
+                  sizes="(max-width: 720px) 82vw, (max-width: 1000px) 340px, 31vw"
+                />
+                <span className="journey-choice-card__duration">{collection.label}</span>
+                <span className="journey-choice-card__number">0{cardIndex + 1}</span>
+                <div className="journey-choice-card__title">
+                  <h3>{card.title}</h3>
                 </div>
-              </article>
-            );
-          })}
+              </Link>
+              <div className="journey-choice-card__body">
+                <p>{card.summary}</p>
+                <Link className="journey-choice-card__link" href={card.href}>
+                  Explore journey <ArrowRight />
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
 
