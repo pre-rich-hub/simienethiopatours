@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { cms } from "@/lib/cms";
+import { simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "https://gondarsimientours.com";
@@ -7,6 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Tour slugs from CMS (published tours only). Fallback: bundled itineraries.
   const tours = await cms.getAllTours();
   const tourPaths = tours.map((t) => `/treks/${t.slug}`);
+  const simienPlacePaths = simienPlaces.map((place) => simienPlacePath(place.slug));
 
   const staticPaths = [
     "",
@@ -18,6 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/plan",
     "/privacy",
     "/terms",
+    ...simienPlacePaths,
   ];
 
   const allPaths = [...staticPaths, ...tourPaths];

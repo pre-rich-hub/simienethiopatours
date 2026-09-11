@@ -65,7 +65,7 @@ export default async function Home() {
             <p className="lead">Not a checklist. Three different ways to feel the scale of the landscape.</p>
           </div>
           <div className="discover-grid shell">
-            <Link href="/simien-mountains#imet-gogo" className="discover-card discover-card--tall">
+            <Link href="/simien-mountains/imet-gogo" className="discover-card discover-card--tall">
               <Image src="/images/imet-gogo.jpg" alt="Rocky promontory at Imet Gogo above the Simien escarpment" fill sizes="(max-width: 720px) 100vw, 43vw" />
               <div>
                 <span>Simien icon</span><h3>Imet Gogo</h3><p>Walk into the view.</p>
@@ -73,7 +73,7 @@ export default async function Home() {
                 <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
               </div>
             </Link>
-            <Link href="/simien-mountains#wildlife" className="discover-card">
+            <Link href="/simien-mountains/sankaber" className="discover-card">
               <Image src="/images/gelada-troop.jpg" alt="A wild troop of geladas grazing in the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 28vw" />
               <div>
                 <span>Wildlife</span><h3>Gelada country</h3><p>Observe. Never stage.</p>
@@ -81,7 +81,7 @@ export default async function Home() {
                 <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
               </div>
             </Link>
-            <Link href="/treks/ras-dashen-challenge" className="discover-card">
+            <Link href="/simien-mountains/ras-dashen" className="discover-card">
               <Image src="/images/giant-lobelia.jpg" alt="Giant lobelias across the high Afroalpine landscape of the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 28vw" />
               <div>
                 <span>High country</span><h3>Ras Dashen</h3><p>The summit journey.</p>

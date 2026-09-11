@@ -162,7 +162,7 @@ export function Header({ light = false }: { light?: boolean }) {
         </div>
         <nav aria-label="Mobile navigation">
           {links.map((link, index) => (
-            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href ? "page" : undefined}>
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
               <span>0{index + 1}</span>{link.label}<ArrowUpRight />
             </Link>
           ))}
