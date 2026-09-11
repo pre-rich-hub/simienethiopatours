@@ -420,6 +420,7 @@ export default function TourForm({
 
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ tourTitle?: string; tourDestination?: string }>({});
 
   const imagePreview = useFilePreview(form.tourImageFile, form.image);
 
@@ -429,6 +430,15 @@ export default function TourForm({
 
   const handleSave = useCallback(async (e: FormEvent) => {
     e.preventDefault();
+    const nextErrors: { tourTitle?: string; tourDestination?: string } = {};
+    if (!form.tourTitle.trim()) nextErrors.tourTitle = "Tour name is required.";
+    if (!form.tourDestination) nextErrors.tourDestination = "Choose a destination.";
+    setFieldErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setNotice({ type: "error", msg: "Please fix the highlighted fields before saving." });
+      return;
+    }
+
     setSaving(true);
     setNotice(null);
 
@@ -495,7 +505,7 @@ export default function TourForm({
       <div className={adminFormSection}>
         <h3 className={adminFormTitle}>Basics</h3>
         <div className={adminFormGrid} style={{ marginBottom: 20 }}>
-          <AdminField label="Tour name">
+          <AdminField label="Tour name" error={fieldErrors.tourTitle}>
             <AdminInput required value={form.tourTitle} onChange={(e) => set("tourTitle", e.target.value)} />
           </AdminField>
           {!isNew && typeof initialData?.slug === "string" && (
@@ -505,7 +515,7 @@ export default function TourForm({
           )}
         </div>
         <div className={adminFormGrid} style={{ marginBottom: 20 }}>
-          <AdminField label="Destination">
+          <AdminField label="Destination" error={fieldErrors.tourDestination}>
             <AdminSelect value={form.tourDestination} onChange={(e) => set("tourDestination", e.target.value)} placeholder="Select destination">
               {destinations.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
             </AdminSelect>
@@ -594,7 +604,22 @@ export default function TourForm({
         </AdminField>
         <div className={adminFormGrid} style={{ marginTop: 20 }}>
           <AdminToggle checked={form.isFeatured} onChange={(v) => set("isFeatured", v)} label="Featured" />
-          <AdminToggle checked={form.isPublished} onChange={(v) => set("isPublished", v)} label="Published" />
+          <AdminField
+            label="Visibility"
+            hint={form.isPublished
+              ? "Published tours appear on the public site when the API is healthy."
+              : "Draft tours stay in admin only. They will not appear on the public site."}
+          >
+            <div className="flex items-center gap-3">
+              <AdminToggle checked={form.isPublished} onChange={(v) => set("isPublished", v)} label="Published" />
+              <span className={cn(
+                "rounded-sm px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em]",
+                form.isPublished ? "bg-teal/12 text-teal" : "bg-copper/12 text-copper",
+              )}>
+                {form.isPublished ? "Live" : "Draft"}
+              </span>
+            </div>
+          </AdminField>
         </div>
       </div>
 
@@ -612,14 +637,29 @@ export default function TourForm({
             />
           )}
           <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
-            <AdminField label="Upload file">
+            <AdminField
+              label="Upload file"
+              hint={form.tourImageFile
+                ? `New file selected: ${form.tourImageFile.name}. Save to replace the current image.`
+                : form.image
+                  ? "Upload a file to replace the current image, or keep the URL below."
+                  : "JPEG, PNG, WebP or AVIF."}
+            >
               <input
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/avif"
                 onChange={(e) => set("tourImageFile", e.target.files?.[0] ?? null)}
               />
             </AdminField>
-            <AdminField label="Or paste image URL">
+            {form.tourImageFile && (
+              <AdminButton variant="secondary" size="small" onClick={() => set("tourImageFile", null)}>
+                Clear new file
+              </AdminButton>
+            )}
+            <AdminField
+              label="Or paste image URL"
+              hint={form.image && !form.tourImageFile ? `Current image: ${form.image}` : undefined}
+            >
               <AdminInput value={form.image} placeholder="https://..." onChange={(e) => set("image", e.target.value)} />
             </AdminField>
           </div>

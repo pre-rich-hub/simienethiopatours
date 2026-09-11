@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
 import {
-  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminNotice,
-  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
-  adminFormSection, adminFormActions, adminTableActions,
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  AdminNotice, adminFormSection, adminFormActions, adminTableActions,
 } from "@/components/admin/ui";
 
 type Contact = {
@@ -17,47 +19,53 @@ type Contact = {
 };
 
 export default function AdminContactsPage() {
-  const [items, setItems] = useState<Contact[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [replyingTo, setReplyingTo] = useState<Contact | null>(null);
+  const { items, setItems, loading, error, reload } = useAdminList<Contact>("/api/v1/admin/contacts");
+  const [selected, setSelected] = useState<Contact | null>(null);
+  const [replying, setReplying] = useState(false);
   const [subject, setSubject] = useState("");
   const [replyMsg, setReplyMsg] = useState("");
   const [sending, setSending] = useState(false);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
-  function load() {
-    adminRequestClient<Contact[]>("/api/v1/admin/contacts")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+  async function openContact(c: Contact) {
+    setFormError(null);
+    setReplying(false);
+    try {
+      const full = await adminRequestClient<Contact>(`/api/v1/admin/contacts/${c.id}`);
+      setSelected(full ?? c);
+    } catch {
+      setSelected(c);
+    }
   }
 
-  useEffect(() => { load(); }, []);
-
-  function openReply(c: Contact) {
-    setReplyingTo(c);
+  function startReply(c: Contact) {
+    setSelected(c);
+    setReplying(true);
     setSubject(`Re: Your inquiry to Simien Ethiopia Tours`);
     setReplyMsg("");
-    setNotice(null);
+    setFormError(null);
   }
 
-  function cancelReply() { setReplyingTo(null); setNotice(null); }
+  function cancelReply() {
+    setReplying(false);
+    setFormError(null);
+  }
 
   async function handleReply(e: FormEvent) {
     e.preventDefault();
-    if (!replyingTo) return;
+    if (!selected) return;
     setSending(true);
-    setNotice(null);
+    setFormError(null);
     try {
-      const result = await adminMutate(`/api/v1/admin/contacts/${replyingTo.id}/reply`, {
+      const result = await adminMutate(`/api/v1/admin/contacts/${selected.id}/reply`, {
         method: "POST",
         json: { subject, message: replyMsg },
       });
       if (result === null) return;
-      setNotice({ type: "success", msg: `Reply sent to ${replyingTo.email}.` });
-      setReplyingTo(null);
+      adminToast("success", `Reply sent to ${selected.email}.`);
+      setReplying(false);
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Reply failed" });
+      setFormError(err instanceof Error ? err.message : "Reply failed");
     }
     setSending(false);
   }
@@ -68,9 +76,10 @@ export default function AdminContactsPage() {
       const result = await adminMutate(`/api/v1/admin/contacts/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((c) => c.id !== id));
-      setNotice({ type: "success", msg: "Contact deleted." });
+      if (selected?.id === id) setSelected(null);
+      adminToast("success", "Contact deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
@@ -80,35 +89,46 @@ export default function AdminContactsPage() {
     <>
       <AdminPageHeader title="Contacts" />
 
-      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
-
-      {replyingTo && (
+      {selected && (
         <div className="mb-6">
-          <AdminCard title={`Reply to ${replyingTo.name}`}>
-            <div className="mb-3 text-[13px] text-stone">
-              Sending to: <strong>{replyingTo.email}</strong>
-            </div>
-            <form onSubmit={handleReply}>
-              <AdminField label="Subject" className={adminFormSection}>
-                <AdminInput required value={subject} onChange={(e) => setSubject(e.target.value)} />
-              </AdminField>
-              <AdminField label="Message" className={adminFormSection}>
-                <AdminTextarea required className="min-h-[150px]" value={replyMsg} onChange={(e) => setReplyMsg(e.target.value)} />
-              </AdminField>
-              <div className={adminFormActions}>
-                <AdminButton type="submit" disabled={sending}>{sending ? "Sending..." : "Send reply"}</AdminButton>
-                <AdminButton variant="secondary" onClick={cancelReply}>Cancel</AdminButton>
+          <AdminCard
+            title={selected.name}
+            actions={<AdminButton variant="secondary" size="small" onClick={() => { setSelected(null); setReplying(false); }}>Close</AdminButton>}
+          >
+            <p className="mt-0 mb-2 text-sm text-stone">{selected.email} · {new Date(selected.createdAt).toLocaleString()}</p>
+            <pre className="mb-4 max-h-[360px] overflow-auto whitespace-pre-wrap rounded-sm border border-line bg-paper p-4 font-sans text-sm leading-relaxed text-ink">{selected.message}</pre>
+            {!replying && (
+              <div className={adminTableActions}>
+                <AdminButton variant="secondary" size="small" onClick={() => startReply(selected)}>Reply</AdminButton>
+                <AdminButton variant="danger" size="small" onClick={() => handleDelete(selected.id, selected.name)}>Delete</AdminButton>
               </div>
-            </form>
+            )}
+            {replying && (
+              <form onSubmit={handleReply} className="mt-4">
+                {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
+                <AdminField label="Subject" className={adminFormSection}>
+                  <AdminInput required value={subject} onChange={(e) => setSubject(e.target.value)} />
+                </AdminField>
+                <AdminField label="Message" className={adminFormSection}>
+                  <AdminTextarea required className="min-h-[150px]" value={replyMsg} onChange={(e) => setReplyMsg(e.target.value)} />
+                </AdminField>
+                <div className={adminFormActions}>
+                  <AdminButton type="submit" disabled={sending}>{sending ? "Sending..." : "Send reply"}</AdminButton>
+                  <AdminButton variant="secondary" onClick={cancelReply}>Cancel</AdminButton>
+                </div>
+              </form>
+            )}
           </AdminCard>
         </div>
       )}
 
       <AdminCard flush>
-        {items.length === 0 ? (
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : items.length === 0 ? (
           <AdminEmpty>
             <p className="mb-2">No contacts yet.</p>
-            <p className="m-0 text-[13px]">Messages will appear here when customers use the contact form on your site.</p>
+            <p className="m-0 text-[13px]">Messages will appear here when travelers send an inquiry.</p>
           </AdminEmpty>
         ) : (
           <AdminListTable headers={["Name", "Email", "Message", "Date", ""]}>
@@ -116,11 +136,12 @@ export default function AdminContactsPage() {
               <AdminTableRow key={c.id} className="hover:bg-copper/3">
                 <AdminTd className="font-semibold">{c.name}</AdminTd>
                 <AdminTd>{c.email}</AdminTd>
-                <AdminTd truncate>{c.message.slice(0, 120)}{c.message.length > 120 ? "..." : ""}</AdminTd>
+                <AdminTd truncate>{c.message}</AdminTd>
                 <AdminTd>{new Date(c.createdAt).toLocaleDateString()}</AdminTd>
                 <AdminTd>
                   <div className={adminTableActions}>
-                    <AdminButton variant="secondary" size="small" onClick={() => openReply(c)}>Reply</AdminButton>
+                    <AdminButton variant="secondary" size="small" onClick={() => void openContact(c)}>View</AdminButton>
+                    <AdminButton variant="secondary" size="small" onClick={() => startReply(c)}>Reply</AdminButton>
                     <AdminButton variant="danger" size="small" onClick={() => handleDelete(c.id, c.name)}>Delete</AdminButton>
                   </div>
                 </AdminTd>

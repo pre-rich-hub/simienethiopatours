@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { adminMutate, adminRequestClient } from "@/lib/admin/client";
+import { useState } from "react";
+import { adminMutate } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
 import {
-  AdminBadge, AdminButton, AdminNotice, AdminPageHeader, AdminLoading, AdminEmpty, AdminCard,
+  AdminBadge, AdminButton, AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminCard,
   AdminSearch, AdminListTable, AdminTableRow, AdminTd, adminTableActions, adminLinkButtonClass,
 } from "@/components/admin/ui";
 
@@ -20,17 +22,8 @@ type Tour = {
 };
 
 export default function AdminToursPage() {
-  const [tours, setTours] = useState<Tour[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { items: tours, setItems: setTours, loading, error, reload } = useAdminList<Tour>("/api/v1/admin/tours");
   const [search, setSearch] = useState("");
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
-
-  useEffect(() => {
-    adminRequestClient<Tour[]>("/api/v1/admin/tours")
-      .then((data) => { if (data) setTours(data); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
 
   const filtered = tours.filter((t) => {
     if (!search) return true;
@@ -44,9 +37,9 @@ export default function AdminToursPage() {
       const result = await adminMutate(`/api/v1/admin/tours/${id}`, { method: "DELETE" });
       if (result === null) return;
       setTours((prev) => prev.filter((t) => t.id !== id));
-      setNotice({ type: "success", msg: "Tour deleted." });
+      adminToast("success", "Tour deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
@@ -59,12 +52,12 @@ export default function AdminToursPage() {
         actions={<a href="/admin/tours/new" className={adminLinkButtonClass("primary")}>New tour</a>}
       />
 
-      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
-
       <AdminSearch value={search} onChange={setSearch} placeholder="Search by name or slug..." />
 
       <AdminCard flush>
-        {filtered.length === 0 ? (
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : filtered.length === 0 ? (
           <AdminEmpty>
             {tours.length === 0 ? "No tours yet. Create your first tour." : "No tours match your search."}
           </AdminEmpty>

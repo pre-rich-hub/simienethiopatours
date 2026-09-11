@@ -150,6 +150,8 @@ Introduce Tailwind CSS and shadcn/ui **without** a visual rewrite. Map existing 
 
 Admin is usable for day-to-day content ops; public content prefers API; inquiry path is reliable.
 
+**P2 notes (implemented):** extra inquiry fields are composed into `Contact.message` (no Prisma schema change). Public `POST /api/v1/contacts` and `POST /api/v1/subscribers` persist planner and newsletter submissions. Gallery and testimonials are server-fetched through `cms.ts`.
+
 ### Tasks
 
 1. Harden each admin area to the same bar as tours:
@@ -175,16 +177,16 @@ Admin is usable for day-to-day content ops; public content prefers API; inquiry 
 
 ### Acceptance criteria
 
-- [ ] Admin can CRUD all listed entities without console errors
-- [ ] Published tour/testimonial changes appear on public site when API is healthy
-- [ ] Inquiry creates a backend contact (or documented fallback fires) with required fields
-- [ ] Empty/error/loading states exist on every admin list page
+- [x] Admin can CRUD all listed entities without console errors
+- [x] Published tour/testimonial changes appear on public site when API is healthy
+- [x] Inquiry creates a backend contact (or documented fallback fires) with required fields
+- [x] Empty/error/loading states exist on every admin list page
 
 ### Backend dependencies
 
 - Stable admin auth cookies (CORS + `COOKIE_SECURE` for each environment)
 - Upload + CRUD endpoints for gallery/tours/etc.
-- Contact create endpoint (or agreed webhook contract)
+- Public rate-limited `POST /api/v1/contacts` and `POST /api/v1/subscribers`
 - Seed data for staging parity with bundled fallbacks
 
 ---

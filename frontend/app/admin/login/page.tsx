@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminButton, AdminField, AdminInput, AdminNotice } from "@/components/admin/ui";
 
@@ -11,7 +11,13 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [expired, setExpired] = useState(false);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setExpired(params.get("expired") === "1");
+  }, []);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -41,6 +47,9 @@ export default function AdminLoginPage() {
     <div className="grid min-h-dvh place-items-center bg-paper p-6">
       <form className="w-full max-w-[420px] border border-line bg-ivory px-10 py-[52px]" onSubmit={handleSubmit}>
         <span className="mb-9 block text-center font-serif text-[32px] font-medium leading-[1.1] tracking-[-0.03em] text-highland">Simien Ethio Tours</span>
+        {expired && !error && (
+          <AdminNotice variant="error" className="mb-5">Your session expired. Sign in again to continue.</AdminNotice>
+        )}
         {error && <AdminNotice variant="error" className="mb-5">{error}</AdminNotice>}
         <AdminField label="Email" className="mb-4">
           <AdminInput

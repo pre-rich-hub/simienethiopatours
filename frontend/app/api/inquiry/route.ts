@@ -1,6 +1,37 @@
 import { NextResponse } from "next/server";
+import { planningOptions } from "@/lib/experiences";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+function composeMessage(payload: {
+  dates: string;
+  group: string;
+  duration: string;
+  interests: string;
+  experience: string;
+  accommodation: string;
+  gondarNights: string;
+  simienNights: string;
+  budget: string;
+  message: string;
+}) {
+  const lines = [
+    payload.experience && `Experience: ${planningOptions.find((option) => option.id === payload.experience)?.label || payload.experience}`,
+    payload.dates && `Travel window: ${payload.dates}`,
+    payload.group && `Group size: ${payload.group}`,
+    payload.duration && `Time in Simien: ${payload.duration}`,
+    payload.interests && `Interests: ${payload.interests}`,
+    payload.accommodation && `Accommodation: ${payload.accommodation}`,
+    payload.gondarNights && `Nights in Gondar: ${payload.gondarNights}`,
+    payload.simienNights && `Nights in Simien: ${payload.simienNights}`,
+    payload.budget && `Accommodation budget: ${payload.budget}`,
+  ].filter(Boolean);
+
+  const body = payload.message || "Please help me plan my journey.";
+  if (lines.length === 0) return body;
+  return `${lines.join("\n")}\n\n${body}`;
+}
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
@@ -32,21 +63,38 @@ export async function POST(request: Request) {
     submittedAt: new Date().toISOString(),
   };
 
-  const webhook = process.env.CONTACT_WEBHOOK_URL;
-  if (!webhook) {
-    return NextResponse.json({ delivery: "email", message: "Continue in your email app." });
-  }
+  const composedMessage = composeMessage(safePayload);
 
   try {
-    const response = await fetch(webhook, {
+    const response = await fetch(`${API_BASE}/api/v1/contacts`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(safePayload),
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ name, email, message: composedMessage }),
       signal: AbortSignal.timeout(8000),
     });
-    if (!response.ok) throw new Error("Webhook rejected inquiry");
-    return NextResponse.json({ delivery: "webhook" });
+    if (response.ok) {
+      return NextResponse.json({ delivery: "contact" });
+    }
   } catch {
-    return NextResponse.json({ delivery: "email", message: "Continue in your email app." });
+    // Fall through to webhook / mailto.
   }
+
+  const webhook = process.env.CONTACT_WEBHOOK_URL;
+  if (webhook) {
+    try {
+      const response = await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...safePayload, message: composedMessage }),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (response.ok) {
+        return NextResponse.json({ delivery: "webhook" });
+      }
+    } catch {
+      // Fall through to mailto.
+    }
+  }
+
+  return NextResponse.json({ delivery: "email", message: "Continue in your email app." });
 }

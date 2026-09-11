@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { adminMutate, adminRequestClient } from "@/lib/admin/client";
+import { useState } from "react";
+import { adminMutate } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
 import {
-  AdminButton, AdminNotice, AdminPageHeader, AdminLoading, AdminEmpty, AdminCard,
-  AdminListTable, AdminTableRow, AdminTd,
+  AdminButton, AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminCard,
+  AdminSearch, AdminListTable, AdminTableRow, AdminTd,
 } from "@/components/admin/ui";
 
 type Subscriber = {
@@ -14,18 +16,10 @@ type Subscriber = {
 };
 
 export default function AdminSubscribersPage() {
-  const [items, setItems] = useState<Subscriber[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const { items, setItems, loading, error, reload } = useAdminList<Subscriber>("/api/v1/admin/subscribers");
+  const [search, setSearch] = useState("");
 
-  function load() {
-    adminRequestClient<Subscriber[]>("/api/v1/admin/subscribers")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => { load(); }, []);
+  const filtered = items.filter((s) => !search || s.email.toLowerCase().includes(search.toLowerCase()));
 
   async function handleDelete(id: number, email: string) {
     if (!window.confirm(`Remove subscriber "${email}"?`)) return;
@@ -33,9 +27,9 @@ export default function AdminSubscribersPage() {
       const result = await adminMutate(`/api/v1/admin/subscribers/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((s) => s.id !== id));
-      setNotice({ type: "success", msg: "Subscriber removed." });
+      adminToast("success", "Subscriber removed.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
@@ -45,17 +39,25 @@ export default function AdminSubscribersPage() {
     <>
       <AdminPageHeader title="Subscribers" />
 
-      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
+      <AdminSearch value={search} onChange={setSearch} placeholder="Search by email..." />
 
       <AdminCard flush>
-        {items.length === 0 ? (
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : filtered.length === 0 ? (
           <AdminEmpty>
-            <p className="mb-2">No subscribers yet.</p>
-            <p className="m-0 text-[13px]">Subscribers will appear here when visitors sign up through your site.</p>
+            {items.length === 0 ? (
+              <>
+                <p className="mb-2">No subscribers yet.</p>
+                <p className="m-0 text-[13px]">Subscribers will appear here when visitors sign up through your site.</p>
+              </>
+            ) : (
+              "No subscribers match your search."
+            )}
           </AdminEmpty>
         ) : (
           <AdminListTable headers={["Email", "Subscribed", ""]}>
-            {items.map((s) => (
+            {filtered.map((s) => (
               <AdminTableRow key={s.id} className="hover:bg-copper/3">
                 <AdminTd className="font-semibold">{s.email}</AdminTd>
                 <AdminTd>{new Date(s.createdAt).toLocaleDateString()}</AdminTd>

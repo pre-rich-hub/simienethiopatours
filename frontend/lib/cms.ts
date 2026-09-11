@@ -124,12 +124,25 @@ type ApiBlogPost = {
 // Normalizers
 // ---------------------------------------------------------------------------
 
+const API_ORIGIN = (
+  process.env.API_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:5000"
+).replace(/\/$/, "");
+
+function resolveMediaUrl(url: string | null | undefined): string {
+  if (!url) return "";
+  if (/^https?:\/\//i.test(url)) return url;
+  if (url.startsWith("/assets/")) return `${API_ORIGIN}${url}`;
+  return url;
+}
+
 function apiCardToJourneyCard(tour: ApiTourCard): JourneyCard {
   return {
     slug: tour.slug,
     href: `/treks/${tour.slug}`,
     title: tour.tourName,
-    image: tour.image || "",
+    image: resolveMediaUrl(tour.image),
     duration: tour.duration || "",
     style: tour.style || "",
     difficulty: tour.difficulty || "",
@@ -153,7 +166,7 @@ function apiDetailToJourneyDetail(tour: ApiTourDetail): JourneyDetail {
     heroTitle: tour.heroTitle || tour.tourName,
     heroAccent: tour.heroAccent || "",
     description,
-    image: tour.image || "",
+    image: resolveMediaUrl(tour.image),
     imageAlt: tour.imageAlt || "",
     duration: tour.duration || "",
     route: tour.route || [],
@@ -181,7 +194,7 @@ function apiDetailToJourneyDetail(tour: ApiTourDetail): JourneyDetail {
 
 function apiGalleryToPhotograph(item: ApiGalleryItem): Photograph {
   return {
-    src: item.imageUrl,
+    src: resolveMediaUrl(item.imageUrl),
     title: item.title,
     location: item.location,
     category: item.category,

@@ -1,8 +1,24 @@
 import type { NextConfig } from "next";
 
+function apiImagePatterns(): NonNullable<NextConfig["images"]>["remotePatterns"] {
+  const raw = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  try {
+    const url = new URL(raw);
+    return [{
+      protocol: url.protocol.replace(":", "") as "http" | "https",
+      hostname: url.hostname,
+      ...(url.port ? { port: url.port } : {}),
+      pathname: "/assets/**",
+    }];
+  } catch {
+    return [];
+  }
+}
+
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
+    remotePatterns: apiImagePatterns(),
   },
   async redirects() {
     return [

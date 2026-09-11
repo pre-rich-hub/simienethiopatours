@@ -3,12 +3,34 @@
 import { useState, type FormEvent } from "react";
 import { ArrowUpRight, Check } from "@/components/Icon";
 
-export function NewsletterForm() {
-  const [status, setStatus] = useState<"idle" | "submitted">("idle");
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+export function NewsletterForm() {
+  const [status, setStatus] = useState<"idle" | "sending" | "submitted" | "error">("idle");
+  const [error, setError] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setStatus("submitted");
+    const form = event.currentTarget;
+    const email = String(new FormData(form).get("email") || "").trim();
+    if (!email) return;
+
+    setStatus("sending");
+    setError("");
+    try {
+      const response = await fetch(`${API_BASE}/api/v1/subscribers`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ email }),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!response.ok) throw new Error("Subscribe failed");
+      setStatus("submitted");
+      form.reset();
+    } catch {
+      setStatus("error");
+      setError("We could not add that email. Please try again.");
+    }
   }
 
   if (status === "submitted") {
@@ -20,7 +42,8 @@ export function NewsletterForm() {
   }
 
   return (
-    <form className="newsletter-form" onSubmit={handleSubmit}>
+    <div className="newsletter-form-wrap">
+      <form className="newsletter-form" onSubmit={handleSubmit}>
       <input
         type="email"
         name="email"
@@ -28,10 +51,15 @@ export function NewsletterForm() {
         aria-label="Email address"
         autoComplete="email"
         required
+        disabled={status === "sending"}
       />
-      <button type="submit" aria-label="Subscribe">
-        Subscribe <ArrowUpRight size={16} />
+      <button type="submit" aria-label="Subscribe" disabled={status === "sending"}>
+        {status === "sending" ? "Sending…" : <>Subscribe <ArrowUpRight size={16} /></>}
       </button>
-    </form>
+      </form>
+      {status === "error" && (
+        <p className="newsletter-form__error" role="alert">{error}</p>
+      )}
+    </div>
   );
 }

@@ -9,28 +9,41 @@ function parseError(res: Response): Promise<string> {
     .then((body) => body?.message || `Request failed (${res.status})`);
 }
 
+function redirectToLogin(expired: boolean) {
+  if (typeof window === "undefined") return;
+  if (window.location.pathname === LOGIN_PATH) return;
+  window.location.href = expired ? `${LOGIN_PATH}?expired=1` : LOGIN_PATH;
+}
+
 /**
  * Authenticated read wrapper for the admin API.
  * Sends credentials (cookies) with every request.
- * On 401: returns null (the admin layout redirects to /admin/login).
+ * On 401: redirects to login (session expired) unless redirectOn401 is false.
  * On non-ok: parses { message } and throws.
  * On ok: parses body.data and returns it.
  */
 export async function adminRequestClient<T = unknown>(
   path: string,
-  init?: RequestInit,
+  init?: RequestInit & { redirectOn401?: boolean },
 ): Promise<T | null> {
+  const { redirectOn401 = true, ...fetchInit } = init ?? {};
   const url = `${API_BASE}${path}`;
   const res = await fetch(url, {
-    ...init,
+    ...fetchInit,
     credentials: "include",
     headers: {
       Accept: "application/json",
-      ...init?.headers,
+      ...fetchInit.headers,
     },
   });
 
-  if (res.status === 401) return null;
+  if (res.status === 401) {
+    if (redirectOn401) {
+      redirectToLogin(true);
+      return null;
+    }
+    return null;
+  }
 
   if (!res.ok) {
     throw new Error(await parseError(res));
@@ -43,7 +56,7 @@ export async function adminRequestClient<T = unknown>(
 /**
  * Authenticated mutation wrapper (POST/PUT/DELETE) for the admin API.
  * Accepts either a JSON payload or FormData (file uploads).
- * On 401: sends the user to /admin/login.
+ * On 401: sends the user to /admin/login?expired=1.
  * On non-ok: throws with the server's { message } when present.
  * On ok: returns body.data (or the whole body when data is absent).
  */
@@ -67,7 +80,7 @@ export async function adminMutate<T = unknown>(
   });
 
   if (res.status === 401) {
-    window.location.href = LOGIN_PATH;
+    redirectToLogin(true);
     return null;
   }
 

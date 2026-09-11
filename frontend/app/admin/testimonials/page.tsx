@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
-import { adminMutate, adminRequestClient } from "@/lib/admin/client";
+import { useState, type FormEvent } from "react";
+import { adminMutate } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
 import {
-  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminBadge, AdminNotice,
-  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
-  adminFormSection, adminFormGrid, adminFormActions, adminTableActions,
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminBadge,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  AdminSearch, AdminNotice, adminFormSection, adminFormGrid, adminFormActions, adminTableActions,
 } from "@/components/admin/ui";
 
 type Testimonial = {
@@ -21,8 +23,8 @@ type Testimonial = {
 };
 
 export default function AdminTestimonialsPage() {
-  const [items, setItems] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { items, setItems, loading, error, reload } = useAdminList<Testimonial>("/api/v1/admin/testimonials");
+  const [search, setSearch] = useState("");
   const [editing, setEditing] = useState<Testimonial | null>(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -35,22 +37,19 @@ export default function AdminTestimonialsPage() {
   const [avatarTone, setAvatarTone] = useState("");
   const [translatedFrom, setTranslatedFrom] = useState("");
   const [saving, setSaving] = useState(false);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
-  function load() {
-    adminRequestClient<Testimonial[]>("/api/v1/admin/testimonials")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => { load(); }, []);
+  const filtered = items.filter((t) => {
+    if (!search) return true;
+    const q = search.toLowerCase();
+    return [t.reviewerName, t.title, t.message, t.source].some((v) => (v || "").toLowerCase().includes(q));
+  });
 
   function openNew() {
     setEditing(null);
     setMessage(""); setReviewerName(""); setProfession(""); setSource("");
     setTitle(""); setDate(""); setAvatarTone(""); setTranslatedFrom("");
-    setNotice(null);
+    setFormError(null);
     setShowForm(true);
   }
 
@@ -60,16 +59,16 @@ export default function AdminTestimonialsPage() {
     setProfession(t.profession || ""); setSource(t.source || "");
     setTitle(t.title || ""); setDate(t.date || "");
     setAvatarTone(t.avatarTone || ""); setTranslatedFrom(t.translatedFrom || "");
-    setNotice(null);
+    setFormError(null);
     setShowForm(true);
   }
 
-  function cancel() { setShowForm(false); setEditing(null); setNotice(null); }
+  function cancel() { setShowForm(false); setEditing(null); setFormError(null); }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSaving(true);
-    setNotice(null);
+    setFormError(null);
     try {
       const payload = {
         message, reviewerName,
@@ -88,12 +87,12 @@ export default function AdminTestimonialsPage() {
         json: payload,
       });
       if (result === null) return;
-      setNotice({ type: "success", msg: editing ? "Testimonial updated." : "Testimonial created." });
+      adminToast("success", editing ? "Testimonial updated." : "Testimonial created.");
       setShowForm(false);
       setEditing(null);
-      load();
+      await reload();
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Save failed" });
+      setFormError(err instanceof Error ? err.message : "Save failed");
     }
     setSaving(false);
   }
@@ -104,9 +103,9 @@ export default function AdminTestimonialsPage() {
       const result = await adminMutate(`/api/v1/admin/testimonials/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((t) => t.id !== id));
-      setNotice({ type: "success", msg: "Testimonial deleted." });
+      adminToast("success", "Testimonial deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
@@ -119,11 +118,12 @@ export default function AdminTestimonialsPage() {
         actions={<AdminButton variant="primary" onClick={openNew}>New testimonial</AdminButton>}
       />
 
-      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
+      <AdminSearch value={search} onChange={setSearch} placeholder="Search reviewer, title, or message..." />
 
       {showForm && (
         <div className="mb-6">
           <AdminCard title={editing ? "Edit testimonial" : "New testimonial"}>
+            {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
             <form onSubmit={handleSubmit}>
               <AdminField label="Message" className={adminFormSection}>
                 <AdminTextarea required value={message} onChange={(e) => setMessage(e.target.value)} />
@@ -145,7 +145,7 @@ export default function AdminTestimonialsPage() {
                   <AdminInput value={date} onChange={(e) => setDate(e.target.value)} placeholder="e.g. January 2026" />
                 </AdminField>
                 <AdminField label="Avatar tone">
-                  <AdminInput value={avatarTone} onChange={(e) => setAvatarTone(e.target.value)} placeholder="e.g. warm, professional" />
+                  <AdminInput value={avatarTone} onChange={(e) => setAvatarTone(e.target.value)} placeholder="e.g. clay, sky, forest" />
                 </AdminField>
                 <AdminField label="Translated from">
                   <AdminInput value={translatedFrom} onChange={(e) => setTranslatedFrom(e.target.value)} placeholder="e.g. Amharic, N/A" />
@@ -161,15 +161,17 @@ export default function AdminTestimonialsPage() {
       )}
 
       <AdminCard flush>
-        {items.length === 0 ? (
-          <AdminEmpty>No testimonials yet.</AdminEmpty>
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : filtered.length === 0 ? (
+          <AdminEmpty>{items.length === 0 ? "No testimonials yet." : "No testimonials match your search."}</AdminEmpty>
         ) : (
-          <AdminListTable headers={["Name", "Title", "Profession", "Source", "Date", "Translated", ""]}>
-            {items.map((t) => (
+          <AdminListTable headers={["Name", "Message", "Title", "Source", "Date", "Translated", ""]}>
+            {filtered.map((t) => (
               <AdminTableRow key={t.id} className="hover:bg-copper/3">
                 <AdminTd className="font-semibold">{t.reviewerName}</AdminTd>
+                <AdminTd truncate>{t.message}</AdminTd>
                 <AdminTd>{t.title || "—"}</AdminTd>
-                <AdminTd>{t.profession || "—"}</AdminTd>
                 <AdminTd>{t.source || "—"}</AdminTd>
                 <AdminTd>{t.date || "—"}</AdminTd>
                 <AdminTd>

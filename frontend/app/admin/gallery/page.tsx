@@ -2,10 +2,12 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
 import {
-  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminSelect, AdminNotice,
-  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
-  adminFormSection, adminFormGrid, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminSelect,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  AdminSearch, AdminNotice, adminFormSection, adminFormGrid, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
 } from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
@@ -26,9 +28,9 @@ type GalleryItem = {
 type Tour = { id: number; name: string };
 
 export default function AdminGalleryPage() {
-  const [items, setItems] = useState<GalleryItem[]>([]);
+  const { items, setItems, loading, error, reload } = useAdminList<GalleryItem>("/api/v1/admin/gallery");
   const [tours, setTours] = useState<Tour[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const [editing, setEditing] = useState<GalleryItem | null>(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -43,27 +45,27 @@ export default function AdminGalleryPage() {
   const [tourId, setTourId] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const imagePreview = useFilePreview(file, imageUrl);
 
-  function load() {
-    Promise.all([
-      adminRequestClient<GalleryItem[]>("/api/v1/admin/gallery"),
-      adminRequestClient<Tour[]>("/api/v1/admin/tours"),
-    ]).then(([g, t]) => {
-      if (g) setItems(g);
-      if (t) setTours(t.map((x) => ({ id: x.id, name: x.name })));
-    }).catch(() => {}).finally(() => setLoading(false));
-  }
+  useEffect(() => {
+    adminRequestClient<Tour[]>("/api/v1/admin/tours")
+      .then((t) => { if (t) setTours(t.map((x) => ({ id: x.id, name: x.name }))); })
+      .catch(() => {});
+  }, []);
 
-  useEffect(() => { load(); }, []);
+  const filtered = items.filter((g) => {
+    if (!search) return true;
+    const q = search.toLowerCase();
+    return [g.title, g.location, g.category, g.alt].some((v) => (v || "").toLowerCase().includes(q));
+  });
 
   function openNew() {
     setEditing(null);
     setImageUrl(""); setTitle(""); setLocation(""); setCategory("");
     setAlt(""); setStory(""); setHref(""); setLink(""); setTourId(""); setFile(null);
-    setNotice(null);
+    setFormError(null);
     setShowForm(true);
   }
 
@@ -73,16 +75,16 @@ export default function AdminGalleryPage() {
     setCategory(g.category || ""); setAlt(g.alt || ""); setStory(g.story || "");
     setHref(g.href || ""); setLink(g.link || "");
     setTourId(g.tourId ? String(g.tourId) : ""); setFile(null);
-    setNotice(null);
+    setFormError(null);
     setShowForm(true);
   }
 
-  function cancel() { setShowForm(false); setEditing(null); setNotice(null); }
+  function cancel() { setShowForm(false); setEditing(null); setFormError(null); }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSaving(true);
-    setNotice(null);
+    setFormError(null);
     try {
       const fd = new FormData();
       fd.append("imageUrl", imageUrl);
@@ -104,12 +106,12 @@ export default function AdminGalleryPage() {
         formData: fd,
       });
       if (result === null) return;
-      setNotice({ type: "success", msg: editing ? "Gallery item updated." : "Gallery item created." });
+      adminToast("success", editing ? "Gallery item updated." : "Gallery item created.");
       setShowForm(false);
       setEditing(null);
-      load();
+      await reload();
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Save failed" });
+      setFormError(err instanceof Error ? err.message : "Save failed");
     }
     setSaving(false);
   }
@@ -120,9 +122,9 @@ export default function AdminGalleryPage() {
       const result = await adminMutate(`/api/v1/admin/gallery/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((g) => g.id !== id));
-      setNotice({ type: "success", msg: "Gallery image deleted." });
+      adminToast("success", "Gallery image deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
@@ -135,11 +137,12 @@ export default function AdminGalleryPage() {
         actions={<AdminButton variant="primary" onClick={openNew}>New image</AdminButton>}
       />
 
-      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
+      <AdminSearch value={search} onChange={setSearch} placeholder="Search title, location, or category..." />
 
       {showForm && (
         <div className="mb-6">
           <AdminCard title={editing ? "Edit image" : "New image"}>
+            {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
             <form onSubmit={handleSubmit}>
               <div className={adminFileRow}>
                 <AdminField label="Image URL or file">
@@ -197,11 +200,13 @@ export default function AdminGalleryPage() {
       )}
 
       <AdminCard flush>
-        {items.length === 0 ? (
-          <AdminEmpty>No gallery images yet.</AdminEmpty>
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : filtered.length === 0 ? (
+          <AdminEmpty>{items.length === 0 ? "No gallery images yet." : "No images match your search."}</AdminEmpty>
         ) : (
           <AdminListTable headers={["Image", "Title", "Category", "Location", "Link", "Tour", ""]}>
-            {items.map((g) => (
+            {filtered.map((g) => (
               <AdminTableRow key={g.id} className="hover:bg-copper/3">
                 <AdminTd>
                   {g.imageUrl && <img className={adminThumb} src={g.imageUrl} alt={g.alt || g.title || ""} />}

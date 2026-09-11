@@ -14,6 +14,7 @@ import { buttonVariants } from "@/components/ui/button";
 export default async function Home() {
   const allTours = await cms.getAllTours();
   const featuredTours = await cms.getFeaturedTours();
+  const reviews = await cms.getTestimonials();
 
   return (
     <>
@@ -118,7 +119,7 @@ export default async function Home() {
         <section className="section reviews-home" id="reviews">
           <div className="shell">
             <div className="reviews-home__heading"><SectionIntro tag="Traveler reviews" title="Their journeys." accent="In their own words." /><div><p className="lead">Independent feedback from travelers who met Tevan in Gondar and experienced northern Ethiopia with local guidance.</p></div></div>
-            <ReviewsShowcase />
+            <ReviewsShowcase reviews={reviews} />
           </div>
         </section>
 

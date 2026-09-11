@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { adminRequestClient } from "@/lib/admin/client";
 import {
   Compass, MapPin, Image, Star, BookOpen,
   ClipboardList, Mail, Users,
-  AdminPageHeader, AdminLoading, AdminEmpty, AdminCard, AdminBadge, AdminQuickLink,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminCard, AdminBadge, AdminQuickLink,
   AdminListTable, AdminTableRow, AdminTd,
 } from "@/components/admin/ui";
 
@@ -35,16 +35,30 @@ type Stats = {
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
     adminRequestClient<Stats>("/api/v1/admin/dashboard/stats")
       .then((data) => { if (data) setStats(data); })
-      .catch(() => {})
+      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load dashboard stats."))
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    load();
+  }, [load]);
+
   if (loading) return <AdminLoading />;
-  if (!stats) return <AdminEmpty>Failed to load dashboard stats.</AdminEmpty>;
+  if (error || !stats) {
+    return (
+      <>
+        <AdminPageHeader title="Dashboard" />
+        <AdminError onRetry={load}>{error || "Failed to load dashboard stats."}</AdminError>
+      </>
+    );
+  }
 
   const { totals, recentBookings } = stats;
 

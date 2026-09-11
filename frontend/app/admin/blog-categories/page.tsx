@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
-import { adminMutate, adminRequestClient } from "@/lib/admin/client";
+import { useState, type FormEvent } from "react";
+import { adminMutate } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
 import {
-  AdminButton, AdminCard, AdminField, AdminInput, AdminNotice,
-  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
-  adminFormSection, adminFormActions, adminTableActions,
+  AdminButton, AdminCard, AdminField, AdminInput,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  AdminNotice, adminFormSection, adminFormActions, adminTableActions,
 } from "@/components/admin/ui";
 
 type BlogCategory = {
@@ -16,38 +18,27 @@ type BlogCategory = {
 };
 
 export default function AdminBlogCategoriesPage() {
-  const [items, setItems] = useState<BlogCategory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { items, setItems, loading, error, reload } = useAdminList<BlogCategory>("/api/v1/admin/blog-categories");
   const [editing, setEditing] = useState<BlogCategory | null>(null);
   const [showForm, setShowForm] = useState(false);
-
   const [name, setName] = useState("");
   const [saving, setSaving] = useState(false);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
-
-  function load() {
-    adminRequestClient<BlogCategory[]>("/api/v1/admin/blog-categories")
-      .then((d) => { if (d) setItems(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => { load(); }, []);
+  const [formError, setFormError] = useState<string | null>(null);
 
   function openNew() {
-    setEditing(null); setName(""); setNotice(null); setShowForm(true);
+    setEditing(null); setName(""); setFormError(null); setShowForm(true);
   }
 
   function openEdit(c: BlogCategory) {
-    setEditing(c); setName(c.name); setNotice(null); setShowForm(true);
+    setEditing(c); setName(c.name); setFormError(null); setShowForm(true);
   }
 
-  function cancel() { setShowForm(false); setEditing(null); setNotice(null); }
+  function cancel() { setShowForm(false); setEditing(null); setFormError(null); }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSaving(true);
-    setNotice(null);
+    setFormError(null);
     try {
       const path = editing
         ? `/api/v1/admin/blog-categories/${editing.id}`
@@ -57,10 +48,10 @@ export default function AdminBlogCategoriesPage() {
         json: { name },
       });
       if (result === null) return;
-      setNotice({ type: "success", msg: editing ? "Category updated." : "Category created." });
-      setShowForm(false); setEditing(null); load();
+      adminToast("success", editing ? "Category updated." : "Category created.");
+      setShowForm(false); setEditing(null); await reload();
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Save failed" });
+      setFormError(err instanceof Error ? err.message : "Save failed");
     }
     setSaving(false);
   }
@@ -71,9 +62,9 @@ export default function AdminBlogCategoriesPage() {
       const result = await adminMutate(`/api/v1/admin/blog-categories/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((c) => c.id !== id));
-      setNotice({ type: "success", msg: "Category deleted." });
+      adminToast("success", "Category deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
@@ -86,11 +77,10 @@ export default function AdminBlogCategoriesPage() {
         actions={<AdminButton variant="primary" onClick={openNew}>New category</AdminButton>}
       />
 
-      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
-
       {showForm && (
         <div className="mb-6">
           <AdminCard title={editing ? "Edit category" : "New category"}>
+            {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
             <form onSubmit={handleSubmit}>
               <AdminField label="Name">
                 <AdminInput required value={name} onChange={(e) => setName(e.target.value)} />
@@ -110,7 +100,9 @@ export default function AdminBlogCategoriesPage() {
       )}
 
       <AdminCard flush>
-        {items.length === 0 ? (
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : items.length === 0 ? (
           <AdminEmpty>No blog categories yet.</AdminEmpty>
         ) : (
           <AdminListTable headers={["Name", "Slug", "Posts", ""]}>

@@ -2,10 +2,12 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
+import { useAdminList } from "@/lib/admin/useAdminList";
+import { adminToast } from "@/lib/admin/toast";
 import {
-  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminSelect, AdminNotice,
-  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
-  adminFormSection, adminFormGrid, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminSelect,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminError, AdminListTable, AdminTableRow, AdminTd,
+  AdminSearch, AdminNotice, adminFormSection, adminFormGrid, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
 } from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
@@ -25,9 +27,9 @@ type BlogPost = {
 type BlogCategory = { id: number; name: string };
 
 export default function AdminBlogPage() {
-  const [items, setItems] = useState<BlogPost[]>([]);
+  const { items, setItems, loading, error, reload } = useAdminList<BlogPost>("/api/v1/admin/blog");
   const [categories, setCategories] = useState<BlogCategory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const [editing, setEditing] = useState<BlogPost | null>(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -39,43 +41,61 @@ export default function AdminBlogPage() {
   const [file, setFile] = useState<File | null>(null);
   const [existingImage, setExistingImage] = useState("");
   const [saving, setSaving] = useState(false);
-  const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const imagePreview = useFilePreview(file, existingImage);
 
-  function load() {
-    Promise.all([
-      adminRequestClient<BlogPost[]>("/api/v1/admin/blog"),
-      adminRequestClient<BlogCategory[]>("/api/v1/admin/blog-categories"),
-    ]).then(([b, c]) => {
-      if (b) setItems(b);
-      if (c) setCategories(c.map((x) => ({ id: x.id, name: x.name })));
-    }).catch(() => {}).finally(() => setLoading(false));
-  }
+  useEffect(() => {
+    adminRequestClient<BlogCategory[]>("/api/v1/admin/blog-categories")
+      .then((c) => { if (c) setCategories(c.map((x) => ({ id: x.id, name: x.name }))); })
+      .catch(() => {});
+  }, []);
 
-  useEffect(() => { load(); }, []);
+  const filtered = items.filter((p) => {
+    if (!search) return true;
+    const q = search.toLowerCase();
+    return p.blogTitle.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q) || (p.categoryName || "").toLowerCase().includes(q);
+  });
 
   function openNew() {
     setEditing(null);
     setBlogTitle(""); setBlogDescription(""); setContent(""); setHref(""); setCategoryId("");
-    setFile(null); setExistingImage(""); setNotice(null);
+    setFile(null); setExistingImage(""); setFormError(null);
     setShowForm(true);
   }
 
-  function openEdit(p: BlogPost) {
-    setEditing(p);
-    setBlogTitle(p.blogTitle); setBlogDescription(p.description || "");
-    setContent(p.content || ""); setHref(p.href || ""); setCategoryId(p.categoryId ? String(p.categoryId) : "");
-    setFile(null); setExistingImage(p.imageUrl || ""); setNotice(null);
+  async function openEdit(p: BlogPost) {
     setShowForm(true);
+    setFormError(null);
+    setFile(null);
+    try {
+      const full = await adminRequestClient<BlogPost>(`/api/v1/admin/blog/${p.id}`);
+      const row = full ?? p;
+      setEditing(row);
+      setBlogTitle(row.blogTitle);
+      setBlogDescription(row.description || "");
+      setContent(row.content || "");
+      setHref(row.href || "");
+      setCategoryId(row.categoryId ? String(row.categoryId) : "");
+      setExistingImage(row.imageUrl || "");
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : "Failed to load post");
+      setEditing(p);
+      setBlogTitle(p.blogTitle);
+      setBlogDescription(p.description || "");
+      setContent(p.content || "");
+      setHref(p.href || "");
+      setCategoryId(p.categoryId ? String(p.categoryId) : "");
+      setExistingImage(p.imageUrl || "");
+    }
   }
 
-  function cancel() { setShowForm(false); setEditing(null); setNotice(null); }
+  function cancel() { setShowForm(false); setEditing(null); setFormError(null); }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSaving(true);
-    setNotice(null);
+    setFormError(null);
     try {
       const fd = new FormData();
       fd.append("blogTitle", blogTitle);
@@ -93,12 +113,12 @@ export default function AdminBlogPage() {
         formData: fd,
       });
       if (result === null) return;
-      setNotice({ type: "success", msg: editing ? "Post updated." : "Post created." });
+      adminToast("success", editing ? "Post updated." : "Post created.");
       setShowForm(false);
       setEditing(null);
-      load();
+      await reload();
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Save failed" });
+      setFormError(err instanceof Error ? err.message : "Save failed");
     }
     setSaving(false);
   }
@@ -109,9 +129,9 @@ export default function AdminBlogPage() {
       const result = await adminMutate(`/api/v1/admin/blog/${id}`, { method: "DELETE" });
       if (result === null) return;
       setItems((prev) => prev.filter((p) => p.id !== id));
-      setNotice({ type: "success", msg: "Post deleted." });
+      adminToast("success", "Post deleted.");
     } catch (err) {
-      setNotice({ type: "error", msg: err instanceof Error ? err.message : "Delete failed" });
+      adminToast("error", err instanceof Error ? err.message : "Delete failed");
     }
   }
 
@@ -124,11 +144,12 @@ export default function AdminBlogPage() {
         actions={<AdminButton variant="primary" onClick={openNew}>New post</AdminButton>}
       />
 
-      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
+      <AdminSearch value={search} onChange={setSearch} placeholder="Search title, slug, or category..." />
 
       {showForm && (
         <div className="mb-6">
           <AdminCard title={editing ? "Edit post" : "New post"}>
+            {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
             <form onSubmit={handleSubmit}>
               <AdminField label="Title" className={adminFormSection}>
                 <AdminInput required value={blogTitle} onChange={(e) => setBlogTitle(e.target.value)} />
@@ -161,7 +182,7 @@ export default function AdminBlogPage() {
                   </AdminSelect>
                 </AdminField>
                 <div className={adminFileRow}>
-                  <AdminField label="Image">
+                  <AdminField label="Image" hint={existingImage && !file ? `Current image: ${existingImage}` : undefined}>
                     <AdminInput type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
                   </AdminField>
                 </div>
@@ -181,11 +202,13 @@ export default function AdminBlogPage() {
       )}
 
       <AdminCard flush>
-        {items.length === 0 ? (
-          <AdminEmpty>No blog posts yet. Write your first post.</AdminEmpty>
+        {error ? (
+          <AdminError onRetry={() => void reload()}>{error}</AdminError>
+        ) : filtered.length === 0 ? (
+          <AdminEmpty>{items.length === 0 ? "No blog posts yet. Write your first post." : "No posts match your search."}</AdminEmpty>
         ) : (
           <AdminListTable headers={["Image", "Title", "Slug", "Category", "Created", ""]}>
-            {items.map((p) => (
+            {filtered.map((p) => (
               <AdminTableRow key={p.id} className="hover:bg-copper/3">
                 <AdminTd>
                   {p.imageUrl && <img className={adminThumb} src={p.imageUrl} alt={p.blogTitle} />}
@@ -196,7 +219,7 @@ export default function AdminBlogPage() {
                 <AdminTd>{new Date(p.createdAt).toLocaleDateString()}</AdminTd>
                 <AdminTd>
                   <div className={adminTableActions}>
-                    <AdminButton variant="secondary" size="small" onClick={() => openEdit(p)}>Edit</AdminButton>
+                    <AdminButton variant="secondary" size="small" onClick={() => void openEdit(p)}>Edit</AdminButton>
                     <AdminButton variant="danger" size="small" onClick={() => handleDelete(p.id, p.blogTitle)}>Delete</AdminButton>
                   </div>
                 </AdminTd>

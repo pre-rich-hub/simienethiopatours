@@ -147,17 +147,23 @@ export function AdminField({
   label,
   children,
   row,
+  error,
+  hint,
   className = "",
 }: {
   label?: string;
   children: ReactNode;
   row?: boolean;
+  error?: string;
+  hint?: string;
   className?: string;
 }) {
   return (
     <div className={cn("flex flex-col gap-1.5", row && "flex-row items-center justify-between", className)}>
       {label && <Label className="text-[11px] font-semibold uppercase tracking-[0.08em] text-stone">{label}</Label>}
       {children}
+      {hint && !error && <p className="m-0 text-xs leading-normal text-stone">{hint}</p>}
+      {error && <p className="m-0 text-xs leading-normal text-destructive">{error}</p>}
     </div>
   );
 }
@@ -369,6 +375,25 @@ export function AdminLoading({ children = "Loading..." }: { children?: ReactNode
 
 export function AdminEmpty({ children }: { children: ReactNode }) {
   return <div className="px-6 py-10 text-center text-sm text-stone">{children}</div>;
+}
+
+export function AdminError({
+  children,
+  onRetry,
+}: {
+  children: ReactNode;
+  onRetry?: () => void;
+}) {
+  return (
+    <div className="flex flex-col items-center gap-4 px-6 py-10 text-center text-sm text-stone">
+      <p className="m-0">{children}</p>
+      {onRetry && (
+        <AdminButton variant="secondary" onClick={onRetry}>
+          Try again
+        </AdminButton>
+      )}
+    </div>
+  );
 }
 
 export function AdminListTable({ headers, children }: { headers: ReactNode[]; children: ReactNode }) {

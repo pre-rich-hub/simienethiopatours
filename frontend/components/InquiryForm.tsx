@@ -25,7 +25,7 @@ export function InquiryForm({ compact = false, initialExperience = "" }: { compa
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      if (result.delivery === "webhook") {
+      if (result.delivery === "contact" || result.delivery === "webhook") {
         setState("success");
         form.reset();
         return;
@@ -116,7 +116,7 @@ export function InquiryForm({ compact = false, initialExperience = "" }: { compa
       </div>
       <div className="form-submit form-field--wide">
         <Button variant="ctaCopper" size="cta" type="submit" disabled={state === "sending"}>
-          {state === "sending" ? <><LoaderCircle className="spin" /> Preparing email</> : state === "success" ? <><Check /> Inquiry sent</> : <>Send my inquiry <ArrowRight /></>}
+          {state === "sending" ? <><LoaderCircle className="spin" /> Sending</> : state === "success" ? <><Check /> Inquiry sent</> : <>Send my inquiry <ArrowRight /></>}
         </Button>
         <p role="status">{state === "email" ? "Your email app should now open with your journey details." : <>Prefer a conversation? <a href={site.whatsapp} target="_blank" rel="noreferrer">Message us on WhatsApp.</a></>}</p>
       </div>
