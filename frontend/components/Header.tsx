@@ -9,6 +9,8 @@ import { NavMegaMenu } from "./NavMegaMenu";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { site } from "@/lib/site";
 import { gondarMenuCards, journeyMenuCards, simienMenuCards } from "@/lib/nav-menus";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 const links = [
   { href: "/simien-mountains", label: "Simien" },
@@ -106,25 +108,44 @@ export function Header({ light = false }: { light?: boolean }) {
     };
   }, [open]);
 
+  const compact = light || scrolled;
+
   return (
     <>
-      <header className={`site-header ${light ? "site-header--light" : ""} ${scrolled ? "is-scrolled" : ""}`}>
-        <div className="site-header__inner">
+      <header
+        className={cn(
+          "site-header fixed inset-x-0 top-0 z-[60] border-b border-transparent text-white transition-[height,background-color,color,border-color,box-shadow] duration-500",
+          compact ? "h-[72px] bg-ivory/94 text-ink shadow-[0_4px_24px_rgba(23,25,22,.035)] backdrop-blur-[18px] border-[rgba(23,25,22,.09)]" : "h-[88px] max-[720px]:h-[72px]",
+          light && "site-header--light",
+          scrolled && "is-scrolled",
+        )}
+      >
+        <div className="mx-auto flex h-full w-[min(1440px,calc(100vw-72px))] items-center justify-between max-[720px]:w-[calc(100vw-34px)]">
           <BrandMark onDark={!light && !scrolled} />
-          <nav className="desktop-nav" aria-label="Primary navigation">
+          <nav className="desktop-nav ml-auto mr-[clamp(30px,3vw,52px)] hidden h-full items-center gap-[clamp(18px,2vw,34px)] min-[1101px]:flex" aria-label="Primary navigation">
             {links.map((link) => (
               megaMenus[link.href]
                 ? <NavMegaMenu key={link.href} {...megaMenus[link.href]} />
                 : <Link key={link.href} href={link.href} aria-current={pathname === link.href ? "page" : undefined}>{link.label}</Link>
             ))}
           </nav>
-          <div className="header-actions">
-            <LanguageSwitcher />
-            <Link className="button button--small button--copper" href="/plan">
+          <div className="flex items-center gap-[18px]">
+            <div className="max-[1100px]:hidden">
+              <LanguageSwitcher />
+            </div>
+            <Link className={cn(buttonVariants({ variant: "ctaCopper", size: "ctaSm" }), "max-[1100px]:hidden max-[720px]:w-auto")} href="/plan">
               Plan with Tevan <ArrowUpRight size={15} />
             </Link>
           </div>
-          <button ref={menuButtonRef} className="menu-button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} aria-controls="mobile-menu" aria-haspopup="dialog">
+          <button
+            ref={menuButtonRef}
+            className="hidden size-11 border-0 bg-transparent p-2.5 text-inherit max-[1100px]:grid max-[1100px]:place-items-center"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-haspopup="dialog"
+          >
             <Menu />
           </button>
         </div>
@@ -132,13 +153,13 @@ export function Header({ light = false }: { light?: boolean }) {
       <dialog
         ref={menuRef}
         id="mobile-menu"
-        className={`mobile-menu ${open ? "is-open" : ""}`}
+        className={cn("mobile-menu", open && "is-open")}
         aria-label="Site navigation"
         onCancel={(event) => { event.preventDefault(); setOpen(false); }}
       >
         <div className="mobile-menu__top">
           <BrandMark />
-          <button className="menu-button menu-button--dark" onClick={() => setOpen(false)} aria-label="Close menu" autoFocus><X /></button>
+          <button className="grid size-11 place-items-center border-0 bg-transparent p-2.5 text-ink" onClick={() => setOpen(false)} aria-label="Close menu" autoFocus><X /></button>
         </div>
         <nav aria-label="Mobile navigation">
           {links.map((link, index) => (
@@ -150,7 +171,7 @@ export function Header({ light = false }: { light?: boolean }) {
         <div className="mobile-menu__contact">
           <LanguageSwitcher mobile />
           <p>Start with a simple question. Tevan and the local team will help shape the rest.</p>
-          <Link className="button button--dark" href="/plan" onClick={() => setOpen(false)}>Plan your journey</Link>
+          <Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan" onClick={() => setOpen(false)}>Plan your journey</Link>
           <a className="text-link" href={site.whatsapp} target="_blank" rel="noreferrer">WhatsApp {site.phoneDisplay}<ArrowUpRight /></a>
         </div>
       </dialog>

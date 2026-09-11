@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import TourForm from "@/components/admin/TourForm";
 import { adminRequestClient } from "@/lib/admin/client";
+import { AdminCard, AdminLoading, AdminPageHeader } from "@/components/admin/ui";
 
 type Option = { id: number; name: string };
 
@@ -24,18 +25,14 @@ export default function AdminTourNewPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>New tour</h1>
-      </div>
-      <div className="admin-card">
-        <div className="admin-card__body">
-          <TourForm destinations={destinations} categories={categories} />
-        </div>
-      </div>
+      <AdminPageHeader title="New tour" />
+      <AdminCard>
+        <TourForm destinations={destinations} categories={categories} />
+      </AdminCard>
     </>
   );
 }

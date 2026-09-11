@@ -2,7 +2,11 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminSelect, AdminNotice } from "@/components/admin/ui";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminSelect, AdminNotice,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
+  adminFormSection, adminFormGrid, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
+} from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
 type GalleryItem = {
@@ -28,7 +32,6 @@ export default function AdminGalleryPage() {
   const [editing, setEditing] = useState<GalleryItem | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  // form
   const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
@@ -123,38 +126,36 @@ export default function AdminGalleryPage() {
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Gallery</h1>
-        <div className="admin-page-header__actions">
-          <AdminButton variant="primary" onClick={openNew}>New image</AdminButton>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Gallery"
+        actions={<AdminButton variant="primary" onClick={openNew}>New image</AdminButton>}
+      />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
       {showForm && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={editing ? "Edit image" : "New image"}>
             <form onSubmit={handleSubmit}>
-              <div className="admin-file-row">
+              <div className={adminFileRow}>
                 <AdminField label="Image URL or file">
                   <AdminInput
                     placeholder="https://... or /assets/images/..."
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
                   />
-                  <input type="file" accept="image/*" className="admin-input" style={{ marginTop: 8 }} onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+                  <AdminInput type="file" accept="image/*" className="mt-2" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
                 </AdminField>
                 {(file || imageUrl) && (
-                  <img className="admin-image-preview" src={imagePreview} alt="Preview" />
+                  <img className={adminImagePreview} src={imagePreview} alt="Preview" />
                 )}
               </div>
 
-              <div className="admin-form-grid" style={{ marginTop: 16 }}>
+              <div className={`${adminFormGrid} mt-4`}>
                 <AdminField label="Title">
                   <AdminInput value={title} onChange={(e) => setTitle(e.target.value)} />
                 </AdminField>
@@ -182,11 +183,11 @@ export default function AdminGalleryPage() {
                 </AdminField>
               </div>
 
-              <AdminField label="Story" className="admin-form-section">
+              <AdminField label="Story" className={adminFormSection}>
                 <AdminTextarea value={story} onChange={(e) => setStory(e.target.value)} />
               </AdminField>
 
-              <div className="admin-form-actions" style={{ marginTop: 16 }}>
+              <div className={`${adminFormActions} mt-4`}>
                 <AdminButton type="submit" disabled={saving}>{saving ? "Saving..." : editing ? "Update" : "Create"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancel}>Cancel</AdminButton>
               </div>
@@ -195,47 +196,32 @@ export default function AdminGalleryPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
+      <AdminCard flush>
         {items.length === 0 ? (
-          <div className="admin-empty">No gallery images yet.</div>
+          <AdminEmpty>No gallery images yet.</AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Title</th>
-                  <th>Category</th>
-                  <th>Location</th>
-                  <th>Link</th>
-                  <th>Tour</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((g) => (
-                  <tr key={g.id}>
-                    <td>
-                      {g.imageUrl && <img className="admin-thumb" src={g.imageUrl} alt={g.alt || g.title || ""} />}
-                    </td>
-                    <td>{g.title || "—"}</td>
-                    <td>{g.category || "—"}</td>
-                    <td>{g.location || "—"}</td>
-                    <td className="admin-table__truncate">{g.href || "—"}</td>
-                    <td>{g.tour?.name || "—"}</td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openEdit(g)}>Edit</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(g.id)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Image", "Title", "Category", "Location", "Link", "Tour", ""]}>
+            {items.map((g) => (
+              <AdminTableRow key={g.id} className="hover:bg-copper/3">
+                <AdminTd>
+                  {g.imageUrl && <img className={adminThumb} src={g.imageUrl} alt={g.alt || g.title || ""} />}
+                </AdminTd>
+                <AdminTd>{g.title || "—"}</AdminTd>
+                <AdminTd>{g.category || "—"}</AdminTd>
+                <AdminTd>{g.location || "—"}</AdminTd>
+                <AdminTd truncate>{g.href || "—"}</AdminTd>
+                <AdminTd>{g.tour?.name || "—"}</AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => openEdit(g)}>Edit</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(g.id)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

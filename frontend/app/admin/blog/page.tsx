@@ -2,7 +2,11 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminSelect, AdminNotice } from "@/components/admin/ui";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminSelect, AdminNotice,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
+  adminFormSection, adminFormGrid, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
+} from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
 type BlogPost = {
@@ -27,7 +31,6 @@ export default function AdminBlogPage() {
   const [editing, setEditing] = useState<BlogPost | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  // form
   const [blogTitle, setBlogTitle] = useState("");
   const [blogDescription, setBlogDescription] = useState("");
   const [content, setContent] = useState("");
@@ -112,24 +115,22 @@ export default function AdminBlogPage() {
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Blog posts</h1>
-        <div className="admin-page-header__actions">
-          <AdminButton variant="primary" onClick={openNew}>New post</AdminButton>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Blog posts"
+        actions={<AdminButton variant="primary" onClick={openNew}>New post</AdminButton>}
+      />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
       {showForm && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={editing ? "Edit post" : "New post"}>
             <form onSubmit={handleSubmit}>
-              <AdminField label="Title" className="admin-form-section">
+              <AdminField label="Title" className={adminFormSection}>
                 <AdminInput required value={blogTitle} onChange={(e) => setBlogTitle(e.target.value)} />
               </AdminField>
 
@@ -139,19 +140,19 @@ export default function AdminBlogPage() {
                 </AdminField>
               )}
 
-              <AdminField label="Description" className="admin-form-section">
+              <AdminField label="Description" className={adminFormSection}>
                 <AdminTextarea value={blogDescription} onChange={(e) => setBlogDescription(e.target.value)} />
               </AdminField>
 
-              <AdminField label="Href (optional, for experience links)" className="admin-form-section">
+              <AdminField label="Href (optional, for experience links)" className={adminFormSection}>
                 <AdminInput value={href} placeholder="/treks/gondar-heritage-simien" onChange={(e) => setHref(e.target.value)} />
               </AdminField>
 
-              <AdminField label="Content" className="admin-form-section">
-                <AdminTextarea style={{ minHeight: 200 }} value={content} onChange={(e) => setContent(e.target.value)} />
+              <AdminField label="Content" className={adminFormSection}>
+                <AdminTextarea className="min-h-[200px]" value={content} onChange={(e) => setContent(e.target.value)} />
               </AdminField>
 
-              <div className="admin-form-grid">
+              <div className={adminFormGrid}>
                 <AdminField label="Category">
                   <AdminSelect value={categoryId} onChange={(e) => setCategoryId(e.target.value)} placeholder="No category">
                     {categories.map((c) => (
@@ -159,18 +160,18 @@ export default function AdminBlogPage() {
                     ))}
                   </AdminSelect>
                 </AdminField>
-                <div className="admin-file-row">
+                <div className={adminFileRow}>
                   <AdminField label="Image">
-                    <input type="file" accept="image/*" className="admin-input" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+                    <AdminInput type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
                   </AdminField>
                 </div>
               </div>
 
               {(file || existingImage) && (
-                <img className="admin-image-preview" style={{ marginTop: 12 }} src={imagePreview} alt="Preview" />
+                <img className={`${adminImagePreview} mt-3`} src={imagePreview} alt="Preview" />
               )}
 
-              <div className="admin-form-actions" style={{ marginTop: 16 }}>
+              <div className={`${adminFormActions} mt-4`}>
                 <AdminButton type="submit" disabled={saving}>{saving ? "Saving..." : editing ? "Update" : "Create"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancel}>Cancel</AdminButton>
               </div>
@@ -179,45 +180,31 @@ export default function AdminBlogPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
+      <AdminCard flush>
         {items.length === 0 ? (
-          <div className="admin-empty">No blog posts yet. Write your first post.</div>
+          <AdminEmpty>No blog posts yet. Write your first post.</AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Title</th>
-                  <th>Slug</th>
-                  <th>Category</th>
-                  <th>Created</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((p) => (
-                  <tr key={p.id}>
-                    <td>
-                      {p.imageUrl && <img className="admin-thumb" src={p.imageUrl} alt={p.blogTitle} />}
-                    </td>
-                    <td style={{ fontWeight: 600 }}>{p.blogTitle}</td>
-                    <td className="admin-table__slug">{p.slug}</td>
-                    <td>{p.categoryName || "—"}</td>
-                    <td>{new Date(p.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openEdit(p)}>Edit</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(p.id, p.blogTitle)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Image", "Title", "Slug", "Category", "Created", ""]}>
+            {items.map((p) => (
+              <AdminTableRow key={p.id} className="hover:bg-copper/3">
+                <AdminTd>
+                  {p.imageUrl && <img className={adminThumb} src={p.imageUrl} alt={p.blogTitle} />}
+                </AdminTd>
+                <AdminTd className="font-semibold">{p.blogTitle}</AdminTd>
+                <AdminTd slug>{p.slug}</AdminTd>
+                <AdminTd>{p.categoryName || "—"}</AdminTd>
+                <AdminTd>{new Date(p.createdAt).toLocaleDateString()}</AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => openEdit(p)}>Edit</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(p.id, p.blogTitle)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminNotice } from "@/components/admin/ui";
+import {
+  AdminButton, AdminNotice, AdminPageHeader, AdminLoading, AdminEmpty, AdminCard,
+  AdminListTable, AdminTableRow, AdminTd,
+} from "@/components/admin/ui";
 
 type Subscriber = {
   id: number;
@@ -36,49 +39,36 @@ export default function AdminSubscribersPage() {
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Subscribers</h1>
-      </div>
+      <AdminPageHeader title="Subscribers" />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
-      <div className="admin-card admin-card--flush">
+      <AdminCard flush>
         {items.length === 0 ? (
-          <div className="admin-empty">
-            <p style={{ margin: "0 0 8px" }}>No subscribers yet.</p>
-            <p style={{ margin: 0, fontSize: 13 }}>Subscribers will appear here when visitors sign up through your site.</p>
-          </div>
+          <AdminEmpty>
+            <p className="mb-2">No subscribers yet.</p>
+            <p className="m-0 text-[13px]">Subscribers will appear here when visitors sign up through your site.</p>
+          </AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Subscribed</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((s) => (
-                  <tr key={s.id}>
-                    <td style={{ fontWeight: 600 }}>{s.email}</td>
-                    <td>{new Date(s.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      <AdminButton variant="danger" size="small" onClick={() => handleDelete(s.id, s.email)}>
-                        Remove
-                      </AdminButton>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Email", "Subscribed", ""]}>
+            {items.map((s) => (
+              <AdminTableRow key={s.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{s.email}</AdminTd>
+                <AdminTd>{new Date(s.createdAt).toLocaleDateString()}</AdminTd>
+                <AdminTd>
+                  <AdminButton variant="danger" size="small" onClick={() => handleDelete(s.id, s.email)}>
+                    Remove
+                  </AdminButton>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

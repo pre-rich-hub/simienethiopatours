@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 import { EditorialHero, FeatureGrid, PageLinks, PlanningCall, SectionIntro, StorySection } from "@/components/Editorial";
 import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
+import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = { title: "Where to Stay in Gondar & Simien Mountains | Hotels, Lodges & Camping", description: "Plan Gondar hotels, Debark stops, Simien lodges and mountain camping around your trek. Local advice for the nights before, during and after the adventure.", alternates: { canonical: "/where-to-stay-gondar-simien" } };
 
@@ -30,7 +31,7 @@ export default function AccommodationPage() {
     ]}><Link className="text-link" href="/plan?experience=accommodation">Ask about your arrival and route</Link></StorySection>
     <section className="section section--paper" id="choose"><div className="shell"><SectionIntro tag="The right stay is personal" title="Match the night" accent="to the journey." /><div className="table-scroll"><table className="editorial-table"><caption>Starting points for choosing accommodation</caption><thead><tr><th scope="col">Your priorities</th><th scope="col">A style to discuss</th></tr></thead><tbody>
       <tr><th scope="row">Extra comfort</th><td>Resort or higher-comfort hotel</td></tr><tr><th scope="row">Couples & families</th><td>Comfortable hotel or lodge with suitable room arrangements</td></tr><tr><th scope="row">Budget or longer stays</th><td>Guesthouse or practical budget accommodation</td></tr><tr><th scope="row">Before & after trekking</th><td>A hotel suited to rest, preparation and transfers</td></tr><tr><th scope="row">Photography & short mountain visits</th><td>A base matched to your locations and light</td></tr><tr><th scope="row">Long Simien journeys</th><td>Camping with selected hotel or lodge nights where the route allows</td></tr>
-    </tbody></table></div><p className="content-lead">Tell us your arrival date, group size, nights in Gondar and Simien, trekking duration, budget and preferred accommodation. We will bring the stays, transfers and mountain route together in your quotation.</p><Link className="button button--dark" href="/plan?experience=accommodation">Plan my stay</Link></div></section>
+    </tbody></table></div><p className="content-lead">Tell us your arrival date, group size, nights in Gondar and Simien, trekking duration, budget and preferred accommodation. We will bring the stays, transfers and mountain route together in your quotation.</p><Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan?experience=accommodation">Plan my stay</Link></div></section>
     <PlanningCall title="Tell us your itinerary. We’ll help you choose where to stay." experience="accommodation" label="Request a complete trip quote" />
   </PageShell>;
 }

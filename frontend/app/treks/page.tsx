@@ -5,6 +5,7 @@ import { ArrowUpRight, Check, CircleAlert, Compass, Mountain } from "@/component
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { cms } from "@/lib/cms";
+import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Simien Mountains Treks & Private Journeys",
@@ -41,7 +42,7 @@ export default async function TreksPage() {
             </dl>
             <div className="journey-card__footer">
               <Link className="journey-card__explore" href={journey.href}>Read the itinerary <ArrowUpRight /></Link>
-              <Link className="button button--dark button--small" href={`/plan?journey=${journey.slug}`}>Ask about this journey <ArrowUpRight size={15} /></Link>
+              <Link className={buttonVariants({ variant: "ctaDark", size: "ctaSm" })} href={`/plan?journey=${journey.slug}`}>Ask about this journey <ArrowUpRight size={15} /></Link>
             </div>
           </div>
         </article>)}
@@ -56,6 +57,6 @@ export default async function TreksPage() {
     <section className="section section--paper honest-section">
       <div className="shell honest-grid"><div><p className="eyebrow eyebrow--copper">Before you choose</p><h2 className="section-title">An honest route is a <em>better route.</em></h2></div><div className="honest-points"><p><Check />We explain daily effort, camping and altitude in plain language.</p><p><Check />We confirm the route against current weather, trail and road conditions.</p><p><Check />We never guarantee a wild animal sighting.</p><p><CircleAlert />Prices are quoted personally because group size, season and logistics change the real cost.</p></div></div>
     </section>
-    <section className="inline-cta"><div className="shell"><p>Not sure which journey fits?</p><h2>Tell us what you want the mountain to feel like.</h2><Link className="button button--copper" href="/plan">Start the planner <ArrowUpRight /></Link></div></section>
+    <section className="inline-cta"><div className="shell"><p>Not sure which journey fits?</p><h2>Tell us what you want the mountain to feel like.</h2><Link className={buttonVariants({ variant: "ctaCopper", size: "cta" })} href="/plan">Start the planner <ArrowUpRight /></Link></div></section>
   </PageShell>;
 }

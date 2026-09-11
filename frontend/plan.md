@@ -133,10 +133,10 @@ Introduce Tailwind CSS and shadcn/ui **without** a visual rewrite. Map existing 
 
 ### Acceptance criteria
 
-- [ ] Tailwind + shadcn installed and used in admin without breaking login/dashboard/tours
-- [ ] Brand colors/fonts match current look (no generic shadcn theme takeover)
-- [ ] Marketing homepage still matches current composition after chrome migration
-- [ ] No duplicate conflicting global button systems left undocumented
+- [x] Tailwind + shadcn installed and used in admin without breaking login/dashboard/tours
+- [x] Brand colors/fonts match current look (no generic shadcn theme takeover)
+- [x] Marketing homepage still matches current composition after chrome migration
+- [x] No duplicate conflicting global button systems left undocumented
 
 ### Backend dependencies
 

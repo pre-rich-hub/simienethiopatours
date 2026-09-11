@@ -34,9 +34,7 @@ See [Planned / upcoming](#planned--upcoming-frontend) for what is not fully live
 | Validation | Zod |
 | Icons | Lucide React |
 | Fonts | Cormorant Garamond + Manrope (`@fontsource`) |
-| Styles | Custom CSS — [`app/globals.css`](app/globals.css), plus [`app/admin/admin.css`](app/admin/admin.css) |
-
-**Not in use yet:** Tailwind CSS, shadcn/ui.
+| Styles | Tailwind CSS v4 + shadcn/ui, with remaining marketing CSS in [`app/globals.css`](app/globals.css) |
 
 ---
 
@@ -47,7 +45,7 @@ frontend/
 ├── app/                    # Next.js App Router
 │   ├── page.tsx            # Homepage
 │   ├── layout.tsx          # Root layout, metadata
-│   ├── globals.css         # Site-wide styles
+│   ├── globals.css         # Brand tokens, Tailwind/shadcn theme, marketing CSS
 │   ├── api/inquiry/        # Inquiry API route (webhook / mailto path)
 │   ├── admin/              # Admin panel pages (login, tours, CMS entities)
 │   ├── treks/              # Trek listing + [slug] detail
@@ -164,7 +162,7 @@ For CMS, admin, and AI chat against live data, run the backend in [`../backend`]
 
 These are in project scope but not fully implemented in this app yet:
 
-- **Tailwind CSS** and **shadcn/ui** for a shared component system
+- **Tailwind CSS** and **shadcn/ui** — admin + shared chrome migrated; remaining marketing section CSS is still in `globals.css`
 - **Multi-language** — English, Spanish, German, French (a language switcher shell exists; full localization is not wired)
 - **GEO** — structured / AI-search-oriented content and markup for generative engines
 - **Video** — promotional video placement and playback UX

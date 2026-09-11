@@ -2,7 +2,11 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminBadge, AdminNotice } from "@/components/admin/ui";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminBadge, AdminNotice,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
+  adminFormSection, adminFormGrid, adminFormActions, adminTableActions,
+} from "@/components/admin/ui";
 
 type Testimonial = {
   id: number;
@@ -22,7 +26,6 @@ export default function AdminTestimonialsPage() {
   const [editing, setEditing] = useState<Testimonial | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  // form
   const [message, setMessage] = useState("");
   const [reviewerName, setReviewerName] = useState("");
   const [profession, setProfession] = useState("");
@@ -107,27 +110,25 @@ export default function AdminTestimonialsPage() {
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Testimonials</h1>
-        <div className="admin-page-header__actions">
-          <AdminButton variant="primary" onClick={openNew}>New testimonial</AdminButton>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Testimonials"
+        actions={<AdminButton variant="primary" onClick={openNew}>New testimonial</AdminButton>}
+      />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
       {showForm && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={editing ? "Edit testimonial" : "New testimonial"}>
             <form onSubmit={handleSubmit}>
-              <AdminField label="Message" className="admin-form-section">
+              <AdminField label="Message" className={adminFormSection}>
                 <AdminTextarea required value={message} onChange={(e) => setMessage(e.target.value)} />
               </AdminField>
-              <div className="admin-form-grid">
+              <div className={adminFormGrid}>
                 <AdminField label="Reviewer name">
                   <AdminInput required value={reviewerName} onChange={(e) => setReviewerName(e.target.value)} />
                 </AdminField>
@@ -150,7 +151,7 @@ export default function AdminTestimonialsPage() {
                   <AdminInput value={translatedFrom} onChange={(e) => setTranslatedFrom(e.target.value)} placeholder="e.g. Amharic, N/A" />
                 </AdminField>
               </div>
-              <div className="admin-form-actions" style={{ marginTop: 16 }}>
+              <div className={`${adminFormActions} mt-4`}>
                 <AdminButton type="submit" disabled={saving}>{saving ? "Saving..." : editing ? "Update" : "Create"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancel}>Cancel</AdminButton>
               </div>
@@ -159,47 +160,32 @@ export default function AdminTestimonialsPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
+      <AdminCard flush>
         {items.length === 0 ? (
-          <div className="admin-empty">No testimonials yet.</div>
+          <AdminEmpty>No testimonials yet.</AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Title</th>
-                  <th>Profession</th>
-                  <th>Source</th>
-                  <th>Date</th>
-                  <th>Translated</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((t) => (
-                  <tr key={t.id}>
-                    <td style={{ fontWeight: 600 }}>{t.reviewerName}</td>
-                    <td>{t.title || "—"}</td>
-                    <td>{t.profession || "—"}</td>
-                    <td>{t.source || "—"}</td>
-                    <td>{t.date || "—"}</td>
-                    <td>
-                      {t.translatedFrom && <AdminBadge variant="amber">{t.translatedFrom}</AdminBadge>}
-                    </td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openEdit(t)}>Edit</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(t.id, t.reviewerName)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Name", "Title", "Profession", "Source", "Date", "Translated", ""]}>
+            {items.map((t) => (
+              <AdminTableRow key={t.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{t.reviewerName}</AdminTd>
+                <AdminTd>{t.title || "—"}</AdminTd>
+                <AdminTd>{t.profession || "—"}</AdminTd>
+                <AdminTd>{t.source || "—"}</AdminTd>
+                <AdminTd>{t.date || "—"}</AdminTd>
+                <AdminTd>
+                  {t.translatedFrom && <AdminBadge variant="amber">{t.translatedFrom}</AdminBadge>}
+                </AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => openEdit(t)}>Edit</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(t.id, t.reviewerName)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

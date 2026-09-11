@@ -6,6 +6,7 @@ import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { sourceLinks } from "@/lib/site";
 import { cms } from "@/lib/cms";
+import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = { title: "Simien Field Notes | Practical Travel Guide", description: "Plain-language planning notes for Simien seasons, altitude, packing, wildlife and travel from Gondar.", alternates: { canonical: "/travel-guide" } };
 
@@ -21,6 +22,6 @@ export default async function GuidePage() {
       { title: "Equipment & local support", body: "Understand the preparation and the people behind your mountain journey, then confirm the gear and services in your quote.", href: "/about#equipment" },
     ]} /></div></section>
     <section className="section section--dark guide-sources"><div className="shell"><div><p className="eyebrow eyebrow--copper">Use current sources</p><h2 className="section-title">Mountain information <em>can change.</em></h2></div><div><p>Park procedures, access, weather, flights, visas, health advice and public safety should be checked again close to travel. This guide is orientation—not medical, legal or official entry advice.</p><a href={sourceLinks.simienUnesco} target="_blank" rel="noreferrer">UNESCO park profile <ArrowUpRight /></a><a href={sourceLinks.gondarTourism} target="_blank" rel="noreferrer">Gondar tourism department <ArrowUpRight /></a><a href={sourceLinks.operatorContact} target="_blank" rel="noreferrer">Current local contact <ArrowUpRight /></a></div></div></section>
-    <section className="inline-cta"><div className="shell"><p>Still unsure?</p><h2>Ask the question before it becomes a worry.</h2><Link className="button button--copper" href="/plan">Ask Tevan <ArrowUpRight /></Link></div></section>
+    <section className="inline-cta"><div className="shell"><p>Still unsure?</p><h2>Ask the question before it becomes a worry.</h2><Link className={buttonVariants({ variant: "ctaCopper", size: "cta" })} href="/plan">Ask Tevan <ArrowUpRight /></Link></div></section>
   </PageShell>;
 }

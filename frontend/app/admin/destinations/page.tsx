@@ -2,7 +2,11 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminNotice } from "@/components/admin/ui";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminNotice,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
+  adminFormSection, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
+} from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
 type Destination = {
@@ -20,7 +24,6 @@ export default function AdminDestinationsPage() {
   const [editing, setEditing] = useState<Destination | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  // form state
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -105,42 +108,36 @@ export default function AdminDestinationsPage() {
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Destinations</h1>
-        <div className="admin-page-header__actions">
-          <AdminButton variant="primary" onClick={openNew}>New destination</AdminButton>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Destinations"
+        actions={<AdminButton variant="primary" onClick={openNew}>New destination</AdminButton>}
+      />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
       {showForm && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={editing ? "Edit destination" : "New destination"}>
             <form onSubmit={handleSubmit}>
-              <AdminField label="Name" className="admin-form-section">
+              <AdminField label="Name" className={adminFormSection}>
                 <AdminInput required value={name} onChange={(e) => setName(e.target.value)} />
               </AdminField>
-              <AdminField label="Description" className="admin-form-section">
+              <AdminField label="Description" className={adminFormSection}>
                 <AdminTextarea value={desc} onChange={(e) => setDesc(e.target.value)} />
               </AdminField>
-              <div className="admin-file-row">
+              <div className={adminFileRow}>
                 <AdminField label="Image">
-                  <input type="file" accept="image/*" className="admin-input" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+                  <AdminInput type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
                 </AdminField>
                 {(file || existingImage) && (
-                  <img
-                    className="admin-image-preview"
-                    src={imagePreview}
-                    alt="Preview"
-                  />
+                  <img className={adminImagePreview} src={imagePreview} alt="Preview" />
                 )}
               </div>
-              <div className="admin-form-actions">
+              <div className={adminFormActions}>
                 <AdminButton type="submit" disabled={saving}>{saving ? "Saving..." : editing ? "Update" : "Create"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancel}>Cancel</AdminButton>
               </div>
@@ -149,45 +146,31 @@ export default function AdminDestinationsPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
+      <AdminCard flush>
         {items.length === 0 ? (
-          <div className="admin-empty">No destinations yet. Create your first destination.</div>
+          <AdminEmpty>No destinations yet. Create your first destination.</AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Slug</th>
-                  <th>Description</th>
-                  <th>Tours</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((d) => (
-                  <tr key={d.id}>
-                    <td>
-                      {d.imageUrl && <img className="admin-thumb" src={d.imageUrl} alt={d.name} />}
-                    </td>
-                    <td style={{ fontWeight: 600 }}>{d.name}</td>
-                    <td className="admin-table__slug">{d.slug}</td>
-                    <td className="admin-table__truncate">{d.description || "—"}</td>
-                    <td>{d.tourCount}</td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openEdit(d)}>Edit</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(d.id, d.name)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Image", "Name", "Slug", "Description", "Tours", ""]}>
+            {items.map((d) => (
+              <AdminTableRow key={d.id} className="hover:bg-copper/3">
+                <AdminTd>
+                  {d.imageUrl && <img className={adminThumb} src={d.imageUrl} alt={d.name} />}
+                </AdminTd>
+                <AdminTd className="font-semibold">{d.name}</AdminTd>
+                <AdminTd slug>{d.slug}</AdminTd>
+                <AdminTd truncate>{d.description || "—"}</AdminTd>
+                <AdminTd>{d.tourCount}</AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => openEdit(d)}>Edit</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(d.id, d.name)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

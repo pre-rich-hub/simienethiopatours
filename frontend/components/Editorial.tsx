@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, ChevronDown } from "@/components/Icon";
 import { site } from "@/lib/site";
+import { buttonVariants } from "@/components/ui/button";
 
 export type Feature = { title: string; body: string; tag?: string; href?: string; linkLabel?: string; id?: string };
 export type ItineraryDay = { title: string; subtitle: string; paragraphs: string[]; overnight?: string; notes?: string[]; stages?: { label: string; body: string }[] };
@@ -79,5 +80,5 @@ export function PageLinks({ items }: { items: { href: string; label: string }[] 
 }
 
 export function PlanningCall({ title, eyebrow = "Personally planned in Gondar", experience, label = "Plan with Tevan" }: { title: string; eyebrow?: string; experience?: string; label?: string }) {
-  return <section className="inline-cta"><div className="shell"><p>{eyebrow}</p><h2>{title}</h2><Link className="button button--copper" href={experience ? `/plan?experience=${experience}` : "/plan"}>{label}<ArrowUpRight /></Link><a className="inline-contact" href={site.whatsapp} target="_blank" rel="noreferrer">Chat with Tevan on WhatsApp</a></div></section>;
+  return <section className="inline-cta"><div className="shell"><p>{eyebrow}</p><h2>{title}</h2><Link className={buttonVariants({ variant: "ctaCopper", size: "cta" })} href={experience ? `/plan?experience=${experience}` : "/plan"}>{label}<ArrowUpRight /></Link><a className="inline-contact" href={site.whatsapp} target="_blank" rel="noreferrer">Chat with Tevan on WhatsApp</a></div></section>;
 }

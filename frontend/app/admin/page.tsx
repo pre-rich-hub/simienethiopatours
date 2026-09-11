@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { adminRequestClient } from "@/lib/admin/client";
 import {
-  LayoutDashboard, Compass, MapPin, Image, Star, BookOpen,
+  Compass, MapPin, Image, Star, BookOpen,
   ClipboardList, Mail, Users,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminCard, AdminBadge, AdminQuickLink,
+  AdminListTable, AdminTableRow, AdminTd,
 } from "@/components/admin/ui";
 
 type Stats = {
@@ -41,8 +43,8 @@ export default function AdminDashboardPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
-  if (!stats) return <div className="admin-empty">Failed to load dashboard stats.</div>;
+  if (loading) return <AdminLoading />;
+  if (!stats) return <AdminEmpty>Failed to load dashboard stats.</AdminEmpty>;
 
   const { totals, recentBookings } = stats;
 
@@ -59,84 +61,61 @@ export default function AdminDashboardPage() {
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Dashboard</h1>
-      </div>
+      <AdminPageHeader title="Dashboard" />
 
-      <div className="admin-stats">
+      <div className="mb-8 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
         {statCards.map((card) => (
-          <div key={card.label} className="admin-stat">
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span className="admin-stat__label">{card.label}</span>
-              <card.icon size={18} style={{ color: "var(--copper)" }} />
+          <div key={card.label} className="flex flex-col gap-1 border border-line bg-ivory p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-semibold tracking-[0.08em] text-stone uppercase">{card.label}</span>
+              <card.icon size={18} className="text-copper" />
             </div>
-            <span className="admin-stat__value">{card.value}</span>
-            {card.detail && <span className="admin-stat__detail">{card.detail}</span>}
+            <span className="font-serif text-[32px] leading-tight font-medium text-ink">{card.value}</span>
+            {card.detail && <span className="text-xs text-stone">{card.detail}</span>}
           </div>
         ))}
       </div>
 
-      <div className="admin-card" style={{ marginBottom: 28 }}>
-        <div className="admin-card__header">
-          <h2>Quick links</h2>
+      <AdminCard title="Quick links">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-3">
+          {[
+            { href: "/admin/tours", label: "Manage tours" },
+            { href: "/admin/tours/new", label: "New tour" },
+            { href: "/admin/destinations", label: "Destinations" },
+            { href: "/admin/gallery", label: "Gallery" },
+            { href: "/admin/bookings", label: "Bookings" },
+            { href: "/admin/blog", label: "Blog posts" },
+          ].map((link) => (
+            <AdminQuickLink key={link.href} href={link.href}>{link.label}</AdminQuickLink>
+          ))}
         </div>
-        <div className="admin-card__body">
-          <div className="admin-quick-links">
-            {[
-              { href: "/admin/tours", label: "Manage tours" },
-              { href: "/admin/tours/new", label: "New tour" },
-              { href: "/admin/destinations", label: "Destinations" },
-              { href: "/admin/gallery", label: "Gallery" },
-              { href: "/admin/bookings", label: "Bookings" },
-              { href: "/admin/blog", label: "Blog posts" },
-            ].map((link) => (
-              <a key={link.href} href={link.href} className="admin-quick-link">
-                <Compass /> {link.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
+      </AdminCard>
 
-      <div className="admin-card">
-        <div className="admin-card__header">
-          <h2>Recent bookings</h2>
-          {totals.bookings > 0 && (
-            <a href="/admin/bookings" className="admin-button--link">View all</a>
-          )}
-        </div>
-        <div className="admin-card__body" style={{ padding: 0 }}>
+      <div className="mt-7">
+        <AdminCard
+          title="Recent bookings"
+          actions={totals.bookings > 0 ? <a href="/admin/bookings" className="text-[13px] font-semibold text-copper hover:underline">View all</a> : undefined}
+          flush={recentBookings.length > 0}
+        >
           {recentBookings.length === 0 ? (
-            <div className="admin-empty">No bookings yet.</div>
+            <AdminEmpty>No bookings yet.</AdminEmpty>
           ) : (
-            <div className="admin-table-wrap">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Tour</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentBookings.map((b) => (
-                    <tr key={b.id}>
-                      <td>{b.fullName}</td>
-                      <td>{b.tour?.name || "—"}</td>
-                      <td>
-                        <span className={`admin-badge admin-badge--${b.status === "Confirmed" ? "green" : b.status === "Cancelled" ? "red" : "amber"}`}>
-                          {b.status}
-                        </span>
-                      </td>
-                      <td>{new Date(b.createdAt).toLocaleDateString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <AdminListTable headers={["Name", "Tour", "Status", "Date"]}>
+              {recentBookings.map((b) => (
+                <AdminTableRow key={b.id} className="hover:bg-copper/3">
+                  <AdminTd>{b.fullName}</AdminTd>
+                  <AdminTd>{b.tour?.name || "—"}</AdminTd>
+                  <AdminTd>
+                    <AdminBadge variant={b.status === "Confirmed" ? "green" : b.status === "Cancelled" ? "red" : "amber"}>
+                      {b.status}
+                    </AdminBadge>
+                  </AdminTd>
+                  <AdminTd>{new Date(b.createdAt).toLocaleDateString()}</AdminTd>
+                </AdminTableRow>
+              ))}
+            </AdminListTable>
           )}
-        </div>
+        </AdminCard>
       </div>
     </>
   );

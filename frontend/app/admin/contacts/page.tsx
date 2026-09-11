@@ -2,7 +2,11 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminNotice } from "@/components/admin/ui";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput, AdminTextarea, AdminNotice,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
+  adminFormSection, adminFormActions, adminTableActions,
+} from "@/components/admin/ui";
 
 type Contact = {
   id: number;
@@ -70,30 +74,28 @@ export default function AdminContactsPage() {
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Contacts</h1>
-      </div>
+      <AdminPageHeader title="Contacts" />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
       {replyingTo && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={`Reply to ${replyingTo.name}`}>
-            <div style={{ marginBottom: 12, fontSize: 13, color: "var(--stone)" }}>
+            <div className="mb-3 text-[13px] text-stone">
               Sending to: <strong>{replyingTo.email}</strong>
             </div>
             <form onSubmit={handleReply}>
-              <AdminField label="Subject" className="admin-form-section">
+              <AdminField label="Subject" className={adminFormSection}>
                 <AdminInput required value={subject} onChange={(e) => setSubject(e.target.value)} />
               </AdminField>
-              <AdminField label="Message" className="admin-form-section">
-                <AdminTextarea required style={{ minHeight: 150 }} value={replyMsg} onChange={(e) => setReplyMsg(e.target.value)} />
+              <AdminField label="Message" className={adminFormSection}>
+                <AdminTextarea required className="min-h-[150px]" value={replyMsg} onChange={(e) => setReplyMsg(e.target.value)} />
               </AdminField>
-              <div className="admin-form-actions">
+              <div className={adminFormActions}>
                 <AdminButton type="submit" disabled={sending}>{sending ? "Sending..." : "Send reply"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancelReply}>Cancel</AdminButton>
               </div>
@@ -102,44 +104,31 @@ export default function AdminContactsPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
+      <AdminCard flush>
         {items.length === 0 ? (
-          <div className="admin-empty">
-            <p style={{ margin: "0 0 8px" }}>No contacts yet.</p>
-            <p style={{ margin: 0, fontSize: 13 }}>Messages will appear here when customers use the contact form on your site.</p>
-          </div>
+          <AdminEmpty>
+            <p className="mb-2">No contacts yet.</p>
+            <p className="m-0 text-[13px]">Messages will appear here when customers use the contact form on your site.</p>
+          </AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Message</th>
-                  <th>Date</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((c) => (
-                  <tr key={c.id}>
-                    <td style={{ fontWeight: 600 }}>{c.name}</td>
-                    <td>{c.email}</td>
-                    <td className="admin-table__truncate">{c.message.slice(0, 120)}{c.message.length > 120 ? "..." : ""}</td>
-                    <td>{new Date(c.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openReply(c)}>Reply</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(c.id, c.name)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Name", "Email", "Message", "Date", ""]}>
+            {items.map((c) => (
+              <AdminTableRow key={c.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{c.name}</AdminTd>
+                <AdminTd>{c.email}</AdminTd>
+                <AdminTd truncate>{c.message.slice(0, 120)}{c.message.length > 120 ? "..." : ""}</AdminTd>
+                <AdminTd>{new Date(c.createdAt).toLocaleDateString()}</AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => openReply(c)}>Reply</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(c.id, c.name)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

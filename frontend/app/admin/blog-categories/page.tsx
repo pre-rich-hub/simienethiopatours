@@ -2,7 +2,11 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminField, AdminInput, AdminNotice } from "@/components/admin/ui";
+import {
+  AdminButton, AdminCard, AdminField, AdminInput, AdminNotice,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
+  adminFormSection, adminFormActions, adminTableActions,
+} from "@/components/admin/ui";
 
 type BlogCategory = {
   id: number;
@@ -73,32 +77,30 @@ export default function AdminBlogCategoriesPage() {
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Blog categories</h1>
-        <div className="admin-page-header__actions">
-          <AdminButton variant="primary" onClick={openNew}>New category</AdminButton>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Blog categories"
+        actions={<AdminButton variant="primary" onClick={openNew}>New category</AdminButton>}
+      />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
       {showForm && (
-        <div className="admin-inline-form">
+        <div className="mb-6">
           <AdminCard title={editing ? "Edit category" : "New category"}>
             <form onSubmit={handleSubmit}>
               <AdminField label="Name">
                 <AdminInput required value={name} onChange={(e) => setName(e.target.value)} />
               </AdminField>
               {editing && (
-                <AdminField label="Slug (auto-generated)" className="admin-form-section">
+                <AdminField label="Slug (auto-generated)" className={adminFormSection}>
                   <AdminInput readOnly value={editing.slug} />
                 </AdminField>
               )}
-              <div className="admin-form-actions" style={{ marginTop: 16 }}>
+              <div className={`${adminFormActions} mt-4`}>
                 <AdminButton type="submit" disabled={saving}>{saving ? "Saving..." : editing ? "Update" : "Create"}</AdminButton>
                 <AdminButton variant="secondary" onClick={cancel}>Cancel</AdminButton>
               </div>
@@ -107,39 +109,27 @@ export default function AdminBlogCategoriesPage() {
         </div>
       )}
 
-      <div className="admin-card admin-card--flush">
+      <AdminCard flush>
         {items.length === 0 ? (
-          <div className="admin-empty">No blog categories yet.</div>
+          <AdminEmpty>No blog categories yet.</AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Slug</th>
-                  <th>Posts</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((c) => (
-                  <tr key={c.id}>
-                    <td style={{ fontWeight: 600 }}>{c.name}</td>
-                    <td className="admin-table__slug">{c.slug}</td>
-                    <td>{c.postCount}</td>
-                    <td>
-                      <div className="admin-table__actions">
-                        <AdminButton variant="secondary" size="small" onClick={() => openEdit(c)}>Edit</AdminButton>
-                        <AdminButton variant="danger" size="small" onClick={() => handleDelete(c.id, c.name)}>Delete</AdminButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Name", "Slug", "Posts", ""]}>
+            {items.map((c) => (
+              <AdminTableRow key={c.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{c.name}</AdminTd>
+                <AdminTd slug>{c.slug}</AdminTd>
+                <AdminTd>{c.postCount}</AdminTd>
+                <AdminTd>
+                  <div className={adminTableActions}>
+                    <AdminButton variant="secondary" size="small" onClick={() => openEdit(c)}>Edit</AdminButton>
+                    <AdminButton variant="danger" size="small" onClick={() => handleDelete(c.id, c.name)}>Delete</AdminButton>
+                  </div>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

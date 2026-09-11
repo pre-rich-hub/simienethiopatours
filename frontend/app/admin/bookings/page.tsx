@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { adminMutate, adminRequestClient } from "@/lib/admin/client";
-import { AdminButton, AdminCard, AdminBadge, AdminSelect, AdminNotice } from "@/components/admin/ui";
+import {
+  AdminButton, AdminCard, AdminSelect, AdminNotice,
+  AdminPageHeader, AdminLoading, AdminEmpty, AdminListTable, AdminTableRow, AdminTd,
+} from "@/components/admin/ui";
 
 type Booking = {
   id: number;
@@ -59,70 +62,48 @@ export default function AdminBookingsPage() {
     }
   }
 
-  if (loading) return <div className="admin-loading">Loading...</div>;
+  if (loading) return <AdminLoading />;
 
   return (
     <>
-      <div className="admin-page-header">
-        <h1>Bookings</h1>
-      </div>
+      <AdminPageHeader title="Bookings" />
 
-      {notice && <AdminNotice variant={notice.type} style={{ marginBottom: 20 }}>{notice.msg}</AdminNotice>}
+      {notice && <AdminNotice variant={notice.type} className="mb-5">{notice.msg}</AdminNotice>}
 
-      <div className="admin-card admin-card--flush">
+      <AdminCard flush>
         {items.length === 0 ? (
-          <div className="admin-empty">
-            <p style={{ margin: "0 0 8px" }}>No bookings yet.</p>
-            <p style={{ margin: 0, fontSize: 13 }}>Bookings will appear here when customers submit the booking form on your site.</p>
-          </div>
+          <AdminEmpty>
+            <p className="mb-2">No bookings yet.</p>
+            <p className="m-0 text-[13px]">Bookings will appear here when customers submit the booking form on your site.</p>
+          </AdminEmpty>
         ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Tour</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Date</th>
-                  <th>People</th>
-                  <th>Status</th>
-                  <th>Created</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((b) => (
-                  <tr key={b.id}>
-                    <td style={{ fontWeight: 600 }}>{b.fullName}</td>
-                    <td>{b.tour?.name || "—"}</td>
-                    <td>{b.email}</td>
-                    <td>{b.phone}</td>
-                    <td>{new Date(b.chosenDate).toLocaleDateString()}</td>
-                    <td>{b.adults}A{b.children > 0 ? ` + ${b.children}C` : ""}</td>
-                    <td>
-                      <AdminSelect
-                        value={b.status}
-                        onChange={(e) => handleStatus(b.id, e.target.value)}
-                      >
-                        <option value="Pending">Pending</option>
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Cancelled">Cancelled</option>
-                      </AdminSelect>
-                    </td>
-                    <td>{new Date(b.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      <AdminButton variant="danger" size="small" onClick={() => handleDelete(b.id)}>
-                        Delete
-                      </AdminButton>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AdminListTable headers={["Name", "Tour", "Email", "Phone", "Date", "People", "Status", "Created", ""]}>
+            {items.map((b) => (
+              <AdminTableRow key={b.id} className="hover:bg-copper/3">
+                <AdminTd className="font-semibold">{b.fullName}</AdminTd>
+                <AdminTd>{b.tour?.name || "—"}</AdminTd>
+                <AdminTd>{b.email}</AdminTd>
+                <AdminTd>{b.phone}</AdminTd>
+                <AdminTd>{new Date(b.chosenDate).toLocaleDateString()}</AdminTd>
+                <AdminTd>{b.adults}A{b.children > 0 ? ` + ${b.children}C` : ""}</AdminTd>
+                <AdminTd>
+                  <AdminSelect value={b.status} onChange={(e) => handleStatus(b.id, e.target.value)}>
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </AdminSelect>
+                </AdminTd>
+                <AdminTd>{new Date(b.createdAt).toLocaleDateString()}</AdminTd>
+                <AdminTd>
+                  <AdminButton variant="danger" size="small" onClick={() => handleDelete(b.id)}>
+                    Delete
+                  </AdminButton>
+                </AdminTd>
+              </AdminTableRow>
+            ))}
+          </AdminListTable>
         )}
-      </div>
+      </AdminCard>
     </>
   );
 }

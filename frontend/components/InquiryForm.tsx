@@ -4,6 +4,7 @@ import { ArrowRight, Check, LoaderCircle } from "@/components/Icon";
 import { FormEvent, useState } from "react";
 import { site } from "@/lib/site";
 import { planningOptions } from "@/lib/experiences";
+import { Button } from "@/components/ui/button";
 
 type FormState = "idle" | "sending" | "success" | "email";
 
@@ -114,9 +115,9 @@ export function InquiryForm({ compact = false, initialExperience = "" }: { compa
         <textarea id={`message-${compact}`} name="message" rows={compact ? 3 : 5} placeholder="Tell Tevan what you want to see, what you enjoy, and anything you are unsure about." />
       </div>
       <div className="form-submit form-field--wide">
-        <button className="button button--copper" type="submit" disabled={state === "sending"}>
+        <Button variant="ctaCopper" size="cta" type="submit" disabled={state === "sending"}>
           {state === "sending" ? <><LoaderCircle className="spin" /> Preparing email</> : state === "success" ? <><Check /> Inquiry sent</> : <>Send my inquiry <ArrowRight /></>}
-        </button>
+        </Button>
         <p role="status">{state === "email" ? "Your email app should now open with your journey details." : <>Prefer a conversation? <a href={site.whatsapp} target="_blank" rel="noreferrer">Message us on WhatsApp.</a></>}</p>
       </div>
     </form>
