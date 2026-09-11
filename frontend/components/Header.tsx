@@ -64,7 +64,7 @@ const megaMenus: Record<string, React.ComponentProps<typeof NavMegaMenu>> = {
     exploreHref: "/gondar",
     exploreLabel: "Explore Gondar",
     extraLinks: [
-      { href: "/gondar#experiences", label: "Gondar experiences" },
+      { href: "/gondar/gondar", label: "Gondar: the royal city" },
       { href: "/treks/5-day-gondar-simien", label: "5-day Royal City & Mountain Adventure" },
     ],
     cards: gondarMenuCards,
@@ -162,7 +162,7 @@ export function Header({ light = false }: { light?: boolean }) {
         </div>
         <nav aria-label="Mobile navigation">
           {links.map((link, index) => (
-            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href ? "page" : undefined}>
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
               <span>0{index + 1}</span>{link.label}<ArrowUpRight />
             </Link>
           ))}

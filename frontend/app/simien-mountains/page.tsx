@@ -3,42 +3,54 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
-import { SimienReasonCards } from "@/components/SimienReasonCards";
-import { SimienPhotoCards } from "@/components/SimienPhotoCards";
-import { PageLinks, PlanningCall, SectionIntro, StorySection } from "@/components/Editorial";
-import { site, sourceLinks } from "@/lib/site";
-import { moreSimienPlaces, simienDurations, simienPlanning, simienWildlife } from "@/lib/simien-guide";
-import { buttonVariants } from "@/components/ui/button";
+import { simienPlacePath, simienPlaceSummary, simienPlaces } from "@/lib/simien-destinations";
 
-export const metadata: Metadata = { title: "Simien Mountains Ethiopia | Trekking, Wildlife & Local Tours", description: "Explore the Simien Mountains with a local Gondar-based team. Discover trekking routes, wildlife, Imet Gogo, Chenek, Ras Dashen and journeys shaped around you.", alternates: { canonical: "/simien-mountains" } };
+export const metadata: Metadata = {
+  title: "Simien Mountains Destinations | Places, Camps & Viewpoints",
+  description: "Eighteen Simien Mountains destinations — from Debark and Sankaber to Imet Gogo, Chenek, Ras Dashen and Adi Arkay — each with its own page.",
+  alternates: { canonical: "/simien-mountains" },
+};
 
 export default function SimienPage() {
-  return <PageShell lightHeader={false}>
-    <section className="page-hero--image simien-page-hero editorial-hero"><Image src="/images/imet-gogo.jpg" alt="The immense cliffs and valleys seen from Imet Gogo" fill priority sizes="100vw" /><div className="page-hero__content shell"><div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Simien Mountains</span></div><p className="eyebrow">Ethiopia’s wild highland frontier</p><h1 className="display">Life above <em>the clouds.</em></h1><p className="lead">Explore dramatic escarpments, deep valleys and a living highland with people who call this region home. Your Simien journey begins with our local team in Gondar.</p></div></section>
-    <PageLinks items={[{ label: "Why Simien", href: "#why-simien" }, { label: "Places", href: "#places" }, { label: "Wildlife", href: "#wildlife" }, { label: "Choose your trek", href: "#trekking" }, { label: "Plan your visit", href: "#planning" }, { label: "Local knowledge", href: "#local-knowledge" }]} />
-    <section className="section simien-intro"><div className="shell editorial-grid"><div><span className="chapter-index">01</span><h2 className="section-title">A landscape carved <em>over millions of years.</em></h2></div><div className="prose"><p>The Simien is a high plateau broken by dramatic cliffs and gorges, with escarpments dropping as much as 1,500 metres. UNESCO recognizes the park for both exceptional natural beauty and globally important biodiversity.</p><p>Walk across the grasslands and the plateau can feel open and peaceful. Then the land falls away into valleys, villages and distant ridges. Wind, sun, cloud and cold can move quickly across this high country.</p><p>People farm, work and share this landscape with wildlife. With Gondar Simien Tours, an Ethiopian-owned company based in Gondar, local interpretation is part of the journey from the first road north to the final walk.</p><a className="source-link" href={sourceLinks.simienUnesco} target="_blank" rel="noreferrer">Source: UNESCO World Heritage Centre ↗</a><p><Link className="text-link" href="/treks">Explore Simien trekking <ArrowUpRight /></Link></p></div></div></section>
-    <section className="section section--paper simien-reasons" id="why-simien"><div className="shell"><div className="simien-reasons__heading"><SectionIntro tag="Why visit Simien?" title="Many reasons." accent="Your own way in." /><p>Every journey begins differently. Find the view of the highlands that feels most like yours.</p></div><SimienReasonCards /></div></section>
-    <section className="simien-places section" id="places"><div className="shell"><SectionIntro tag="Places that shape the journey" title="Get to know" accent="the highlands." /><div className="place-gallery">
-      <article id="imet-gogo"><div className="image-frame"><Image src="/images/imet-gogo.jpg" alt="The promontory at Imet Gogo" fill sizes="(max-width: 720px) 100vw, 45vw" /></div><span>01</span><h2>Imet Gogo</h2><p>A defining viewpoint over the Simien escarpments and valleys. Walk here from the Geech area on a route that leaves time to pause and take in the scale.</p><Link className="text-link" href="/treks/3-day-simien-trek">Explore the Imet Gogo trek <ArrowUpRight /></Link></article>
-      <article id="chenek"><div className="image-frame"><Image src="/images/chenek-camp.jpg" alt="Chenek camp among the Simien cliffs" fill sizes="(max-width: 720px) 100vw, 45vw" /></div><span>02</span><h2>Chenek</h2><p>Rocky slopes, mountain camps and opportunities to look for Walia ibex and geladas. Chenek is a classic trekking destination and a staging point for higher routes.</p><Link className="text-link" href="/treks/4-day-simien-classic">Walk through to Chenek <ArrowUpRight /></Link></article>
-      <article id="geech"><div className="image-frame"><Image src="/images/geech-camp.jpg" alt="Tents on the high plateau near Geech" fill sizes="(max-width: 720px) 100vw, 45vw" /></div><span>03</span><h2>Geech</h2><p>A classic overnight area surrounded by highland scenery and giant lobelias. The route from Sankaber introduces the Jinbar gorge before climbing toward camp.</p><Link className="text-link" href="/treks/3-day-simien-trek">Explore the Geech route <ArrowUpRight /></Link></article>
-    </div><SimienPhotoCards items={moreSimienPlaces} photoSet="places" /></div></section>
-    <section className="section wildlife-guide section--dark" id="wildlife"><div className="shell wildlife-guide__grid"><div className="image-frame"><Image src="/images/gelada-troop.jpg" alt="Gelada troop grazing in the highlands" fill sizes="(max-width: 720px) 100vw, 48vw" /></div><div><p className="eyebrow eyebrow--copper">Wildlife</p><h2 className="section-title">Watch quietly. <em>Stay curious.</em></h2><p className="lead lead--light">The park is important habitat for geladas, Walia ibex and Ethiopian wolves. Give wildlife time and space: their timing, distance and visibility are never ours to command.</p><Link className={buttonVariants({ variant: "ctaCopper", size: "cta" })} href="/plan">Plan a wildlife journey <ArrowUpRight /></Link></div></div></section>
-    <section className="section"><div className="shell"><SimienPhotoCards columns={2} items={simienWildlife} photoSet="wildlife" /><p className="content-note">Learn more about the park’s conservation importance in the <a href={sourceLinks.simienUnesco} target="_blank" rel="noreferrer">UNESCO profile</a>. Wildlife sightings depend on habitat, route and conditions.</p></div></section>
-    <section className="section section--paper" id="trekking"><div className="shell"><SectionIntro tag="How many days do you have?" title="The mountains," accent="at your pace." /><p className="content-lead">Choose by your available time, fitness and interests. One day offers an introduction; several days bring more walking and mountain nights. Higher objectives need their own preparation and return plan.</p><SimienPhotoCards items={simienDurations} photoSet="durations" /></div></section>
-    <section className="section"><div className="shell fact-band"><div><span>Gateway</span><strong>Gondar → Debark → Park</strong></div><div><span>Approach</span><strong>Private and small-group</strong></div><div><span>Route</span><strong>Confirmed for conditions</strong></div><div><span>Altitude</span><strong>Prepare, layer, acclimatize</strong></div></div></section>
-    <StorySection id="local-knowledge" tag="Our local Simien knowledge" title="We come" accent="from here." paper image={{ src: "/images/geech-camp.jpg", alt: "A mountain camp supported by local teams in the Simien highlands", caption: "Local teams · Simien highlands" }} paragraphs={[
-      "Our team is based in Gondar, with a direct connection to the trails and the people who work around them. Guides, scouts, drivers, cooks and mule handlers each play a part in bringing a mountain journey together.",
-      "We walk the trails we sell. The team is developing field-based route records covering walking effort, elevation, camps, water arrangements, viewpoints and alternatives. For your trip, we explain what is confirmed and what needs checking against current conditions.",
-      "Private trips and small groups leave room for questions and a personal pace. Weather changes, animals move and demanding trails need realistic expectations. Good local knowledge helps shape those decisions before and during the journey.",
-    ]}><Link className="text-link" href="/about">Meet the people behind the journey <ArrowUpRight /></Link></StorySection>
-    <StorySection tag="More than a trek" title="The people behind" accent="the landscape." image={{ src: "/images/road-to-simien.jpg", alt: "Daily life in the highlands on the road toward Simien", caption: "A living landscape · Northern highlands" }} paragraphs={[
-      "The Simien highlands are home to families, farms and communities. A guide can help you understand the fields, livestock and traditions you encounter along the trail.",
-      "Village visits, local food, coffee and conversations are arranged with hosts and around their daily lives. Ask before photographing people, respect local customs and allow community members to choose how they take part.",
-      "Travel responsibly by working with local teams, supporting local businesses, following park rules, keeping wildlife wild and carrying out waste. These choices help care for both the landscape and the people who call it home.",
-    ]}><Link className="text-link" href="/gondar#experiences">Explore local experiences <ArrowUpRight /></Link><p><a className="text-link" href={site.tripadvisor} target="_blank" rel="noreferrer">Read traveler reviews on Tripadvisor <ArrowUpRight /></a></p></StorySection>
-    <section className="section section--paper" id="planning"><div className="shell"><SectionIntro tag="Your Simien travel guide" title="Arrive curious." accent="Come prepared." /><SimienPhotoCards items={simienPlanning} photoSet="planning" /></div></section>
-    <StorySection tag="Gondar + Simien" title="Two destinations." accent="One journey." image={{ src: "/images/fasil-ghebbi.jpg", alt: "The royal architecture of Fasil Ghebbi in Gondar", caption: "Fasil Ghebbi · Gondar" }} paragraphs={["Start among Gondar’s royal palaces, churches, streets and coffee culture, then follow the road north into the mountains. Our Royal City & Mountain Adventure adds three camping nights to a Gondar arrival day.", "For more city history and adaptable mountain walks, the separate Heritage & Simien journey offers two Gondar nights and two mountain nights. Both begin with your interests and the time you have."]}><Link className="text-link" href="/treks/5-day-gondar-simien">Explore the Royal City & Mountain Adventure <ArrowUpRight /></Link><p><Link className="text-link" href="/treks/gondar-heritage-simien">Explore the heritage-focused journey <ArrowUpRight /></Link></p></StorySection>
-    <PlanningCall title="Your Simien adventure starts in Gondar." label="Plan my Simien journey" />
-  </PageShell>;
+  return (
+    <PageShell lightHeader={false}>
+      <section className="page-hero--image simien-page-hero editorial-hero">
+        <Image src="/images/simien-panorama.jpg" alt="Wide panorama across the Simien Mountains" fill priority sizes="100vw" />
+        <div className="page-hero__content shell">
+          <div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Simien Mountains</span></div>
+          <p className="eyebrow">Simien destinations</p>
+          <h1 className="display">Eighteen places, <em>one highland.</em></h1>
+          <p className="lead">From the Debark gateway to Imet Gogo, Chenek, Ras Dashen and the quieter eastern transect. Choose a place to read more.</p>
+        </div>
+      </section>
+
+      <section className="section" id="destinations">
+        <div className="shell">
+          <div className="simien-photo-grid simien-photo-grid--3">
+            {simienPlaces.map((place) => (
+              <Link className="simien-photo-card dest-card" href={simienPlacePath(place.slug)} key={place.slug}>
+                <div className="simien-photo-card__image">
+                  <Image src={place.image} alt={place.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                  <span className="simien-photo-card__shade" />
+                  <div className="simien-photo-card__overlay">
+                    <p className="simien-photo-card__eyebrow">{place.location.split(";")[0]}</p>
+                    <h2>{place.name}</h2>
+                  </div>
+                </div>
+                <div className="simien-photo-card__body">
+                  <p>{simienPlaceSummary(place)}</p>
+                  <div className="simien-photo-card__footer">
+                    <span className="simien-photo-card__explore">
+                      About {place.name}
+                      <ArrowUpRight />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </PageShell>
+  );
 }

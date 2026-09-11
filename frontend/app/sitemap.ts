@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
-import { cms } from "@/lib/cms";
+import { gondarPlacePath, gondarPlaces } from "@/lib/gondar-destinations";
+import { journeyPackagePath, journeyPackages } from "@/lib/journey-packages";
+import { simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "https://gondarsimientours.com";
 
-  // Tour slugs from CMS (published tours only). Fallback: bundled itineraries.
-  const tours = await cms.getAllTours();
-  const tourPaths = tours.map((t) => `/treks/${t.slug}`);
+  const journeyPaths = journeyPackages.map((journey) => journeyPackagePath(journey.slug));
+  const simienPlacePaths = simienPlaces.map((place) => simienPlacePath(place.slug));
+  const gondarPlacePaths = gondarPlaces.map((place) => gondarPlacePath(place.slug));
 
   const staticPaths = [
     "",
@@ -18,11 +20,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/plan",
     "/privacy",
     "/terms",
+    ...simienPlacePaths,
+    ...gondarPlacePaths,
+    ...journeyPaths,
   ];
 
-  const allPaths = [...staticPaths, ...tourPaths];
-
-  return allPaths.map((path, index) => ({
+  return staticPaths.map((path, index) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
     changeFrequency: index === 0 ? "weekly" : "monthly",

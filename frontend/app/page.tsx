@@ -8,12 +8,15 @@ import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
 import { ReviewsShowcase } from "@/components/ReviewsShowcase";
 import { DurationSelector } from "@/components/DurationSelector";
 import { site, sourceLinks } from "@/lib/site";
+import {
+  homeBeyondTheTrail,
+  homeHorizons,
+  homeSignatureJourneys,
+} from "@/lib/home-cards";
 import { cms } from "@/lib/cms";
 import { buttonVariants } from "@/components/ui/button";
 
 export default async function Home() {
-  const allTours = await cms.getAllTours();
-  const featuredTours = await cms.getFeaturedTours();
   const reviews = await cms.getTestimonials();
 
   return (
@@ -65,30 +68,20 @@ export default async function Home() {
             <p className="lead">Not a checklist. Three different ways to feel the scale of the landscape.</p>
           </div>
           <div className="discover-grid shell">
-            <Link href="/simien-mountains#imet-gogo" className="discover-card discover-card--tall">
-              <Image src="/images/imet-gogo.jpg" alt="Rocky promontory at Imet Gogo above the Simien escarpment" fill sizes="(max-width: 720px) 100vw, 43vw" />
-              <div>
-                <span>Simien icon</span><h3>Imet Gogo</h3><p>Walk into the view.</p>
-                <div className="discover-card__details"><div><p>Walk from Geech to a dramatic viewpoint overlooking the Simien escarpments, deep valleys and distant ridges. Take time to pause and enjoy the panorama.</p></div></div>
-                <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
-              </div>
-            </Link>
-            <Link href="/simien-mountains#wildlife" className="discover-card">
-              <Image src="/images/gelada-troop.jpg" alt="A wild troop of geladas grazing in the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 28vw" />
-              <div>
-                <span>Wildlife</span><h3>Gelada country</h3><p>Observe. Never stage.</p>
-                <div className="discover-card__details"><div><p>Watch wild geladas graze and interact on the highland grasslands. Explore with a local guide, giving each troop space to go about its day.</p></div></div>
-                <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
-              </div>
-            </Link>
-            <Link href="/treks/ras-dashen-challenge" className="discover-card">
-              <Image src="/images/giant-lobelia.jpg" alt="Giant lobelias across the high Afroalpine landscape of the Simien Mountains" fill sizes="(max-width: 720px) 100vw, 28vw" />
-              <div>
-                <span>High country</span><h3>Ras Dashen</h3><p>The summit journey.</p>
-                <div className="discover-card__details"><div><p>Journey through giant-lobelia country and remote mountain landscapes on a demanding multi-day trek, with time to acclimatize before the summit approach.</p></div></div>
-                <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
-              </div>
-            </Link>
+            {homeHorizons.map((place) => (
+              <Link
+                href={place.href}
+                className={`discover-card${place.tall ? " discover-card--tall" : ""}`}
+                key={place.href}
+              >
+                <Image src={place.image} alt={place.imageAlt} fill sizes={place.tall ? "(max-width: 720px) 100vw, 43vw" : "(max-width: 720px) 100vw, 28vw"} />
+                <div>
+                  <span>{place.tag}</span><h3>{place.title}</h3><p>{place.short}</p>
+                  <div className="discover-card__details"><div><p>{place.detail}</p></div></div>
+                  <span className="discover-card__cta">Explore more <ArrowUpRight /></span>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
 
@@ -98,7 +91,7 @@ export default async function Home() {
             <h2 className="section-title">How do you want to <em>meet the mountains?</em></h2>
             <p className="lead">From a first encounter to a full highland expedition, begin with the experience that feels like yours. Every journey is privately refined around your time and pace.</p>
           </div>
-          <div className="shell"><DurationSelector tours={allTours} /></div>
+          <div className="shell"><DurationSelector /></div>
         </section>
 
         <section className="section featured-journeys">
@@ -107,10 +100,10 @@ export default async function Home() {
             <Link className="text-link" href="/treks">View every journey <ArrowUpRight /></Link>
           </div>
           <div className="shell journey-mosaic">
-            {featuredTours.map((journey, index) => (
-              <Link id={journey.slug} key={journey.slug} className={`journey-tile journey-tile--${index + 1}`} href={`/treks#${journey.slug}`}>
-                <Image src={journey.image} alt={`Landscape associated with ${journey.title}`} fill sizes="(max-width: 720px) 100vw, 45vw" />
-                <div className="journey-tile__overlay"><span>{journey.duration} · {journey.difficulty}</span><h3>{journey.title}</h3><p>{journey.summary}</p><b>Discover <ArrowUpRight /></b></div>
+            {homeSignatureJourneys.map((journey, index) => (
+              <Link id={journey.slug} key={journey.slug} className={`journey-tile journey-tile--${index + 1}`} href={journey.href}>
+                <Image src={journey.image} alt={journey.imageAlt} fill sizes="(max-width: 720px) 100vw, 45vw" />
+                <div className="journey-tile__overlay"><span>{journey.duration}</span><h3>{journey.title}</h3><p>{journey.summary}</p><b>Discover <ArrowUpRight /></b></div>
               </Link>
             ))}
           </div>
@@ -151,11 +144,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="section section--paper"><div className="shell"><SectionIntro tag="Beyond the trail" title="More ways to" accent="travel deeper." /><ExperiencePhotoCards items={[
-          { title: "Living culture & festivals", tag: "Celebrate · Understand · Connect", body: "Connect Gondar's celebrations with the Simien Mountains, local stories and time to understand what you are seeing.", href: "/gondar", image: { src: "/images/fasil-ghebbi.jpg", alt: "Gondar's historic royal city, the setting for cultural journeys", caption: "Gondar · Living culture" } },
-          { title: "Running & photography", tag: "Move · Observe · Create", body: "Find quieter Gondar paths or build a mountain journey around the photographs you hope to make.", href: "/gallery", image: { src: "/images/simien-panorama.jpg", alt: "Open highland landscapes for active and photography journeys", caption: "Highland paths · Changing light" } },
-          { title: "Your stay, thoughtfully planned", tag: "Gondar · Lodge · Camp", body: "Bring together city hotels, mountain lodges and camping around the experience you want.", href: "/plan", image: { src: "/images/geech-camp.jpg", alt: "Tents at Geech camp in the Simien Mountains", caption: "Mountain nights · Geech" } },
-        ]} /></div></section>
+        <section className="section section--paper"><div className="shell"><SectionIntro tag="Beyond the trail" title="More ways to" accent="travel deeper." /><ExperiencePhotoCards items={homeBeyondTheTrail} /></div></section>
         <section className="final-call">
           <Image src="/images/simien-panorama.jpg" alt="A wide panorama of the Simien Mountains escarpment" fill sizes="100vw" />
           <div className="final-call__veil" />

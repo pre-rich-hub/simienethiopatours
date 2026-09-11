@@ -5,7 +5,7 @@ export const simienReasons: Feature[] = [
   { title: "The wildlife lover", tag: "Time to observe", body: "Leave room to watch geladas, look for Walia ibex in suitable habitat and notice highland birdlife. Encounters follow the animals’ own rhythms.", href: "#wildlife", linkLabel: "Meet the wildlife" },
   { title: "The photographer", tag: "Light & landscape", body: "Build your days around the subjects that interest you: escarpments, giant lobelias, wildlife or the changing mountain light.", href: "/gallery" },
   { title: "The mountain walker", tag: "Higher ambitions", body: "Discuss Bwahit or a Ras Dashen expedition with time for preparation, acclimatization and a complete return route.", href: "/treks/ras-dashen-challenge" },
-  { title: "The curious traveler", tag: "A living highland", body: "Discover how communities farm, work and live around the mountains through local interpretation and respectfully arranged visits.", href: "/gondar#experiences" },
+  { title: "The curious traveler", tag: "A living highland", body: "Discover how communities farm, work and live around the mountains through local interpretation and respectfully arranged visits.", href: "/gondar/gondar" },
   { title: "The traveler with one day", tag: "A first encounter", body: "Travel from Gondar for selected viewpoints, wildlife watching and a walk, then return to the city without camping.", href: "/treks/simien-day-trip" },
 ];
 

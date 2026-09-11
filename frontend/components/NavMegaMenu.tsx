@@ -121,7 +121,7 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
         if (!event.currentTarget.contains(event.relatedTarget)) close();
       }}
     >
-      <span className="desktop-nav__trigger" aria-expanded={expanded} aria-current={pathname === matchPath ? "page" : undefined}>
+      <span className="desktop-nav__trigger" aria-expanded={expanded} aria-current={pathname === matchPath || pathname.startsWith(`${matchPath}/`) ? "page" : undefined}>
         <Link href={matchPath} onClick={close}>{label}</Link>
         <button
           ref={triggerRef}
