@@ -7,6 +7,7 @@ import { DestinationRoutes } from "@/components/JourneyPhotoCards";
 import { EditorialHero, SectionIntro, StorySection } from "@/components/Editorial";
 import { journeysThroughPlace } from "@/lib/destination-routes";
 import { getSimienPlace, simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -18,11 +19,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const place = getSimienPlace(slug);
   if (!place) return {};
-  return {
+  return pageMetadata({
     title: `${place.name} | Simien Mountains`,
-    description: place.about[0],
-    alternates: { canonical: simienPlacePath(place.slug) },
-  };
+    description: place.about[0] ?? "",
+    path: simienPlacePath(place.slug),
+    image: { url: place.image, alt: place.imageAlt },
+  });
 }
 
 export default async function SimienPlacePage({ params }: { params: Promise<{ slug: string }> }) {

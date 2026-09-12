@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
+import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { simienPlacePath, simienPlaceSummary, simienPlaces } from "@/lib/simien-destinations";
+import { site } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Simien Mountains Destinations | Places, Camps & Viewpoints",
   description: "Eighteen Simien Mountains destinations — from Debark and Sankaber to Imet Gogo, Chenek, Ras Dashen and Adi Arkay — each with its own page.",
-  alternates: { canonical: "/simien-mountains" },
-};
+  path: "/simien-mountains",
+});
 
 export default function SimienPage() {
   return (
@@ -21,6 +23,17 @@ export default function SimienPage() {
           <p className="eyebrow">Simien destinations</p>
           <h1 className="display">Eighteen places, <em>one highland.</em></h1>
           <p className="lead">From the Debark gateway to Imet Gogo, Chenek, Ras Dashen and the quieter eastern transect. Choose a place to read more.</p>
+        </div>
+      </section>
+
+      <section className="section section--paper" id="in-brief">
+        <div className="shell">
+          <SectionIntro tag="In brief" title="The highland," accent="from Gondar." />
+          <FeatureGrid items={[
+            { title: "Who we are", body: `${site.name}, operated by ${site.legalOperator}, is a Gondar-based team that plans private journeys into Simien Mountains National Park.` },
+            { title: "Where this is", body: "The park is a highland of plateaus, valleys and escarpments, reached from Gondar via Debark. The pages below cover gateway towns, camps, viewpoints and Ras Dashen approaches described in our destination notes." },
+            { title: "How to use these pages", body: "Read a place, then choose a journey or tell us your time. Wildlife sightings and summit success are not guaranteed.", href: "/plan", linkLabel: "Plan a Simien journey" },
+          ]} />
         </div>
       </section>
 

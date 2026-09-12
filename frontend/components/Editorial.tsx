@@ -13,7 +13,7 @@ export function EditorialHero({ eyebrow, title, accent, lead, image, parent = { 
   image?: { src: string; alt: string }; parent?: { label: string; href: string };
 }) {
   return <section className={image ? "page-hero--image editorial-hero" : "page-hero editorial-hero"}>
-    {image && <Image src={image.src} alt={image.alt} fill priority sizes="100vw" />}
+    {image && <Image src={image.src} alt={image.alt} fill priority fetchPriority="high" loading="eager" sizes="100vw" />}
     <div className={`shell ${image ? "page-hero__content" : ""}`}>
       <div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><Link href={parent.href}>{parent.label}</Link></div>
       <p className="eyebrow">{eyebrow}</p>

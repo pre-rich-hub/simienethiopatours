@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, CheckCircle2, Compass, Map, Mountain, Route, TentTree } from "@/components/Icon";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { SectionIntro } from "@/components/Editorial";
+import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
 import { ReviewsShowcase } from "@/components/ReviewsShowcase";
 import { DurationSelector } from "@/components/DurationSelector";
@@ -16,21 +17,24 @@ import {
 import { cms } from "@/lib/cms";
 import { buttonVariants } from "@/components/ui/button";
 
-export default async function Home() {
+async function HomeReviews() {
   const reviews = await cms.getTestimonials();
+  return <ReviewsShowcase reviews={reviews} />;
+}
 
+export default async function Home() {
   return (
     <>
       <Header />
       <main id="main-content">
         <section className="hero">
           <div className="hero__media">
-            <Image src="/images/imet-gogo.jpg" alt="The high plateau and dramatic escarpment at Imet Gogo in the Simien Mountains" fill priority sizes="100vw" />
+            <Image src="/images/imet-gogo.jpg" alt="The high plateau and dramatic escarpment at Imet Gogo in the Simien Mountains" fill priority fetchPriority="high" loading="eager" sizes="100vw" />
             <div className="hero__veil" /><div className="hero__grain" />
           </div>
           <div className="hero__content">
             <h1 className="display">Your local gateway to the <em>Simien Mountains.</em></h1>
-            <p className="hero__lead">Discover Gondar. Explore Simien. Travel deeper with a local team that knows the mountain and handles the details.</p>
+            <p className="hero__lead">Discover Gondar. Explore the Simien Mountains. Travel deeper with a local team that knows the mountain and handles the details.</p>
             <div className="hero__actions">
               <Link className={buttonVariants({ variant: "ctaCopper", size: "cta" })} href="/simien-mountains">Explore the Simien <ArrowUpRight size={16} /></Link>
             </div>
@@ -44,6 +48,20 @@ export default async function Home() {
             <span><Mountain />Simien specialists</span>
             <span><Compass />Certified local guide</span>
             <a href={sourceLinks.operatorAbout} target="_blank" rel="noreferrer">Verified operator details <ArrowUpRight /></a>
+          </div>
+        </section>
+
+        <section className="section section--paper" id="who-we-are" aria-labelledby="who-we-are-title">
+          <div className="shell">
+            <div className="content-heading">
+              <p className="eyebrow eyebrow--copper">In plain words</p>
+              <h2 className="section-title" id="who-we-are-title">Who we are. <em>Where we work.</em></h2>
+            </div>
+            <FeatureGrid items={[
+              { title: "Who we are", body: `${site.name} is a locally owned brand created by Tesema “Tevan” Mulualem, a guide based in Gondar. Journeys are operated by ${site.legalOperator}.`, href: "/about", linkLabel: "Read Tevan’s story" },
+              { title: "Where we operate", body: `We plan from ${site.address} into Simien Mountains National Park, Gondar city journeys, and related highland routes.`, href: "/simien-mountains", linkLabel: "Explore the Simien Mountains" },
+              { title: "How planning works", body: "Tell us your time, walking comfort and interests. Tevan replies with questions, then a route and quote for current conditions. A journey is not confirmed until you accept a written proposal.", href: "/plan", linkLabel: "Start the planner" },
+            ]} />
           </div>
         </section>
 
@@ -112,7 +130,9 @@ export default async function Home() {
         <section className="section reviews-home" id="reviews">
           <div className="shell">
             <div className="reviews-home__heading"><SectionIntro tag="Traveler reviews" title="Their journeys." accent="In their own words." /><div><p className="lead">Independent feedback from travelers who met Tevan in Gondar and experienced northern Ethiopia with local guidance.</p></div></div>
-            <ReviewsShowcase reviews={reviews} />
+            <Suspense fallback={<div className="reviews-showcase-fallback" role="status">Loading traveler reviews…</div>}>
+              <HomeReviews />
+            </Suspense>
           </div>
         </section>
 

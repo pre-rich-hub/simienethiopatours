@@ -5,6 +5,7 @@ import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { EditorialHero, Itinerary, SectionIntro, StorySection } from "@/components/Editorial";
 import { getJourneyPackage, journeyPackagePath, journeyPackages } from "@/lib/journey-packages";
+import { jsonLdScript, pageMetadata, tourJsonLd } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -16,11 +17,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const journey = getJourneyPackage(slug);
   if (!journey) return {};
-  return {
+  return pageMetadata({
     title: `${journey.name} | Journeys`,
-    description: journey.overview[0],
-    alternates: { canonical: journeyPackagePath(journey.slug) },
-  };
+    description: journey.overview[0] ?? "",
+    path: journeyPackagePath(journey.slug),
+    image: { url: journey.image, alt: journey.imageAlt },
+  });
 }
 
 export default async function JourneyPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -32,6 +34,14 @@ export default async function JourneyPage({ params }: { params: Promise<{ slug: 
 
   return (
     <PageShell lightHeader={false}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(tourJsonLd({
+        name: journey.name,
+        description: journey.overview[0] ?? "",
+        path: journeyPackagePath(journey.slug),
+        image: journey.image,
+        duration: journey.duration,
+        route: journey.route,
+      })) }} />
       <EditorialHero
         eyebrow="Journeys"
         title={journey.heroTitle}

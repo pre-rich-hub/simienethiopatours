@@ -1,22 +1,21 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { Gallery } from "@/components/Gallery";
 import { buttonVariants } from "@/components/ui/button";
 import { cms } from "@/lib/cms";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Gallery | Gondar & the Simien Mountains",
   description: "A visual journey through the Simien Mountains and Gondar. Explore highland landscapes, wild geladas, royal architecture and life along the trail.",
-  alternates: { canonical: "/gallery" },
-  openGraph: {
-    title: "A little closer to extraordinary | Gondar Simien Gallery",
-    description: "The landscapes, quiet moments and unexpected details of Gondar and the Simien Mountains.",
-    url: "/gallery",
-    images: [{ url: "/images/simien-panorama.jpg", alt: "The layered landscape of the Simien Mountains" }],
+  path: "/gallery",
+  ogTitle: "A little closer to extraordinary | Gondar Simien Gallery",
+  image: {
+    url: "/images/simien-panorama.jpg",
+    alt: "The layered landscape of the Simien Mountains",
   },
-};
+});
 
 export default async function GalleryPage() {
   const photographs = await cms.getGallery();
