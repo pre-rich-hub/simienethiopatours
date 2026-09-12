@@ -155,7 +155,7 @@ function styleFromJourneys(journey: SeedJourney): {
   difficulty: string | null;
   fit: string | null;
 } {
-  const match = (journeys as Array<{ slug: string; style?: string; difficulty?: string; fit?: string }>).find(
+  const match = (journeys as readonly { slug: string; style?: string; difficulty?: string; fit?: string }[]).find(
     (entry) => entry.slug === journey.inquiry,
   );
   return {
