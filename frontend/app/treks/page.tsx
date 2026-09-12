@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "@/components/Icon";
+import { JourneyPhotoCards } from "@/components/JourneyPhotoCards";
 import { PageShell } from "@/components/PageShell";
-import { journeyPackagePath, journeyPackageSummary, journeyPackages } from "@/lib/journey-packages";
+import { journeyPackages } from "@/lib/journey-packages";
 
 export const metadata: Metadata = {
   title: "Journeys | Simien Treks, Gondar Experiences & Festival Packages",
@@ -26,29 +26,7 @@ export default function TreksPage() {
 
       <section className="section" id="journeys">
         <div className="shell">
-          <div className="simien-photo-grid simien-photo-grid--3">
-            {journeyPackages.map((journey) => (
-              <Link className="simien-photo-card dest-card" href={journeyPackagePath(journey.slug)} key={journey.slug}>
-                <div className="simien-photo-card__image">
-                  <Image src={journey.image} alt={journey.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
-                  <span className="simien-photo-card__shade" />
-                  <div className="simien-photo-card__overlay">
-                    <p className="simien-photo-card__eyebrow">{journey.duration}</p>
-                    <h2>{journey.name}</h2>
-                  </div>
-                </div>
-                <div className="simien-photo-card__body">
-                  <p>{journeyPackageSummary(journey)}</p>
-                  <div className="simien-photo-card__footer">
-                    <span className="simien-photo-card__explore">
-                      About {journey.name}
-                      <ArrowUpRight />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <JourneyPhotoCards journeys={journeyPackages} />
         </div>
       </section>
     </PageShell>

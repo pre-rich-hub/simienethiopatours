@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
+import { DestinationRoutes } from "@/components/JourneyPhotoCards";
 import { EditorialHero, SectionIntro, StorySection } from "@/components/Editorial";
+import { journeysThroughPlace } from "@/lib/destination-routes";
 import { getSimienPlace, simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
 
 export const dynamicParams = false;
@@ -27,6 +29,7 @@ export default async function SimienPlacePage({ params }: { params: Promise<{ sl
   const { slug } = await params;
   const place = getSimienPlace(slug);
   if (!place) notFound();
+  const routes = journeysThroughPlace("simien", place.slug);
 
   return (
     <PageShell lightHeader={false}>
@@ -67,6 +70,8 @@ export default async function SimienPlacePage({ params }: { params: Promise<{ sl
           </ul>
         </div>
       </section>
+
+      <DestinationRoutes journeys={routes} paper={place.highlights.length > 0} />
 
       <p className="shell dest-back">
         <Link className="text-link" href="/simien-mountains">
