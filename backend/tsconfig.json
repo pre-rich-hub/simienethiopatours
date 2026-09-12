@@ -12,7 +12,8 @@
     "resolveJsonModule": true,
     "types": ["node"],
     "paths": {
-      "@/*": ["../frontend/*"]
+      "@/*": ["../frontend/*"],
+      "helmet": ["./src/types/helmet.d.ts"]
     }
   },
   "include": ["src/**/*.ts"],
