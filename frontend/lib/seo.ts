@@ -1,13 +1,17 @@
 /**
- * Shared public-page metadata. Pages pass title / description / path;
- * this helper fills canonical, Open Graph, and Twitter from the site NAP
+ * Shared public-page metadata. Pages pass title / description / path / locale;
+ * this helper fills canonical, hreflang, Open Graph, and Twitter from the site NAP
  * and NEXT_PUBLIC_SITE_URL. Do not invent ratings, prices, or extra claims here.
  *
  * Inner-page `title` is the document title *segment*. Root layout applies
  * `template: "%s | Gondar Simien Tours"`, so do not append the brand yourself.
+ * Home uses `titleAbsolute` to keep `Brand | tagline`.
  */
 
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { hasLocale } from "next-intl";
+import { routing, type AppLocale } from "@/i18n/routing";
 import { site } from "@/lib/site";
 
 export const SITE_URL = (
@@ -25,8 +29,8 @@ export const nap = {
 
 export const DEFAULT_OG_IMAGE = {
   url: "/images/imet-gogo.jpg",
-  width: 1600,
-  height: 1200,
+  width: 2560,
+  height: 1920,
   alt: "The high plateau and dramatic escarpment at Imet Gogo in the Simien Mountains",
 } as const;
 
@@ -36,6 +40,54 @@ export type OgImage = {
   width?: number;
   height?: number;
 };
+
+const OG_LOCALE: Record<AppLocale, string> = {
+  en: "en_US",
+  es: "es_ES",
+  de: "de_DE",
+  fr: "fr_FR",
+};
+
+const META_PATHS = {
+  home: "/",
+  about: "/about",
+  plan: "/plan",
+  treks: "/treks",
+  simien: "/simien-mountains",
+} as const;
+
+export type MetaPage = keyof typeof META_PATHS;
+
+export function localeFromParam(value: string | undefined): AppLocale {
+  return value && hasLocale(routing.locales, value) ? value : routing.defaultLocale;
+}
+
+export function localePath(path = "/", locale: AppLocale = routing.defaultLocale): string {
+  const suffix = !path || path === "/" ? "" : path.startsWith("/") ? path : `/${path}`;
+  return `/${locale}${suffix}`;
+}
+
+/** Relative locale URLs; `metadataBase` turns them into absolute hreflang hrefs. */
+export function languageAlternates(path: string): NonNullable<Metadata["alternates"]>["languages"] {
+  const languages: Record<string, string> = {
+    "x-default": localePath(path, routing.defaultLocale),
+  };
+  for (const locale of routing.locales) {
+    languages[locale] = localePath(path, locale);
+  }
+  return languages;
+}
+
+/** Absolute locale URLs for sitemap `alternates.languages`. */
+export function absoluteLanguageAlternates(path: string): Record<string, string> {
+  const languages: Record<string, string> = {
+    "x-default": absoluteUrl(localePath(path, routing.defaultLocale)),
+  };
+  for (const locale of routing.locales) {
+    languages[locale] = absoluteUrl(localePath(path, locale));
+  }
+  return languages;
+}
 
 export function absoluteUrl(path = "/"): string {
   if (!path || path === "/") return SITE_URL;
@@ -47,22 +99,30 @@ export type PageMetadataInput = {
   description: string;
   /** Pathname beginning with `/`, or `/` for home. */
   path: string;
+  locale?: AppLocale;
   /** Open Graph / Twitter title when it should differ from `title`. */
   ogTitle?: string;
   image?: OgImage;
   /** Privacy / terms should pass false. Default true. */
   index?: boolean;
+  /** Skip the `%s | Brand` template (home document title). */
+  titleAbsolute?: boolean;
+  /** Public pages should keep the default. Root/admin metadata passes false. */
+  languages?: boolean;
 };
 
 export function pageMetadata({
   title,
   description,
   path,
+  locale = routing.defaultLocale,
   ogTitle,
   image = DEFAULT_OG_IMAGE,
   index = true,
+  titleAbsolute = false,
+  languages = true,
 }: PageMetadataInput): Metadata {
-  const canonical = path || "/";
+  const canonical = localePath(path, locale);
   const socialTitle = ogTitle ?? title;
   const ogImage = {
     url: image.url,
@@ -72,15 +132,21 @@ export function pageMetadata({
   };
 
   return {
-    title,
+    title: titleAbsolute ? { absolute: title } : title,
     description,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      ...(languages ? { languages: languageAlternates(path) } : {}),
+    },
     robots: index
       ? { index: true, follow: true }
       : { index: false, follow: true },
     openGraph: {
       type: "website",
-      locale: "en_US",
+      locale: OG_LOCALE[locale],
+      alternateLocale: routing.locales
+        .filter((code) => code !== locale)
+        .map((code) => OG_LOCALE[code]),
       siteName: nap.name,
       title: socialTitle,
       description,
@@ -96,6 +162,25 @@ export function pageMetadata({
   };
 }
 
+export async function messagePageMetadata(
+  localeParam: string,
+  page: MetaPage,
+  extras?: Partial<PageMetadataInput>,
+): Promise<Metadata> {
+  const locale = localeFromParam(localeParam);
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const copy = t.raw(page as never) as { title: string; description: string; ogTitle?: string };
+  return pageMetadata({
+    locale,
+    path: extras?.path ?? META_PATHS[page],
+    title: copy.title,
+    description: copy.description,
+    ogTitle: copy.ogTitle,
+    titleAbsolute: page === "home",
+    ...extras,
+  });
+}
+
 /** Root layout defaults. Pages override via `pageMetadata`. */
 const home = pageMetadata({
   title: `${nap.name} | Your Local Gateway to the Simien Mountains`,
@@ -103,13 +188,15 @@ const home = pageMetadata({
     "Private, locally guided Simien Mountains treks and Gondar journeys, personally planned by Tesema ‘Tevan’ Mulualem and a Gondar-based team.",
   path: "/",
   ogTitle: "Your Local Gateway to the Simien Mountains",
+  titleAbsolute: true,
+  languages: false,
 });
 
 export const rootMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   ...home,
   title: {
-    default: home.title as string,
+    default: `${nap.name} | Your Local Gateway to the Simien Mountains`,
     template: `%s | ${nap.name}`,
   },
 };
@@ -134,6 +221,12 @@ export function organizationJsonLd() {
     name: nap.name,
     legalName: nap.legalOperator,
     url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: absoluteUrl(site.brand.badge),
+      width: site.brand.badgeWidth,
+      height: site.brand.badgeHeight,
+    },
     telephone: nap.telephone,
     email: nap.email,
     address: postalAddress(),
@@ -150,6 +243,7 @@ export type TourJsonLdInput = {
   name: string;
   description: string;
   path: string;
+  locale?: AppLocale;
   image?: string;
   duration?: string;
   route?: string;
@@ -166,6 +260,7 @@ export function tourJsonLd({
   name,
   description,
   path,
+  locale = routing.defaultLocale,
   image,
   duration,
   route,
@@ -174,7 +269,7 @@ export function tourJsonLd({
     "@context": "https://schema.org",
     "@type": "TouristTrip",
     name,
-    url: absoluteUrl(path),
+    url: absoluteUrl(localePath(path, locale)),
     provider: {
       "@type": "TravelAgency",
       name: nap.name,

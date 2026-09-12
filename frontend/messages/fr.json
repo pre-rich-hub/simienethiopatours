@@ -1,0 +1,630 @@
+{
+  "common": {
+    "skipToContent": "Aller au contenu",
+    "home": "Accueil",
+    "homeAria": "Accueil de Gondar Simien Tours",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "primaryNav": "Navigation principale",
+    "mobileNav": "Navigation mobile",
+    "siteNav": "Navigation du site",
+    "onThisPage": "Sur cette page",
+    "followUs": "Suivez-nous sur les réseaux sociaux",
+    "followOn": "Suivre sur {network}"
+  },
+  "errors": {
+    "eyebrow": "Un problème est survenu",
+    "title": "Cette page n’a pas pu s’afficher.",
+    "lead": "Réessayez ou revenez à l’accueil. Le planificateur et WhatsApp joignent toujours l’équipe locale.",
+    "retry": "Réessayer"
+  },
+  "nav": {
+    "simien": "Simien",
+    "journeys": "Voyages",
+    "gondar": "Gondar",
+    "ourStory": "Notre histoire",
+    "gallery": "Galerie",
+    "explore": "Explorer",
+    "exploreNamed": "Explorer {name}",
+    "exploreMenu": "Menu {label}",
+    "mobileLead": "Commencez par une question simple. Tevan et l’équipe locale aideront à façonner le reste.",
+    "simienMenu": {
+      "eyebrow": "Les montagnes du Simien",
+      "heading": "La vie au-dessus<br></br><em>des nuages.</em>",
+      "description": "Escarpements classés UNESCO, geladas et Walia ibex — explorez la frontière sauvage des hauts plateaux d’Éthiopie à votre rythme.",
+      "explore": "Explorer les montagnes du Simien",
+      "chooseTrek": "Choisir un trekking dans le Simien",
+      "planNights": "Planifier des nuits à Gondar et dans le Simien",
+      "royalCity": "Gondar : la ville royale"
+    },
+    "journeysMenu": {
+      "eyebrow": "Voyages signature",
+      "heading": "Trouvez votre chemin<br></br><em>vers le Simien.</em>",
+      "description": "D’un premier trekking en montagne à un voyage vers la cime, trouvez un point de départ pour votre temps, votre curiosité et votre rythme.",
+      "explore": "Explorer tous les voyages",
+      "gondarLife": "Gondar : fêtes, cuisine et vie locale",
+      "rasDashen": "Ras Dashen : la plus haute montagne d’Éthiopie",
+      "expedition": "Expédition de 10 jours dans le Simien et au Ras Dashen",
+      "heritage": "5 jours : Gondar, patrimoine et Simien"
+    },
+    "gondarMenu": {
+      "eyebrow": "La ville royale",
+      "heading": "Histoire, cuisine<br></br><em>et vie quotidienne.</em>",
+      "description": "Châteaux, café, marchés et les personnes qui appellent Gondar leur chez-soi — une introduction façonnée autour de vos intérêts.",
+      "explore": "Explorer Gondar",
+      "royalCity": "Gondar : la ville royale",
+      "royalAdventure": "5 jours : ville royale et aventure en montagne"
+    }
+  },
+  "cta": {
+    "planWithTevan": "Planifier avec Tevan",
+    "planYourJourney": "Planifier votre voyage",
+    "planAJourney": "Planifier un voyage",
+    "whatsapp": "WhatsApp",
+    "whatsappUs": "Écrivez-nous sur WhatsApp",
+    "whatsappWithPhone": "WhatsApp {phone}",
+    "chatOnWhatsApp": "Discuter sur WhatsApp : {phone}",
+    "chatWithTevan": "Discuter avec Tevan sur WhatsApp",
+    "openAiChat": "Ouvrir le chat IA",
+    "closeAiChat": "Fermer le chat IA",
+    "exploreExperience": "Explorer l’expérience",
+    "exploreJourney": "Explorer le voyage",
+    "viewAllJourneys": "Voir tous les voyages",
+    "personallyPlanned": "Planifié en personne à Gondar"
+  },
+  "footer": {
+    "owned": "100 % de propriété locale",
+    "based": "Basé à Gondar",
+    "licensed": "Opérateur agréé",
+    "support": "Soutien local direct",
+    "tagline": "Voyages planifiés localement depuis Gondar vers les hauts plateaux sauvages des montagnes du Simien.",
+    "discover": "Découvrir",
+    "theSimien": "Le Simien",
+    "company": "Entreprise",
+    "meetTevan": "Rencontrer Tevan",
+    "tevanLocal": "Tevan Local",
+    "operatingCompany": "Entreprise opératrice",
+    "office": "Bureau à Gondar",
+    "subscribeTitle": "Abonnez-vous à notre lettre pour des récits de voyage choisis",
+    "copyright": "© {year} Gondar Simien Tours. Exploité par {operator}.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions"
+  },
+  "language": {
+    "choose": "Choisir la langue",
+    "label": "Langue",
+    "note": "Certains détails de voyages et de lieux restent en anglais."
+  },
+  "newsletter": {
+    "emailAria": "Adresse e-mail",
+    "placeholder": "Votre adresse e-mail",
+    "subscribe": "S’abonner",
+    "sending": "Envoi…",
+    "success": "Merci — vous êtes sur la liste.",
+    "error": "Nous n’avons pas pu ajouter cette adresse. Veuillez réessayer."
+  },
+  "inquiry": {
+    "experience": "Quelle expérience vous intéresse ?",
+    "experienceExplore": "J’explore — aidez-moi à choisir",
+    "name": "Votre nom",
+    "namePlaceholder": "Comment devons-nous nous adresser à vous ?",
+    "email": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "dates": "Fenêtre de voyage",
+    "datesPlaceholder": "Mois, dates, ou encore flexible",
+    "group": "Voyageurs",
+    "groupPlaceholder": "Choisir la taille du groupe",
+    "groupSolo": "Voyageur solo",
+    "groupTwo": "2 voyageurs",
+    "groupThreeFour": "3–4 voyageurs",
+    "groupFiveTen": "5–10 voyageurs",
+    "groupMore": "Plus de 10",
+    "duration": "Temps pour le Simien",
+    "durationPlaceholder": "Choisissez ce qui vous semble possible",
+    "duration1": "1 jour",
+    "duration2": "2 jours",
+    "duration3": "3 jours",
+    "duration4": "4 jours",
+    "duration5": "5 jours",
+    "duration6": "6 jours",
+    "duration10": "10 jours",
+    "durationUnsure": "Je ne suis pas sûr",
+    "interests": "Intérêt principal",
+    "interestsPlaceholder": "Qu’est-ce qui vous amène dans les montagnes ?",
+    "interestScenery": "Paysage et marche",
+    "interestWildlife": "Faune",
+    "interestPhotography": "Photographie",
+    "interestRasDashen": "Ras Dashen",
+    "interestHeritage": "Gondar et patrimoine",
+    "interestFood": "Cuisine, café et vie locale",
+    "interestFestivals": "Fêtes et jours fériés",
+    "interestRunning": "Running et campagne",
+    "interestStay": "Hébergement et transport",
+    "interestEverything": "Un peu de tout",
+    "accommodation": "Hébergement préféré",
+    "accommodationAdvise": "Conseillez-moi pour mon voyage",
+    "accommodationHigh": "Hôtel ou lodge de confort supérieur",
+    "accommodationMid": "Hôtel de gamme moyenne",
+    "accommodationBudget": "Maison d’hôtes ou séjour économique",
+    "accommodationCamping": "Camping",
+    "accommodationMix": "Un mélange d’hôtel et de camping",
+    "stayContext": "Indiquez les nuits que vous avez en tête. Nous relierons vos séjours à l’itinéraire de trekking et aux plans d’arrivée.",
+    "gondarNights": "Nuits à Gondar",
+    "simienNights": "Nuits dans le Simien",
+    "nightsPlaceholder": "Encore flexible",
+    "budget": "Budget d’hébergement",
+    "budgetPlaceholder": "Votre fourchette préférée, la devise et s’il s’agit du tarif par nuit ou du total",
+    "message": "Qu’imaginez-vous ?",
+    "messagePlaceholder": "Dites à Tevan ce que vous voulez voir, ce que vous aimez, et tout ce dont vous n’êtes pas sûr.",
+    "sending": "Envoi",
+    "sent": "Demande envoyée",
+    "submit": "Envoyer ma demande",
+    "emailOpened": "Votre application de messagerie devrait maintenant s’ouvrir avec les détails de votre voyage.",
+    "preferChat": "Vous préférez une conversation ?",
+    "messageWhatsApp": "Écrivez-nous sur WhatsApp."
+  },
+  "booking": {
+    "eyebrow": "Tarifs",
+    "title": "Devis sur mesure",
+    "duration": "Durée",
+    "groupSize": "Taille du groupe",
+    "difficulty": "Difficulté",
+    "startFinish": "Départ et arrivée",
+    "book": "Réserver ce voyage",
+    "ask": "Poser une question"
+  },
+  "chat": {
+    "dialog": "Poser une question sur les circuits à Gondar et dans le Simien",
+    "title": "Posez vos questions sur les circuits",
+    "subtitle": "Les réponses viennent de nos voyages publiés. Tevan confirme les détails pour vos dates.",
+    "messages": "Messages du chat",
+    "suggestions": "Questions suggérées",
+    "greeting": "Bonjour. Je réponds à partir de nos voyages publiés à Gondar et dans le Simien. Tevan confirme les itinéraires, les dates et les conditions actuelles. Que souhaitez-vous savoir ?",
+    "chipDays": "Quel trekking convient le mieux pour 3 ou 4 jours ?",
+    "chipWildlife": "Quelle faune est connue dans les montagnes du Simien ?",
+    "chipSummit": "Puis-je tenter la cime du Ras Dashen ?",
+    "chipPack": "Comment se planifie un voyage ?",
+    "groundedNote": "Le chat est un point de départ, pas une réservation. Confirmez les itinéraires et les conditions actuelles avec l’équipe locale.",
+    "planHandoffs": "Prêt à planifier ?",
+    "planChipDays3": "Planifier un trekking de 3 jours",
+    "planChipDays4": "Planifier le classique de 4 jours",
+    "planChipSummit": "Planifier le Ras Dashen",
+    "planChipCustom": "Planifier un voyage sur mesure",
+    "planMessageDays3": "J’aimerais de l’aide pour planifier un trekking de 3 jours dans le Simien au départ de Gondar.",
+    "planMessageDays4": "J’aimerais de l’aide pour planifier le trekking classique de 4 jours dans le Simien au départ de Gondar.",
+    "planMessageSummit": "J’aimerais de l’aide pour planifier une approche du sommet du Ras Dashen au départ de Gondar.",
+    "planMessageCustom": "J’aimerais de l’aide pour planifier un voyage sur mesure dans le nord de l’Éthiopie au départ de Gondar.",
+    "unavailable": "L’assistant est temporairement indisponible. Contactez-nous directement :",
+    "disabled": "L’assistant est désactivé pour le moment. Contactez l’équipe locale directement :",
+    "disabledSubtitle": "Le chat est coupé. WhatsApp, l’e-mail ou le planificateur joignent toujours Tevan.",
+    "rateLimited": "Trop de questions en peu de temps. Attendez quelques minutes, ou contactez-nous directement :",
+    "quota": "L’assistant a atteint sa limite pour le moment. Contactez l’équipe locale directement :",
+    "quotaSubtitle": "La limite de l’assistant est atteinte. WhatsApp, l’e-mail ou le planificateur joignent toujours Tevan.",
+    "streamError": "La réponse a été interrompue. Réessayez, ou contactez-nous directement :",
+    "thinking": "Réflexion",
+    "sending": "Envoi…",
+    "email": "E-mail",
+    "startOver": "Recommencer",
+    "placeholder": "Posez une question sur nos trekkings…",
+    "placeholderUnavailable": "Le chat est indisponible pour le moment",
+    "inputAria": "Poser une question sur les circuits",
+    "send": "Envoyer",
+    "preferPerson": "Vous préférez une personne ?"
+  },
+  "home": {
+    "heroTitle": "Votre porte d’entrée locale vers les <em>montagnes du Simien.</em>",
+    "heroLead": "Découvrez Gondar. Explorez les montagnes du Simien. Voyagez plus en profondeur avec une équipe locale qui connaît la montagne et s’occupe des détails.",
+    "heroAlt": "Le haut plateau et l’escarpement spectaculaire d’Imet Gogo dans les montagnes du Simien",
+    "exploreSimien": "Explorer le Simien",
+    "trustAria": "Repères de confiance",
+    "trustOwned": "100 % de propriété locale",
+    "trustBased": "Basé à Gondar",
+    "trustSpecialists": "Spécialistes du Simien",
+    "trustGuide": "Guide local certifié",
+    "trustVerified": "Coordonnées d’opérateur vérifiées",
+    "whoTag": "En mots simples",
+    "whoTitle": "Qui nous sommes. <em>Où nous travaillons.</em>",
+    "whoWeAre": "Qui nous sommes",
+    "whoWeAreBody": "{name} est une marque de propriété locale créée par Tesema « Tevan » Mulualem, un guide basé à Gondar. Les voyages sont exploités par {operator}.",
+    "whoStory": "Lire l’histoire de Tevan",
+    "whereOperate": "Où nous opérons",
+    "whereOperateBody": "Nous planifions depuis {address} vers le parc national des montagnes du Simien, les voyages en ville à Gondar et les itinéraires de hauts plateaux associés.",
+    "whereOperateLink": "Explorer les montagnes du Simien",
+    "howPlanning": "Comment se passe la planification",
+    "howPlanningBody": "Indiquez-nous votre temps, votre aisance à la marche et vos intérêts. Tevan répond par des questions, puis par un itinéraire et un devis selon les conditions actuelles. Un voyage n’est confirmé que lorsque vous acceptez une proposition écrite.",
+    "startPlanner": "Commencer le planificateur",
+    "arcTag": "Le chemin vers le nord",
+    "arcTitle": "Le voyage change <em>sous vos yeux.</em>",
+    "arcLead": "Gondar est la porte culturelle et pratique. Puis la ville relâche son emprise : terres agricoles, villages, route qui grimpe, Debark — et enfin un horizon ouvert par l’escarpement du Simien.",
+    "arcCaption": "Route du nord · hauts plateaux de l’Amhara",
+    "arcAlt": "La vie des hauts plateaux sur la route du nord depuis Gondar vers les montagnes du Simien",
+    "arcGondar": "Gondar",
+    "arcRoad": "Route du nord",
+    "arcDebark": "Debark",
+    "arcEscarpment": "Escarpement",
+    "arcPath": "Ville → terres agricoles → hauts plateaux → sentier",
+    "horizonsTag": "Trouvez votre horizon",
+    "horizonsTitle": "Où les montagnes <em>vous mèneront-elles ?</em>",
+    "horizonsLead": "Pas une liste à cocher. Trois manières différentes de ressentir l’échelle du paysage.",
+    "exploreMore": "Explorer davantage",
+    "horizons": {
+      "imet-gogo": {
+        "title": "Imet Gogo",
+        "tag": "Icône du Simien",
+        "short": "Point de vue emblématique du Simien à environ 3,926 m — gorges profondes, crêtes et falaises verticales.",
+        "detail": "Point culminant visuel de nombreux trekkings de 3 jours et classiques ; également un foyer des programmes de photographie."
+      },
+      "gelada": {
+        "title": "Pays des geladas",
+        "tag": "Faune",
+        "short": "Habitat connu des geladas, avec le Walia ibex et (rarement) le loup d’Éthiopie également présents dans le parc.",
+        "detail": "Les aperçus ne sont jamais garantis ; les programmes laissent le temps d’observer lorsqu’un groupe ou un individu est trouvé."
+      },
+      "ras-dashen": {
+        "title": "Ras Dashen",
+        "tag": "Haute montagne",
+        "short": "La plus haute cime d’Éthiopie (aussi Ras Dejen ; environ 4,500+ m / ~4,543–4,550 m dans le libellé des sources).",
+        "detail": "Une journée de cime exigeante au départ d’Ambiko sur les itinéraires Challenge et d’expédition — la réussite dépend des conditions."
+      }
+    },
+    "clarityTag": "Choisissez en toute clarté",
+    "clarityTitle": "Comment voulez-vous <em>rencontrer les montagnes ?</em>",
+    "clarityLead": "D’une première rencontre à une expédition complète sur les hauts plateaux, commencez par l’expérience qui vous ressemble. Chaque voyage est affiné en privé autour de votre temps et de votre rythme.",
+    "clarityAria": "Choisir un voyage selon le temps, l’intérêt ou l’effort",
+    "clarity": {
+      "by-time": {
+        "label": "Selon le temps",
+        "day": {
+          "title": "Une journée dans le Simien",
+          "summary": "Excursion d’une journée Gondar–Debark–parc avec marches courtes et points de vue sur l’escarpement (Facile à Modéré)."
+        },
+        "classic": {
+          "title": "Corridor classique de 3–4 jours",
+          "summary": "Sankaber–Geech–Imet Gogo (3 jours) ou poursuite jusqu’à Chenek sur le Classique de 4 jours."
+        },
+        "long": {
+          "title": "Voyages en montagne de 5–10 jours",
+          "summary": "Combinaisons Gondar + Simien, Ras Dashen Challenge, ou le transect complet de 10 jours."
+        }
+      },
+      "by-interest": {
+        "label": "Selon l’intérêt",
+        "trekking": {
+          "title": "Trekking",
+          "summary": "Itinéraires de plusieurs jours sur les hauts plateaux, de Sankaber à Geech vers Chenek et au-delà."
+        },
+        "wildlife": {
+          "title": "Faune",
+          "summary": "Voyages flexibles de 2–4 jours centrés sur la faune et programmes d’une journée au pays des geladas (aperçus non garantis)."
+        },
+        "culture": {
+          "title": "Culture et patrimoine",
+          "summary": "Sites royaux de Gondar, expériences de ville vivante, hauts plateaux de Kosoye et voyages liés aux fêtes."
+        }
+      },
+      "by-effort": {
+        "label": "Selon l’effort",
+        "gentle": {
+          "title": "Journée plus douce / introduction",
+          "summary": "Simien en une journée ou introduction de 2 jours au Simien avec campement près de Sankaber."
+        },
+        "classic-trek": {
+          "title": "Trekking classique",
+          "summary": "Corridor de 3 ou 4 jours, Modéré à Exigeant, vers Imet Gogo et Chenek."
+        },
+        "summit": {
+          "title": "Expédition de cime",
+          "summary": "Ras Dashen Challenge et itinéraires d’expédition plus longs via le col de Bwahit et Ambiko."
+        }
+      }
+    },
+    "signatureTag": "Voyages signature",
+    "signatureTitle": "Des possibilités, <em>pas des forfaits.</em>",
+    "viewEveryJourney": "Voir tous les voyages",
+    "discover": "Découvrir",
+    "signature": {
+      "4-day-simien-classic": {
+        "duration": "4 jours / 3 nuits",
+        "title": "Trekking classique de 4 jours dans le Simien",
+        "summary": "De Gondar à Sankaber, Geech, Imet Gogo et Chenek — le corridor classique central (~30–45 km de marche selon les options)."
+      },
+      "3-day-simien-trek": {
+        "duration": "3 jours / 2 nuits",
+        "title": "Aventure de trekking de 3 jours dans les montagnes du Simien",
+        "summary": "Nuits à Sankaber et Geech, cascade de Jinbar, puis Imet Gogo et prise en charge sur la route (n’atteint pas Chenek)."
+      },
+      "ras-dashen-challenge": {
+        "duration": "5–6 jours",
+        "title": "Ras Dashen Challenge",
+        "summary": "Corridor classique vers Ambiko pour une tentative de cime du Ras Dashen via le col de Bwahit — Exigeant ; la cime n’est pas garantie."
+      }
+    },
+    "reviewsTag": "Avis de voyageurs",
+    "reviewsTitle": "Leurs voyages.",
+    "reviewsAccent": "Avec leurs mots.",
+    "reviewsLead": "Retours indépendants de voyageurs qui ont rencontré Tevan à Gondar et découvert le nord de l’Éthiopie avec un accompagnement local.",
+    "reviewsLoading": "Chargement des avis de voyageurs…",
+    "tevanTag": "Les montagnes que j’appelle chez moi",
+    "tevanQuote": "Connaître un lieu, ce n’est pas simplement en connaître le chemin.",
+    "tevanBody": "Je m’appelle Tesema \"Tevan\" Mulualem. J’ai créé Gondar Simien Tours autour d’une idée simple : aider les gens à vivre le lieu que je connais — pas seulement à le visiter. Cela signifie des itinéraires honnêtes, une vraie préparation et de la place pour les moments qu’aucun programme ne peut planifier.",
+    "tevanCaption": "Tevan · Fondateur et guide local",
+    "tevanAlt": "Tesema 'Tevan' Mulualem sur un sentier des montagnes du Simien",
+    "readStory": "Lire l’histoire de Tevan",
+    "certifiedGuide": "Guide professionnel certifié au niveau national",
+    "viewCredentials": "Voir les justificatifs vérifiés",
+    "proofTag": "Des preuves, pas des promesses",
+    "proofTitle": "Si nous le disons, <em>nous devons le montrer.</em>",
+    "proofPrepared": "Préparé en coulisses",
+    "proofPreparedBody": "Guides, scouts, cuisiniers, chauffeurs, muletiers, nourriture et matériel de camp coordonnés avant que vous n’arriviez sur le sentier.",
+    "proofGuidance": "Conseils de première main",
+    "proofGuidanceBody": "Des conseils façonnés autour de votre temps, de vos capacités et de vos intérêts — pas un itinéraire imposé à chaque voyageur.",
+    "proofRespect": "Respect de la montagne",
+    "proofRespectBody": "L’altitude, la météo et la faune sont traitées avec honnêteté. L’itinéraire peut s’adapter lorsque les conditions réelles demandent du jugement.",
+    "trailTag": "Connaissance des itinéraires",
+    "trailTitle": "Nous marchons les sentiers <em>que nous proposons.</em>",
+    "trailLead": "Une bonne planification est honnête sur ce que l’on sait, ce qui change et ce qu’il reste à vérifier. Les décisions d’itinéraire tiennent compte de l’aisance à la marche, de l’altitude, de la météo et des conditions locales actuelles.",
+    "planLocalTeam": "Planifier avec l’équipe locale",
+    "routeName": "Simien Essential",
+    "fieldKnowledge": "Connaissance de terrain",
+    "walkingTime": "Temps de marche",
+    "walkingValue": "Selon l’itinéraire",
+    "trailCondition": "État du sentier",
+    "trailValue": "Vérifié avant le départ",
+    "gps": "Données GPS",
+    "gpsValue": "Relevé en cours",
+    "noInvented": "Aucun chiffre inventé de kilomètres ou de dénivelé. Itinéraire final confirmé selon les conditions actuelles.",
+    "beyondTag": "Au-delà du sentier",
+    "beyondTitle": "D’autres façons de",
+    "beyondAccent": "voyager plus en profondeur.",
+    "beyond": {
+      "local-eyes": {
+        "title": "Gondar à travers le regard local",
+        "tag": "Ville vivante",
+        "body": "Quartiers, café, cuisine et vie quotidienne au-delà du circuit des monuments."
+      },
+      "running": {
+        "title": "Expérience de running cachée à Gondar",
+        "tag": "Campagne",
+        "body": "Courses guidées à la campagne et sur pistes de terre depuis la lisière de la ville, adaptées à Facile / Modéré / Exigeant."
+      },
+      "timkat": {
+        "title": "Timkat et montagnes du Simien",
+        "tag": "Voyage de fête",
+        "body": "6 jours suggérés — Timkat à Gondar, puis escarpements et faune du Simien (dates de la fête confirmées plus près du départ)."
+      }
+    },
+    "finalEyebrow": "Vous apportez la curiosité. Nous gérons la complexité.",
+    "finalTitle": "Commencez par une question simple.",
+    "finalLead": "Dites-nous de combien de temps vous disposez — ou que vous n’en avez encore aucune idée. Cela suffit pour commencer.",
+    "planMyJourney": "Planifier mon voyage",
+    "chatOnWhatsApp": "Discuter sur WhatsApp",
+    "finalAlt": "Un large panorama de l’escarpement des montagnes du Simien"
+  },
+  "about": {
+    "crumb": "Notre histoire",
+    "eyebrow": "Tesema « Tevan » Mulualem · Fondateur et guide local",
+    "title": "L’histoire <em>commence ici.</em>",
+    "lead": "« Je veux que les gens vivent le lieu que je connais — pas seulement qu’ils le visitent. »",
+    "heroAlt": "Tesema ‘Tevan’ Mulualem debout dans les montagnes du Simien",
+    "linkBrief": "En bref",
+    "linkStory": "L’histoire de Tevan",
+    "linkApproach": "Notre approche",
+    "linkLocal": "Tevan Local",
+    "linkEquipment": "Équipement et préparation",
+    "briefTag": "En bref",
+    "briefTitle": "Qui, où",
+    "briefAccent": "et comment nous planifions.",
+    "who": "Qui nous sommes",
+    "whoBody": "Tesema « Tevan » Mulualem est le fondateur et le guide principal de {name}. L’entreprise opératrice est {operator}.",
+    "where": "Où nous opérons",
+    "whereBody": "Le bureau se trouve au {address}. Nous travaillons à Gondar et dans le parc national des montagnes du Simien, et nous pouvons discuter d’extensions vers le nord lorsqu’elles correspondent à votre temps.",
+    "how": "Comment se passe la planification",
+    "howBody": "La planification commence par une conversation — pas par un forfait fixe. Partagez votre temps et vos questions ; une proposition écrite confirme le voyage.",
+    "storyTag": "La route qui quitte Gondar",
+    "storyTitle": "Avant que les montagnes",
+    "storyAccent": "ne deviennent un circuit.",
+    "story": [
+      "Il y a une route qui quitte Gondar et dont je ne me lasse jamais. La ville disparaît peu à peu derrière vous. Les maisons se raréfient, le paysage s’ouvre, l’air change et la route gravit. Puis les montagnes du Simien commencent à apparaître. Chaque fois que je les vois, je me souviens pourquoi j’ai choisi ce métier.",
+      "Je m’appelle Tesema ‘Tevan’ Mulualem. Je suis un guide local de Gondar, en Éthiopie, et j’ai créé Gondar Simien Tours autour du lieu que je connais comme chez moi.",
+      "Avant que les montagnes ne soient une destination sur un itinéraire, elles faisaient simplement partie de la vie. J’ai appris comment un sentier familier change avec la saison, comment les nuages transforment une vallée en quelques minutes, et comment la faune suit son propre horaire. Connaître un lieu, ce n’est pas simplement en connaître le chemin."
+    ],
+    "guidingTag": "Puis j’ai commencé à guider",
+    "guidingTitle": "Voir chez soi",
+    "guidingAccent": "avec des yeux neufs.",
+    "guiding": [
+      "Un voyageur s’arrête pour regarder un gelada et pose encore une question. Quelqu’un remarque les terrasses agricoles ou se demande pourquoi un village a été construit là. Quelqu’un goûte le café éthiopien pour la première fois. Quelqu’un atteint un point de vue et se tait.",
+      "Guider m’a fait remarquer des choses que je tenais pour acquises. J’ai compris que mon travail était d’aider les gens à comprendre où ils étaient, plutôt que de simplement indiquer le sentier.",
+      "C’est pourquoi j’ai voulu construire une forme de voyage plus personnelle. Un couple en quête d’une expérience de montagne tranquille, un photographe qui attend la lumière et un marcheur confirmé qui se prépare pour le Ras Dashen n’ont pas besoin du même voyage. La première étape, c’est d’écouter."
+    ],
+    "approachTag": "Le genre de voyage auquel je crois",
+    "approachTitle": "Les bonnes choses.",
+    "approachAccent": "Au bon rythme.",
+    "unexpected": "De la place pour l’inattendu",
+    "unexpectedBody": "Un sentier calme, une conversation sur la route, une montagne qui apparaît à travers les nuages ou un café lorsque personne n’est pressé. Parfois, le moment dont on se souvient le plus n’était jamais sur l’itinéraire.",
+    "honest": "Des conseils honnêtes",
+    "honestBody": "Si un trekking est trop ambitieux, je le dirai. S’il faut plus de temps, nous en discutons. Si la météo ou les conditions locales changent le plan, nous nous adaptons. Les aperçus de la faune et la réussite du sommet ne sont jamais des promesses.",
+    "respect": "Respect du chez-soi",
+    "respectBody": "Ralentissez assez pour remarquer. Respectez la faune, les communautés, l’intimité des personnes et le paysage. Les montagnes du Simien sont un lieu où les gens vivent, autant qu’un lieu que les voyageurs viennent découvrir.",
+    "verified": "Expertise locale vérifiée",
+    "role": "Fondateur et guide principal",
+    "qualification": "Qualification professionnelle",
+    "qualificationValue": "Tour Guiding Level IV",
+    "operator": "Entreprise opératrice",
+    "based": "Basé à",
+    "basedValue": "Fasil Castle Street, Gondar",
+    "credentialSource": "Les justificatifs et les licences sont publiés sur le <site>site officiel de l’entreprise opératrice ↗</site>.",
+    "localTag": "Tevan Local",
+    "localTitle": "Les personnes font <em>partie du voyage.</em>",
+    "localLead": "Vous pouvez voir un guide, mais une équipe bien plus large se tient souvent derrière le trekking : scouts, cuisiniers, chauffeurs, muletiers, prestataires d’hébergement, fournisseurs et hôtes de la communauté. Ils font partie de l’expérience.",
+    "localBody": "Un voyage réussi dépend de personnes qui travaillent ensemble. Tevan Local est notre engagement à garder davantage de valeur près de ceux qui rendent le voyage possible, et à partager des preuves à mesure que ce travail grandit.",
+    "chainTraveler": "Voyageur",
+    "chainTeam": "Équipe locale",
+    "chainBusiness": "Entreprise locale",
+    "chainFuture": "Avenir local",
+    "equipmentTag": "En coulisses",
+    "equipmentTitle": "Vous voyez les montagnes.",
+    "equipmentAccent": "Nous les préparons.",
+    "equipment": [
+      "Avant votre arrivée, les itinéraires sont planifiés, le transport est organisé, la nourriture est préparée et l’équipe de montagne est coordonnée. La météo et le matériel demandent de l’attention bien avant le premier jour de marche.",
+      "Une tente compte lorsque le vent traverse le camp. Un système de couchage compte lorsque la température baisse. Le matériel de cuisine compte lorsque le dîner se prépare après une longue journée sur le sentier. Nous préparons, vérifions, nettoyons, entretenons et organisons le matériel avant qu’il ne fasse partie de votre voyage.",
+      "Votre devis final précise le matériel de camping et de couchage inclus. Indiquez-nous vos besoins de confort et posez vos questions sur ce que vous prévoyez d’apporter ou de louer."
+    ],
+    "askPreparation": "Poser une question sur la préparation",
+    "noteTag": "Une note de Tevan",
+    "noteQuote": "« J’ai marché ces montagnes de nombreuses fois. Mais guider m’a appris que l’on ne voit jamais vraiment un lieu de la même façon deux fois. Un voyageur pose une question. Quelqu’un remarque quelque chose que vous avez dépassé cent fois. La lumière atteint la vallée autrement. Soudain, vous voyez votre propre chez-vous à travers les yeux de quelqu’un d’autre. »",
+    "noteClose": "Je veux partager un lieu qui compte pour moi. J’espère que, lorsque vous partirez, le Simien comptera aussi pour vous.",
+    "noteSignoff": "Tesema « Tevan » · Fondateur et guide local · Gondar, Éthiopie",
+    "callTitle": "Avant de réserver, racontez-moi votre histoire.",
+    "callEyebrow": "Votre temps · Votre curiosité · Votre rythme",
+    "callLabel": "Planifier votre voyage avec Tevan"
+  },
+  "plan": {
+    "crumb": "Planifier votre voyage",
+    "eyebrow": "Pas de scénario fixe · pas de pression pour réserver",
+    "title": "Vous apportez la curiosité. <em>Nous gérons la complexité.</em>",
+    "lead": "{name}, exploité par {operator} depuis {address}, planifie des voyages à Gondar et dans les montagnes du Simien avec Tesema « Tevan » Mulualem. Vous n’avez pas besoin de connaître l’itinéraire. Indiquez-nous votre temps, vos intérêts et les questions qui vous occupent.",
+    "next": "La suite",
+    "step1": "Vous partagez les grandes lignes",
+    "step1Body": "Dates, groupe, intérêts et votre façon de voyager.",
+    "step2": "Tevan pose des questions utiles",
+    "step2Body": "Aisance à la marche, altitude, camping et priorités.",
+    "step3": "Nous façonnons le voyage",
+    "step3Body": "Un itinéraire et un devis ancrés dans la logistique actuelle.",
+    "preferTalk": "Vous préférez parler ?",
+    "whatsappTevan": "WhatsApp à Tevan",
+    "timezone": "Gondar est à l’heure d’Afrique de l’Est (UTC+3).",
+    "formTag": "Les grandes lignes de votre voyage",
+    "formTitle": "Commencez là où vous êtes."
+  },
+  "treks": {
+    "crumb": "Voyages",
+    "eyebrow": "Forfaits de voyage",
+    "title": "Vingt-huit voyages, <em>une équipe locale.</em>",
+    "lead": "D’une excursion d’une journée dans le Simien au Ras Dashen, aux expériences en ville à Gondar et aux voyages de fête. Choisissez un forfait pour en savoir plus.",
+    "heroAlt": "Large panorama des montagnes du Simien",
+    "briefTag": "En bref",
+    "briefTitle": "Des points de départ,",
+    "briefAccent": "pas des scénarios fixes.",
+    "who": "Qui nous sommes",
+    "whoBody": "{name}, exploité par {operator}, planifie ces voyages depuis Gondar avec Tesema « Tevan » Mulualem.",
+    "what": "Ce que sont ces pages",
+    "whatBody": "Chaque page de voyage est un canevas de planification : nom, durée, itinéraire, inclusions et un programme jour par jour ou par segments lorsque la source en fournit un. Les itinéraires, les camps et la faune peuvent changer.",
+    "how": "Comment continuer",
+    "howBody": "Lisez un canevas, puis indiquez-nous votre temps et votre aisance à la marche. Une proposition écrite confirme ce qui est inclus pour vos dates.",
+    "planThis": "Planifier ce voyage",
+    "about": "À propos de {name}"
+  },
+  "simien": {
+    "crumb": "Montagnes du Simien",
+    "eyebrow": "Destinations du Simien",
+    "title": "Dix-huit lieux, <em>un haut plateau.</em>",
+    "lead": "De la porte d’entrée de Debark à Imet Gogo, Chenek, Ras Dashen et le transect est plus calme. Choisissez un lieu pour en savoir plus.",
+    "heroAlt": "Large panorama des montagnes du Simien",
+    "briefTag": "En bref",
+    "briefTitle": "Le haut plateau,",
+    "briefAccent": "depuis Gondar.",
+    "who": "Qui nous sommes",
+    "whoBody": "{name}, exploité par {operator}, est une équipe basée à Gondar qui planifie des voyages privés dans le parc national des montagnes du Simien.",
+    "where": "Où cela se trouve",
+    "whereBody": "Le parc est un haut plateau de plateaux, de vallées et d’escarpements, joignable depuis Gondar via Debark. Les pages ci-dessous couvrent les villes d’accès, les camps, les points de vue et les approches du Ras Dashen décrits dans nos notes de destination.",
+    "how": "Comment utiliser ces pages",
+    "howBody": "Lisez un lieu, puis choisissez un voyage ou indiquez-nous votre temps. Les aperçus de la faune sont non garantis et la réussite du sommet n’est pas garantie.",
+    "plan": "Planifier un voyage dans le Simien",
+    "about": "À propos de {name}"
+  },
+  "trek": {
+    "overview": "Aperçu",
+    "highlights": "Points forts",
+    "itinerary": "Itinéraire",
+    "included": "Inclus",
+    "excluded": "Non inclus",
+    "inclusionsNote": "Les inclusions exactes d’une réservation sont confirmées dans le devis final.",
+    "allJourneys": "Tous les voyages",
+    "day": "Jour {n}",
+    "overnight": "Nuit",
+    "dayTrip": {
+      "name": "Excursion d’une journée dans les montagnes du Simien / Simien en une journée",
+      "duration": "1 jour",
+      "route": "Gondar → Debark → montagnes du Simien → Gondar",
+      "difficulty": "Facile à Modéré (marche ajustable)",
+      "heroTitle": "Simien en une journée",
+      "heroAccent": "depuis Gondar.",
+      "overview": [
+        "Une introduction d’une journée au parc national des montagnes du Simien depuis Gondar. Voyage vers le nord via Debark pour les formalités du parc, puis marches courtes en montagne, points de vue sur l’escarpement et temps dans un habitat connu des geladas. Conçu pour les voyageurs qui ont peu de temps et qui veulent tout de même quitter le véhicule et passer du temps sur les hauts plateaux."
+      ],
+      "highlights": [
+        "Un avant-goût d’une journée du Simien depuis Gondar",
+        "Points de vue sur l’escarpement (selon l’itinéraire ; Sankaber / escarpement ouest mentionnés)",
+        "Temps d’observation des geladas si un groupe est trouvé (non garantis)",
+        "Marches guidées courtes adaptées au groupe",
+        "Déjeuner en montagne"
+      ],
+      "segments": [
+        {
+          "label": "Matin",
+          "body": "Prise en charge à Gondar (exemple de la source : ~6:30 AM) ; briefing."
+        },
+        {
+          "label": "Gondar → Debark",
+          "body": "Route des hauts plateaux avec commentaires sur l’agriculture, les villages et la géographie."
+        },
+        {
+          "label": "Debark → parc",
+          "body": "Formalités du parc ; les escarpements s’ouvrent."
+        },
+        {
+          "label": "Gelada / marche",
+          "body": "Observer si un groupe est trouvé ; courte marche dans le Simien ; points de vue possibles autour de Sankaber et de l’escarpement ouest."
+        },
+        {
+          "label": "Déjeuner",
+          "body": "Avec une vue."
+        },
+        {
+          "label": "Après-midi",
+          "body": "Plus de temps pour la faune et le paysage si les conditions le permettent (geladas, Walia, oiseaux des hauts plateaux, lobélie géante — non garantis)."
+        },
+        {
+          "label": "Retour",
+          "body": "Via Debark jusqu’à Gondar dans la soirée."
+        }
+      ],
+      "included": [
+        "Transport privé de Gondar au Simien et retour ; prise en charge et dépose à l’hôtel à Gondar",
+        "Guide local professionnel anglophone ; chauffeur et carburant",
+        "Droit d’entrée au parc national du Simien / formalités du parc ; scout/ranger du parc requis",
+        "Déjeuner ; eau potable selon l’organisation de la journée ; thé/café lorsqu’ils sont inclus dans l’itinéraire",
+        "Marches guidées courtes selon le programme convenu ; interprétation de la faune et du paysage",
+        "Planification et coordination avant le voyage"
+      ],
+      "excluded": [
+        "Vols internationaux et intérieurs ; visa/eVisa ; assurance voyage",
+        "Équipement de trekking personnel ; encas et boissons personnels ; alcool ; pourboires ; achats personnels",
+        "Activités optionnelles ; tout service non listé de façon spécifique dans le devis"
+      ]
+    }
+  },
+  "meta": {
+    "home": {
+      "title": "Gondar Simien Tours | Votre porte d’entrée locale vers les montagnes du Simien",
+      "description": "Trekkings privés guidés localement dans les montagnes du Simien et voyages à Gondar, planifiés personnellement par Tesema ‘Tevan’ Mulualem et une équipe basée à Gondar.",
+      "ogTitle": "Votre porte d’entrée locale vers les montagnes du Simien"
+    },
+    "about": {
+      "title": "À propos | L’histoire de Tevan",
+      "description": "Rencontrez Tesema ‘Tevan’ Mulualem, le fondateur et guide basé à Gondar derrière Gondar Simien Tours. Savoir local, accompagnement personnel et préparation soignée."
+    },
+    "plan": {
+      "title": "Planifier votre voyage dans le Simien",
+      "description": "Indiquez à Tevan votre temps, votre aisance à la marche et vos intérêts pour recevoir un voyage à Gondar et dans le Simien planifié localement."
+    },
+    "treks": {
+      "title": "Voyages | Treks du Simien, expériences à Gondar et voyages de fête",
+      "description": "Vingt-huit formules de voyage — d’une journée dans le Simien et du trek classique jusqu’au Ras Dashen, aux expériences à Gondar et aux voyages de fête — chacune avec sa propre page."
+    },
+    "simien": {
+      "title": "Destinations des montagnes du Simien | Lieux, camps et points de vue",
+      "description": "Dix-huit destinations des montagnes du Simien — de Debark et Sankaber à Imet Gogo, Chenek, Ras Dashen et Adi Arkay — chacune avec sa propre page."
+    }
+  }
+}

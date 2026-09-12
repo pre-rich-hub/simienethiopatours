@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 
 export type ExperiencePhotoItem = {
@@ -11,7 +12,8 @@ export type ExperiencePhotoItem = {
   image: { src: string; alt: string; caption: string; position?: string };
 };
 
-export function ExperiencePhotoCards({ items, compact = false }: { items: readonly ExperiencePhotoItem[]; compact?: boolean }) {
+export async function ExperiencePhotoCards({ items, compact = false }: { items: readonly ExperiencePhotoItem[]; compact?: boolean }) {
+  const t = await getTranslations("cta");
   return <div className={`experience-photo-grid ${compact ? "experience-photo-grid--compact" : ""}`}>
     {items.map((item, index) => <article className="experience-photo-card" key={item.title}>
       <div className="experience-photo-card__image">
@@ -30,7 +32,7 @@ export function ExperiencePhotoCards({ items, compact = false }: { items: readon
         <p className="eyebrow eyebrow--copper">{item.tag || "Personally arranged"}</p>
         <h3>{item.title}</h3>
         <p>{item.body}</p>
-        {item.href && <Link href={item.href} className="text-link">{item.linkLabel || "Explore experience"}<ArrowUpRight /></Link>}
+        {item.href && <Link href={item.href} className="text-link">{item.linkLabel || t("exploreExperience")}<ArrowUpRight /></Link>}
       </div>
     </article>)}
   </div>;

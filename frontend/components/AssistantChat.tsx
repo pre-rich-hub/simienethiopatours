@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
+import { useTranslations } from "next-intl";
 import { ArrowUpRight, X } from "@/components/Icon";
 import { site } from "@/lib/site";
 
@@ -14,17 +15,28 @@ type ChatMessage = {
   text: string;
 };
 
-type SsePayload = { text?: unknown };
+type ErrorKind = "disabled" | "rateLimited" | "quota" | "stream" | "unavailable";
+type Availability = "ready" | "disabled" | "quota";
 
-// Shape of the non-streaming JSON fallback: { status, message, data: { text } }
+type SsePayload = {
+  text?: unknown;
+  handoff?: { type?: unknown };
+};
+
 type JsonPayload = { status?: unknown; message?: unknown; data?: { text?: unknown } };
+
+function classifyStatus(status: number): ErrorKind {
+  if (status === 503) return "disabled";
+  if (status === 429) return "rateLimited";
+  return "unavailable";
+}
 
 // Reads a POST /api/v1/assistant SSE stream: events are "event: meta|delta|done|error"
 // followed by a "data: {...}" line and a blank line separator.
 async function readSseStream(
   body: ReadableStream<Uint8Array>,
   onDelta: (text: string) => void,
-  onDone: () => void,
+  onDone: (handoff: "none" | "limit") => void,
   onError: () => void,
 ): Promise<void> {
   const reader = body.getReader();
@@ -48,7 +60,7 @@ async function readSseStream(
     if (event === "delta" && typeof payload.text === "string") {
       onDelta(payload.text);
     } else if (event === "done") {
-      onDone();
+      onDone(payload.handoff?.type === "limit" ? "limit" : "none");
     } else if (event === "error") {
       onError();
     }
@@ -67,10 +79,66 @@ async function readSseStream(
   if (buffer.trim()) handleBlock(buffer);
 }
 
+function ErrorLinks({
+  whatsapp,
+  email,
+}: {
+  whatsapp: string;
+  email: string;
+}) {
+  return (
+    <div className="assistant-chat__error-links">
+      <a href={site.whatsapp} target="_blank" rel="noreferrer">{whatsapp}</a>
+      <a href={`mailto:${site.email}`}>{email}</a>
+    </div>
+  );
+}
+
+const PLAN_HANDOFFS = [
+  { journey: "simien-classic", labelKey: "planChipDays3", messageKey: "planMessageDays3" },
+  { journey: "simien-essential", labelKey: "planChipDays4", messageKey: "planMessageDays4" },
+  { journey: "ras-dashen", labelKey: "planChipSummit", messageKey: "planMessageSummit" },
+  { journey: "custom", labelKey: "planChipCustom", messageKey: "planMessageCustom" },
+] as const;
+
+function PlanHandoffs({ onClose }: { onClose: () => void }) {
+  const t = useTranslations("chat");
+  const router = useRouter();
+  return (
+    <div className="assistant-chat__handoffs" role="group" aria-label={t("planHandoffs")}>
+      <p className="assistant-chat__handoffs-label">{t("planHandoffs")}</p>
+      <div className="assistant-chat__chips">
+        {PLAN_HANDOFFS.map((chip) => {
+          const message = t(chip.messageKey);
+          const href = { pathname: "/plan", query: { journey: chip.journey, message } } as const;
+          return (
+            <Link
+              key={chip.journey}
+              href={href}
+              className="assistant-chat__chip"
+              onClick={(event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+                event.preventDefault();
+                router.push(href);
+                onClose();
+              }}
+            >
+              {t(chip.labelKey)}
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function AssistantChat({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const t = useTranslations("chat");
+  const tCta = useTranslations("cta");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
+  const [availability, setAvailability] = useState<Availability>("ready");
 
   const sessionIdRef = useRef<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -79,11 +147,22 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
   const intentionalAbortRef = useRef<Set<AbortController>>(new Set());
   const inputRef = useRef<HTMLInputElement>(null);
   const threadRef = useRef<HTMLDivElement>(null);
+  const locked = streaming || availability !== "ready";
 
-  // Focus the input when the panel opens.
+  const errorText = (kind: ErrorKind) => {
+    if (kind === "disabled") return t("disabled");
+    if (kind === "rateLimited") return t("rateLimited");
+    if (kind === "quota") return t("quota");
+    if (kind === "stream") return t("streamError");
+    return t("unavailable");
+  };
+
+  // Desktop only: focusing on a phone opens the keyboard and covers the sheet.
   useEffect(() => {
-    if (open) inputRef.current?.focus();
-  }, [open]);
+    if (!open || availability !== "ready") return;
+    if (window.matchMedia("(max-width: 720px)").matches) return;
+    inputRef.current?.focus();
+  }, [open, availability]);
 
   // Abort the in-flight request, marking it intentional so its catch does not
   // surface an error. No-op when nothing is in flight.
@@ -106,7 +185,9 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
     if (thread) thread.scrollTop = thread.scrollHeight;
   }, [messages, streaming]);
 
-  const pushError = () => {
+  const pushError = (kind: ErrorKind) => {
+    if (kind === "disabled") setAvailability("disabled");
+    if (kind === "quota") setAvailability("quota");
     setMessages((prev) => {
       const next = prev.slice();
       const last = next[next.length - 1];
@@ -116,7 +197,7 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
       next.push({
         id: crypto.randomUUID(),
         role: "error",
-        text: "The assistant is temporarily unavailable. Reach us directly:",
+        text: errorText(kind),
       });
       return next;
     });
@@ -125,13 +206,13 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
   const handleSend = async (event: FormEvent) => {
     event.preventDefault();
     const text = input.trim();
-    if (!text || streaming) return;
+    if (!text || locked) return;
 
     await sendMessage(text);
   };
 
   const sendMessage = async (text: string) => {
-    if (!text || streaming) return;
+    if (!text || locked) return;
 
     if (!sessionIdRef.current) sessionIdRef.current = crypto.randomUUID();
     const controller = new AbortController();
@@ -154,8 +235,13 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
         signal: controller.signal,
       });
 
-      if (!response.ok || !response.body) {
-        pushError();
+      if (!response.ok) {
+        pushError(classifyStatus(response.status));
+        return;
+      }
+
+      if (!response.body) {
+        pushError("unavailable");
         return;
       }
 
@@ -169,7 +255,7 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
             prev.map((m) => (m.id === assistantId ? { ...m, text: reply } : m)),
           );
         } else {
-          pushError();
+          pushError("unavailable");
         }
         return;
       }
@@ -182,20 +268,22 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
               prev.map((m) => (m.id === assistantId ? { ...m, text: m.text + delta } : m)),
             );
           },
-          () => undefined,
-          () => pushError(),
+          (handoff) => {
+            if (handoff === "limit") pushError("quota");
+          },
+          () => pushError("stream"),
         );
         return;
       }
 
-      pushError();
+      pushError("unavailable");
     } catch {
       if (intentionalAbortRef.current.delete(controller)) {
         // Intentional abort (Start over, panel close, unmount): drop the
         // half-finished reply instead of showing an error.
         setMessages((prev) => prev.filter((m) => m.id !== assistantId));
       } else {
-        pushError();
+        pushError("unavailable");
       }
     } finally {
       setStreaming(false);
@@ -213,52 +301,55 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
     setMessages([]);
     setInput("");
     setStreaming(false);
+    setAvailability("ready");
   };
 
   return (
     <div
       className={`floating-contact__panel assistant-chat ${open ? "is-open" : ""}`}
       role="dialog"
-      aria-label="Ask about Gondar and Simien tours"
+      aria-modal="false"
+      aria-label={t("dialog")}
       aria-hidden={!open}
       inert={!open}
     >
       <header className="assistant-chat__header">
         <div>
-          <h2 className="assistant-chat__title">Ask about the tours</h2>
+          <h2 className="assistant-chat__title">{t("title")}</h2>
           <p className="assistant-chat__subtitle">
-            Instant answers from our catalog. A real person replies within a day for the rest.
+            {availability === "disabled" ? t("disabledSubtitle") : availability === "quota" ? t("quotaSubtitle") : t("subtitle")}
           </p>
         </div>
-        <button type="button" className="assistant-chat__close" onClick={onClose} aria-label="Close AI chat">
+        <button type="button" className="assistant-chat__close" onClick={onClose} aria-label={tCta("closeAiChat")}>
           <X size={16} />
         </button>
       </header>
 
-      <div className="assistant-chat__thread" ref={threadRef} role="log" aria-live="polite" aria-label="Chat messages">
+      <div className="assistant-chat__thread" ref={threadRef} role="log" aria-live="polite" aria-label={t("messages")}>
         {messages.length === 0 ? (
           <>
             <div className="assistant-chat__message assistant-chat__message--assistant">
-              Hello! I can answer questions about our treks, Simien Mountains destinations and travel planning. What would you like to know?
+              {t("greeting")}
             </div>
-            <div className="assistant-chat__chips" role="group" aria-label="Suggested questions">
+            <div className="assistant-chat__chips" role="group" aria-label={t("suggestions")}>
               {[
-                "Which trek is best for 3 or 4 days?",
-                "What wildlife can I see in the Simien Mountains?",
-                "Can I attempt the Ras Dashen summit?",
-                "What should I pack for a Simien trek?",
+                t("chipDays"),
+                t("chipWildlife"),
+                t("chipSummit"),
+                t("chipPack"),
               ].map((label) => (
                 <button
                   key={label}
                   type="button"
                   className="assistant-chat__chip"
                   onClick={() => handleChipClick(label)}
-                  disabled={streaming}
+                  disabled={locked}
                 >
                   {label}
                 </button>
               ))}
             </div>
+            <PlanHandoffs onClose={onClose} />
           </>
         ) : (
           messages.map((message, index) => {
@@ -266,33 +357,37 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
               return (
                 <div key={message.id} className="assistant-chat__message assistant-chat__message--error" role="alert">
                   <p>{message.text}</p>
-                  <div className="assistant-chat__error-links">
-                    <a href={site.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
-                    <a href={`mailto:${site.email}`}>Email</a>
-                  </div>
+                  <ErrorLinks whatsapp={tCta("whatsapp")} email={t("email")} />
                 </div>
               );
             }
+            const pending = message.role === "assistant" && message.text === "" && streaming && index === messages.length - 1;
             return (
               <div
                 key={message.id}
-                className={`assistant-chat__message assistant-chat__message--${message.role}`}
+                className={`assistant-chat__message assistant-chat__message--${message.role}${pending ? " assistant-chat__message--pending" : ""}`}
+                aria-busy={pending || undefined}
               >
-                {message.text ||
-                  (message.role === "assistant" &&
-                    streaming &&
-                    index === messages.length - 1
-                      ? "…"
-                      : "")}
+                {pending ? (
+                  <span className="assistant-chat__thinking">
+                    <span className="assistant-chat__dot" aria-hidden="true" />
+                    <span className="assistant-chat__dot" aria-hidden="true" />
+                    <span className="assistant-chat__dot" aria-hidden="true" />
+                    <span className="sr-only">{t("thinking")}</span>
+                  </span>
+                ) : (
+                  message.text
+                )}
               </div>
             );
           })
         )}
+        {messages.length > 0 ? <PlanHandoffs onClose={onClose} /> : null}
       </div>
 
       <div className="assistant-chat__toolbar">
         <button type="button" className="assistant-chat__reset" onClick={handleStartOver}>
-          Start over
+          {t("startOver")}
         </button>
       </div>
 
@@ -304,28 +399,31 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
           value={input}
           onChange={(event) => setInput(event.target.value)}
           maxLength={2000}
-          placeholder="Ask about our treks…"
-          disabled={streaming}
-          aria-label="Ask about the tours"
+          placeholder={availability === "ready" ? t("placeholder") : t("placeholderUnavailable")}
+          disabled={locked}
+          aria-label={t("inputAria")}
         />
-        <button type="submit" className="assistant-chat__send" disabled={streaming || !input.trim()}>
-          Send
+        <button type="submit" className="assistant-chat__send" disabled={locked || !input.trim()}>
+          {streaming ? t("sending") : t("send")}
         </button>
       </form>
 
       <footer className="assistant-chat__footer">
-        <span>Prefer a person?</span>
-        <a href={site.whatsapp} target="_blank" rel="noreferrer" onClick={onClose}>
-          <span>WhatsApp</span><ArrowUpRight size={12} />
-        </a>
-        <span aria-hidden="true">·</span>
-        <a href={`mailto:${site.email}`} onClick={onClose}>
-          <span>Email</span><ArrowUpRight size={12} />
-        </a>
-        <span aria-hidden="true">·</span>
-        <Link href="/plan" onClick={onClose}>
-          <span>Plan your journey</span><ArrowUpRight size={12} />
-        </Link>
+        <p className="assistant-chat__grounded">{t("groundedNote")}</p>
+        <div className="assistant-chat__footer-links">
+          <span>{t("preferPerson")}</span>
+          <a href={site.whatsapp} target="_blank" rel="noreferrer" onClick={onClose}>
+            <span>{tCta("whatsapp")}</span><ArrowUpRight size={12} />
+          </a>
+          <span aria-hidden="true">·</span>
+          <a href={`mailto:${site.email}`} onClick={onClose}>
+            <span>{t("email")}</span><ArrowUpRight size={12} />
+          </a>
+          <span aria-hidden="true">·</span>
+          <Link href="/plan" onClick={onClose}>
+            <span>{tCta("planYourJourney")}</span><ArrowUpRight size={12} />
+          </Link>
+        </div>
       </footer>
     </div>
   );

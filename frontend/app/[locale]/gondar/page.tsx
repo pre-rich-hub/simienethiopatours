@@ -1,17 +1,22 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { gondarPlacePath, gondarPlaceSummary, gondarPlaces } from "@/lib/gondar-destinations";
 import { site } from "@/lib/site";
-import { pageMetadata } from "@/lib/seo";
+import { localeFromParam, pageMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 
-export const metadata = pageMetadata({
-  title: "Gondar Destinations | Royal City, Heritage & Northern Extensions",
-  description: "Fifteen Gondar and northern-extension destinations — from Fasil Ghebbi and Kosoye to Lake Tana, Lalibela and Axum — each with its own page.",
-  path: "/gondar",
-});
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata({
+    locale: localeFromParam(locale),
+    title: "Gondar Destinations | Royal City, Heritage & Northern Extensions",
+    description: "Fifteen Gondar and northern-extension destinations — from Fasil Ghebbi and Kosoye to Lake Tana, Lalibela and Axum — each with its own page.",
+    path: "/gondar",
+  });
+}
 
 export default function GondarPage() {
   return (

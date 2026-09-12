@@ -45,8 +45,8 @@ export default function AdminLoginPage() {
 
   return (
     <div className="grid min-h-dvh place-items-center bg-paper p-6">
-      <form className="w-full max-w-[420px] border border-line bg-ivory px-10 py-[52px]" onSubmit={handleSubmit}>
-        <span className="mb-9 block text-center font-serif text-[32px] font-medium leading-[1.1] tracking-[-0.03em] text-highland">Simien Ethio Tours</span>
+      <form method="post" className="w-full max-w-[420px] border border-line bg-ivory px-10 py-[52px]" onSubmit={handleSubmit}>
+        <h1 className="mt-0 mb-9 text-center font-serif text-[32px] font-medium leading-[1.1] tracking-[-0.03em] text-highland">Simien Ethio Tours</h1>
         {expired && !error && (
           <AdminNotice variant="error" className="mb-5">Your session expired. Sign in again to continue.</AdminNotice>
         )}
@@ -54,6 +54,8 @@ export default function AdminLoginPage() {
         <AdminField label="Email" className="mb-4">
           <AdminInput
             type="email"
+            name="email"
+            autoComplete="username"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -63,6 +65,8 @@ export default function AdminLoginPage() {
         <AdminField label="Password" className="mb-7">
           <AdminInput
             type="password"
+            name="password"
+            autoComplete="current-password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}

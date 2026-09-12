@@ -1,38 +1,45 @@
+import type { ReactNode } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { simienPlacePath, simienPlaceSummary, simienPlaces } from "@/lib/simien-destinations";
 import { site } from "@/lib/site";
-import { pageMetadata } from "@/lib/seo";
+import { messagePageMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 
-export const metadata = pageMetadata({
-  title: "Simien Mountains Destinations | Places, Camps & Viewpoints",
-  description: "Eighteen Simien Mountains destinations — from Debark and Sankaber to Imet Gogo, Chenek, Ras Dashen and Adi Arkay — each with its own page.",
-  path: "/simien-mountains",
-});
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return messagePageMetadata(locale, "simien");
+}
 
-export default function SimienPage() {
+const em = { em: (chunks: ReactNode) => <em>{chunks}</em> };
+
+export default async function SimienPage() {
+  const t = await getTranslations("simien");
+  const tCommon = await getTranslations("common");
+
   return (
     <PageShell lightHeader={false}>
       <section className="page-hero--image simien-page-hero editorial-hero">
-        <Image src="/images/simien-panorama.jpg" alt="Wide panorama across the Simien Mountains" fill priority sizes="100vw" />
+        <Image src="/images/simien-panorama.jpg" alt={t("heroAlt")} fill priority sizes="100vw" />
         <div className="page-hero__content shell">
-          <div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Simien Mountains</span></div>
-          <p className="eyebrow">Simien destinations</p>
-          <h1 className="display">Eighteen places, <em>one highland.</em></h1>
-          <p className="lead">From the Debark gateway to Imet Gogo, Chenek, Ras Dashen and the quieter eastern transect. Choose a place to read more.</p>
+          <div className="breadcrumbs"><Link href="/">{tCommon("home")}</Link><span>/</span><span>{t("crumb")}</span></div>
+          <p className="eyebrow">{t("eyebrow")}</p>
+          <h1 className="display">{t.rich("title", em)}</h1>
+          <p className="lead">{t("lead")}</p>
         </div>
       </section>
 
       <section className="section section--paper" id="in-brief">
         <div className="shell">
-          <SectionIntro tag="In brief" title="The highland," accent="from Gondar." />
+          <SectionIntro tag={t("briefTag")} title={t("briefTitle")} accent={t("briefAccent")} />
           <FeatureGrid items={[
-            { title: "Who we are", body: `${site.name}, operated by ${site.legalOperator}, is a Gondar-based team that plans private journeys into Simien Mountains National Park.` },
-            { title: "Where this is", body: "The park is a highland of plateaus, valleys and escarpments, reached from Gondar via Debark. The pages below cover gateway towns, camps, viewpoints and Ras Dashen approaches described in our destination notes." },
-            { title: "How to use these pages", body: "Read a place, then choose a journey or tell us your time. Wildlife sightings and summit success are not guaranteed.", href: "/plan", linkLabel: "Plan a Simien journey" },
+            { title: t("who"), body: t("whoBody", { name: site.name, operator: site.legalOperator }) },
+            { title: t("where"), body: t("whereBody") },
+            { title: t("how"), body: t("howBody"), href: "/plan", linkLabel: t("plan") },
           ]} />
         </div>
       </section>
@@ -54,7 +61,7 @@ export default function SimienPage() {
                   <p>{simienPlaceSummary(place)}</p>
                   <div className="simien-photo-card__footer">
                     <span className="simien-photo-card__explore">
-                      About {place.name}
+                      {t("about", { name: place.name })}
                       <ArrowUpRight />
                     </span>
                   </div>

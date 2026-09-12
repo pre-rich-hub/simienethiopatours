@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Menu, X, ArrowUpRight } from "@/components/Icon";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { BrandMark } from "./BrandMark";
 import { NavMegaMenu } from "./NavMegaMenu";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -13,70 +13,78 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
 const links = [
-  { href: "/simien-mountains", label: "Simien" },
-  { href: "/treks", label: "Journeys" },
-  { href: "/gondar", label: "Gondar" },
-  { href: "/about", label: "Our story" },
-  { href: "/gallery", label: "Gallery" },
-];
-
-const megaMenus: Record<string, React.ComponentProps<typeof NavMegaMenu>> = {
-  "/simien-mountains": {
-    id: "simien-menu",
-    label: "Simien",
-    matchPath: "/simien-mountains",
-    eyebrow: "The Simien Mountains",
-    heading: <>Life above<br /><em>the clouds.</em></>,
-    description: "UNESCO-listed escarpments, geladas and Walia ibex — explore Ethiopia's wild highland frontier at your own pace.",
-    exploreHref: "/simien-mountains",
-    exploreLabel: "Explore the Simien Mountains",
-    extraLinks: [
-      { href: "/treks", label: "Choose a Simien trek" },
-      { href: "/plan", label: "Plan nights in Gondar & Simien" },
-      { href: "/gondar", label: "Gondar: the royal city" },
-    ],
-    cards: simienMenuCards,
-  },
-  "/treks": {
-    id: "journeys-menu",
-    label: "Journeys",
-    matchPath: "/treks",
-    eyebrow: "Signature journeys",
-    heading: <>Find your way<br /><em>into Simien.</em></>,
-    description: "From a first mountain trek to a summit journey, find a starting point for your time, curiosity and pace.",
-    exploreHref: "/treks",
-    exploreLabel: "Explore all journeys",
-    extraLinks: [
-      { href: "/gondar", label: "Gondar: festivals, food & local life" },
-      { href: "/treks/ras-dashen-challenge", label: "Ras Dashen: Ethiopia's highest mountain" },
-      { href: "/treks/10-day-simien-ras-dashen", label: "10-day Simien & Ras Dashen expedition" },
-      { href: "/treks/gondar-heritage-simien", label: "5-day Gondar, Heritage & Simien" },
-    ],
-    cards: journeyMenuCards,
-  },
-  "/gondar": {
-    id: "gondar-menu",
-    label: "Gondar",
-    matchPath: "/gondar",
-    eyebrow: "The royal city",
-    heading: <>History, food<br /><em>and everyday life.</em></>,
-    description: "Castles, coffee, markets and the people who call Gondar home — an introduction shaped around your interests.",
-    exploreHref: "/gondar",
-    exploreLabel: "Explore Gondar",
-    extraLinks: [
-      { href: "/gondar/gondar", label: "Gondar: the royal city" },
-      { href: "/treks/5-day-gondar-simien", label: "5-day Royal City & Mountain Adventure" },
-    ],
-    cards: gondarMenuCards,
-  },
-};
+  { href: "/simien-mountains", key: "simien" },
+  { href: "/treks", key: "journeys" },
+  { href: "/gondar", key: "gondar" },
+  { href: "/about", key: "ourStory" },
+  { href: "/gallery", key: "gallery" },
+] as const;
 
 export function Header({ light = false }: { light?: boolean }) {
+  const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
+  const tCta = useTranslations("cta");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const menuRef = useRef<HTMLDialogElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  const richHeading = {
+    br: () => <br />,
+    em: (chunks: ReactNode) => <em>{chunks}</em>,
+  };
+
+  const megaMenus: Record<string, ComponentProps<typeof NavMegaMenu>> = {
+    "/simien-mountains": {
+      id: "simien-menu",
+      label: t("simien"),
+      matchPath: "/simien-mountains",
+      eyebrow: t("simienMenu.eyebrow"),
+      heading: t.rich("simienMenu.heading", richHeading),
+      description: t("simienMenu.description"),
+      exploreHref: "/simien-mountains",
+      exploreLabel: t("simienMenu.explore"),
+      extraLinks: [
+        { href: "/treks", label: t("simienMenu.chooseTrek") },
+        { href: "/plan", label: t("simienMenu.planNights") },
+        { href: "/gondar", label: t("simienMenu.royalCity") },
+      ],
+      cards: simienMenuCards,
+    },
+    "/treks": {
+      id: "journeys-menu",
+      label: t("journeys"),
+      matchPath: "/treks",
+      eyebrow: t("journeysMenu.eyebrow"),
+      heading: t.rich("journeysMenu.heading", richHeading),
+      description: t("journeysMenu.description"),
+      exploreHref: "/treks",
+      exploreLabel: t("journeysMenu.explore"),
+      extraLinks: [
+        { href: "/gondar", label: t("journeysMenu.gondarLife") },
+        { href: "/treks/ras-dashen-challenge", label: t("journeysMenu.rasDashen") },
+        { href: "/treks/10-day-simien-ras-dashen", label: t("journeysMenu.expedition") },
+        { href: "/treks/gondar-heritage-simien", label: t("journeysMenu.heritage") },
+      ],
+      cards: journeyMenuCards,
+    },
+    "/gondar": {
+      id: "gondar-menu",
+      label: t("gondar"),
+      matchPath: "/gondar",
+      eyebrow: t("gondarMenu.eyebrow"),
+      heading: t.rich("gondarMenu.heading", richHeading),
+      description: t("gondarMenu.description"),
+      exploreHref: "/gondar",
+      exploreLabel: t("gondarMenu.explore"),
+      extraLinks: [
+        { href: "/gondar/gondar", label: t("gondarMenu.royalCity") },
+        { href: "/treks/5-day-gondar-simien", label: t("gondarMenu.royalAdventure") },
+      ],
+      cards: gondarMenuCards,
+    },
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -120,12 +128,12 @@ export function Header({ light = false }: { light?: boolean }) {
         )}
       >
         <div className="mx-auto flex h-full w-[min(1440px,calc(100vw-72px))] items-center justify-between max-[720px]:w-[calc(100vw-34px)]">
-          <BrandMark onDark={!light && !scrolled} />
-          <nav className="desktop-nav ml-auto mr-[clamp(30px,3vw,52px)] hidden h-full items-center gap-[clamp(18px,2vw,34px)] min-[1101px]:flex" aria-label="Primary navigation">
+          <BrandMark onDark={!light && !scrolled} label={tCommon("homeAria")} />
+          <nav className="desktop-nav ml-auto mr-[clamp(30px,3vw,52px)] hidden h-full items-center gap-[clamp(18px,2vw,34px)] min-[1101px]:flex" aria-label={tCommon("primaryNav")}>
             {links.map((link) => (
               megaMenus[link.href]
                 ? <NavMegaMenu key={link.href} {...megaMenus[link.href]} />
-                : <Link key={link.href} href={link.href} aria-current={pathname === link.href ? "page" : undefined}>{link.label}</Link>
+                : <Link key={link.href} href={link.href} aria-current={pathname === link.href ? "page" : undefined}>{t(link.key)}</Link>
             ))}
           </nav>
           <div className="flex items-center gap-[18px]">
@@ -133,14 +141,14 @@ export function Header({ light = false }: { light?: boolean }) {
               <LanguageSwitcher />
             </div>
             <Link className={cn(buttonVariants({ variant: "ctaCopper", size: "ctaSm" }), "max-[1100px]:hidden max-[720px]:w-auto")} href="/plan">
-              Plan with Tevan <ArrowUpRight size={15} />
+              {tCta("planWithTevan")} <ArrowUpRight size={15} />
             </Link>
           </div>
           <button
             ref={menuButtonRef}
             className="hidden size-11 border-0 bg-transparent p-2.5 text-inherit max-[1100px]:grid max-[1100px]:place-items-center"
             onClick={() => setOpen(true)}
-            aria-label="Open menu"
+            aria-label={tCommon("openMenu")}
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-haspopup="dialog"
@@ -153,25 +161,25 @@ export function Header({ light = false }: { light?: boolean }) {
         ref={menuRef}
         id="mobile-menu"
         className={cn("mobile-menu", open && "is-open")}
-        aria-label="Site navigation"
+        aria-label={tCommon("siteNav")}
         onCancel={(event) => { event.preventDefault(); setOpen(false); }}
       >
         <div className="mobile-menu__top">
-          <BrandMark />
-          <button className="grid size-11 place-items-center border-0 bg-transparent p-2.5 text-ink" onClick={() => setOpen(false)} aria-label="Close menu" autoFocus><X /></button>
+          <BrandMark label={tCommon("homeAria")} />
+          <button className="grid size-11 place-items-center border-0 bg-transparent p-2.5 text-ink" onClick={() => setOpen(false)} aria-label={tCommon("closeMenu")} autoFocus><X /></button>
         </div>
-        <nav aria-label="Mobile navigation">
+        <nav aria-label={tCommon("mobileNav")}>
           {links.map((link, index) => (
             <Link key={link.href} href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
-              <span>0{index + 1}</span>{link.label}<ArrowUpRight />
+              <span>0{index + 1}</span>{t(link.key)}<ArrowUpRight />
             </Link>
           ))}
         </nav>
         <div className="mobile-menu__contact">
           <LanguageSwitcher mobile />
-          <p>Start with a simple question. Tevan and the local team will help shape the rest.</p>
-          <Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan" onClick={() => setOpen(false)}>Plan your journey</Link>
-          <a className="text-link" href={site.whatsapp} target="_blank" rel="noreferrer">WhatsApp {site.phoneDisplay}<ArrowUpRight /></a>
+          <p>{t("mobileLead")}</p>
+          <Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan" onClick={() => setOpen(false)}>{tCta("planYourJourney")}</Link>
+          <a className="text-link" href={site.whatsapp} target="_blank" rel="noreferrer">{tCta("whatsappWithPhone", { phone: site.phoneDisplay })}<ArrowUpRight /></a>
         </div>
       </dialog>
     </>

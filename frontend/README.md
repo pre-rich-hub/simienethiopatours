@@ -66,6 +66,11 @@ frontend/
 │   └── …                   # reviews, gallery, experiences, nav, etc.
 ├── public/images/          # Static photography and assets
 ├── .env.example            # Env template
+├── docs/environments.md    # Local / staging / production env matrix
+├── docs/qa.md              # Launch QA checklist (home, trek, plan, locales, assistant, admin)
+├── docs/performance.md     # CWV-style budget, LCP targets, photo/font rules
+├── docs/cutover.md         # Hosting, DNS, post-deploy checks, rollback
+├── docs/monitoring.md      # Error logs, optional webhook, uptime probes
 ├── content-map.md          # Editorial mapping of client drafts
 └── research-notes.md       # Research and content integrity notes
 ```
@@ -96,11 +101,15 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Environment
 
+Full local / staging / production matrix: [`docs/environments.md`](docs/environments.md). Launch QA: [`docs/qa.md`](docs/qa.md). Performance budget: [`docs/performance.md`](docs/performance.md). Cutover (host, DNS, post-deploy, rollback): [`docs/cutover.md`](docs/cutover.md). Monitoring (logs + uptime): [`docs/monitoring.md`](docs/monitoring.md).
+
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical site URL (production SEO / absolute links) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin (local: `http://localhost:3000`; production: `https://gondarsimientours.com`) |
 | `NEXT_PUBLIC_API_URL` | Express backend origin (default `http://localhost:5000`) |
-| `CONTACT_WEBHOOK_URL` | Optional JSON webhook for silent inquiry delivery |
+| `API_URL` | Optional server-only SSR override for the API |
+| `CONTACT_WEBHOOK_URL` | Optional server-only JSON webhook if the contacts API is down |
+| `ERROR_WEBHOOK_URL` | Optional server-only JSON webhook for `logError` (see [`docs/monitoring.md`](docs/monitoring.md)) |
 
 ### Scripts
 
@@ -113,11 +122,17 @@ npm run lint    # TypeScript check (`tsc --noEmit`)
 
 For CMS, admin, and AI chat against live data, run the backend in [`../backend`](../backend) and point `NEXT_PUBLIC_API_URL` at it.
 
+### Deploy
+
+Host the **`frontend`** directory (Vercel or another Node 20+ host). Production canonical is `https://gondarsimientours.com`. Env, DNS, sitemap submit, admin + inquiry checks, and rollback: [`docs/cutover.md`](docs/cutover.md).
+
 ---
 
 ## Main routes
 
 ### Public
+
+Public pages are served under `/{locale}` (`en`, `es`, `de`, `fr`). `/` redirects to `/en`.
 
 | Route | Purpose |
 | --- | --- |
@@ -154,10 +169,8 @@ For CMS, admin, and AI chat against live data, run the backend in [`../backend`]
 These are in project scope but not fully implemented in this app yet:
 
 - **Tailwind CSS** and **shadcn/ui** — admin + shared chrome migrated; remaining marketing section CSS is still in `globals.css`
-- **Multi-language** — English, Spanish, German, French (a language switcher shell exists; full localization is not wired)
 - **GEO** — structured / AI-search-oriented content and markup for generative engines
-- **Video** — promotional video placement and playback UX
-- **Brand / logo** — guidelines and scalable vector assets beyond the current mark
+- **Video** — promotional video placement and playback UX (deferred until assets are supplied)
 - **AI assistant** — chat UI is present; full 24/7 conversion behavior depends on backend config (`ASSISTANT_ENABLED` and provider keys)
 
 SEO foundations already in place include App Router metadata patterns, `sitemap.ts`, `robots.ts`, and careful content sourcing. Deeper keyword / local SEO work continues as content evolves.
@@ -167,6 +180,7 @@ SEO foundations already in place include App Router metadata patterns, `sitemap.
 ## Content integrity
 
 - Brand, operator, founder, and contact facts live in [`lib/site.ts`](lib/site.ts).
+- Logo lockups and light/dark usage: [`docs/brand.md`](docs/brand.md).
 - Do not invent prices, review counts, wildlife guarantees, or unverified trail metrics.
 - Travel facts should link to UNESCO, official tourism sources, or the operator.
 - Photo authors, licenses, and files are listed in [`research-notes.md`](research-notes.md).

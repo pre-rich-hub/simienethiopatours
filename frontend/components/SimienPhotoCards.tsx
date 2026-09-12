@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import type { Feature } from "@/components/Editorial";
 
@@ -37,7 +38,8 @@ const photography: Record<PhotoSet, readonly Photo[]> = {
   ],
 };
 
-export function SimienPhotoCards({ items, photoSet, columns = 3 }: { items: readonly Feature[]; photoSet: PhotoSet; columns?: 2 | 3 }) {
+export async function SimienPhotoCards({ items, photoSet, columns = 3 }: { items: readonly Feature[]; photoSet: PhotoSet; columns?: 2 | 3 }) {
+  const t = await getTranslations("cta");
   const photos = photography[photoSet];
   return <div className={`simien-photo-grid simien-photo-grid--${columns}`}>
     {items.map((item, index) => {
@@ -55,7 +57,7 @@ export function SimienPhotoCards({ items, photoSet, columns = 3 }: { items: read
         <div className="simien-photo-card__body">
           <p>{item.body}</p>
           {item.href && <div className="simien-photo-card__footer">
-            <Link className="simien-photo-card__explore" href={item.href}>{item.linkLabel || "Explore experience"}<ArrowUpRight /></Link>
+            <Link className="simien-photo-card__explore" href={item.href}>{item.linkLabel || t("exploreExperience")}<ArrowUpRight /></Link>
           </div>}
         </div>
       </article>;

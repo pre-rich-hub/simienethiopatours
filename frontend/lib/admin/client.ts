@@ -17,7 +17,9 @@ function redirectToLogin(expired: boolean) {
 
 /**
  * Authenticated read wrapper for the admin API.
- * Sends credentials (cookies) with every request.
+ * Sends credentials so the httpOnly admin_session cookie is included.
+ * That cookie is SameSite=Lax: it is sent when the API is same-site
+ * (localhost ports, or a subdomain of the public host). See docs/environments.md.
  * On 401: redirects to login (session expired) unless redirectOn401 is false.
  * On non-ok: parses { message } and throws.
  * On ok: parses body.data and returns it.

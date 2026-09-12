@@ -1,4 +1,5 @@
 export type HomeHorizonCard = {
+  id: string;
   title: string;
   tag: string;
   short: string;
@@ -10,6 +11,7 @@ export type HomeHorizonCard = {
 };
 
 export type HomeClarityCard = {
+  id: string;
   title: string;
   summary: string;
   href: string;
@@ -34,6 +36,7 @@ export type HomeSignatureJourney = {
 };
 
 export type HomeBeyondCard = {
+  id: string;
   title: string;
   tag: string;
   body: string;
@@ -43,6 +46,7 @@ export type HomeBeyondCard = {
 
 export const homeHorizons: readonly HomeHorizonCard[] = [
   {
+    id: "imet-gogo",
     title: "Imet Gogo",
     tag: "Simien icon",
     short: "Signature Simien viewpoint at approximately 3,926 m — deep gorges, ridges and sheer cliffs.",
@@ -53,6 +57,7 @@ export const homeHorizons: readonly HomeHorizonCard[] = [
     tall: true,
   },
   {
+    id: "gelada",
     title: "Gelada country",
     tag: "Wildlife",
     short: "Known habitat for Gelada, with Walia ibex and (uncommonly) Ethiopian wolf also present in the park.",
@@ -62,6 +67,7 @@ export const homeHorizons: readonly HomeHorizonCard[] = [
     imageAlt: "A wild troop of geladas grazing in the Simien Mountains",
   },
   {
+    id: "ras-dashen",
     title: "Ras Dashen",
     tag: "High country",
     short: "Ethiopia’s highest summit (also Ras Dejen; approximately 4,500+ m / ~4,543–4,550 m in source wording).",
@@ -78,6 +84,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
     label: "By time",
     cards: [
       {
+        id: "day",
         title: "One day in Simien",
         summary: "Gondar–Debark–park day trip with short walks and escarpment viewpoints (Easy to Moderate).",
         href: "/treks/simien-day-trip",
@@ -85,6 +92,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
         imageAlt: "Highland landscape typical of a Simien day trip from Gondar",
       },
       {
+        id: "classic",
         title: "3–4 day classic corridor",
         summary: "Sankaber–Geech–Imet Gogo (3 days) or continue to Chenek on the 4-Day Classic.",
         href: "/treks/4-day-simien-classic",
@@ -92,6 +100,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
         imageAlt: "Imet Gogo viewpoint on the classic Simien corridor",
       },
       {
+        id: "long",
         title: "5–10 day mountain journeys",
         summary: "Gondar + Simien combinations, Ras Dashen Challenge, or the 10-day full transect.",
         href: "/treks",
@@ -105,6 +114,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
     label: "By interest",
     cards: [
       {
+        id: "trekking",
         title: "Trekking",
         summary: "Multi-day highland routes from Sankaber through Geech toward Chenek and beyond.",
         href: "/treks",
@@ -112,6 +122,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
         imageAlt: "Tents at Geech camp on a multi-day Simien trek",
       },
       {
+        id: "wildlife",
         title: "Wildlife",
         summary: "Flexible 2–4 day wildlife-focused journeys and Gelada-country day programmes (sightings not guaranteed).",
         href: "/simien-mountains",
@@ -119,6 +130,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
         imageAlt: "Geladas in highland grassland in Simien Mountains National Park",
       },
       {
+        id: "culture",
         title: "Culture & heritage",
         summary: "Royal Gondar sites, living-city experiences, Kosoye highlands and festival-linked journeys.",
         href: "/gondar",
@@ -132,6 +144,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
     label: "By effort",
     cards: [
       {
+        id: "gentle",
         title: "Gentler day / introduction",
         summary: "Simien in a Day or 2-day Simien Introduction with overnight camp near Sankaber.",
         href: "/treks/simien-day-trip",
@@ -139,6 +152,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
         imageAlt: "The highland road used on gentler Simien introductions from Gondar",
       },
       {
+        id: "classic-trek",
         title: "Classic trek",
         summary: "Moderate to Challenging 3- or 4-day corridor to Imet Gogo and Chenek.",
         href: "/treks/4-day-simien-classic",
@@ -146,6 +160,7 @@ export const homeClarityCollections: readonly HomeClarityCollection[] = [
         imageAlt: "Classic Simien corridor views toward Imet Gogo and Chenek",
       },
       {
+        id: "summit",
         title: "Summit expedition",
         summary: "Ras Dashen Challenge and longer expedition routes via Bwahit Pass and Ambiko.",
         href: "/treks/ras-dashen-challenge",
@@ -191,6 +206,7 @@ export const homeSignatureJourneys: readonly HomeSignatureJourney[] = [
 
 export const homeBeyondTheTrail: readonly HomeBeyondCard[] = [
   {
+    id: "local-eyes",
     title: "Gondar Through Local Eyes",
     tag: "Living city",
     body: "Neighbourhoods, coffee, food and daily life beyond the monument circuit.",
@@ -202,6 +218,7 @@ export const homeBeyondTheTrail: readonly HomeBeyondCard[] = [
     },
   },
   {
+    id: "running",
     title: "Gondar Hidden Running Experience",
     tag: "Countryside",
     body: "Guided countryside and dirt-track runs from the city edge, adapted to Easy / Moderate / Challenging.",
@@ -213,6 +230,7 @@ export const homeBeyondTheTrail: readonly HomeBeyondCard[] = [
     },
   },
   {
+    id: "timkat",
     title: "Timkat & Simien Mountains",
     tag: "Festival journey",
     body: "Suggested 6 days — Timkat in Gondar, then Simien escarpments and wildlife (festival dates confirmed closer to departure).",

@@ -1,15 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight } from "@/components/Icon";
 import { homeClarityCollections } from "@/lib/home-cards";
 import { buttonVariants } from "@/components/ui/button";
 
+type ClarityCopy = Record<string, { label: string } & Record<string, { title?: string; summary?: string }>>;
+
 export function DurationSelector() {
+  const t = useTranslations("cta");
+  const tNav = useTranslations("nav");
+  const tHome = useTranslations("home");
+  const clarity = tHome.raw("clarity" as never) as ClarityCopy;
   const [active, setActive] = useState(0);
   const collection = homeClarityCollections[active];
+  const collectionCopy = clarity[collection.id];
   const tabsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,7 +47,7 @@ export function DurationSelector() {
 
   return (
     <div className="journey-discovery">
-      <div ref={tabsRef} className="journey-discovery__tabs" role="tablist" aria-label="Choose a journey by time, interest or effort">
+      <div ref={tabsRef} className="journey-discovery__tabs" role="tablist" aria-label={tHome("clarityAria")}>
         {homeClarityCollections.map((item, index) => (
           <button
             type="button"
@@ -53,7 +61,7 @@ export function DurationSelector() {
             aria-controls="journey-collection-panel"
             tabIndex={index === active ? 0 : -1}
           >
-            {item.label}
+            {clarity[item.id]?.label ?? item.label}
           </button>
         ))}
       </div>
@@ -69,23 +77,23 @@ export function DurationSelector() {
         <div className="journey-discovery__grid">
           {collection.cards.map((card, cardIndex) => (
             <article className="journey-choice-card" key={card.title}>
-              <Link className="journey-choice-card__image" href={card.href} aria-label={`Explore ${card.title}`}>
+              <Link className="journey-choice-card__image" href={card.href} aria-label={tNav("exploreNamed", { name: collectionCopy?.[card.id]?.title ?? card.title })}>
                 <Image
                   src={card.image}
                   alt={card.imageAlt}
                   fill
                   sizes="(max-width: 720px) 82vw, (max-width: 1000px) 340px, 31vw"
                 />
-                <span className="journey-choice-card__duration">{collection.label}</span>
+                <span className="journey-choice-card__duration">{collectionCopy?.label ?? collection.label}</span>
                 <span className="journey-choice-card__number">0{cardIndex + 1}</span>
                 <div className="journey-choice-card__title">
-                  <h3>{card.title}</h3>
+                  <h3>{collectionCopy?.[card.id]?.title ?? card.title}</h3>
                 </div>
               </Link>
               <div className="journey-choice-card__body">
-                <p>{card.summary}</p>
+                <p>{collectionCopy?.[card.id]?.summary ?? card.summary}</p>
                 <Link className="journey-choice-card__link" href={card.href}>
-                  Explore journey <ArrowRight />
+                  {t("exploreJourney")} <ArrowRight />
                 </Link>
               </div>
             </article>
@@ -94,7 +102,7 @@ export function DurationSelector() {
       </div>
 
       <div className="journey-discovery__action">
-        <Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/treks">View all journeys <ArrowUpRight /></Link>
+        <Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/treks">{t("viewAllJourneys")} <ArrowUpRight /></Link>
       </div>
     </div>
   );

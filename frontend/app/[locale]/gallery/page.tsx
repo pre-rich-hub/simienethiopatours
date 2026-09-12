@@ -1,21 +1,26 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { Gallery } from "@/components/Gallery";
 import { buttonVariants } from "@/components/ui/button";
 import { cms } from "@/lib/cms";
-import { pageMetadata } from "@/lib/seo";
+import { localeFromParam, pageMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 
-export const metadata = pageMetadata({
-  title: "Gallery | Gondar & the Simien Mountains",
-  description: "A visual journey through the Simien Mountains and Gondar. Explore highland landscapes, wild geladas, royal architecture and life along the trail.",
-  path: "/gallery",
-  ogTitle: "A little closer to extraordinary | Gondar Simien Gallery",
-  image: {
-    url: "/images/simien-panorama.jpg",
-    alt: "The layered landscape of the Simien Mountains",
-  },
-});
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata({
+    locale: localeFromParam(locale),
+    title: "Gallery | Gondar & the Simien Mountains",
+    description: "A visual journey through the Simien Mountains and Gondar. Explore highland landscapes, wild geladas, royal architecture and life along the trail.",
+    path: "/gallery",
+    ogTitle: "A little closer to extraordinary | Gondar Simien Gallery",
+    image: {
+      url: "/images/simien-panorama.jpg",
+      alt: "The layered landscape of the Simien Mountains",
+    },
+  });
+}
 
 export default async function GalleryPage() {
   const photographs = await cms.getGallery();

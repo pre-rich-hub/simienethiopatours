@@ -36,7 +36,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   }, [isLogin, pathname]);
 
   if (isLogin) {
-    return <Toaster>{children}</Toaster>;
+    return (
+      <Toaster>
+        <a className="skip-link" href="#admin-main">Skip to content</a>
+        <main id="admin-main" tabIndex={-1}>{children}</main>
+      </Toaster>
+    );
   }
 
   if (loading) {
@@ -45,11 +50,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <Toaster>
+      <a className="skip-link" href="#admin-main">Skip to content</a>
       <div className="grid min-h-dvh md:grid-cols-[256px_1fr]">
         <AdminSidebar currentPath={pathname} />
         <div className="min-h-dvh bg-paper md:col-start-2">
           <AdminTopbar userName={admin?.name || admin?.email} />
-          <div className="p-5 md:p-8">{children}</div>
+          <main id="admin-main" className="p-5 md:p-8" tabIndex={-1}>{children}</main>
         </div>
       </div>
     </Toaster>
