@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { helmet } from "helmet";
+import helmet from "helmet";
 import path from "node:path";
 
 import { env } from "./config/env.js";
