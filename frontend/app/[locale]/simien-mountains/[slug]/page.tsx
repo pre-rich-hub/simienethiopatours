@@ -3,40 +3,45 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
+import { DestinationRoutes } from "@/components/JourneyPhotoCards";
 import { EditorialHero, SectionIntro, StorySection } from "@/components/Editorial";
-import { getGondarPlace, gondarPlacePath, gondarPlaces } from "@/lib/gondar-destinations";
+import { journeysThroughPlace } from "@/lib/destination-routes";
+import { getSimienPlace, simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return gondarPlaces.map(({ slug }) => ({ slug }));
+  return simienPlaces.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const place = getGondarPlace(slug);
+  const place = getSimienPlace(slug);
   if (!place) return {};
-  return {
-    title: `${place.name} | Gondar`,
-    description: place.about[0],
-    alternates: { canonical: gondarPlacePath(place.slug) },
-  };
+  return pageMetadata({
+    title: `${place.name} | Simien Mountains`,
+    description: place.about[0] ?? "",
+    path: simienPlacePath(place.slug),
+    image: { url: place.image, alt: place.imageAlt },
+  });
 }
 
-export default async function GondarPlacePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function SimienPlacePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const place = getGondarPlace(slug);
+  const place = getSimienPlace(slug);
   if (!place) notFound();
+  const routes = journeysThroughPlace("simien", place.slug);
 
   return (
     <PageShell lightHeader={false}>
       <EditorialHero
-        eyebrow="Gondar"
+        eyebrow="Simien Mountains"
         title={place.heroTitle}
         accent={place.heroAccent}
         lead={place.location}
         image={{ src: place.image, alt: place.imageAlt }}
-        parent={{ label: "Gondar", href: "/gondar" }}
+        parent={{ label: "Simien Mountains", href: "/simien-mountains" }}
       />
 
       <StorySection id="about" tag="About" title={place.name} paragraphs={place.about} />
@@ -68,9 +73,11 @@ export default async function GondarPlacePage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
+      <DestinationRoutes journeys={routes} paper={place.highlights.length > 0} />
+
       <p className="shell dest-back">
-        <Link className="text-link" href="/gondar">
-          All Gondar destinations <ArrowUpRight />
+        <Link className="text-link" href="/simien-mountains">
+          All Simien destinations <ArrowUpRight />
         </Link>
       </p>
     </PageShell>

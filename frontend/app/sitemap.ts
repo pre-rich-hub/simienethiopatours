@@ -2,33 +2,36 @@ import type { MetadataRoute } from "next";
 import { gondarPlacePath, gondarPlaces } from "@/lib/gondar-destinations";
 import { journeyPackagePath, journeyPackages } from "@/lib/journey-packages";
 import { simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
+import { absoluteUrl } from "@/lib/seo";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://gondarsimientours.com";
+/** Indexable public routes only. Privacy/terms are noindex; admin is omitted. */
+const INDEX_PATHS = [
+  "/",
+  "/simien-mountains",
+  "/treks",
+  "/gondar",
+  "/about",
+  "/gallery",
+  "/plan",
+] as const;
 
-  const journeyPaths = journeyPackages.map((journey) => journeyPackagePath(journey.slug));
-  const simienPlacePaths = simienPlaces.map((place) => simienPlacePath(place.slug));
-  const gondarPlacePaths = gondarPlaces.map((place) => gondarPlacePath(place.slug));
+function sitemapEntry(path: string): MetadataRoute.Sitemap[number] {
+  const isHome = path === "/";
+  const isHub = INDEX_PATHS.includes(path as (typeof INDEX_PATHS)[number]);
+  return {
+    url: absoluteUrl(path),
+    lastModified: new Date(),
+    changeFrequency: isHome ? "weekly" : "monthly",
+    priority: isHome ? 1 : path === "/plan" ? 0.9 : isHub ? 0.8 : 0.7,
+  };
+}
 
-  const staticPaths = [
-    "",
-    "/simien-mountains",
-    "/treks",
-    "/gondar",
-    "/about",
-    "/gallery",
-    "/plan",
-    "/privacy",
-    "/terms",
-    ...simienPlacePaths,
-    ...gondarPlacePaths,
-    ...journeyPaths,
+export default function sitemap(): MetadataRoute.Sitemap {
+  const placeAndJourneyPaths = [
+    ...simienPlaces.map((place) => simienPlacePath(place.slug)),
+    ...gondarPlaces.map((place) => gondarPlacePath(place.slug)),
+    ...journeyPackages.map((journey) => journeyPackagePath(journey.slug)),
   ];
 
-  return staticPaths.map((path, index) => ({
-    url: `${base}${path}`,
-    lastModified: new Date(),
-    changeFrequency: index === 0 ? "weekly" : "monthly",
-    priority: index === 0 ? 1 : path === "/plan" ? 0.9 : 0.8,
-  }));
+  return [...INDEX_PATHS, ...placeAndJourneyPaths].map(sitemapEntry);
 }

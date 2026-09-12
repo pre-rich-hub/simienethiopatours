@@ -1,9 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { MessageCircle, X } from "@/components/Icon";
 import { site } from "@/lib/site";
-import { AssistantChat } from "@/components/AssistantChat";
+
+const AssistantChat = dynamic(
+  () => import("@/components/AssistantChat").then((mod) => mod.AssistantChat),
+  { ssr: false },
+);
 
 function WhatsappIcon() {
   return <svg viewBox="0 0 32 32" aria-hidden="true" className="size-7 max-[720px]:size-[25px]">
@@ -33,7 +38,7 @@ export function FloatingContact() {
 
   return (
     <div ref={rootRef} className="fixed right-[22px] bottom-[22px] z-[70] flex flex-col items-end gap-3.5 max-[720px]:right-4 max-[720px]:bottom-4 max-[720px]:gap-3">
-      <AssistantChat open={open} onClose={() => setOpen(false)} />
+      {open ? <AssistantChat open onClose={() => setOpen(false)} /> : null}
 
       <a
         className={`${fabClass} bg-[#25d366]`}

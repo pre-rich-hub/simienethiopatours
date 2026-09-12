@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
+import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { gondarPlacePath, gondarPlaceSummary, gondarPlaces } from "@/lib/gondar-destinations";
+import { site } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Gondar Destinations | Royal City, Heritage & Northern Extensions",
   description: "Fifteen Gondar and northern-extension destinations — from Fasil Ghebbi and Kosoye to Lake Tana, Lalibela and Axum — each with its own page.",
-  alternates: { canonical: "/gondar" },
-};
+  path: "/gondar",
+});
 
 export default function GondarPage() {
   return (
@@ -21,6 +23,17 @@ export default function GondarPage() {
           <p className="eyebrow">Gondar destinations</p>
           <h1 className="display">Fifteen places, <em>one royal city.</em></h1>
           <p className="lead">From Fasil Ghebbi and Kosoye to Debark, Lake Tana, Lalibela and Axum. Choose a place to read more.</p>
+        </div>
+      </section>
+
+      <section className="section section--paper" id="in-brief">
+        <div className="shell">
+          <SectionIntro tag="In brief" title="The royal city," accent="and the way north." />
+          <FeatureGrid items={[
+            { title: "Who we are", body: `${site.name} is based in Gondar. Tesema “Tevan” Mulualem and the ${site.legalOperator} team plan city days and onward travel into the Simien Mountains.` },
+            { title: "Where this is", body: "Gondar is the historic royal city of northern Ethiopia and the usual starting point for Simien journeys. These pages cover the city, nearby highland viewpoints such as Kosoye, and northern extensions some travelers combine with Gondar." },
+            { title: "How to use these pages", body: "Read a destination, then plan a city day, a Simien trek, or a combined journey with the local team.", href: "/plan", linkLabel: "Plan from Gondar" },
+          ]} />
         </div>
       </section>
 

@@ -1,17 +1,26 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, PageLinks, PlanningCall, SectionIntro, StorySection } from "@/components/Editorial";
-import { sourceLinks } from "@/lib/site";
+import { site, sourceLinks } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "About Us | Tevan’s Story", description: "Meet Tesema ‘Tevan’ Mulualem, the Gondar-based founder and guide behind Gondar Simien Tours. Local knowledge, personal guiding and careful preparation.", alternates: { canonical: "/about" } };
+export const metadata = pageMetadata({
+  title: "About Us | Tevan’s Story",
+  description: "Meet Tesema ‘Tevan’ Mulualem, the Gondar-based founder and guide behind Gondar Simien Tours. Local knowledge, personal guiding and careful preparation.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return <PageShell>
     <section className="about-hero page-hero"><div className="shell about-hero__grid"><div><div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Our story</span></div><p className="eyebrow eyebrow--copper">Tesema “Tevan” Mulualem · Founder & local guide</p><h1 className="display">The story <em>starts here.</em></h1><p className="lead">“I want people to experience the place I know—not just visit it.”</p></div><div className="about-hero__portrait image-frame"><Image src="/images/tevan-portrait.jpg" alt="Tesema ‘Tevan’ Mulualem standing in the Simien Mountains" fill priority sizes="(max-width: 720px) 100vw, 45vw" /></div></div></section>
-    <PageLinks items={[{ label: "Tevan’s story", href: "#story" }, { label: "Our approach", href: "#approach" }, { label: "Tevan Local", href: "#local" }, { label: "Equipment & preparation", href: "#equipment" }]} />
+    <PageLinks items={[{ label: "In brief", href: "#in-brief" }, { label: "Tevan’s story", href: "#story" }, { label: "Our approach", href: "#approach" }, { label: "Tevan Local", href: "#local" }, { label: "Equipment & preparation", href: "#equipment" }]} />
+    <section className="section section--paper" id="in-brief"><div className="shell"><SectionIntro tag="In brief" title="Who, where" accent="and how we plan." /><FeatureGrid items={[
+      { title: "Who we are", body: `Tesema “Tevan” Mulualem is the founder and lead guide of ${site.name}. The operating company is ${site.legalOperator}.` },
+      { title: "Where we operate", body: `The office is on ${site.address}. We work in Gondar and Simien Mountains National Park, and we can discuss northern extensions when they fit your time.` },
+      { title: "How planning works", body: "Planning starts with a conversation—not a fixed package. Share your time and questions; a written proposal confirms the journey.", href: "/plan", linkLabel: "Plan with Tevan" },
+    ]} /></div></section>
     <StorySection id="story" tag="The road out of Gondar" title="Before the mountains" accent="became a tour." paragraphs={[
       "There is a road out of Gondar that I never get tired of taking. The city slowly disappears behind you. Houses become fewer, the landscape opens, the air changes and the road climbs. Then the Simien Mountains begin to appear. Every time I see them, I remember why I chose this work.",
       "My name is Tesema ‘Tevan’ Mulualem. I am a local guide from Gondar, Ethiopia, and I created Gondar Simien Tours around the place I know as home.",
