@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
@@ -7,7 +7,7 @@ import { DestinationRoutes } from "@/components/JourneyPhotoCards";
 import { EditorialHero, SectionIntro, StorySection } from "@/components/Editorial";
 import { journeysThroughPlace } from "@/lib/destination-routes";
 import { getSimienPlace, simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
-import { pageMetadata } from "@/lib/seo";
+import { localeFromParam, pageMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -15,11 +15,12 @@ export function generateStaticParams() {
   return simienPlaces.map(({ slug }) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params;
   const place = getSimienPlace(slug);
   if (!place) return {};
   return pageMetadata({
+    locale: localeFromParam(locale),
     title: `${place.name} | Simien Mountains`,
     description: place.about[0] ?? "",
     path: simienPlacePath(place.slug),

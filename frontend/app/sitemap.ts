@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { gondarPlacePath, gondarPlaces } from "@/lib/gondar-destinations";
 import { journeyPackagePath, journeyPackages } from "@/lib/journey-packages";
 import { simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
-import { absoluteUrl } from "@/lib/seo";
+import { routing } from "@/i18n/routing";
+import { absoluteLanguageAlternates, absoluteUrl, localePath } from "@/lib/seo";
 
 /** Indexable public routes only. Privacy/terms are noindex; admin is omitted. */
 const INDEX_PATHS = [
@@ -15,15 +16,18 @@ const INDEX_PATHS = [
   "/plan",
 ] as const;
 
-function sitemapEntry(path: string): MetadataRoute.Sitemap[number] {
+function sitemapEntries(path: string): MetadataRoute.Sitemap {
   const isHome = path === "/";
   const isHub = INDEX_PATHS.includes(path as (typeof INDEX_PATHS)[number]);
-  return {
-    url: absoluteUrl(path),
+  const languages = absoluteLanguageAlternates(path);
+
+  return routing.locales.map((locale) => ({
+    url: absoluteUrl(localePath(path, locale)),
     lastModified: new Date(),
     changeFrequency: isHome ? "weekly" : "monthly",
     priority: isHome ? 1 : path === "/plan" ? 0.9 : isHub ? 0.8 : 0.7,
-  };
+    alternates: { languages },
+  }));
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -33,5 +37,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...journeyPackages.map((journey) => journeyPackagePath(journey.slug)),
   ];
 
-  return [...INDEX_PATHS, ...placeAndJourneyPaths].map(sitemapEntry);
+  return [...INDEX_PATHS, ...placeAndJourneyPaths].flatMap(sitemapEntries);
 }

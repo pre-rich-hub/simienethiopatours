@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 import { MessageCircle, X } from "@/components/Icon";
 import { site } from "@/lib/site";
 
@@ -19,15 +20,22 @@ function WhatsappIcon() {
 const fabClass = "grid size-[58px] place-items-center rounded-full border-0 text-white shadow-[0_4px_12px_rgba(23,25,22,.08),0_18px_40px_rgba(23,25,22,.16)] transition-transform hover:-translate-y-[3px] hover:scale-[1.045] hover:shadow-[0_6px_16px_rgba(23,25,22,.1),0_26px_52px_rgba(23,25,22,.2)] max-[720px]:size-[52px]";
 
 export function FloatingContact() {
+  const t = useTranslations("cta");
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const dismissOutside = (event: PointerEvent) => {
       if (event.target instanceof Node && !rootRef.current?.contains(event.target)) setOpen(false);
     };
-    const dismissOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    const dismissOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setOpen(false);
+      toggleRef.current?.focus({ preventScroll: true });
+    };
     document.addEventListener("pointerdown", dismissOutside);
     document.addEventListener("keydown", dismissOnEscape);
     return () => {
@@ -36,8 +44,32 @@ export function FloatingContact() {
     };
   }, [open]);
 
+  // Lift and shrink the mobile sheet when the software keyboard covers the visual viewport.
+  useEffect(() => {
+    if (!open) return;
+    const root = rootRef.current;
+    const viewport = window.visualViewport;
+    if (!root || !viewport) return;
+
+    const syncViewport = () => {
+      const keyboardInset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+      root.style.setProperty("--keyboard-inset", `${Math.round(keyboardInset)}px`);
+      root.style.setProperty("--floating-vvh", `${Math.round(viewport.height)}px`);
+    };
+
+    syncViewport();
+    viewport.addEventListener("resize", syncViewport);
+    viewport.addEventListener("scroll", syncViewport);
+    return () => {
+      viewport.removeEventListener("resize", syncViewport);
+      viewport.removeEventListener("scroll", syncViewport);
+      root.style.removeProperty("--keyboard-inset");
+      root.style.removeProperty("--floating-vvh");
+    };
+  }, [open]);
+
   return (
-    <div ref={rootRef} className="fixed right-[22px] bottom-[22px] z-[70] flex flex-col items-end gap-3.5 max-[720px]:right-4 max-[720px]:bottom-4 max-[720px]:gap-3">
+    <div ref={rootRef} className="floating-contact">
       {open ? <AssistantChat open onClose={() => setOpen(false)} /> : null}
 
       <a
@@ -45,18 +77,19 @@ export function FloatingContact() {
         href={site.whatsapp}
         target="_blank"
         rel="noreferrer"
-        aria-label={`Chat on WhatsApp: ${site.phoneDisplay}`}
+        aria-label={t("chatOnWhatsApp", { phone: site.phoneDisplay })}
       >
         <WhatsappIcon />
       </a>
 
       <button
+        ref={toggleRef}
         type="button"
         className={`${fabClass} bg-ink`}
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-haspopup="dialog"
-        aria-label={open ? "Close AI chat" : "Open AI chat"}
+        aria-label={open ? t("closeAiChat") : t("openAiChat")}
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
       </button>

@@ -9,6 +9,14 @@ export const site = {
   tripadvisor:
     "https://www.tripadvisor.com/Attraction_Review-g317059-d32805557-Reviews-Tesema_Travels-Gonder_Amhara_Region.html",
   operatorSite: "https://simienethiotours.com/",
+  brand: {
+    /** Circular seal used in chrome, favicon, and Organization JSON-LD. Swap to SVG when a vector export arrives. */
+    badge: "/images/gondar-simien-tours-logo-badge.png",
+    badgeWidth: 1206,
+    badgeHeight: 1199,
+    /** Open lockup (no circle). Not used in chrome. */
+    lockup: "/images/gondar-simien-tours-logo.png",
+  },
   social: {
     x: "#",
     instagram: "#",

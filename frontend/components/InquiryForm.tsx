@@ -2,13 +2,23 @@
 
 import { ArrowRight, Check, LoaderCircle } from "@/components/Icon";
 import { FormEvent, useState } from "react";
+import { useTranslations } from "next-intl";
 import { site } from "@/lib/site";
 import { planningOptions } from "@/lib/experiences";
 import { Button } from "@/components/ui/button";
 
 type FormState = "idle" | "sending" | "success" | "email";
 
-export function InquiryForm({ compact = false, initialExperience = "" }: { compact?: boolean; initialExperience?: string }) {
+export function InquiryForm({
+  compact = false,
+  initialExperience = "",
+  initialMessage = "",
+}: {
+  compact?: boolean;
+  initialExperience?: string;
+  initialMessage?: string;
+}) {
+  const t = useTranslations("inquiry");
   const [state, setState] = useState<FormState>("idle");
   const [experience, setExperience] = useState(initialExperience);
 
@@ -55,70 +65,95 @@ export function InquiryForm({ compact = false, initialExperience = "" }: { compa
   }
 
   return (
-    <form className={`inquiry-form ${compact ? "inquiry-form--compact" : ""}`} onSubmit={submit}>
+    <form method="post" className={`inquiry-form ${compact ? "inquiry-form--compact" : ""}`} onSubmit={submit}>
       {!compact && <div className="form-field form-field--wide">
-        <label htmlFor="experience">Which experience interests you?</label>
+        <label htmlFor="experience">{t("experience")}</label>
         <select id="experience" name="experience" value={experience} onChange={(event) => setExperience(event.target.value)}>
-          <option value="">I’m exploring — help me choose</option>
+          <option value="">{t("experienceExplore")}</option>
           {planningOptions.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}
         </select>
       </div>}
       <div className="form-field">
-        <label htmlFor={`name-${compact}`}>Your name</label>
-        <input id={`name-${compact}`} name="name" autoComplete="name" required placeholder="How should we address you?" />
+        <label htmlFor={`name-${compact}`}>{t("name")}</label>
+        <input id={`name-${compact}`} name="name" autoComplete="name" required placeholder={t("namePlaceholder")} />
       </div>
       <div className="form-field">
-        <label htmlFor={`email-${compact}`}>Email address</label>
-        <input id={`email-${compact}`} type="email" name="email" autoComplete="email" required placeholder="you@example.com" />
+        <label htmlFor={`email-${compact}`}>{t("email")}</label>
+        <input id={`email-${compact}`} type="email" name="email" autoComplete="email" required placeholder={t("emailPlaceholder")} />
       </div>
       {!compact && <>
         <div className="form-field">
-          <label htmlFor="dates">Travel window</label>
-          <input id="dates" name="dates" placeholder="Month, dates, or still flexible" />
+          <label htmlFor="dates">{t("dates")}</label>
+          <input id="dates" name="dates" placeholder={t("datesPlaceholder")} />
         </div>
         <div className="form-field">
-          <label htmlFor="group">Travelers</label>
+          <label htmlFor="group">{t("group")}</label>
           <select id="group" name="group" defaultValue="">
-            <option value="" disabled>Select group size</option>
-            <option>Solo traveler</option><option>2 travelers</option><option>3–4 travelers</option><option>5–10 travelers</option><option>More than 10</option>
+            <option value="" disabled>{t("groupPlaceholder")}</option>
+            <option value="Solo traveler">{t("groupSolo")}</option>
+            <option value="2 travelers">{t("groupTwo")}</option>
+            <option value="3–4 travelers">{t("groupThreeFour")}</option>
+            <option value="5–10 travelers">{t("groupFiveTen")}</option>
+            <option value="More than 10">{t("groupMore")}</option>
           </select>
         </div>
         <div className="form-field">
-          <label htmlFor="duration">Time for Simien</label>
+          <label htmlFor="duration">{t("duration")}</label>
           <select id="duration" name="duration" defaultValue="">
-            <option value="" disabled>Choose what feels possible</option>
-            <option>1 day</option><option>2 days</option><option>3 days</option><option>4 days</option><option>5 days</option><option>6 days</option><option>10 days</option><option>I am not sure</option>
+            <option value="" disabled>{t("durationPlaceholder")}</option>
+            <option value="1 day">{t("duration1")}</option>
+            <option value="2 days">{t("duration2")}</option>
+            <option value="3 days">{t("duration3")}</option>
+            <option value="4 days">{t("duration4")}</option>
+            <option value="5 days">{t("duration5")}</option>
+            <option value="6 days">{t("duration6")}</option>
+            <option value="10 days">{t("duration10")}</option>
+            <option value="I am not sure">{t("durationUnsure")}</option>
           </select>
         </div>
         <div className="form-field">
-          <label htmlFor="interests">Main interest</label>
+          <label htmlFor="interests">{t("interests")}</label>
           <select id="interests" name="interests" defaultValue="">
-            <option value="" disabled>What brings you to the mountains?</option>
-            <option>Scenery and walking</option><option>Wildlife</option><option>Photography</option><option>Ras Dashen</option><option>Gondar and heritage</option><option>Food, coffee and local life</option><option>Festivals and holidays</option><option>Running and countryside</option><option>Accommodation and transport</option><option>A little of everything</option>
+            <option value="" disabled>{t("interestsPlaceholder")}</option>
+            <option value="Scenery and walking">{t("interestScenery")}</option>
+            <option value="Wildlife">{t("interestWildlife")}</option>
+            <option value="Photography">{t("interestPhotography")}</option>
+            <option value="Ras Dashen">{t("interestRasDashen")}</option>
+            <option value="Gondar and heritage">{t("interestHeritage")}</option>
+            <option value="Food, coffee and local life">{t("interestFood")}</option>
+            <option value="Festivals and holidays">{t("interestFestivals")}</option>
+            <option value="Running and countryside">{t("interestRunning")}</option>
+            <option value="Accommodation and transport">{t("interestStay")}</option>
+            <option value="A little of everything">{t("interestEverything")}</option>
           </select>
         </div>
         <div className="form-field form-field--wide">
-          <label htmlFor="accommodation">Preferred accommodation</label>
+          <label htmlFor="accommodation">{t("accommodation")}</label>
           <select id="accommodation" name="accommodation" defaultValue="">
-            <option value="">Please advise for my journey</option><option>Higher-comfort hotel or lodge</option><option>Mid-range hotel</option><option>Guesthouse or budget stay</option><option>Camping</option><option>A mix of hotel and camping</option>
+            <option value="">{t("accommodationAdvise")}</option>
+            <option value="Higher-comfort hotel or lodge">{t("accommodationHigh")}</option>
+            <option value="Mid-range hotel">{t("accommodationMid")}</option>
+            <option value="Guesthouse or budget stay">{t("accommodationBudget")}</option>
+            <option value="Camping">{t("accommodationCamping")}</option>
+            <option value="A mix of hotel and camping">{t("accommodationMix")}</option>
           </select>
         </div>
         {experience === "accommodation" && <>
-          <p className="form-context">Share the nights you have in mind. We’ll connect your stays with the trekking route and arrival plans.</p>
-          <div className="form-field"><label htmlFor="gondar-nights">Nights in Gondar</label><input id="gondar-nights" name="gondarNights" type="number" min="0" max="60" placeholder="Still flexible" /></div>
-          <div className="form-field"><label htmlFor="simien-nights">Nights in Simien</label><input id="simien-nights" name="simienNights" type="number" min="0" max="60" placeholder="Still flexible" /></div>
-          <div className="form-field form-field--wide"><label htmlFor="stay-budget">Accommodation budget</label><input id="stay-budget" name="budget" maxLength={200} placeholder="Your preferred range, currency and whether per night or total" /></div>
+          <p className="form-context">{t("stayContext")}</p>
+          <div className="form-field"><label htmlFor="gondar-nights">{t("gondarNights")}</label><input id="gondar-nights" name="gondarNights" type="number" min="0" max="60" placeholder={t("nightsPlaceholder")} /></div>
+          <div className="form-field"><label htmlFor="simien-nights">{t("simienNights")}</label><input id="simien-nights" name="simienNights" type="number" min="0" max="60" placeholder={t("nightsPlaceholder")} /></div>
+          <div className="form-field form-field--wide"><label htmlFor="stay-budget">{t("budget")}</label><input id="stay-budget" name="budget" maxLength={200} placeholder={t("budgetPlaceholder")} /></div>
         </>}
       </>}
       <div className={`form-field form-field--wide ${compact ? "form-field--compact-message" : ""}`}>
-        <label htmlFor={`message-${compact}`}>What are you imagining?</label>
-        <textarea id={`message-${compact}`} name="message" rows={compact ? 3 : 5} placeholder="Tell Tevan what you want to see, what you enjoy, and anything you are unsure about." />
+        <label htmlFor={`message-${compact}`}>{t("message")}</label>
+        <textarea id={`message-${compact}`} name="message" rows={compact ? 3 : 5} defaultValue={initialMessage} placeholder={t("messagePlaceholder")} />
       </div>
       <div className="form-submit form-field--wide">
         <Button variant="ctaCopper" size="cta" type="submit" disabled={state === "sending"}>
-          {state === "sending" ? <><LoaderCircle className="spin" /> Sending</> : state === "success" ? <><Check /> Inquiry sent</> : <>Send my inquiry <ArrowRight /></>}
+          {state === "sending" ? <><LoaderCircle className="spin" /> {t("sending")}</> : state === "success" ? <><Check /> {t("sent")}</> : <>{t("submit")} <ArrowRight /></>}
         </Button>
-        <p role="status">{state === "email" ? "Your email app should now open with your journey details." : <>Prefer a conversation? <a href={site.whatsapp} target="_blank" rel="noreferrer">Message us on WhatsApp.</a></>}</p>
+        <p role="status">{state === "email" ? t("emailOpened") : <>{t("preferChat")} <a href={site.whatsapp} target="_blank" rel="noreferrer">{t("messageWhatsApp")}</a></>}</p>
       </div>
     </form>
   );

@@ -1,38 +1,45 @@
+import type { ReactNode } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { JourneyPhotoCards } from "@/components/JourneyPhotoCards";
 import { PageShell } from "@/components/PageShell";
 import { journeyPackages } from "@/lib/journey-packages";
 import { site } from "@/lib/site";
-import { pageMetadata } from "@/lib/seo";
+import { messagePageMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 
-export const metadata = pageMetadata({
-  title: "Journeys | Simien Treks, Gondar Experiences & Festival Packages",
-  description: "Twenty-eight journey packages — from Simien in a Day and the Classic trek to Ras Dashen, Gondar experiences and festival journeys — each with its own page.",
-  path: "/treks",
-});
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return messagePageMetadata(locale, "treks");
+}
 
-export default function TreksPage() {
+const em = { em: (chunks: ReactNode) => <em>{chunks}</em> };
+
+export default async function TreksPage() {
+  const t = await getTranslations("treks");
+  const tCommon = await getTranslations("common");
+
   return (
     <PageShell lightHeader={false}>
       <section className="page-hero--image simien-page-hero editorial-hero">
-        <Image src="/images/simien-panorama.jpg" alt="Wide panorama across the Simien Mountains" fill priority sizes="100vw" />
+        <Image src="/images/simien-panorama.jpg" alt={t("heroAlt")} fill priority sizes="100vw" />
         <div className="page-hero__content shell">
-          <div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Journeys</span></div>
-          <p className="eyebrow">Journey packages</p>
-          <h1 className="display">Twenty-eight journeys, <em>one local team.</em></h1>
-          <p className="lead">From a Simien day trip to Ras Dashen, Gondar city experiences and festival journeys. Choose a package to read more.</p>
+          <div className="breadcrumbs"><Link href="/">{tCommon("home")}</Link><span>/</span><span>{t("crumb")}</span></div>
+          <p className="eyebrow">{t("eyebrow")}</p>
+          <h1 className="display">{t.rich("title", em)}</h1>
+          <p className="lead">{t("lead")}</p>
         </div>
       </section>
 
       <section className="section section--paper" id="in-brief">
         <div className="shell">
-          <SectionIntro tag="In brief" title="Starting points," accent="not fixed scripts." />
+          <SectionIntro tag={t("briefTag")} title={t("briefTitle")} accent={t("briefAccent")} />
           <FeatureGrid items={[
-            { title: "Who we are", body: `${site.name}, operated by ${site.legalOperator}, plans these journeys from Gondar with Tesema “Tevan” Mulualem.` },
-            { title: "What these pages are", body: "Each journey page is a planning outline: name, duration, route, inclusions and a day-by-day or segment itinerary where the source provides one. Routes, camps and wildlife can change." },
-            { title: "How to continue", body: "Read an outline, then tell us your time and walking comfort. A written proposal confirms what is included for your dates.", href: "/plan", linkLabel: "Plan this journey" },
+            { title: t("who"), body: t("whoBody", { name: site.name, operator: site.legalOperator }) },
+            { title: t("what"), body: t("whatBody") },
+            { title: t("how"), body: t("howBody"), href: "/plan", linkLabel: t("planThis") },
           ]} />
         </div>
       </section>

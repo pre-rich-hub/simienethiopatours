@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown } from "@/components/Icon";
 
@@ -30,6 +30,7 @@ export type NavMegaMenuProps = {
 };
 
 export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, description, exploreHref, exploreLabel, extraLinks, cards }: NavMegaMenuProps) {
+  const t = useTranslations("nav");
   const [expanded, setExpanded] = useState(false);
   const pathname = usePathname();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -126,7 +127,8 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
         <button
           ref={triggerRef}
           type="button"
-          aria-label={`${label} menu`}
+          aria-label={t("exploreMenu", { label })}
+          aria-haspopup="true"
           aria-expanded={expanded}
           aria-controls={menuId}
           onClick={() => { clearTimer(); setExpanded((value) => !value); }}
@@ -149,7 +151,7 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
       <div
         className="journey-menu"
         id={menuId}
-        aria-label={`Explore ${label}`}
+        aria-label={t("exploreNamed", { name: label })}
         aria-hidden={!expanded}
         inert={!expanded}
         onClick={(event) => {
@@ -177,7 +179,7 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
                 <h3>{card.title}</h3>
                 <p className="journey-menu-card__style">{card.style}</p>
                 <p className="journey-menu-card__summary">{card.summary}</p>
-                <div className="journey-menu-card__footer"><span>Explore</span><ArrowUpRight size={16} /></div>
+                <div className="journey-menu-card__footer"><span>{t("explore")}</span><ArrowUpRight size={16} /></div>
               </Link>
             ))}
           </div>

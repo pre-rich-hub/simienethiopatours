@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useTranslations } from "next-intl";
 import { ArrowUpRight, Check } from "@/components/Icon";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export function NewsletterForm() {
+  const t = useTranslations("newsletter");
   const [status, setStatus] = useState<"idle" | "sending" | "submitted" | "error">("idle");
   const [error, setError] = useState("");
 
@@ -29,14 +31,14 @@ export function NewsletterForm() {
       form.reset();
     } catch {
       setStatus("error");
-      setError("We could not add that email. Please try again.");
+      setError(t("error"));
     }
   }
 
   if (status === "submitted") {
     return (
       <p className="newsletter-form__success">
-        <Check size={15} /> Thank you — you&rsquo;re on the list.
+        <Check size={15} /> {t("success")}
       </p>
     );
   }
@@ -47,14 +49,14 @@ export function NewsletterForm() {
       <input
         type="email"
         name="email"
-        placeholder="Your email address"
-        aria-label="Email address"
+        placeholder={t("placeholder")}
+        aria-label={t("emailAria")}
         autoComplete="email"
         required
         disabled={status === "sending"}
       />
-      <button type="submit" aria-label="Subscribe" disabled={status === "sending"}>
-        {status === "sending" ? "Sending…" : <>Subscribe <ArrowUpRight size={16} /></>}
+      <button type="submit" aria-label={t("subscribe")} disabled={status === "sending"}>
+        {status === "sending" ? t("sending") : <>{t("subscribe")} <ArrowUpRight size={16} /></>}
       </button>
       </form>
       {status === "error" && (

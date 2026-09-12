@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, type InputHTMLAttributes, type TextareaHTMLAttributes, type SelectHTMLAttributes, type CSSProperties } from "react";
+import { Children, cloneElement, isValidElement, useId, type ReactElement, type ReactNode, type InputHTMLAttributes, type TextareaHTMLAttributes, type SelectHTMLAttributes, type CSSProperties } from "react";
 import Link from "next/link";
 import {
   LayoutDashboard, Compass, MapPin, Image, Star, BookOpen,
@@ -43,7 +43,7 @@ const NAV_ITEMS = [
 ] as const;
 
 const navLinkClass = "flex items-center gap-2.5 rounded px-3.5 py-2.5 text-[13px] font-medium text-stone no-underline transition-colors hover:bg-paper hover:text-ink";
-const navLinkActiveClass = "bg-copper/8 text-copper hover:bg-copper/8 hover:text-copper";
+const navLinkActiveClass = "bg-copper/8 text-copper-ink hover:bg-copper/8 hover:text-copper-ink";
 
 export function AdminSidebar({ currentPath }: { currentPath: string }) {
   function isActive(href: string) {
@@ -56,11 +56,12 @@ export function AdminSidebar({ currentPath }: { currentPath: string }) {
       <a href="/admin" className="flex items-center gap-2.5 border-b border-line px-6 py-6 font-serif text-lg font-medium tracking-[-0.02em] text-highland no-underline">
         <span className="text-copper">SET</span> Admin
       </a>
-      <nav className="flex flex-1 flex-col gap-0.5 p-3">
+      <nav className="flex flex-1 flex-col gap-0.5 p-3" aria-label="Admin">
         {NAV_ITEMS.map((item) => (
           <a
             key={item.href}
             href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
             className={cn(navLinkClass, isActive(item.href) && navLinkActiveClass)}
           >
             <item.icon className="size-[18px]" />
@@ -84,7 +85,7 @@ export function AdminTopbar({ userName }: { userName?: string | null }) {
   return (
     <div className="flex items-center justify-end gap-5 border-b border-line bg-ivory px-8 py-4 text-xs">
       {userName && <span className="font-semibold text-ink">{userName}</span>}
-      <a href="/" target="_blank" rel="noreferrer" className="text-stone no-underline transition-colors hover:text-copper">View site</a>
+      <a href="/" target="_blank" rel="noreferrer" className="text-stone no-underline transition-colors hover:text-copper-ink">View site</a>
       <AdminButton variant="link" onClick={logout}>Logout</AdminButton>
     </div>
   );
@@ -122,7 +123,7 @@ export function AdminButton({
         size === "small" && adminButtonSmall,
         variant === "primary" && "bg-copper text-white hover:bg-[#9b6439]",
         variant === "secondary" && "border-line bg-transparent text-ink hover:border-stone hover:bg-transparent",
-        variant === "link" && "min-h-0 px-0 text-[13px] font-semibold normal-case tracking-normal text-copper hover:underline",
+        variant === "link" && "min-h-0 px-0 text-[13px] font-semibold normal-case tracking-normal text-copper-ink hover:underline",
         className,
       )}
     >
@@ -143,6 +144,14 @@ export function adminLinkButtonClass(variant: "primary" | "secondary" = "primary
 
 const fieldControl = "h-auto min-h-[42px] rounded-[3px] border-line bg-white px-3.5 py-2.5 text-sm text-ink focus-visible:border-copper focus-visible:ring-copper/20";
 
+const adminLabelClass = "text-[11px] font-semibold uppercase tracking-[0.08em] text-stone";
+
+type AdminControlProps = {
+  id?: string;
+  "aria-invalid"?: boolean | "true" | "false";
+  "aria-describedby"?: string;
+};
+
 export function AdminField({
   label,
   children,
@@ -158,12 +167,49 @@ export function AdminField({
   hint?: string;
   className?: string;
 }) {
+  const generatedId = useId();
+  const hintId = `${generatedId}-hint`;
+  const errorId = `${generatedId}-error`;
+  const describedBy = [hint && hintId, error && errorId].filter(Boolean).join(" ") || undefined;
+  const controls = Children.toArray(children).filter(isValidElement);
+  const grouped = controls.length > 1;
+  const first = controls[0] as ReactElement<AdminControlProps> | undefined;
+  const controlId = first?.props.id ?? generatedId;
+
+  const labeled = grouped
+    ? children
+    : Children.map(children, (child) => {
+        if (!isValidElement(child)) return child;
+        const el = child as ReactElement<AdminControlProps>;
+        return cloneElement(el, {
+          id: el.props.id ?? generatedId,
+          "aria-invalid": error ? true : el.props["aria-invalid"],
+          "aria-describedby": [el.props["aria-describedby"], describedBy].filter(Boolean).join(" ") || undefined,
+        });
+      });
+
+  const message = (
+    <>
+      {hint && !error && <p id={hintId} className="m-0 text-xs leading-normal text-stone">{hint}</p>}
+      {error && <p id={errorId} className="m-0 text-xs leading-normal text-destructive" role="alert">{error}</p>}
+    </>
+  );
+
+  if (grouped && label) {
+    return (
+      <fieldset className={cn("m-0 flex min-w-0 flex-col gap-1.5 border-0 p-0", row && "flex-row items-center justify-between", className)}>
+        <legend className={cn(adminLabelClass, "float-none w-full px-0")}>{label}</legend>
+        {children}
+        {message}
+      </fieldset>
+    );
+  }
+
   return (
     <div className={cn("flex flex-col gap-1.5", row && "flex-row items-center justify-between", className)}>
-      {label && <Label className="text-[11px] font-semibold uppercase tracking-[0.08em] text-stone">{label}</Label>}
-      {children}
-      {hint && !error && <p className="m-0 text-xs leading-normal text-stone">{hint}</p>}
-      {error && <p className="m-0 text-xs leading-normal text-destructive">{error}</p>}
+      {label && <Label htmlFor={controlId} className={adminLabelClass}>{label}</Label>}
+      {labeled}
+      {message}
     </div>
   );
 }
@@ -209,10 +255,11 @@ export function AdminToggle({
   onChange: (v: boolean) => void;
   label?: string;
 }) {
+  const id = useId();
   return (
     <div className="flex flex-row items-center justify-between gap-1.5">
-      {label && <Label className="text-[11px] font-semibold uppercase tracking-[0.08em] text-stone">{label}</Label>}
-      <Switch checked={checked} onCheckedChange={onChange} className="data-checked:bg-teal" />
+      {label && <Label htmlFor={id} className={adminLabelClass}>{label}</Label>}
+      <Switch id={id} checked={checked} onCheckedChange={onChange} className="data-checked:bg-teal" />
     </div>
   );
 }

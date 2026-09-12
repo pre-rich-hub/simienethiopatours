@@ -151,7 +151,7 @@ export default function AdminGalleryPage() {
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
                   />
-                  <AdminInput type="file" accept="image/*" className="mt-2" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+                  <AdminInput type="file" accept="image/*" className="mt-2" aria-label="Image file" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
                 </AdminField>
                 {(file || imageUrl) && (
                   <img className={adminImagePreview} src={imagePreview} alt="Preview" />

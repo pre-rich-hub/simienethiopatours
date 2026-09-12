@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { simienReasons } from "@/lib/simien-guide";
 
@@ -13,7 +14,8 @@ const reasonPhotography = [
   { src: "/images/simien-panorama.jpg", alt: "A wide first view into the Simien Mountains", place: "A first encounter" },
 ] as const;
 
-export function SimienReasonCards() {
+export async function SimienReasonCards() {
+  const t = await getTranslations("cta");
   return <div className="simien-reason-grid">
     {simienReasons.map((reason, index) => {
       const photo = reasonPhotography[index];
@@ -28,7 +30,7 @@ export function SimienReasonCards() {
           <p className="eyebrow eyebrow--copper">{reason.tag}</p>
           <h3>{reason.title}</h3>
           <p>{reason.body}</p>
-          {reason.href && <Link href={reason.href} className="text-link">{reason.linkLabel || "Explore experience"}<ArrowUpRight /></Link>}
+          {reason.href && <Link href={reason.href} className="text-link">{reason.linkLabel || t("exploreExperience")}<ArrowUpRight /></Link>}
         </div>
       </article>;
     })}

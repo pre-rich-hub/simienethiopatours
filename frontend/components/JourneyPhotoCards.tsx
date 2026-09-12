@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { SectionIntro } from "@/components/Editorial";
 import {
@@ -8,7 +9,8 @@ import {
   type JourneyPackage,
 } from "@/lib/journey-packages";
 
-export function JourneyPhotoCards({ journeys }: { journeys: readonly JourneyPackage[] }) {
+export async function JourneyPhotoCards({ journeys }: { journeys: readonly JourneyPackage[] }) {
+  const t = await getTranslations("treks");
   const columns = journeys.length <= 2 ? 2 : 3;
 
   return (
@@ -32,7 +34,7 @@ export function JourneyPhotoCards({ journeys }: { journeys: readonly JourneyPack
             <p>{journeyPackageSummary(journey)}</p>
             <div className="simien-photo-card__footer">
               <span className="simien-photo-card__explore">
-                About {journey.name}
+                {t("about", { name: journey.name })}
                 <ArrowUpRight />
               </span>
             </div>

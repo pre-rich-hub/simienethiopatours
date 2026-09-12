@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { planningOptions } from "@/lib/experiences";
+import { logError, logWarn } from "@/lib/log";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
@@ -75,10 +76,12 @@ export async function POST(request: Request) {
     if (response.ok) {
       return NextResponse.json({ delivery: "contact" });
     }
-  } catch {
-    // Fall through to webhook / mailto.
+    logWarn("inquiry-contacts", `contacts API ${response.status}`);
+  } catch (error) {
+    logWarn("inquiry-contacts", error);
   }
 
+  // Server-only. Do not expose as NEXT_PUBLIC_CONTACT_WEBHOOK_URL.
   const webhook = process.env.CONTACT_WEBHOOK_URL;
   if (webhook) {
     try {
@@ -91,8 +94,9 @@ export async function POST(request: Request) {
       if (response.ok) {
         return NextResponse.json({ delivery: "webhook" });
       }
-    } catch {
-      // Fall through to mailto.
+      logError("inquiry-webhook", `webhook ${response.status}`);
+    } catch (error) {
+      logError("inquiry-webhook", error);
     }
   }
 

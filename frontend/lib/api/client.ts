@@ -5,9 +5,13 @@
  * - Uses an AbortController timeout so a dead backend does not stall SSR.
  * - Prefers the server-only API_URL env var, falls back to NEXT_PUBLIC_API_URL,
  *   then http://localhost:5000.
- * - Not marked "use client" — import only from server components, route
- *   handlers, or server-side lib modules.
+ * - Import only from server components, route handlers, or server-side lib.
+ *   API_URL must not ship in the client bundle.
  */
+
+if (typeof window !== "undefined") {
+  throw new Error("lib/api/client is server-only");
+}
 
 const API_URL =
   process.env.API_URL ||
