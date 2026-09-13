@@ -16,6 +16,9 @@
     "paths": {
       "@/*": [
         "../frontend/*"
+      ],
+      "helmet": [
+        "./src/types/helmet.d.ts"
       ]
     },
     "rewriteRelativeImportExtensions": true
