@@ -11,7 +11,7 @@ for (const collection of [journeyPackages, simienPlaces, gondarPlaces]) {
   assert.equal(new Set(collection.map((item: { slug: string }) => item.slug)).size, collection.length, "Duplicate URL slug");
 }
 for (const journey of journeyPackages) {
-  for (const field of ["overview", "highlights", "included", "excluded"]) {
+  for (const field of ["overview", "highlights", "included", "excluded"] as const) {
     assert.ok(journey[field]?.length > 0, `${journey.slug}: missing ${field}`);
   }
   assert.ok(journey.days?.length || journey.segments?.length, `${journey.slug}: missing schedule`);
@@ -23,11 +23,17 @@ for (const journey of journeyPackages) {
   assert.deepEqual(mapped.days, journey.days ?? [{ title: journey.name, subtitle: journey.duration, paragraphs: [], stages: journey.segments }]);
 }
 for (const place of [...simienPlaces, ...gondarPlaces]) {
-  for (const field of ["about", "highlights", "thingsToDo"]) assert.ok(place[field]?.length, `${place.slug}: missing ${field}`);
+  for (const field of ["about", "highlights", "thingsToDo"] as const) assert.ok(place[field]?.length, `${place.slug}: missing ${field}`);
   assert.ok(place.location);
 }
-assert.ok(journeyPackages.find((j: { slug: string }) => j.slug === "ras-dashen-challenge").itineraryNotes.join(" ").includes("Ambiko"));
-assert.equal(journeyPackages.find((j: { slug: string }) => j.slug === "timkat-ras-dashen").days[0].dayLabel, "1–3");
+const rasDashen = journeyPackages.find((j: { slug: string }) => j.slug === "ras-dashen-challenge");
+assert.ok(rasDashen, "missing ras-dashen-challenge");
+assert.ok(rasDashen.itineraryNotes, "missing itinerary notes");
+assert.ok(rasDashen.itineraryNotes.join(" ").includes("Ambiko"));
+const timkat = journeyPackages.find((j: { slug: string }) => j.slug === "timkat-ras-dashen");
+assert.ok(timkat, "missing timkat-ras-dashen");
+assert.ok(timkat.days, "missing schedule");
+assert.equal(timkat.days[0].dayLabel, "1–3");
 
 const forbiddenPatterns = [
   /exact details are confirmed in your written proposal/i,
