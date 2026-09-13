@@ -81,23 +81,24 @@ const parsed = {
   ASSISTANT_IP_HASH_SALT: rawEnv.ASSISTANT_IP_HASH_SALT || rawEnv.JWT_SECRET,
 };
 
-// Boot check: email must be fully configured before enabled
-if (parsed.EMAIL_ENABLED) {
-  if (!parsed.SMTP_FROM) {
-    throw new Error("EMAIL_ENABLED is true but SMTP_FROM is not configured.");
-  }
-  if (!parsed.ADMIN_EMAIL) {
-    throw new Error("EMAIL_ENABLED is true but ADMIN_EMAIL is not configured.");
-  }
+// Boot gates (not fatal): half-configured optional features must not take
+// down the whole API. If a feature flag is on but its secrets are missing,
+// warn loudly and disable the feature; the rest of the API keeps serving.
+if (parsed.EMAIL_ENABLED && (!parsed.SMTP_FROM || !parsed.ADMIN_EMAIL)) {
+  console.warn(
+    "[env] EMAIL_ENABLED is true but SMTP_FROM or ADMIN_EMAIL is not configured. Email dispatch is disabled until they are set.",
+  );
+  parsed.EMAIL_ENABLED = false;
 }
 
-// Boot check: assistant provider key must be set when enabled
 if (parsed.ASSISTANT_ENABLED) {
   if (parsed.ASSISTANT_PROVIDER === "openai" && !parsed.OPENAI_API_KEY) {
-    throw new Error("ASSISTANT_ENABLED is true but OPENAI_API_KEY is not configured.");
+    console.warn("[env] ASSISTANT_ENABLED is true but OPENAI_API_KEY is not configured. The assistant is disabled until a key is set.");
+    parsed.ASSISTANT_ENABLED = false;
   }
   if (parsed.ASSISTANT_PROVIDER === "gemini" && !parsed.GEMINI_API_KEY) {
-    throw new Error("ASSISTANT_ENABLED is true but GEMINI_API_KEY is not configured.");
+    console.warn("[env] ASSISTANT_ENABLED is true but GEMINI_API_KEY is not configured. The assistant is disabled until a key is set.");
+    parsed.ASSISTANT_ENABLED = false;
   }
 }
 
