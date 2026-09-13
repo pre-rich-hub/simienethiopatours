@@ -193,22 +193,22 @@ async function translateEntity<T>(
       slug: source.slug,
       ...(entityType === "tour"
         ? {
-            journeyType: (source as TourContent).journeyType,
-            image: (source as TourContent).image,
-            isPublished: (source as TourContent).isPublished,
-            isFeatured: (source as TourContent).isFeatured,
-            sortOrder: (source as TourContent).sortOrder,
-            destinationIds: (source as TourContent).destinationIds,
-            inquiry: (source as TourContent).inquiry,
+            journeyType: (source as unknown as TourContent).journeyType,
+            image: (source as unknown as TourContent).image,
+            isPublished: (source as unknown as TourContent).isPublished,
+            isFeatured: (source as unknown as TourContent).isFeatured,
+            sortOrder: (source as unknown as TourContent).sortOrder,
+            destinationIds: (source as unknown as TourContent).destinationIds,
+            inquiry: (source as unknown as TourContent).inquiry,
           }
         : {
-            area: (source as DestinationContent).area,
-            type: (source as DestinationContent).type,
-            imageUrl: (source as DestinationContent).imageUrl,
-            isPublished: (source as DestinationContent).isPublished,
-            sortOrder: (source as DestinationContent).sortOrder,
-            tourIds: (source as DestinationContent).tourIds,
-            sourceReferences: (source as DestinationContent).sourceReferences,
+            area: (source as unknown as DestinationContent).area,
+            type: (source as unknown as DestinationContent).type,
+            imageUrl: (source as unknown as DestinationContent).imageUrl,
+            isPublished: (source as unknown as DestinationContent).isPublished,
+            sortOrder: (source as unknown as DestinationContent).sortOrder,
+            tourIds: (source as unknown as DestinationContent).tourIds,
+            sourceReferences: (source as unknown as DestinationContent).sourceReferences,
           }),
     };
     const parsed = schema.parse(locked);
