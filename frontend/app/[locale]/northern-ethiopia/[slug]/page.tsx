@@ -6,7 +6,7 @@ import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { DestinationRoutes } from "@/components/JourneyPhotoCards";
 import { EditorialHero, SectionIntro, StorySection } from "@/components/Editorial";
-import { getDestinationForRoute, getTours, destinationToPlace, tourToJourney, requireContentLocale } from "@/lib/catalogue";
+import { getDestinationForRoute, getTours, destinationToPlace, tourToJourney, requireContentLocale, resolveMediaUrl } from "@/lib/catalogue";
 import { localizedMetadata } from "@/lib/catalogue-seo";
 import { localeFromParam } from "@/lib/seo";
 
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const record = await getDestinationForRoute(slug, locale);
   if (!record) return {};
   requireContentLocale(record, locale);
-  return localizedMetadata({ locale, title: `${record.name} | Northern Ethiopia`, description: record.overview[0] ?? "", path: record.path, image: { url: record.imageUrl, alt: record.imageAlt } }, record.availableLocales);
+  return localizedMetadata({ locale, title: `${record.name} | Northern Ethiopia`, description: record.overview[0] ?? "", path: record.path, image: { url: resolveMediaUrl(record.imageUrl), alt: record.imageAlt } }, record.availableLocales);
 }
 
 export default async function NorthernDestinationPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {

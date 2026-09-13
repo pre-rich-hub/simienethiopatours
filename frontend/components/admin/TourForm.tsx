@@ -14,6 +14,7 @@ import {
 } from "@/components/admin/ui";
 import { dayToForm, dayToDb, type TourDayForm } from "@/lib/admin/tour-day-form";
 import { useFilePreview } from "@/components/admin/useFilePreview";
+import { resolveMediaUrl } from "@/lib/media-url";
 
 /* ── Types ────────────────────────────────────────────────────────── */
 
@@ -407,7 +408,7 @@ export default function TourForm({
   const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{ tourTitle?: string; tourDestination?: string }>({});
 
-  const imagePreview = useFilePreview(form.tourImageFile, form.image);
+  const imagePreview = useFilePreview(form.tourImageFile, resolveMediaUrl(form.image));
 
   function set<K extends keyof Form>(key: K, val: Form[K]) {
     setForm((prev) => ({ ...prev, [key]: val }));

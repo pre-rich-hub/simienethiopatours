@@ -8,6 +8,8 @@ import snapshot from "@/lib/generated/catalogue.json";
 import type { JourneyPackage } from "@/lib/journey-packages";
 import { fetchCatalogue, CatalogueFetchError } from "@/lib/catalogue-fetch";
 import { selectLocale } from "@/lib/catalogue-locale";
+import { resolveMediaUrl } from "@/lib/media-url";
+export { resolveMediaUrl };
 export type { PublicCatalogue, PublicTour, PublicDestination, PublicPost };
 export { selectLocale };
 
@@ -34,11 +36,6 @@ export const getCatalogue = cache(async (): Promise<PublicCatalogue> => {
   console.warn(JSON.stringify({ event: "catalogue_fallback", reason: result.kind, version: snapshot.version }));
   return catalogueFromSnapshot(snapshot, process.env.NODE_ENV === "production");
 });
-export function resolveMediaUrl(url: string | null | undefined): string {
-  if (!url) return "";
-  const origin = (process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:5000").replace(/\/$/, "");
-  return url.startsWith("/assets/") ? `${origin}${url}` : url;
-}
 export function requireContentLocale<T extends { locale: string; path: string }>(record: T, locale: string): T {
   if (record.locale !== locale) redirect(`/${record.locale}${record.path}`);
   return record;

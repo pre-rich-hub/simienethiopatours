@@ -10,6 +10,7 @@ import {
   AdminSearch, AdminNotice, adminFormSection, adminFormGrid, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
 } from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
+import { resolveMediaUrl } from "@/lib/media-url";
 
 type GalleryItem = {
   id: number;
@@ -47,7 +48,7 @@ export default function AdminGalleryPage() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
-  const imagePreview = useFilePreview(file, imageUrl);
+  const imagePreview = useFilePreview(file, resolveMediaUrl(imageUrl));
 
   useEffect(() => {
     adminRequestClient<Tour[]>("/api/v1/admin/tours")
@@ -209,7 +210,7 @@ export default function AdminGalleryPage() {
             {filtered.map((g) => (
               <AdminTableRow key={g.id} className="hover:bg-copper/3">
                 <AdminTd>
-                  {g.imageUrl && <img className={adminThumb} src={g.imageUrl} alt={g.alt || g.title || ""} />}
+                  {g.imageUrl && <img className={adminThumb} src={resolveMediaUrl(g.imageUrl)} alt={g.alt || g.title || ""} />}
                 </AdminTd>
                 <AdminTd>{g.title || "—"}</AdminTd>
                 <AdminTd>{g.category || "—"}</AdminTd>

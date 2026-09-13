@@ -10,6 +10,7 @@ import {
   AdminNotice, adminFormSection, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
 } from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
+import { resolveMediaUrl } from "@/lib/media-url";
 
 type Destination = {
   id: number;
@@ -54,7 +55,7 @@ export default function AdminDestinationsPage() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
-  const imagePreview = useFilePreview(file, existingImage);
+  const imagePreview = useFilePreview(file, resolveMediaUrl(existingImage));
 
   function openNew() {
     setEditing(null);
@@ -224,7 +225,7 @@ export default function AdminDestinationsPage() {
             {items.map((d) => (
               <AdminTableRow key={d.id} className="hover:bg-copper/3">
                 <AdminTd>
-                  {d.imageUrl && <img className={adminThumb} src={d.imageUrl} alt={d.name} />}
+                  {d.imageUrl && <img className={adminThumb} src={resolveMediaUrl(d.imageUrl)} alt={d.name} />}
                 </AdminTd>
                 <AdminTd className="font-semibold">{d.name}</AdminTd>
                 <AdminTd>{d.area}</AdminTd>

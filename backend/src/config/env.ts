@@ -43,8 +43,7 @@ const envSchema = z.object({
   UPLOAD_ROOT: z.string().default("uploads"),
   PUBLIC_FILE_BASE_URL: z.string().optional().default(""),
   MAX_UPLOAD_MB: z.coerce.number().positive().default(4),
-  STORAGE_DRIVER: z.enum(["local", "cloudinary", "vercel-blob"]).default("local"),
-  BLOB_READ_WRITE_TOKEN: z.string().optional().default(""),
+  STORAGE_DRIVER: z.enum(["local", "database", "cloudinary"]).default("local"),
 
   // AI assistant
   ASSISTANT_ENABLED: z.preprocess(envBoolean, z.boolean()).default(false),
@@ -66,8 +65,19 @@ const envSchema = z.object({
 
 const rawEnv = envSchema.parse(process.env);
 
+// On Vercel the serverless disk is ephemeral: files written to the local
+// filesystem vanish between requests and are invisible across instances.
+// Fall back to database storage (Postgres BYTEA) unless a driver was
+// explicitly chosen, so uploads work without extra configuration.
+const isOnVercel = Boolean(process.env.VERCEL);
+const storageDriver =
+  isOnVercel && (!rawEnv.STORAGE_DRIVER || rawEnv.STORAGE_DRIVER === "local")
+    ? "database"
+    : rawEnv.STORAGE_DRIVER;
+
 const parsed = {
   ...rawEnv,
+  STORAGE_DRIVER: storageDriver,
   ASSISTANT_IP_HASH_SALT: rawEnv.ASSISTANT_IP_HASH_SALT || rawEnv.JWT_SECRET,
 };
 
@@ -91,21 +101,13 @@ if (parsed.ASSISTANT_ENABLED) {
   }
 }
 
-// Boot warning (not fatal): production uploads need durable storage. Keep the
-// API alive so health, auth, catalogue and assistant work even when media
-// storage is misconfigured; upload attempts then fail per-request with a 503.
-if (parsed.NODE_ENV === "production") {
-  if (parsed.STORAGE_DRIVER === "vercel-blob" && !parsed.BLOB_READ_WRITE_TOKEN) {
-    console.warn(
-      "[env] STORAGE_DRIVER=vercel-blob but BLOB_READ_WRITE_TOKEN is not set. File uploads will fail until it is configured in the Vercel dashboard.",
-    );
-  }
-
-  if (parsed.STORAGE_DRIVER === "local" && !parsed.PUBLIC_FILE_BASE_URL) {
-    console.warn(
-      "[env] Production uploads use the local driver but PUBLIC_FILE_BASE_URL is not set. Uploaded files will not be served publicly; configure PUBLIC_FILE_BASE_URL or switch STORAGE_DRIVER to vercel-blob.",
-    );
-  }
+// Boot warning (not fatal): production local uploads need a public base URL.
+// Keep the API alive so health, auth, catalogue and assistant work even when
+// media storage is misconfigured; upload attempts then fail with a clear error.
+if (parsed.NODE_ENV === "production" && parsed.STORAGE_DRIVER === "local" && !parsed.PUBLIC_FILE_BASE_URL) {
+  console.warn(
+    "[env] Production uploads use the local driver but PUBLIC_FILE_BASE_URL is not set. Uploaded files will not be served publicly; configure PUBLIC_FILE_BASE_URL or use STORAGE_DRIVER=database (automatic on Vercel).",
+  );
 }
 
 export const env = parsed;

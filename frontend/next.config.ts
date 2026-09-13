@@ -8,12 +8,16 @@ function apiImagePatterns(): NonNullable<NextConfig["images"]>["remotePatterns"]
   const raw = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
   try {
     const url = new URL(raw);
-    return [{
+    const base = {
       protocol: url.protocol.replace(":", "") as "http" | "https",
       hostname: url.hostname,
       ...(url.port ? { port: url.port } : {}),
-      pathname: "/assets/**",
-    }];
+    };
+    // /assets/** = local-disk uploads, /api/v1/media/** = database uploads.
+    return [
+      { ...base, pathname: "/assets/**" },
+      { ...base, pathname: "/api/v1/media/**" },
+    ];
   } catch {
     return [];
   }

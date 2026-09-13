@@ -15,6 +15,7 @@ import { authRouter } from "./modules/auth/auth.routes.js";
 import { adminRouter } from "./modules/admin/admin.routes.js";
 import { contactsRouter } from "./modules/public-forms/contacts.routes.js";
 import { subscribersRouter } from "./modules/public-forms/subscribers.routes.js";
+import { mediaRouter } from "./modules/media/media.routes.js";
 
 export function registerRoutes(app: Express) {
   app.use("/api/v1/catalogue", publicCatalogueRouter);
@@ -31,4 +32,5 @@ export function registerRoutes(app: Express) {
   app.use("/api/v1/admin", adminRouter);
   app.use("/api/v1/contacts", contactsRouter);
   app.use("/api/v1/subscribers", subscribersRouter);
+  app.use("/api/v1/media", mediaRouter);
 }

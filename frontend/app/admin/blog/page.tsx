@@ -10,6 +10,7 @@ import {
   AdminSearch, AdminNotice, adminFormSection, adminFormGrid, adminFileRow, adminFormActions, adminImagePreview, adminThumb, adminTableActions,
 } from "@/components/admin/ui";
 import { useFilePreview } from "@/components/admin/useFilePreview";
+import { resolveMediaUrl } from "@/lib/media-url";
 
 type BlogPost = {
   isPublished: boolean; author: string | null; imageAlt: string | null;
@@ -47,7 +48,7 @@ export default function AdminBlogPage() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
-  const imagePreview = useFilePreview(file, existingImage);
+  const imagePreview = useFilePreview(file, resolveMediaUrl(existingImage));
 
   useEffect(() => {
     adminRequestClient<BlogCategory[]>("/api/v1/admin/blog-categories")
@@ -226,7 +227,7 @@ export default function AdminBlogPage() {
             {filtered.map((p) => (
               <AdminTableRow key={p.id} className="hover:bg-copper/3">
                 <AdminTd>
-                  {p.imageUrl && <img className={adminThumb} src={p.imageUrl} alt={p.blogTitle} />}
+                  {p.imageUrl && <img className={adminThumb} src={resolveMediaUrl(p.imageUrl)} alt={p.blogTitle} />}
                 </AdminTd>
                 <AdminTd className="font-semibold">{p.blogTitle} · {p.isPublished ? "Published" : "Draft"}</AdminTd>
                 <AdminTd slug>{p.slug}</AdminTd>
