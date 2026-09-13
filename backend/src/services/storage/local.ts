@@ -30,6 +30,8 @@ export class LocalStorageProvider implements StorageProvider {
   }
 
   async delete(storedPath: string): Promise<void> {
+    // Absolute URLs belong to external/blob storage, not the local disk.
+    if (/^https?:\/\//i.test(storedPath)) return;
     try {
       await fs.unlink(path.resolve(process.cwd(), env.UPLOAD_ROOT, storedPath));
     } catch {

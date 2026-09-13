@@ -1,17 +1,15 @@
 import { getStorageProvider } from "./storage/index.js";
 
 /**
- * Convert a URL-relative path or storedPath back to the raw storedPath
- * that the storage provider can delete.
+ * Convert whatever the database holds (URL-relative path, bare stored path or
+ * absolute file URL) back to the key the storage provider can delete.
  *
- * - Full HTTP(S) URLs are external → return null (skip disk delete)
+ * - Full HTTP(S) URLs are passed through: the provider decides whether it owns
+ *   them (Vercel Blob deletes its own URLs; the local driver ignores them).
  * - Leading-slash relative URLs like "/assets/images/tours/TOUR-1.jpg" → strip the slash
  * - Bare stored paths like "assets/images/tours/TOUR-1.jpg" → pass through
  */
-function resolveStoredPath(urlOrPath: string): string | null {
-  // Full URLs (http/https) are not local files — skip disk deletion
-  if (/^https?:\/\//i.test(urlOrPath)) return null;
-
+function resolveStoredPath(urlOrPath: string): string {
   // URL-relative form with leading slash (e.g., "/assets/images/…")
   if (urlOrPath.startsWith("/")) return urlOrPath.slice(1);
 
@@ -23,7 +21,6 @@ export async function removeStoredFile(
 ) {
   if (!urlOrPath) return;
   const storedPath = resolveStoredPath(urlOrPath);
-  if (!storedPath) return;
   const provider = await getStorageProvider();
   await provider.delete(storedPath);
 }
