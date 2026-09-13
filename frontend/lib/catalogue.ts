@@ -9,16 +9,30 @@ import type { JourneyPackage } from "@/lib/journey-packages";
 import { fetchCatalogue, CatalogueFetchError } from "@/lib/catalogue-fetch";
 import { selectLocale } from "@/lib/catalogue-locale";
 export type { PublicCatalogue, PublicTour, PublicDestination, PublicPost };
-export { selectLocale } from "@/lib/catalogue-locale";
+export { selectLocale };
 
-const cachedCatalogue = unstable_cache(async () => fetchCatalogue(), ["public-catalogue-v1"], { revalidate: 60, tags: ["catalogue"] });
-export const getCatalogue = cache(async (): Promise<PublicCatalogue> => {
-  try { return await cachedCatalogue(); }
-  catch (error) {
-    if (!(error instanceof CatalogueFetchError) || !error.allowFallback) throw error;
-    console.warn(JSON.stringify({ event: "catalogue_fallback", reason: error.kind, version: snapshot.version }));
-    return catalogueFromSnapshot(snapshot, process.env.NODE_ENV === "production");
+type CatalogueLoad =
+  | { ok: true; data: PublicCatalogue }
+  | { ok: false; kind: CatalogueFetchError["kind"]; allowFallback: boolean };
+
+/** Catch inside the cache so API-down does not surface as a Next.js error overlay. */
+const cachedCatalogue = unstable_cache(async (): Promise<CatalogueLoad> => {
+  try {
+    return { ok: true, data: await fetchCatalogue() };
+  } catch (error) {
+    if (error instanceof CatalogueFetchError) {
+      return { ok: false, kind: error.kind, allowFallback: error.allowFallback };
+    }
+    return { ok: false, kind: "network", allowFallback: true };
   }
+}, ["public-catalogue-v1"], { revalidate: 60, tags: ["catalogue"] });
+
+export const getCatalogue = cache(async (): Promise<PublicCatalogue> => {
+  const result = await cachedCatalogue();
+  if (result.ok) return result.data;
+  if (!result.allowFallback) throw new CatalogueFetchError(result.kind, false);
+  console.warn(JSON.stringify({ event: "catalogue_fallback", reason: result.kind, version: snapshot.version }));
+  return catalogueFromSnapshot(snapshot, process.env.NODE_ENV === "production");
 });
 export function resolveMediaUrl(url: string | null | undefined): string {
   if (!url) return "";
