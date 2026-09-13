@@ -7,6 +7,7 @@ import { HttpError } from "../../middleware/error.middleware.js";
 import { fail, ok } from "../../utils/api-response.js";
 import { assistantSchema } from "./assistant.validation.js";
 import { loadUsage, runChat } from "./assistant.service.js";
+import { requestRetentionSweep } from "../../services/retention.service.js";
 
 export const assistantRouter = Router();
 
@@ -51,6 +52,7 @@ function hashIp(ip: string): string {
 
 async function handleChatRequest(req: Request, res: Response): Promise<void> {
   try {
+    requestRetentionSweep();
     if (!env.ASSISTANT_ENABLED) {
       fail(res, "Assistant is disabled", [], 503);
       return;

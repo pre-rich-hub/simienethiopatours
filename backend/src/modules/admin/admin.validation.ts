@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { jsonText, tourArrays, journeyTypes } from "../catalog/tour-content.js";
+import { destinationAreas, destinationTypes } from "../catalog/destination-content.js";
 
 // ---------------------------------------------------------------------------
 // Tour create / update
@@ -18,11 +20,14 @@ export const tourCreateSchema = z.object({
     tourDiscount: z.any().optional(),
     tourRating: z.any().optional(),
     tourReviews: z.any().optional(),
-    isFeatured: z.any().optional(),
+    isFeatured: z.union([z.boolean(), z.enum(["true", "false"])]).optional(),
     tourOverview: looseString,
-    tourIncluded: z.any().optional(),
-    tourExcluded: z.any().optional(),
-    tourItinerary: z.any().optional(),
+    summary: looseString,
+    itineraryIntro: looseString,
+    itineraryNotes: jsonText(tourArrays.itineraryNotes),
+    tourIncluded: jsonText(tourArrays.included),
+    tourExcluded: jsonText(tourArrays.excluded),
+    tourItinerary: jsonText(tourArrays.itinerary),
     tourMap: looseString,
     // Editorial fields (P1 content pipeline)
     heroTitle: looseString,
@@ -32,17 +37,23 @@ export const tourCreateSchema = z.object({
     duration: looseString,
     style: looseString,
     difficulty: looseString,
+    journeyType: z.enum(journeyTypes).optional(),
+    editorialStatus: z.enum(["draft", "reviewed", "published"]).optional(),
+    editorialSourceNotes: z.string().optional(),
+    reviewSourceNotes: z.string().optional(),
+    routeApproved: z.coerce.boolean().optional(), commercialApproved: z.coerce.boolean().optional(),
+    safetyApproved: z.coerce.boolean().optional(), translationApproved: z.coerce.boolean().optional(),
     fit: looseString,
     inquiry: looseString,
     notice: looseString,
-    route: z.any().optional(),
-    facts: z.any().optional(),
-    introduction: z.any().optional(),
-    highlights: z.any().optional(),
-    preparation: z.any().optional(),
-    related: z.any().optional(),
-    isPublished: z.any().optional(),
-    sortOrder: z.any().optional(),
+    route: jsonText(tourArrays.route),
+    facts: jsonText(tourArrays.facts),
+    introduction: jsonText(tourArrays.introduction),
+    highlights: jsonText(tourArrays.highlights),
+    preparation: jsonText(tourArrays.preparation),
+    related: jsonText(tourArrays.related),
+    isPublished: z.union([z.boolean(), z.enum(["true", "false"])]).optional(),
+    sortOrder: z.coerce.number().int().nonnegative().optional(),
   }),
 });
 
@@ -57,11 +68,14 @@ export const tourUpdateSchema = z.object({
     tourDiscount: z.any().optional(),
     tourRating: z.any().optional(),
     tourReviews: z.any().optional(),
-    isFeatured: z.any().optional(),
+    isFeatured: z.union([z.boolean(), z.enum(["true", "false"])]).optional(),
     tourOverview: looseString,
-    tourIncluded: z.any().optional(),
-    tourExcluded: z.any().optional(),
-    tourItinerary: z.any().optional(),
+    summary: looseString,
+    itineraryIntro: looseString,
+    itineraryNotes: jsonText(tourArrays.itineraryNotes),
+    tourIncluded: jsonText(tourArrays.included),
+    tourExcluded: jsonText(tourArrays.excluded),
+    tourItinerary: jsonText(tourArrays.itinerary),
     tourMap: looseString,
     heroTitle: looseString,
     heroAccent: looseString,
@@ -70,17 +84,23 @@ export const tourUpdateSchema = z.object({
     duration: looseString,
     style: looseString,
     difficulty: looseString,
+    journeyType: z.enum(journeyTypes).optional(),
+    editorialStatus: z.enum(["draft", "reviewed", "published"]).optional(),
+    editorialSourceNotes: z.string().optional(),
+    reviewSourceNotes: z.string().optional(),
+    routeApproved: z.coerce.boolean().optional(), commercialApproved: z.coerce.boolean().optional(),
+    safetyApproved: z.coerce.boolean().optional(), translationApproved: z.coerce.boolean().optional(),
     fit: looseString,
     inquiry: looseString,
     notice: looseString,
-    route: z.any().optional(),
-    facts: z.any().optional(),
-    introduction: z.any().optional(),
-    highlights: z.any().optional(),
-    preparation: z.any().optional(),
-    related: z.any().optional(),
-    isPublished: z.any().optional(),
-    sortOrder: z.any().optional(),
+    route: jsonText(tourArrays.route),
+    facts: jsonText(tourArrays.facts),
+    introduction: jsonText(tourArrays.introduction),
+    highlights: jsonText(tourArrays.highlights),
+    preparation: jsonText(tourArrays.preparation),
+    related: jsonText(tourArrays.related),
+    isPublished: z.union([z.boolean(), z.enum(["true", "false"])]).optional(),
+    sortOrder: z.coerce.number().int().nonnegative().optional(),
     deleteImages: z.any().optional(),
   }),
 });
@@ -106,6 +126,23 @@ export const destinationCreateSchema = z.object({
   body: z.object({
     destinationName: z.string().trim().min(1, "Destination name is required"),
     destinationDescription: z.string().optional(),
+    area: z.enum(destinationAreas).optional(),
+    type: z.enum(destinationTypes).optional(),
+    location: z.string().optional(),
+    alsoKnownAs: z.any().optional(),
+    heroTitle: z.string().optional(),
+    heroAccent: z.string().optional(),
+    overview: z.any().optional(),
+    highlights: z.any().optional(),
+    thingsToDo: z.any().optional(),
+    image: z.any().optional(),
+    imageAlt: z.string().optional(),
+    sourceReferences: z.any().optional(),
+    editorialStatus: z.enum(["draft", "reviewed", "published"]).optional(), editorialSourceNotes: z.string().optional(),
+    reviewSourceNotes: z.string().optional(), routeApproved: z.coerce.boolean().optional(), commercialApproved: z.coerce.boolean().optional(), safetyApproved: z.coerce.boolean().optional(), translationApproved: z.coerce.boolean().optional(),
+    tourIds: z.any().optional(),
+    isPublished: z.any().optional(),
+    sortOrder: z.coerce.number().int().nonnegative().optional(),
   }),
 });
 
@@ -113,6 +150,23 @@ export const destinationUpdateSchema = z.object({
   body: z.object({
     destinationName: z.string().trim().min(1, "Destination name is required").optional(),
     destinationDescription: z.string().optional(),
+    area: z.enum(destinationAreas).optional(),
+    type: z.enum(destinationTypes).optional(),
+    location: z.string().optional(),
+    alsoKnownAs: z.any().optional(),
+    heroTitle: z.string().optional(),
+    heroAccent: z.string().optional(),
+    overview: z.any().optional(),
+    highlights: z.any().optional(),
+    thingsToDo: z.any().optional(),
+    image: z.any().optional(),
+    imageAlt: z.string().optional(),
+    sourceReferences: z.any().optional(),
+    editorialStatus: z.enum(["draft", "reviewed", "published"]).optional(), editorialSourceNotes: z.string().optional(),
+    reviewSourceNotes: z.string().optional(), routeApproved: z.coerce.boolean().optional(), commercialApproved: z.coerce.boolean().optional(), safetyApproved: z.coerce.boolean().optional(), translationApproved: z.coerce.boolean().optional(),
+    tourIds: z.any().optional(),
+    isPublished: z.any().optional(),
+    sortOrder: z.coerce.number().int().nonnegative().optional(),
   }),
 });
 
@@ -137,6 +191,9 @@ export const blogCreateSchema = z.object({
     content: z.string().optional(),
     href: z.string().trim().max(500).optional(),
     categoryId: z.any().optional(),
+    isPublished: z.union([z.boolean(), z.enum(["true", "false"])]).optional(),
+    author: z.string().trim().max(255).optional(),
+    imageAlt: z.string().trim().max(500).optional(),
   }),
 });
 
@@ -147,6 +204,9 @@ export const blogUpdateSchema = z.object({
     content: z.string().optional(),
     href: z.string().trim().max(500).optional(),
     categoryId: z.any().optional(),
+    isPublished: z.union([z.boolean(), z.enum(["true", "false"])]).optional(),
+    author: z.string().trim().max(255).optional(),
+    imageAlt: z.string().trim().max(500).optional(),
   }),
 });
 
@@ -157,6 +217,18 @@ export const blogUpdateSchema = z.object({
 export const blogCategorySchema = z.object({
   body: z.object({
     name: z.string().trim().min(1, "Name is required"),
+  }),
+});
+
+export const translationUpdateSchema = z.object({
+  params: z.object({
+    entityType: z.enum(["tour", "destination", "blog"]),
+    slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+    locale: z.enum(["es", "de", "fr"]),
+  }),
+  body: z.object({
+    content: z.record(z.string(), z.unknown()),
+    status: z.enum(["missing", "draft", "reviewed", "published"]),
   }),
 });
 

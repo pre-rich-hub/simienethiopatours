@@ -1,0 +1,28 @@
+{
+  "fixtureOnly": true,
+  "passed": [
+    "CMS tour listing and stable detail",
+    "Destination hubs and related journeys",
+    "Untranslated detail redirects and hreflang",
+    "Journal article, category, metadata and escaped content",
+    "CMS sitemap and actual update dates",
+    "Invalidation rejects absent, wrong and non-ASCII credentials",
+    "Newly published slug appears without rebuilding",
+    "Edit updates listing, detail metadata and homepage",
+    "Unpublish removes detail, navigation links and sitemap",
+    "Authoritative empty catalogue does not resurrect bootstrap",
+    "Outage, malformed response and timeout remain bounded",
+    "Service recovery restores published catalogue",
+    "390px /en: no horizontal overflow or injected script",
+    "390px /en/treks/simien-day-trip: no horizontal overflow or injected script",
+    "390px /en/simien-mountains/imet-gogo: no horizontal overflow or injected script",
+    "390px /en/journal/qa-field-story: no horizontal overflow or injected script",
+    "Mobile dialog opens, closes and restores focus",
+    "1440px /en: no horizontal overflow or injected script",
+    "1440px /en/treks/simien-day-trip: no horizontal overflow or injected script",
+    "1440px /en/simien-mountains/imet-gogo: no horizontal overflow or injected script",
+    "1440px /en/journal/qa-field-story: no horizontal overflow or injected script",
+    "Desktop journey menu opens with CMS records"
+  ],
+  "count": 22
+}

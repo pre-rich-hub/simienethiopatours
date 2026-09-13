@@ -1,10 +1,12 @@
 # Brand mark
 
-Delivered lockups live in [`public/images/`](../public/images/). Chrome reads the circular seal from [`lib/site.ts`](../lib/site.ts) (`site.brand.badge`). When a vector export arrives, point that path at an SVG — no other chrome change is required.
+Delivered lockups live in [`public/images/`](../public/images/). Chrome reads the circular seal from [`lib/site.ts`](../lib/site.ts) (`site.brand.badge`).
+
+**Current brand asset (2026-09-13):** the production mark is the PNG circular badge — there is no vector/SVG export yet. When a vector file arrives, point `site.brand.badge` at that SVG; no other chrome change is required.
 
 ## Primary mark
 
-Use **`gondar-simien-tours-logo-badge.png`** (circular seal) for header, footer, menu, favicon, and Organization JSON-LD.
+Use **`gondar-simien-tours-logo-badge.png`** (circular seal; current production brand asset) for header, footer, menu, favicon, and Organization JSON-LD.
 
 | Surface | Treatment |
 | --- | --- |

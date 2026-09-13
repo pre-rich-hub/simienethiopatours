@@ -6,7 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc --noEmit"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "qa:p4": "node scripts/p4-smoke.mjs",
+    "qa:content": "node scripts/content-integrity.mjs",
+    "content:locale-audit": "node scripts/audit-locale-messages.mjs",
+    "qa:seo": "node scripts/seo-smoke.mjs",
+    "qa:metadata": "node scripts/metadata-uniqueness.mjs",
+    "qa:secrets": "node scripts/secret-scan.mjs",
+    "qa:media": "node scripts/media-budget.mjs",
+    "qa:crawl": "node scripts/crawl-sitemap.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -40,6 +51,7 @@
     "@types/react-dom": "^19.1.9",
     "eslint": "^9.34.0",
     "eslint-config-next": "16.3.4",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.7"
   }
 }

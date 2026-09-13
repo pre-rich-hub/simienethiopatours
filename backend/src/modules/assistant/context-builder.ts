@@ -1,3 +1,4 @@
+import { buildPublicCatalogue } from "../catalog/public-catalogue.js";
 import { prisma } from "../../config/database.js";
 import { env } from "../../config/env.js";
 
@@ -5,18 +6,21 @@ import { env } from "../../config/env.js";
 // Types
 // ---------------------------------------------------------------------------
 
+export type AssistantLocale = "en" | "es" | "de" | "fr";
+
 export type CatalogContext = {
   sections: string[];
   tokenEstimate: number;
   builtAt: Date;
   truncated: boolean;
+  locale: AssistantLocale;
 };
 
 export interface ContextBuilder {
-  build(): Promise<CatalogContext>;
+  build(locale?: AssistantLocale): Promise<CatalogContext>;
 }
 
-type CatalogRow = Record<string, unknown>;
+type CatalogRow = Record<string, unknown> & { slug?: string; locale?: string };
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -31,6 +35,7 @@ function safe(rows: unknown): CatalogRow[] {
 }
 
 function parseArray(value: unknown): unknown[] {
+  if (Array.isArray(value)) return value;
   if (typeof value !== "string" || !value) return [];
   try {
     const parsed: unknown = JSON.parse(value);
@@ -55,6 +60,26 @@ function formatBullets(items: unknown[]): string {
     .join("\n");
 }
 
+/**
+ * Prefer the requested locale row per slug; fall back to English so the model
+ * always has a published public record when a translation is missing.
+ */
+export function pickLocaleRows<T extends { slug: string; locale: string }>(
+  rows: T[],
+  locale: AssistantLocale,
+): T[] {
+  const bySlug = new Map<string, T>();
+  for (const row of rows) {
+    if (row.locale === "en") bySlug.set(row.slug, row);
+  }
+  if (locale !== "en") {
+    for (const row of rows) {
+      if (row.locale === locale) bySlug.set(row.slug, row);
+    }
+  }
+  return [...bySlug.values()];
+}
+
 // Itinerary rows store the ItineraryDay[] shape as JSON:
 // { title, subtitle?, paragraphs[], overnight?, notes?, stages?[] }.
 // Render it as readable markdown so the model reads an itinerary, not JSON.
@@ -67,8 +92,8 @@ function formatItinerary(raw: unknown): string {
       const subtitle = asString(entry.subtitle);
       const lines: string[] = [
         subtitle
-          ? `# Day ${index + 1}: ${title} — ${subtitle}`
-          : `# Day ${index + 1}: ${title}`,
+          ? `# Day ${asString(entry.dayLabel) ?? index + 1}: ${title} — ${subtitle}`
+          : `# Day ${asString(entry.dayLabel) ?? index + 1}: ${title}`,
       ];
 
       const paragraphs = parseArray(entry.paragraphs);
@@ -103,55 +128,26 @@ function formatItinerary(raw: unknown): string {
 // ---------------------------------------------------------------------------
 // CatalogContextBuilder
 //
-// Fetches structured data from the database and formats it as sections that
-// get injected into the AI system prompt. Rich tour fields (itinerary, route,
-// facts, introduction, highlights, preparation, included/excluded) are stored
-// as JSON text and parsed back into readable markdown here.
+// Builds from the same published public catalogue as the frontend
+// (`buildPublicCatalogue`: isPublished + editorialStatus published only).
+// Drafts and private source/review notes never cross that boundary.
 // ---------------------------------------------------------------------------
 
 export class CatalogContextBuilder implements ContextBuilder {
   constructor(private client: typeof prisma = prisma) {}
 
-  async build(): Promise<CatalogContext> {
-    const [tours, destinations, posts] = await Promise.all([
-      this.client.tour.findMany({
-        select: {
-          tourName: true,
-          overview: true,
-          duration: true,
-          style: true,
-          difficulty: true,
-          fit: true,
-          inquiry: true,
-          notice: true,
-          route: true,
-          facts: true,
-          introduction: true,
-          highlights: true,
-          preparation: true,
-          included: true,
-          excluded: true,
-          itinerary: true,
-        },
-        where: { isPublished: true },
-        orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
-      }),
-      this.client.destination.findMany({
-        select: { destinationName: true, description: true },
-        orderBy: { id: "asc" },
-      }),
-      this.client.blog.findMany({
-        select: { blogTitle: true, description: true, content: true },
-        orderBy: { id: "asc" },
-      }),
-    ]);
+  async build(locale: AssistantLocale = "en"): Promise<CatalogContext> {
+    const catalogue = await buildPublicCatalogue(this.client);
+    const tours = pickLocaleRows(catalogue.tours, locale);
+    const destinations = pickLocaleRows(catalogue.destinations, locale);
+    const posts = pickLocaleRows(catalogue.posts, locale);
 
     const sections: string[] = [
-      "## Tour packages",
+      `## Tour packages (locale: ${locale})`,
       ...safe(tours).map((tour) => this.formatTour(tour)),
       "## Destinations",
       ...safe(destinations).map((dest) =>
-        this.formatEntry(dest, ["destinationName", "description"]),
+        this.formatEntry(dest, ["name", "location", "overview", "highlights", "thingsToDo", "tourSlugs"]),
       ),
       "## Travel journal",
       ...safe(posts).map((post) =>
@@ -170,6 +166,7 @@ export class CatalogContextBuilder implements ContextBuilder {
       tokenEstimate: estimateTokens(trimmed),
       builtAt: new Date(),
       truncated,
+      locale,
     };
   }
 
@@ -178,6 +175,11 @@ export class CatalogContextBuilder implements ContextBuilder {
     for (const field of fields) {
       const raw = row[field];
       if (raw === null || raw === undefined || raw === "") continue;
+      if (Array.isArray(raw)) {
+        const bullets = formatBullets(raw);
+        if (bullets) lines.push(`${field}:\n${bullets}`);
+        continue;
+      }
       lines.push(`${field}: ${String(raw)}`);
     }
     return lines.join("\n");
@@ -190,6 +192,8 @@ export class CatalogContextBuilder implements ContextBuilder {
       if (text) lines.push(`${label}: ${text}`);
     };
 
+    // Public editorial fields only — never adultPrice/childPrice/rating/source notes.
+    push("slug", row.slug);
     push("tourName", row.tourName);
     push("overview", row.overview);
     push("duration", row.duration);
@@ -259,22 +263,36 @@ export class CatalogContextBuilder implements ContextBuilder {
 }
 
 // ---------------------------------------------------------------------------
-// Memoized context cache
+// Memoized context cache (keyed by locale)
 // ---------------------------------------------------------------------------
 
 type MemoEntry = { expiresAt: number; context: CatalogContext };
 
-let memo: MemoEntry | null = null;
+const memo = new Map<AssistantLocale, MemoEntry>();
+let revision = 0;
+
+export function invalidateCatalogContext(): void {
+  memo.clear();
+  revision += 1;
+}
 
 export async function getCatalogContext(
   builder: ContextBuilder,
+  locale: AssistantLocale = "en",
 ): Promise<CatalogContext> {
-  if (memo && memo.expiresAt > Date.now()) return memo.context;
-  const context = await builder.build();
-  memo = { expiresAt: Date.now() + env.ASSISTANT_CONTEXT_TTL_MS, context };
+  const cached = memo.get(locale);
+  if (cached && cached.expiresAt > Date.now()) return cached.context;
+  const startedRevision = revision;
+  const context = await builder.build(locale);
+  if (startedRevision === revision) {
+    memo.set(locale, {
+      expiresAt: Date.now() + Math.min(env.ASSISTANT_CONTEXT_TTL_MS, 60_000),
+      context,
+    });
+  }
   return context;
 }
 
 export function resetForTests(): void {
-  memo = null;
+  invalidateCatalogContext();
 }

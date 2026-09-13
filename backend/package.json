@@ -16,8 +16,16 @@
     "prisma:studio": "prisma studio",
     "db:seed": "tsx scripts/seed.ts",
     "db:admin": "tsx scripts/seed-admin.ts",
+    "data:purge": "tsx scripts/purge-retention.ts",
+    "content:audit": "node --import tsx scripts/audit-public-editorial.ts",
+    "content:drift": "node --import tsx scripts/audit-catalogue-drift.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "content:export": "tsx scripts/export-public-catalogue.ts",
+    "content:bootstrap": "tsx scripts/bootstrap-public-catalogue.ts",
+    "content:translations": "tsx scripts/seed-catalogue-translations.ts",
+    "content:localization": "tsx scripts/audit-localization.ts",
+    "smoke:admin-publish": "tsx scripts/smoke-admin-publish.ts"
   },
   "dependencies": {
     "@google/genai": "^2.16.0",

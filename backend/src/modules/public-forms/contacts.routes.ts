@@ -6,6 +6,7 @@ import { ok } from "../../utils/api-response.js";
 import { validate } from "../../middleware/validate.middleware.js";
 import { publicFormLimiter } from "../../middleware/rate-limit.middleware.js";
 import { sendContactAdminEmail } from "../../services/email.service.js";
+import { requestRetentionSweep } from "../../services/retention.service.js";
 
 export const contactsRouter = Router();
 
@@ -22,6 +23,7 @@ contactsRouter.post(
   publicFormLimiter,
   validate(contactCreateSchema),
   asyncHandler(async (req, res) => {
+    requestRetentionSweep();
     const { name, email, message } = req.body as {
       name: string;
       email: string;

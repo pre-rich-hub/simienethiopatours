@@ -106,6 +106,28 @@ event: done    (final, includes usage)
 
 All configurable in `.env`.
 
+## Data retention
+
+Public-form and assistant data use the privacy defaults below:
+
+| Data | Default | Configuration |
+| --- | --- | --- |
+| Contact inquiries | 730 days from submission | `CONTACT_RETENTION_DAYS` |
+| Assistant sessions, messages, and hashed IP | 30 days after the session was last updated | `ASSISTANT_RETENTION_DAYS` |
+| Newsletter subscribers | Until withdrawal or admin deletion | Not automatically purged |
+
+Long-running servers run retention cleanup at startup and every 24 hours.
+Public contact, newsletter, and assistant requests also trigger a throttled
+cleanup attempt for serverless deployments. Schedule `pnpm data:purge` daily as
+an independent production safeguard. The command logs deletion counts only and
+does not print personal data.
+
+## Public editorial audit
+
+Run `pnpm content:audit` before seeding or publishing catalog content. It
+checks bundled tours and destination records for internal research language,
+package-mapping notes, and other wording that must not appear in public HTML.
+
 ## AI Providers
 
 Set `ASSISTANT_PROVIDER=gemini` or `openai`, plus the matching API key.
@@ -125,3 +147,7 @@ case in `createProvider()`.
 - Boot checks fail fast on misconfigured env
 - No secrets in code, ever
 - Commit in small, atomic pieces
+
+## Phase 4 public catalogue
+
+`GET /api/v1/catalogue` is the shared, publication-filtered tour/destination/journal contract. Admin mutations invalidate frontend/assistant caches. Journal rows start as drafts and require author, description, content and image alt text when publishing an image. Apply migration `20260913090000_public_catalogue_journal`, configure `CATALOGUE_REVALIDATE_URL` and `CATALOGUE_REVALIDATE_SECRET`, and export approved content with `npm run content:export`. See [the CMS cutover runbook](../frontend/docs/p4-cms-cutover.md). No production seed, migration or publication is implied by local verification.

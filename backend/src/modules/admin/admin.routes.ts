@@ -1,3 +1,4 @@
+import { catalogueInvalidation } from "../catalog/catalogue-invalidation.js";
 import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../../config/database.js";
@@ -19,6 +20,11 @@ import {
 import { removeStoredFile } from "../../services/file.service.js";
 import { sendEmail } from "../../services/email.service.js";
 import { slugify } from "../../utils/slug.js";
+import { parseJson } from "../catalog/destination-content.js";
+import { serializeDestination } from "../catalog/destination.serializers.js";
+import { tourContentSchema } from "../catalog/tour-content.js";
+import { destinationContentSchema } from "../catalog/destination-content.js";
+import { publicPostSchema } from "../catalog/public-catalogue.schema.js";
 import { validate } from "../../middleware/validate.middleware.js";
 import {
   blogCategorySchema,
@@ -35,11 +41,57 @@ import {
   testimonialSchema,
   tourCreateSchema,
   tourUpdateSchema,
+  translationUpdateSchema,
 } from "./admin.validation.js";
 
 export const adminRouter = Router();
 
 adminRouter.use(requireAdminAuth);
+adminRouter.use(catalogueInvalidation);
+
+// ---------------------------------------------------------------------------
+// TRANSLATIONS
+// ---------------------------------------------------------------------------
+
+adminRouter.get(
+  "/translations",
+  asyncHandler(async (req, res) => {
+    const locale = typeof req.query.locale === "string" ? req.query.locale : undefined;
+    const entityType = typeof req.query.entityType === "string" ? req.query.entityType : undefined;
+    const rows = await prisma.contentTranslation.findMany({
+      where: { ...(locale ? { locale } : {}), ...(entityType ? { entityType } : {}) },
+      orderBy: [{ entityType: "asc" }, { entitySlug: "asc" }, { locale: "asc" }],
+    });
+    return ok(res, rows.map(row => ({ ...row, content: JSON.parse(row.content) })), "Translations fetched successfully");
+  }),
+);
+
+adminRouter.put(
+  "/translations/:entityType/:slug/:locale",
+  validate(translationUpdateSchema),
+  asyncHandler(async (req, res) => {
+    const { entityType, slug, locale } = req.params as { entityType: "tour" | "destination" | "blog"; slug: string; locale: "es" | "de" | "fr" };
+    const sourceExists = entityType === "tour"
+      ? await prisma.tour.findFirst({ where: { slug }, select: { slug: true } })
+      : entityType === "destination"
+        ? await prisma.destination.findFirst({ where: { slug }, select: { slug: true } })
+        : await prisma.blog.findFirst({ where: { slug }, select: { slug: true } });
+    if (!sourceExists) throw new HttpError(404, "Source content not found");
+    const content = JSON.stringify(req.body.content);
+    const status = req.body.status as string;
+    if (status === "published") {
+      const schema = entityType === "tour" ? tourContentSchema : entityType === "destination" ? destinationContentSchema : publicPostSchema;
+      if (!schema.safeParse(req.body.content).success) throw new HttpError(422, "Published translation is incomplete or invalid");
+    }
+    const published = status === "published";
+    const row = await prisma.contentTranslation.upsert({
+      where: { entityType_entitySlug_locale: { entityType, entitySlug: slug, locale } },
+      update: { content, status, reviewedAt: status === "reviewed" || published ? new Date() : null, publishedAt: published ? new Date() : null },
+      create: { entityType, entitySlug: slug, locale, content, status, reviewedAt: status === "reviewed" || published ? new Date() : null, publishedAt: published ? new Date() : null },
+    });
+    return ok(res, { ...row, content: req.body.content }, "Translation saved successfully");
+  }),
+);
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -85,6 +137,37 @@ function parseJsonField(value: unknown): string | null {
     }
   }
   return null;
+}
+
+async function saveEditorialReview(entityType: "tour" | "destination", entitySlug: string, body: Record<string, unknown>, reviewerId?: number) {
+  const status = typeof body.editorialStatus === "string" ? body.editorialStatus : undefined;
+  const data = {
+    ...(status ? { status } : {}),
+    ...(body.reviewSourceNotes !== undefined ? { sourceNotes: String(body.reviewSourceNotes || "") || null } : {}),
+    ...(reviewerId ? { reviewerId } : {}),
+    ...(body.routeApproved !== undefined ? { routeApproved: toBoolean(body.routeApproved) } : {}),
+    ...(body.commercialApproved !== undefined ? { commercialApproved: toBoolean(body.commercialApproved) } : {}),
+    ...(body.safetyApproved !== undefined ? { safetyApproved: toBoolean(body.safetyApproved) } : {}),
+    ...(body.translationApproved !== undefined ? { translationApproved: toBoolean(body.translationApproved) } : {}),
+    ...(status === "reviewed" ? { reviewedAt: new Date() } : {}),
+    ...(status === "published" ? { publishedAt: new Date(), reviewedAt: new Date() } : {}),
+  };
+  if (!Object.keys(data).length) return;
+  await prisma.editorialReview.upsert({ where: { entityType_entitySlug: { entityType, entitySlug } }, update: data, create: { entityType, entitySlug, status: status ?? "draft", ...data } });
+}
+
+function destinationJson(value: unknown): string {
+  if (typeof value !== "string" || !value.trim()) return "[]";
+  try {
+    const parsed = JSON.parse(value);
+    return JSON.stringify(Array.isArray(parsed) ? parsed : []);
+  } catch {
+    return "[]";
+  }
+}
+
+function destinationIds(value: unknown): number[] {
+  return parseCategoryIds(value).filter((id) => id > 0);
 }
 
 /**
@@ -255,6 +338,9 @@ adminRouter.get(
           }
         : null,
       style: t.style ?? null,
+      journeyType: t.journeyType,
+      editorialStatus: t.editorialStatus,
+      editorialSourceNotes: t.editorialSourceNotes,
       createdAt: t.createdAt,
       updatedAt: t.updatedAt,
     }));
@@ -286,6 +372,9 @@ adminRouter.get(
       sortOrder: tour.sortOrder,
       isFeatured: Boolean(tour.isFeatured),
       overview: tour.overview,
+      summary: tour.summary,
+      itineraryIntro: tour.itineraryIntro,
+      itineraryNotes: tour.itineraryNotes,
       adultPrice: tour.adultPrice != null ? Number(tour.adultPrice) : null,
       childPrice: tour.childPrice != null ? Number(tour.childPrice) : null,
       discount: tour.discount,
@@ -297,6 +386,10 @@ adminRouter.get(
       imageAlt: tour.imageAlt ?? null,
       duration: tour.duration ?? null,
       style: tour.style ?? null,
+      journeyType: tour.journeyType,
+      editorialStatus: tour.editorialStatus,
+      editorialSourceNotes: tour.editorialSourceNotes,
+      editorialReview: await prisma.editorialReview.findUnique({ where: { entityType_entitySlug: { entityType: "tour", entitySlug: tour.slug } } }),
       difficulty: tour.difficulty ?? null,
       fit: tour.fit ?? null,
       inquiry: tour.inquiry ?? null,
@@ -357,6 +450,9 @@ adminRouter.post(
 
     const tourTitle = String(req.body.tourTitle ?? "").trim();
     if (!tourTitle) throw new HttpError(422, "Tour name is required");
+    if (toBoolean(req.body.isPublished) && imageUrl && !String(req.body.imageAlt ?? "").trim()) {
+      throw new HttpError(422, "Published tours require image alt text");
+    }
 
     const categoryIds = parseCategoryIds(req.body.tourCategories).filter(
       (id) => id > 0,
@@ -379,6 +475,9 @@ adminRouter.post(
         noOfRates: Number(req.body.tourReviews ?? 0),
         isFeatured: toBoolean(req.body.isFeatured),
         overview: String(req.body.tourOverview ?? ""),
+        summary: req.body.summary || null,
+        itineraryIntro: req.body.itineraryIntro || null,
+        itineraryNotes: req.body.itineraryNotes ?? "[]",
         included: parseOptionalJsonArrayString(req.body.tourIncluded),
         excluded: parseOptionalJsonArrayString(req.body.tourExcluded),
         itinerary: parseItinerary(req.body.tourItinerary),
@@ -394,6 +493,9 @@ adminRouter.post(
         difficulty: req.body.difficulty
           ? String(req.body.difficulty)
           : null,
+        journeyType: req.body.journeyType ?? "core-trek",
+        editorialStatus: req.body.editorialStatus ?? "draft",
+        editorialSourceNotes: req.body.editorialSourceNotes ? String(req.body.editorialSourceNotes) : null,
         fit: req.body.fit ? String(req.body.fit) : null,
         inquiry: req.body.inquiry ? String(req.body.inquiry) : null,
         notice: req.body.notice ? String(req.body.notice) : null,
@@ -430,6 +532,8 @@ adminRouter.post(
       },
     });
 
+    await saveEditorialReview("tour", created.slug, req.body, req.admin?.id);
+
     return ok(res, {
       id: created.id,
       name: created.tourName,
@@ -452,6 +556,9 @@ adminRouter.put(
       : typeof req.body.image === "string" && req.body.image.trim()
         ? req.body.image.trim()
         : undefined;
+    if (toBoolean(req.body.isPublished ?? false) && (imageUrl || req.body.image) && !String(req.body.imageAlt ?? "").trim()) {
+      throw new HttpError(422, "Published tours require image alt text");
+    }
 
     const tourTitle = req.body.tourTitle
       ? String(req.body.tourTitle).trim()
@@ -470,14 +577,12 @@ adminRouter.put(
       destinationIds = parseTourDestinationIds(req.body);
     }
 
-    // Slug is locked on update — derived from current tourName, never from input.
-    const slug = tourTitle ? await uniqueTourSlug(tourTitle, id) : undefined;
+    // Existing URLs are immutable here. Renaming a title must not break links.
 
     const updated = await prisma.$transaction(async (tx) => {
       await tx.tour.update({
         where: { id },
         data: {
-          ...(slug ? { slug } : {}),
           ...(tourTitle ? { tourName: tourTitle } : {}),
           ...(destinationIds
             ? {
@@ -520,6 +625,9 @@ adminRouter.put(
           ...(req.body.tourOverview !== undefined
             ? { overview: String(req.body.tourOverview ?? "") }
             : {}),
+          ...(req.body.summary !== undefined ? { summary: req.body.summary || null } : {}),
+          ...(req.body.itineraryIntro !== undefined ? { itineraryIntro: req.body.itineraryIntro || null } : {}),
+          ...(req.body.itineraryNotes !== undefined ? { itineraryNotes: req.body.itineraryNotes } : {}),
           ...(req.body.tourIncluded !== undefined
             ? { included: parseOptionalJsonArrayString(req.body.tourIncluded) }
             : {}),
@@ -532,7 +640,7 @@ adminRouter.put(
           ...(req.body.tourMap !== undefined
             ? { journeyMap: req.body.tourMap ? String(req.body.tourMap) : null }
             : {}),
-          ...(imageUrl !== undefined ? { image: imageUrl } : {}),
+          ...(imageUrl !== undefined ? { image: imageUrl } : req.body.image === "" ? { image: null } : {}),
           ...(req.body.heroTitle !== undefined
             ? { heroTitle: req.body.heroTitle ? String(req.body.heroTitle) : null }
             : {}),
@@ -551,6 +659,9 @@ adminRouter.put(
           ...(req.body.difficulty !== undefined
             ? { difficulty: req.body.difficulty ? String(req.body.difficulty) : null }
             : {}),
+          ...(req.body.journeyType !== undefined ? { journeyType: req.body.journeyType } : {}),
+          ...(req.body.editorialStatus !== undefined ? { editorialStatus: req.body.editorialStatus } : {}),
+          ...(req.body.editorialSourceNotes !== undefined ? { editorialSourceNotes: req.body.editorialSourceNotes ? String(req.body.editorialSourceNotes) : null } : {}),
           ...(req.body.fit !== undefined
             ? { fit: req.body.fit ? String(req.body.fit) : null }
             : {}),
@@ -581,13 +692,15 @@ adminRouter.put(
         },
       });
 
-      // Category junctions: always re-sync.
-      await tx.tourCategoryJunction.deleteMany({ where: { tourId: id } });
+      // Omitted means unchanged; an explicit empty list clears the selection.
+      if (req.body.tourCategories !== undefined) {
+        await tx.tourCategoryJunction.deleteMany({ where: { tourId: id } });
       if (categoryIds.length) {
         await tx.tourCategoryJunction.createMany({
           data: categoryIds.map((categoryId) => ({ tourId: id, categoryId })),
           skipDuplicates: true,
         });
+      }
       }
 
       // Gallery delete
@@ -608,6 +721,8 @@ adminRouter.put(
         },
       });
     }, { maxWait: 10000, timeout: 30000 });
+
+    await saveEditorialReview("tour", updated!.slug, req.body, req.admin?.id);
 
     return ok(res, {
       id: updated!.id,
@@ -729,17 +844,9 @@ adminRouter.get(
   asyncHandler(async (_req, res) => {
     const destinations = await prisma.destination.findMany({
       include: { _count: { select: { tours: true, tourLinks: true } } },
-      orderBy: { id: "desc" },
+      orderBy: [{ area: "asc" }, { sortOrder: "asc" }, { id: "asc" }],
     });
-
-    return ok(res, destinations.map((d) => ({
-      id: d.id,
-      slug: d.slug,
-      name: d.destinationName,
-      description: d.description,
-      imageUrl: d.imageUrl,
-      tourCount: d._count.tourLinks ?? d._count.tours,
-    })), "Destinations fetched successfully");
+    return ok(res, destinations.map((d) => serializeDestination(d)), "Destinations fetched successfully");
   }),
 );
 
@@ -749,18 +856,13 @@ adminRouter.get(
     const id = idParam.parse(req.params.id);
     const destination = await prisma.destination.findUnique({
       where: { id },
-      include: { _count: { select: { tours: true, tourLinks: true } } },
+      include: {
+        _count: { select: { tours: true, tourLinks: true } },
+        tourLinks: { include: { tour: { select: { slug: true, tourName: true, isPublished: true } } } },
+      },
     });
     if (!destination) throw new HttpError(404, "Destination not found");
-
-    return ok(res, {
-      id: destination.id,
-      slug: destination.slug,
-      name: destination.destinationName,
-      description: destination.description,
-      imageUrl: destination.imageUrl,
-      tourCount: destination._count.tourLinks ?? destination._count.tours,
-    }, "Destination fetched successfully");
+    return ok(res, { ...serializeDestination(destination, true), editorialStatus: destination.editorialStatus, editorialSourceNotes: destination.editorialSourceNotes, editorialReview: await prisma.editorialReview.findUnique({ where: { entityType_entitySlug: { entityType: "destination", entitySlug: destination.slug } } }) }, "Destination fetched successfully");
   }),
 );
 
@@ -769,31 +871,37 @@ adminRouter.post(
   destinationUpload.single("destinationImage"),
   validate(destinationCreateSchema),
   asyncHandler(async (req, res) => {
-    const imageUrl = req.file
-      ? urlForFile(req.file) || storedPathForFile(req.file)
-      : undefined;
-    if (!imageUrl) throw new HttpError(422, "Destination image is required");
-
-    const destinationName = String(req.body.destinationName ?? "");
-    const slug = slugify(destinationName);
+    const imageUrl = req.file ? urlForFile(req.file) || storedPathForFile(req.file) : (req.body.image ? String(req.body.image) : null);
+    const name = String(req.body.destinationName ?? "").trim();
+    if (toBoolean(req.body.isPublished ?? true) && imageUrl && !String(req.body.imageAlt ?? "").trim()) {
+      throw new HttpError(422, "Published destinations require image alt text");
+    }
+    const slug = slugify(name);
+    const ids = destinationIds(req.body.tourIds);
     const destination = await prisma.destination.create({
       data: {
-        slug,
-        destinationName,
+        slug, destinationName: name,
         description: String(req.body.destinationDescription ?? ""),
-        imageUrl,
+        area: req.body.area ?? "gondar", type: req.body.type ?? "other",
+        location: req.body.location ? String(req.body.location) : null,
+        alsoKnownAs: destinationJson(req.body.alsoKnownAs),
+        heroTitle: req.body.heroTitle ? String(req.body.heroTitle) : null,
+        heroAccent: req.body.heroAccent ? String(req.body.heroAccent) : null,
+        overview: destinationJson(req.body.overview),
+        highlights: destinationJson(req.body.highlights),
+        thingsToDo: destinationJson(req.body.thingsToDo),
+        imageUrl, imageAlt: req.body.imageAlt ? String(req.body.imageAlt) : null,
+        sourceReferences: destinationJson(req.body.sourceReferences),
+        editorialStatus: req.body.editorialStatus ?? "draft",
+        editorialSourceNotes: req.body.editorialSourceNotes ? String(req.body.editorialSourceNotes) : null,
+        isPublished: toBoolean(req.body.isPublished ?? true),
+        sortOrder: Number(req.body.sortOrder ?? 0),
+        tourLinks: { createMany: { data: ids.map((tourId) => ({ tourId })), skipDuplicates: true } },
       },
-      include: { _count: { select: { tours: true, tourLinks: true } } },
+      include: { _count: { select: { tours: true, tourLinks: true } }, tourLinks: { include: { tour: { select: { slug: true, tourName: true, isPublished: true } } } } },
     });
-
-    return ok(res, {
-      id: destination.id,
-      slug: destination.slug,
-      name: destination.destinationName,
-      description: destination.description,
-      imageUrl: destination.imageUrl,
-      tourCount: destination._count.tourLinks ?? destination._count.tours,
-    }, "Destination created successfully");
+    await saveEditorialReview("destination", destination.slug, req.body, req.admin?.id);
+    return ok(res, serializeDestination(destination, true), "Destination created successfully");
   }),
 );
 
@@ -803,30 +911,48 @@ adminRouter.put(
   validate(destinationUpdateSchema),
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
-    const imageUrl = req.file
-      ? urlForFile(req.file) || storedPathForFile(req.file)
-      : undefined;
-    const destinationName = String(req.body.destinationName ?? "");
-    const slug = slugify(destinationName);
-    const destination = await prisma.destination.update({
-      where: { id },
-      data: {
-        slug,
-        destinationName,
-        description: String(req.body.destinationDescription ?? ""),
-        ...(imageUrl ? { imageUrl } : {}),
-      },
-      include: { _count: { select: { tours: true, tourLinks: true } } },
+    const current = await prisma.destination.findUnique({ where: { id } });
+    if (!current) throw new HttpError(404, "Destination not found");
+    const imageUrl = req.file ? urlForFile(req.file) || storedPathForFile(req.file) : undefined;
+    if (toBoolean(req.body.isPublished ?? current.isPublished) && (imageUrl || current.imageUrl) && !String(req.body.imageAlt ?? current.imageAlt ?? "").trim()) {
+      throw new HttpError(422, "Published destinations require image alt text");
+    }
+    const ids = req.body.tourIds !== undefined ? destinationIds(req.body.tourIds) : undefined;
+    const updated = await prisma.$transaction(async (tx) => {
+      const row = await tx.destination.update({
+        where: { id },
+        data: {
+          ...(req.body.destinationName !== undefined ? { destinationName: String(req.body.destinationName).trim() } : {}),
+          ...(req.body.destinationDescription !== undefined ? { description: String(req.body.destinationDescription) } : {}),
+          ...(req.body.area !== undefined ? { area: req.body.area } : {}),
+          ...(req.body.type !== undefined ? { type: req.body.type } : {}),
+          ...(req.body.location !== undefined ? { location: req.body.location ? String(req.body.location) : null } : {}),
+          ...(req.body.alsoKnownAs !== undefined ? { alsoKnownAs: destinationJson(req.body.alsoKnownAs) } : {}),
+          ...(req.body.heroTitle !== undefined ? { heroTitle: req.body.heroTitle ? String(req.body.heroTitle) : null } : {}),
+          ...(req.body.heroAccent !== undefined ? { heroAccent: req.body.heroAccent ? String(req.body.heroAccent) : null } : {}),
+          ...(req.body.overview !== undefined ? { overview: destinationJson(req.body.overview) } : {}),
+          ...(req.body.highlights !== undefined ? { highlights: destinationJson(req.body.highlights) } : {}),
+          ...(req.body.thingsToDo !== undefined ? { thingsToDo: destinationJson(req.body.thingsToDo) } : {}),
+          ...(imageUrl !== undefined ? { imageUrl } : req.body.image === "" ? { imageUrl: null } : {}),
+          ...(req.body.imageAlt !== undefined ? { imageAlt: req.body.imageAlt ? String(req.body.imageAlt) : null } : {}),
+          ...(req.body.sourceReferences !== undefined ? { sourceReferences: destinationJson(req.body.sourceReferences) } : {}),
+          ...(req.body.editorialStatus !== undefined ? { editorialStatus: req.body.editorialStatus } : {}),
+          ...(req.body.editorialSourceNotes !== undefined ? { editorialSourceNotes: req.body.editorialSourceNotes ? String(req.body.editorialSourceNotes) : null } : {}),
+          ...(req.body.isPublished !== undefined ? { isPublished: toBoolean(req.body.isPublished) } : {}),
+          ...(req.body.sortOrder !== undefined ? { sortOrder: Number(req.body.sortOrder) } : {}),
+        },
+      });
+      if (ids !== undefined) {
+        await tx.tourDestinationJunction.deleteMany({ where: { destinationId: id } });
+        if (ids.length) await tx.tourDestinationJunction.createMany({ data: ids.map((tourId) => ({ destinationId: id, tourId })), skipDuplicates: true });
+      }
+      return tx.destination.findUnique({
+        where: { id: row.id },
+        include: { _count: { select: { tours: true, tourLinks: true } }, tourLinks: { include: { tour: { select: { slug: true, tourName: true, isPublished: true } } } } },
+      });
     });
-
-    return ok(res, {
-      id: destination.id,
-      slug: destination.slug,
-      name: destination.destinationName,
-      description: destination.description,
-      imageUrl: destination.imageUrl,
-      tourCount: destination._count.tourLinks ?? destination._count.tours,
-    }, "Destination updated successfully");
+    await saveEditorialReview("destination", updated!.slug, req.body, req.admin?.id);
+    return ok(res, { ...serializeDestination(updated!), editorialStatus: updated!.editorialStatus, editorialSourceNotes: updated!.editorialSourceNotes }, "Destination updated successfully");
   }),
 );
 
@@ -834,6 +960,8 @@ adminRouter.delete(
   "/destinations/:id",
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
+    const links = await prisma.tourDestinationJunction.count({ where: { destinationId: id } });
+    if (links > 0) throw new HttpError(409, "Remove related tours before deleting this destination");
     await prisma.destination.delete({ where: { id } });
     return ok(res, null, "Destination deleted successfully");
   }),
@@ -1164,6 +1292,16 @@ adminRouter.delete(
 
 // ---------------------------------------------------------------------------
 // 8. BLOG
+// Publication requires enough information to render a complete article.
+function assertJournalPublish(row: Record<string, unknown>, publishing: boolean) {
+  if (!publishing) return;
+  const description = row.blogDescription ?? row.description;
+  if (![row.blogTitle, description, row.content, row.author].every(v => typeof v === "string" && v.trim())) {
+    throw new HttpError(400, "Published articles require title, description, content and author");
+  }
+  if (row.imageUrl && !(typeof row.imageAlt === "string" && row.imageAlt.trim())) throw new HttpError(400, "Published images require alt text");
+}
+
 // ---------------------------------------------------------------------------
 
 adminRouter.get(
@@ -1185,6 +1323,7 @@ adminRouter.get(
       categoryId: p.categoryId,
       categoryName: p.category?.name ?? null,
       createdAt: p.createdAt,
+      isPublished: p.isPublished, author: p.author, imageAlt: p.imageAlt, publishedAt: p.publishedAt, updatedAt: p.updatedAt,
     })), "Blog posts fetched successfully");
   }),
 );
@@ -1210,6 +1349,7 @@ adminRouter.get(
       categoryId: post.categoryId,
       categoryName: post.category?.name ?? null,
       createdAt: post.createdAt,
+      isPublished: post.isPublished, author: post.author, imageAlt: post.imageAlt, publishedAt: post.publishedAt, updatedAt: post.updatedAt,
     }, "Blog post fetched successfully");
   }),
 );
@@ -1225,6 +1365,8 @@ adminRouter.post(
     const blogTitle = String(req.body.blogTitle ?? "");
     const slug = slugify(blogTitle);
 
+    const publishing = toBoolean(req.body.isPublished);
+    assertJournalPublish({ ...req.body, imageUrl }, publishing);
     const post = await prisma.blog.create({
       data: {
         slug,
@@ -1235,6 +1377,8 @@ adminRouter.post(
         href: req.body.href ? String(req.body.href) : null,
         categoryId: req.body.categoryId ? Number(req.body.categoryId) : null,
         createdAt: new Date(),
+        isPublished: publishing, author: req.body.author || null, imageAlt: req.body.imageAlt || null,
+        publishedAt: publishing ? new Date() : null,
       },
       include: { category: true },
     });
@@ -1250,6 +1394,7 @@ adminRouter.post(
       categoryId: post.categoryId,
       categoryName: post.category?.name ?? null,
       createdAt: post.createdAt,
+      isPublished: post.isPublished, author: post.author, imageAlt: post.imageAlt, publishedAt: post.publishedAt, updatedAt: post.updatedAt,
     }, "Blog post created successfully");
   }),
 );
@@ -1266,13 +1411,19 @@ adminRouter.put(
     const blogTitle = req.body.blogTitle
       ? String(req.body.blogTitle)
       : undefined;
-    const slug = blogTitle ? slugify(blogTitle) : undefined;
+    const existing = await prisma.blog.findUnique({ where: { id } });
+    if (!existing) throw new HttpError(404, "Blog post not found");
 
+    const publishing = req.body.isPublished === undefined ? existing.isPublished : toBoolean(req.body.isPublished);
+    assertJournalPublish({ ...existing, ...req.body, imageUrl: imageUrl ?? existing.imageUrl }, publishing);
     const post = await prisma.blog.update({
       where: { id },
       data: {
-        ...(slug ? { slug } : {}),
         ...(blogTitle ? { blogTitle } : {}),
+        isPublished: publishing,
+        ...(req.body.author !== undefined ? { author: req.body.author || null } : {}),
+        ...(req.body.imageAlt !== undefined ? { imageAlt: req.body.imageAlt || null } : {}),
+        publishedAt: publishing ? existing.publishedAt ?? new Date() : existing.publishedAt,
         ...(req.body.blogDescription !== undefined
           ? { description: String(req.body.blogDescription ?? "") }
           : {}),
@@ -1301,6 +1452,7 @@ adminRouter.put(
       categoryId: post.categoryId,
       categoryName: post.category?.name ?? null,
       createdAt: post.createdAt,
+      isPublished: post.isPublished, author: post.author, imageAlt: post.imageAlt, publishedAt: post.publishedAt, updatedAt: post.updatedAt,
     }, "Blog post updated successfully");
   }),
 );
@@ -1359,10 +1511,9 @@ adminRouter.put(
   validate(blogCategorySchema),
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
-    const slug = slugify(req.body.name);
     const category = await prisma.blogCategory.update({
       where: { id },
-      data: { name: req.body.name, slug },
+      data: { name: req.body.name },
       include: { _count: { select: { posts: true } } },
     });
 

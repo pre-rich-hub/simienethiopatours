@@ -20,6 +20,8 @@ To attach Slack / email / an agreed tool later: set `ERROR_WEBHOOK_URL` to that 
 
 ## Uptime
 
+**Procedure (hosting-logs + health poll):** until a third-party uptime product is named, treat hosting platform logs plus periodic `/health` polls as the uptime monitor. Ops (or a cron) should poll both health endpoints every 1–5 minutes and alert on two consecutive failures. Pair with the hosting-logs-only error path above.
+
 Two independent checks. The public site is built to render if the CMS API is down — **do not** make the frontend probe call the backend.
 
 | Check | URL | Expect |
@@ -33,6 +35,12 @@ Staging uses the staging origins from ops. Local: `http://localhost:3000/health`
 `/health` is `noindex` and listed in `robots.txt` `Disallow`. Point the monitor at it or at `/` — not at `/admin` or `/api/inquiry`.
 
 Interval: 1–5 minutes is enough. Alert the operator if the frontend probe fails twice, or if the backend probe fails while they expect CMS / admin / chat to be live.
+
+```bash
+# Local / staging poll examples
+curl -fsS "$FRONTEND_ORIGIN/health"
+curl -fsS "$NEXT_PUBLIC_API_URL/health"
+```
 
 ## Local rehearsal — 2026-09-12
 

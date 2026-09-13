@@ -21,7 +21,7 @@ This document records the principles used for the build. The supplied PDFs and m
 
 ## Photography system
 
-All production images are real photographs downloaded from Wikimedia Commons. Source, author and license are listed on `/photo-credits`. Images are locally hosted for stability and optimized by Next Image. Destination images are never presented as company-owned or as photographs of a particular departure.
+Production photographs are locally hosted and optimized by Next Image. The source-of-truth rights manifest is `lib/photo-credits.ts`, rendered on the public `/photo-credits` page and referenced from Terms. It records every shipped photograph (local filename, dimensions, research source, and rights-verification status). Scenic files inherited without exact Wikimedia File: pages stay `verification-required` — category URLs are research starting points, not attribution. Operator-supplied Tevan portraits remain pending written photographer/permission filing. Destination images are never presented as company-owned or as photographs of a particular departure. Brand logo PNGs are operator marks, not third-party photographs, and are omitted from the scenic rights list.
 
 ## Patterns used
 

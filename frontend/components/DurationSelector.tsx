@@ -4,16 +4,19 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight } from "@/components/Icon";
-import { homeClarityCollections } from "@/lib/home-cards";
+import { ArrowRight, ArrowUpRight, Compass, Mountain } from "@/components/Icon";
+import type { HomeClarityCollection } from "@/lib/home-cards";
+import { cardBlurb } from "@/lib/card-blurb";
 import { buttonVariants } from "@/components/ui/button";
 
-type ClarityCopy = Record<string, { label: string } & Record<string, { title?: string; summary?: string }>>;
+type ClarityCopy = Record<string, { label: string }>;
 
-export function DurationSelector() {
+export function DurationSelector({ collections: homeClarityCollections }: { collections: readonly HomeClarityCollection[] }) {
   const t = useTranslations("cta");
   const tNav = useTranslations("nav");
   const tHome = useTranslations("home");
+  const tBooking = useTranslations("booking");
+  const tGondar = useTranslations("gondarExperiences");
   const clarity = tHome.raw("clarity" as never) as ClarityCopy;
   const [active, setActive] = useState(0);
   const collection = homeClarityCollections[active];
@@ -75,29 +78,49 @@ export function DurationSelector() {
         key={collection.id}
       >
         <div className="journey-discovery__grid">
-          {collection.cards.map((card, cardIndex) => (
-            <article className="journey-choice-card" key={card.title}>
-              <Link className="journey-choice-card__image" href={card.href} aria-label={tNav("exploreNamed", { name: collectionCopy?.[card.id]?.title ?? card.title })}>
-                <Image
-                  src={card.image}
-                  alt={card.imageAlt}
-                  fill
-                  sizes="(max-width: 720px) 82vw, (max-width: 1000px) 340px, 31vw"
-                />
-                <span className="journey-choice-card__duration">{collectionCopy?.label ?? collection.label}</span>
-                <span className="journey-choice-card__number">0{cardIndex + 1}</span>
-                <div className="journey-choice-card__title">
-                  <h3>{collectionCopy?.[card.id]?.title ?? card.title}</h3>
-                </div>
-              </Link>
-              <div className="journey-choice-card__body">
-                <p>{collectionCopy?.[card.id]?.summary ?? card.summary}</p>
-                <Link className="journey-choice-card__link" href={card.href}>
-                  {t("exploreJourney")} <ArrowRight />
+          {collection.cards.map((card, cardIndex) => {
+            const summary = cardBlurb(card.summary, 130);
+            return (
+              <article className="journey-choice-card" key={card.title}>
+                <Link className="journey-choice-card__image" href={card.href} locale={card.locale} aria-label={tNav("exploreNamed", { name: card.title })}>
+                  {card.image && <Image
+                    src={card.image}
+                    alt={card.imageAlt}
+                    fill
+                    sizes="(max-width: 720px) 82vw, (max-width: 1000px) 340px, 31vw"
+                  />}
+                  <span className="journey-choice-card__duration">{card.duration || collectionCopy?.label || collection.label}</span>
+                  <span className="journey-choice-card__number">0{cardIndex + 1}</span>
+                  <div className="journey-choice-card__title">
+                    {card.style ? <span>{card.style}</span> : null}
+                    <h3>{card.title}</h3>
+                  </div>
                 </Link>
-              </div>
-            </article>
-          ))}
+                <div className="journey-choice-card__body">
+                  <p>{summary}</p>
+                  {(card.difficulty || card.fit) && (
+                    <div className="journey-choice-card__facts">
+                      {card.difficulty ? (
+                        <div>
+                          <Mountain />
+                          <span><small>{tBooking("difficulty")}</small><b>{card.difficulty}</b></span>
+                        </div>
+                      ) : null}
+                      {card.fit ? (
+                        <div>
+                          <Compass />
+                          <span><small>{tGondar("bestFor")}</small><b>{card.fit}</b></span>
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
+                  <Link className="journey-choice-card__link" href={card.href} locale={card.locale}>
+                    {t("exploreJourney")} <ArrowRight />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
 

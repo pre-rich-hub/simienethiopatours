@@ -2,115 +2,8 @@ import { Router } from "express";
 import { prisma } from "../../config/database.js";
 import { HttpError } from "../../middleware/error.middleware.js";
 import { ok } from "../../utils/api-response.js";
-import {
-  decimalToNumber,
-  parseJsonArray,
-  parseJsonObject,
-  setPublicCache,
-} from "../../utils/serializers.js";
-
-type TourRow = {
-  id: number;
-  slug: string;
-  tourName: string;
-  heroTitle: string | null;
-  heroAccent: string | null;
-  image: string | null;
-  imageAlt: string | null;
-  duration: string | null;
-  style: string | null;
-  difficulty: string | null;
-  fit: string | null;
-  inquiry: string | null;
-  notice: string | null;
-  route: string | null;
-  facts: string | null;
-  introduction: string | null;
-  highlights: string | null;
-  preparation: string | null;
-  related: string | null;
-  overview: string | null;
-  included: string | null;
-  excluded: string | null;
-  itinerary: string | null;
-  journeyMap: string | null;
-  adultPrice: unknown;
-  childPrice: unknown;
-  discount: string | null;
-  rating: unknown;
-  noOfRates: number | null;
-  isFeatured: boolean | null;
-  isPublished: boolean;
-  sortOrder: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// Card shape for list endpoints: enough for a tile, no itinerary/editorial
-// payload.
-function serializeCard(tour: Partial<TourRow> & Pick<TourRow, "slug" | "tourName" | "isFeatured">) {
-  return {
-    slug: tour.slug,
-    tourName: tour.tourName,
-    image: tour.image ?? null,
-    duration: tour.duration ?? null,
-    style: tour.style ?? null,
-    difficulty: tour.difficulty ?? null,
-    fit: tour.fit ?? null,
-    summary: tour.overview ?? null,
-    isFeatured: Boolean(tour.isFeatured),
-    adultPrice: decimalToNumber(tour.adultPrice),
-    childPrice: decimalToNumber(tour.childPrice),
-    rating: decimalToNumber(tour.rating),
-  };
-}
-
-// Full detail: editorial JSON columns parsed back into arrays/objects.
-function serializeDetail(tour: TourRow) {
-  return {
-    id: tour.id,
-    slug: tour.slug,
-    tourName: tour.tourName,
-    heroTitle: tour.heroTitle,
-    heroAccent: tour.heroAccent,
-    image: tour.image,
-    imageAlt: tour.imageAlt,
-    duration: tour.duration,
-    style: tour.style,
-    difficulty: tour.difficulty,
-    fit: tour.fit,
-    inquiry: tour.inquiry,
-    notice: tour.notice,
-    route: parseJsonArray<string>(tour.route),
-    facts: parseJsonArray<{ label: string; value: string }>(tour.facts),
-    introduction: parseJsonArray<string>(tour.introduction),
-    highlights: parseJsonArray<{ title: string; body: string }>(tour.highlights),
-    preparation: parseJsonArray<string>(tour.preparation),
-    related: parseJsonArray<{ title: string; body: string; href?: string }>(tour.related),
-    overview: tour.overview,
-    included: parseJsonArray<string>(tour.included),
-    excluded: parseJsonArray<string>(tour.excluded),
-    itinerary: parseJsonArray<{
-      title: string;
-      subtitle?: string;
-      paragraphs: string[];
-      overnight?: string;
-      notes?: string[];
-      stages?: { label: string; body: string }[];
-    }>(tour.itinerary),
-    journeyMap: tour.journeyMap,
-    adultPrice: decimalToNumber(tour.adultPrice),
-    childPrice: decimalToNumber(tour.childPrice),
-    discount: tour.discount,
-    rating: decimalToNumber(tour.rating),
-    noOfRates: tour.noOfRates,
-    isFeatured: Boolean(tour.isFeatured),
-    isPublished: tour.isPublished,
-    sortOrder: tour.sortOrder,
-    createdAt: tour.createdAt,
-    updatedAt: tour.updatedAt,
-  };
-}
+import { setPublicCache } from "../../utils/serializers.js";
+import { serializeCard, serializeDetail } from "./tour.serializers.js";
 
 // Used by both the card and detail shapes; keeps the select list in one place.
 const tourSelect = {
@@ -124,6 +17,7 @@ const tourSelect = {
   duration: true,
   style: true,
   difficulty: true,
+  journeyType: true,
   fit: true,
   inquiry: true,
   notice: true,
@@ -134,6 +28,11 @@ const tourSelect = {
   preparation: true,
   related: true,
   overview: true,
+  summary: true,
+  itineraryIntro: true,
+  itineraryNotes: true,
+  destinationId: true,
+  destinations: { select: { destinationId: true } },
   included: true,
   excluded: true,
   itinerary: true,
@@ -156,7 +55,7 @@ export const toursRouter = Router();
 toursRouter.get("/", async (_req, res, next) => {
   try {
     const tours = await prisma.tour.findMany({
-      where: { isPublished: true },
+      where: { isPublished: true, editorialStatus: "published" },
       select: tourSelect,
       orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
     });
@@ -171,7 +70,7 @@ toursRouter.get("/", async (_req, res, next) => {
 toursRouter.get("/featured", async (_req, res, next) => {
   try {
     const tours = await prisma.tour.findMany({
-      where: { isPublished: true, isFeatured: true },
+      where: { isPublished: true, editorialStatus: "published", isFeatured: true },
       select: tourSelect,
       orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
     });
@@ -186,7 +85,7 @@ toursRouter.get("/featured", async (_req, res, next) => {
 toursRouter.get("/slug/:slug", async (req, res, next) => {
   try {
     const tour = await prisma.tour.findFirst({
-      where: { slug: req.params.slug, isPublished: true },
+      where: { slug: req.params.slug, isPublished: true, editorialStatus: "published" },
       select: tourSelect,
     });
     if (!tour) throw new HttpError(404, "Tour not found");

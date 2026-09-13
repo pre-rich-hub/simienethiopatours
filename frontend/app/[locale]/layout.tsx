@@ -8,6 +8,8 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { jsonLdScript, organizationJsonLd } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
 
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

@@ -1,3 +1,4 @@
+import { publicCatalogueRouter } from "./modules/catalog/public-catalogue.routes.js";
 import type { Express } from "express";
 import { healthRouter } from "./modules/health/health.routes.js";
 import { assistantRouter } from "./modules/assistant/assistant.routes.js";
@@ -16,6 +17,7 @@ import { contactsRouter } from "./modules/public-forms/contacts.routes.js";
 import { subscribersRouter } from "./modules/public-forms/subscribers.routes.js";
 
 export function registerRoutes(app: Express) {
+  app.use("/api/v1/catalogue", publicCatalogueRouter);
   app.use("/health", healthRouter);
   app.use("/api/v1/assistant", assistantRouter);
   app.use("/api/v1/testimonials", contentRouter);

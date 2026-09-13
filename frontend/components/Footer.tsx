@@ -4,13 +4,22 @@ import { ArrowUpRight, Mail, Phone } from "@/components/Icon";
 import { BrandMark } from "./BrandMark";
 import { NewsletterForm } from "./NewsletterForm";
 import { FacebookBadge, InstagramBadge, TiktokBadge, XBadge, YoutubeBadge } from "./SocialBadges";
-import { site } from "@/lib/site";
+import { site, verifiedSocialLinks, type SocialNetwork } from "@/lib/site";
+
+const socialBadges: Record<SocialNetwork, { label: string; Icon: typeof InstagramBadge }> = {
+  instagram: { label: "Instagram", Icon: InstagramBadge },
+  youtube: { label: "YouTube", Icon: YoutubeBadge },
+  facebook: { label: "Facebook", Icon: FacebookBadge },
+  tiktok: { label: "TikTok", Icon: TiktokBadge },
+  x: { label: "X", Icon: XBadge },
+};
 
 export async function Footer() {
   const t = await getTranslations("footer");
   const tCta = await getTranslations("cta");
   const tCommon = await getTranslations("common");
   const tNav = await getTranslations("nav");
+  const socials = verifiedSocialLinks();
 
   return (
     <footer className="footer bg-ink text-[rgba(250,248,241,.75)]">
@@ -25,13 +34,25 @@ export async function Footer() {
           <BrandMark onDark label={tCommon("homeAria")} />
           <p className="my-7 max-w-[360px] font-serif text-[22px] leading-[1.4]">{t("tagline")}</p>
           <Link className="text-link text-link--light" href="/plan">{tCta("planWithTevan")} <ArrowUpRight /></Link>
-          <div className="mt-[30px] flex gap-3.5" aria-label={tCommon("followUs")}>
-            <a className="inline-flex size-10 rounded-full transition-transform hover:-translate-y-[3px] hover:brightness-110" href={site.social.instagram} target="_blank" rel="noreferrer" aria-label={tCommon("followOn", { network: "Instagram" })}><InstagramBadge /></a>
-            <a className="inline-flex size-10 rounded-full transition-transform hover:-translate-y-[3px] hover:brightness-110" href={site.social.youtube} target="_blank" rel="noreferrer" aria-label={tCommon("followOn", { network: "YouTube" })}><YoutubeBadge /></a>
-            <a className="inline-flex size-10 rounded-full transition-transform hover:-translate-y-[3px] hover:brightness-110" href={site.social.facebook} target="_blank" rel="noreferrer" aria-label={tCommon("followOn", { network: "Facebook" })}><FacebookBadge /></a>
-            <a className="inline-flex size-10 rounded-full transition-transform hover:-translate-y-[3px] hover:brightness-110" href={site.social.tiktok} target="_blank" rel="noreferrer" aria-label={tCommon("followOn", { network: "TikTok" })}><TiktokBadge /></a>
-            <a className="inline-flex size-10 rounded-full transition-transform hover:-translate-y-[3px] hover:brightness-110" href={site.social.x} target="_blank" rel="noreferrer" aria-label={tCommon("followOn", { network: "X" })}><XBadge /></a>
-          </div>
+          {socials.length > 0 && (
+            <div className="mt-[30px] flex gap-3.5" aria-label={tCommon("followUs")}>
+              {socials.map(({ network, href }) => {
+                const { label, Icon } = socialBadges[network];
+                return (
+                  <a
+                    key={network}
+                    className="inline-flex size-10 rounded-full transition-transform hover:-translate-y-[3px] hover:brightness-110"
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={tCommon("followOn", { network: label })}
+                  >
+                    <Icon />
+                  </a>
+                );
+              })}
+            </div>
+          )}
         </div>
         <div className="flex flex-col items-start gap-3.5 text-xs [&_a]:inline-flex [&_a]:items-center [&_a]:gap-1.5 [&_a]:transition-colors hover:[&_a]:text-white max-[720px]:text-sm">
           <h3 className="mb-3 font-sans text-[10px] font-semibold tracking-[0.15em] text-white uppercase max-[720px]:text-[11px]">{t("discover")}</h3>
@@ -63,7 +84,7 @@ export async function Footer() {
       </div>
       <div className="shell flex min-h-[72px] items-center justify-between border-t border-white/12 text-[9px] tracking-[0.05em] max-[720px]:flex-col max-[720px]:items-start max-[720px]:gap-5 max-[720px]:py-[22px] max-[720px]:text-[11px]">
         <p>{t("copyright", { year: new Date().getFullYear(), operator: site.legalOperator })}</p>
-        <div className="flex gap-6"><Link href="/privacy">{t("privacy")}</Link><Link href="/terms">{t("terms")}</Link></div>
+        <div className="flex gap-6"><Link href="/journal">{tNav("journal")}</Link><Link href="/privacy">{t("privacy")}</Link><Link href="/terms">{t("terms")}</Link></div>
       </div>
     </footer>
   );

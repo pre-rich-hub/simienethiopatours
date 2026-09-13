@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { routing, type AppLocale } from "@/i18n/routing";
-import { site } from "@/lib/site";
+import { site, verifiedSocialLinks } from "@/lib/site";
 
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://gondarsimientours.com"
@@ -215,6 +215,7 @@ function postalAddress() {
 
 /** Organization / LocalBusiness / TravelAgency from verified NAP only. */
 export function organizationJsonLd() {
+  const socials = verifiedSocialLinks().map((entry) => entry.href);
   return {
     "@context": "https://schema.org",
     "@type": ["TravelAgency", "LocalBusiness"],
@@ -231,7 +232,26 @@ export function organizationJsonLd() {
     email: nap.email,
     address: postalAddress(),
     areaServed: ["Gondar", "Simien Mountains National Park", "Northern Ethiopia"],
-    sameAs: [site.tripadvisor, site.operatorSite],
+    sameAs: [site.tripadvisor, site.operatorSite, ...socials],
+  };
+}
+
+/** ContactPage for the journey planner (locale /contact redirects here). */
+export function contactPageJsonLd(locale: AppLocale = routing.defaultLocale) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: `Plan a journey | ${nap.name}`,
+    url: absoluteUrl(localePath("/plan", locale)),
+    mainEntity: {
+      "@type": "TravelAgency",
+      name: nap.name,
+      legalName: nap.legalOperator,
+      telephone: nap.telephone,
+      email: nap.email,
+      address: postalAddress(),
+      url: SITE_URL,
+    },
   };
 }
 
@@ -304,4 +324,33 @@ export function tourJsonLd({
   }
 
   return data;
+}
+
+export function breadcrumbJsonLd(items: Array<{ name: string; path: string; locale?: AppLocale }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(localePath(item.path, item.locale ?? routing.defaultLocale)),
+    })),
+  };
+}
+
+/** FAQPage for questions that are also visible on the page. No invented ratings or prices. */
+export function faqPageJsonLd(questions: Array<{ question: string; answer: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: questions.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
 }

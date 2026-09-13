@@ -10,11 +10,21 @@
     "outDir": "dist",
     "rootDir": "src",
     "resolveJsonModule": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "paths": {
-      "@/*": ["../frontend/*"]
-    }
+      "@/*": [
+        "../frontend/*"
+      ]
+    },
+    "rewriteRelativeImportExtensions": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

@@ -1,9 +1,10 @@
+import { getDestinations, destinationToPlace } from "@/lib/catalogue";
+import { getLocale } from "next-intl/server";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
-import { gondarPlacePath, gondarPlaceSummary, gondarPlaces } from "@/lib/gondar-destinations";
 import { site } from "@/lib/site";
 import { localeFromParam, pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -12,13 +13,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   return pageMetadata({
     locale: localeFromParam(locale),
-    title: "Gondar Destinations | Royal City, Heritage & Northern Extensions",
-    description: "Fifteen Gondar and northern-extension destinations — from Fasil Ghebbi and Kosoye to Lake Tana, Lalibela and Axum — each with its own page.",
+    title: "Gondar Destinations | Royal City & Heritage",
+    description: "Explore published Gondar city and countryside destinations.",
     path: "/gondar",
   });
 }
 
-export default function GondarPage() {
+export default async function GondarPage() {
+  const places = (await getDestinations(await getLocale(), "gondar")).map(destinationToPlace);
   return (
     <PageShell lightHeader={false}>
       <section className="page-hero--image simien-page-hero editorial-hero">
@@ -26,8 +28,8 @@ export default function GondarPage() {
         <div className="page-hero__content shell">
           <div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Gondar</span></div>
           <p className="eyebrow">Gondar destinations</p>
-          <h1 className="display">Fifteen places, <em>one royal city.</em></h1>
-          <p className="lead">From Fasil Ghebbi and Kosoye to Debark, Lake Tana, Lalibela and Axum. Choose a place to read more.</p>
+          <h1 className="display">Explore Gondar, <em>the royal city.</em></h1>
+          <p className="lead">Explore the city and nearby countryside. Choose a place to read more.</p>
         </div>
       </section>
 
@@ -38,17 +40,18 @@ export default function GondarPage() {
             { title: "Who we are", body: `${site.name} is based in Gondar. Tesema “Tevan” Mulualem and the ${site.legalOperator} team plan city days and onward travel into the Simien Mountains.` },
             { title: "Where this is", body: "Gondar is the historic royal city of northern Ethiopia and the usual starting point for Simien journeys. These pages cover the city, nearby highland viewpoints such as Kosoye, and northern extensions some travelers combine with Gondar." },
             { title: "How to use these pages", body: "Read a destination, then plan a city day, a Simien trek, or a combined journey with the local team.", href: "/plan", linkLabel: "Plan from Gondar" },
-          ]} />
+            { title: "Planning guide", body: "City time, heritage etiquette, combining Gondar with Simien, and northern extensions—practical answers before you inquire.", href: "/gondar/planning", linkLabel: "Read the Gondar planning guide" },
+          ]} columns={2} />
         </div>
       </section>
 
       <section className="section" id="destinations">
         <div className="shell">
           <div className="simien-photo-grid simien-photo-grid--3">
-            {gondarPlaces.map((place) => (
-              <Link className="simien-photo-card dest-card" href={gondarPlacePath(place.slug)} key={place.slug}>
+            {places.map((place) => (
+              <Link className="simien-photo-card dest-card" href={place.path} locale={place.locale} key={place.slug}>
                 <div className="simien-photo-card__image">
-                  <Image src={place.image} alt={place.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                  {place.image && <Image src={place.image} alt={place.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />}
                   <span className="simien-photo-card__shade" />
                   <div className="simien-photo-card__overlay">
                     <p className="simien-photo-card__eyebrow">{place.location.split(";")[0]}</p>
@@ -56,7 +59,7 @@ export default function GondarPage() {
                   </div>
                 </div>
                 <div className="simien-photo-card__body">
-                  <p>{gondarPlaceSummary(place)}</p>
+                  <p>{place.overview[0] ?? ""}</p>
                   <div className="simien-photo-card__footer">
                     <span className="simien-photo-card__explore">
                       About {place.name}

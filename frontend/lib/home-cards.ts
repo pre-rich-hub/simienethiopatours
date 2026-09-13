@@ -11,12 +11,17 @@ export type HomeHorizonCard = {
 };
 
 export type HomeClarityCard = {
+  locale?: "en" | "es" | "de" | "fr";
   id: string;
   title: string;
   summary: string;
   href: string;
   image: string;
   imageAlt: string;
+  duration?: string;
+  style?: string;
+  difficulty?: string;
+  fit?: string;
 };
 
 export type HomeClarityCollection = {
@@ -36,6 +41,7 @@ export type HomeSignatureJourney = {
 };
 
 export type HomeBeyondCard = {
+  locale?: "en" | "es" | "de" | "fr";
   id: string;
   title: string;
   tag: string;
@@ -70,7 +76,7 @@ export const homeHorizons: readonly HomeHorizonCard[] = [
     id: "ras-dashen",
     title: "Ras Dashen",
     tag: "High country",
-    short: "Ethiopia’s highest summit (also Ras Dejen; approximately 4,500+ m / ~4,543–4,550 m in source wording).",
+    short: "Ethiopia’s highest summit, also known as Ras Dejen, at approximately 4,500+ m.",
     detail: "A demanding Ambiko-based summit day on Challenge and expedition itineraries — success depends on conditions.",
     href: "/simien-mountains/ras-dashen",
     image: "/images/giant-lobelia.jpg",

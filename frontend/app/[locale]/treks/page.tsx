@@ -5,7 +5,8 @@ import { Link } from "@/i18n/navigation";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { JourneyPhotoCards } from "@/components/JourneyPhotoCards";
 import { PageShell } from "@/components/PageShell";
-import { journeyPackages } from "@/lib/journey-packages";
+import { getTours, tourToJourney } from "@/lib/catalogue";
+import { getLocale } from "next-intl/server";
 import { site } from "@/lib/site";
 import { messagePageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -18,6 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 const em = { em: (chunks: ReactNode) => <em>{chunks}</em> };
 
 export default async function TreksPage() {
+  const journeyPackages = (await getTours(await getLocale())).map(tourToJourney);
   const t = await getTranslations("treks");
   const tCommon = await getTranslations("common");
 
@@ -40,7 +42,8 @@ export default async function TreksPage() {
             { title: t("who"), body: t("whoBody", { name: site.name, operator: site.legalOperator }) },
             { title: t("what"), body: t("whatBody") },
             { title: t("how"), body: t("howBody"), href: "/plan", linkLabel: t("planThis") },
-          ]} />
+            { title: t("planningGuide"), body: t("planningGuideBody"), href: "/simien-mountains/planning", linkLabel: t("planningGuideLink") },
+          ]} columns={2} />
         </div>
       </section>
 

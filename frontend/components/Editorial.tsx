@@ -7,12 +7,14 @@ import { site } from "@/lib/site";
 import { buttonVariants } from "@/components/ui/button";
 
 export type Feature = { title: string; body: string; tag?: string; href?: string; linkLabel?: string; id?: string };
-export type ItineraryDay = { title: string; subtitle: string; paragraphs: string[]; overnight?: string; notes?: string[]; stages?: { label: string; body: string }[] };
+export type { TourDay as ItineraryDay } from "@/lib/tour-content";
+import type { TourDay as ItineraryDay } from "@/lib/tour-content";
 
 export async function EditorialHero({ eyebrow, title, accent, lead, image, parent }: {
   eyebrow: string; title: string; accent: string; lead: string;
   image?: { src: string; alt: string }; parent?: { label: string; href: string };
 }) {
+  if (image && !image.src) image = undefined;
   const tCommon = await getTranslations("common");
   const tNav = await getTranslations("nav");
   const crumbs = parent ?? { label: tNav("journeys"), href: "/treks" };
@@ -65,7 +67,7 @@ export function AtAGlance({ facts }: { facts: readonly { label: string; value: s
 export async function Itinerary({ days, id = "itinerary" }: { days: readonly ItineraryDay[]; id?: string }) {
   const t = await getTranslations("trek");
   return <div className="itinerary" id={id}>{days.map((day, index) => <details key={day.title} className="itinerary__day" open={index === 0}>
-    <summary><span className="itinerary__number">{t("day", { n: String(index + 1).padStart(2, "0") })}</span><span><strong>{day.title}</strong><small>{day.subtitle}</small></span><ChevronDown /></summary>
+    <summary><span className="itinerary__number">{t("day", { n: day.dayLabel ?? String(index + 1).padStart(2, "0") })}</span><span><strong>{day.title}</strong><small>{day.subtitle}</small></span><ChevronDown /></summary>
     <div className="itinerary__body">{day.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       {day.stages && <ol className="editorial-list">{day.stages.map((stage) => <li key={stage.label}><strong>{stage.label}</strong><p>{stage.body}</p></li>)}</ol>}
       {day.notes && <ul className="editorial-list">{day.notes.map((note) => <li key={note}>{note}</li>)}</ul>}

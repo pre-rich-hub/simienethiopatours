@@ -5,6 +5,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { ok } from "../../utils/api-response.js";
 import { validate } from "../../middleware/validate.middleware.js";
 import { publicFormLimiter } from "../../middleware/rate-limit.middleware.js";
+import { requestRetentionSweep } from "../../services/retention.service.js";
 
 export const subscribersRouter = Router();
 
@@ -19,6 +20,7 @@ subscribersRouter.post(
   publicFormLimiter,
   validate(subscriberCreateSchema),
   asyncHandler(async (req, res) => {
+    requestRetentionSweep();
     const email = String((req.body as { email: string }).email).toLowerCase();
 
     const existing = await prisma.subscriber.findUnique({ where: { email } });
@@ -34,7 +36,7 @@ subscribersRouter.post(
     } catch (err) {
       if (err && typeof err === "object" && "code" in err && err.code === "P2002") {
         const row = await prisma.subscriber.findUnique({ where: { email } });
-        return ok(res, { id: row?.id ?? existing?.id ?? 0, alreadySubscribed: true }, "Already subscribed");
+        return ok(res, { id: row?.id ?? 0, alreadySubscribed: true }, "Already subscribed");
       }
       throw err;
     }

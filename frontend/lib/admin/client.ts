@@ -1,3 +1,4 @@
+import { adminToast } from "@/lib/admin/toast";
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 const LOGIN_PATH = "/admin/login";
@@ -52,6 +53,7 @@ export async function adminRequestClient<T = unknown>(
   }
 
   const body = await res.json();
+  if (body.warning) adminToast("error", body.warning);
   return (body?.data ?? body) as T;
 }
 
@@ -91,5 +93,6 @@ export async function adminMutate<T = unknown>(
   }
 
   const body = await res.json();
+  if (body.warning) adminToast("error", body.warning);
   return (body?.data ?? body) as T;
 }

@@ -1,13 +1,18 @@
-import path from "node:path";
 import multer from "multer";
 import { env } from "../config/env.js";
 import { getStorageProvider } from "../services/storage/index.js";
 import type { UploadKind } from "../services/storage/types.js";
 import { HttpError } from "./error.middleware.js";
+import { isAllowedUploadMime } from "./upload-controls.js";
 
 export { UploadKind };
-
-const allowedExtensions = ["jpg", "jpeg", "png", "webp", "avif"];
+export {
+  ALLOWED_UPLOAD_EXTENSIONS,
+  exceedsUploadBudget,
+  isAllowedUploadMime,
+  maxUploadBytes,
+  sanitizeUploadFilename,
+} from "./upload-controls.js";
 
 function storageFailureMessage(plural: boolean): string {
   return plural
@@ -20,8 +25,7 @@ function createMulterUpload() {
     storage: multer.memoryStorage(),
     limits: { fileSize: env.MAX_UPLOAD_MB * 1024 * 1024 },
     fileFilter: (_req, file, cb) => {
-      const ext = path.extname(file.originalname).replace(".", "").toLowerCase();
-      if (allowedExtensions.includes(ext) && file.mimetype.startsWith("image/")) {
+      if (isAllowedUploadMime(file.mimetype, file.originalname)) {
         cb(null, true);
         return;
       }

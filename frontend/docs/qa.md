@@ -4,6 +4,13 @@ Launch rehearsal for **Gondar Simien Tours**. Run the same list on **local**, th
 
 Public routes use `/{locale}/…` (`localePrefix: "always"`). `/` must land on `/en`. Admin stays English at `/admin` with no locale prefix.
 
+Phase 0 route, screenshot, Lighthouse, API-down, and staging-blocker evidence is
+recorded in [`p0-t3-baseline.md`](p0-t3-baseline.md).
+
+## Lighthouse / performance baseline (recorded)
+
+Lab Lighthouse on local production build (`http://127.0.0.1:3100/en`, 2026-09-12) is recorded in [`p0-t3-baseline.md`](p0-t3-baseline.md) (mobile Performance 40 / a11y 94; desktop Performance 80 / a11y 89). Agreed CWV and image budgets live in [`performance.md`](performance.md). Optimization is continuous against those budgets; field CrUX after cutover remains the long-term gate.
+
 Staging and production hosts come from ops — use the origins in [`environments.md`](environments.md). Do not invent them.
 
 ## Viewports
@@ -12,6 +19,40 @@ Staging and production hosts come from ops — use the origins in [`environments
 | --- | --- | --- |
 | Desktop | ≥ 1101px | Mega menus, header language switcher, full planner grid |
 | Mobile | ≤ 720px | Hamburger menu, stacked planner, chat sheet, safe areas |
+
+## Verified public contact links (P1-T4)
+
+Checked against `lib/site.ts` (2026-09-13):
+
+| Link | Status |
+| --- | --- |
+| Phone `tel:+251956616969` | Verified constant |
+| Email `mailto:info@simienethiotours.com` | Verified constant |
+| WhatsApp `https://wa.me/251956616969` | Verified constant |
+| TripAdvisor | Verified Attraction_Review URL |
+| Operator site `https://simienethiotours.com/` | Verified constant |
+| Social Instagram | Verified `https://www.instagram.com/tesemaethiopiatour/` |
+| Social Facebook | Verified `https://www.facebook.com/tesema.travels.Ethiopia/` |
+| Social X / TikTok / YouTube | Empty — footer hides unverified networks |
+
+## Launch decisions (locked)
+
+| Decision | Choice |
+| --- | --- |
+| Booking model | Inquiry-only via `/plan` (no public booking create; unused BookingCard removed) |
+| `/contact` | Permanent redirect to `/plan`; ContactPage JSON-LD emitted on `/plan` |
+| Newsletter | Enabled in footer with consent + privacy path; unsubscribe via privacy email deletion |
+| AI assistant | `ASSISTANT_ENABLED=false` by default; enable with one env flip after eval passes |
+| Video | Explicitly deferred — no production video asset |
+| CSP | Draft headers in `next.config.ts` (API origin allowlisted); tighten before production |
+
+## Quality gates (local)
+
+```bash
+npm run typecheck && npm run lint && npm test && npm run qa:content && npm run content:locale-audit
+```
+
+Backend: `cd ../backend && npm test` (assistant context, eval-set structure, conversation).
 
 ## Public — home
 
@@ -83,10 +124,29 @@ Do not publish invented prices onto a live production tour.
 | Environment | Date | Result | Blockers |
 | --- | --- | --- | --- |
 | Local | 2026-09-12 | Partial pass — API-down fallbacks OK; API-up pairing blocked — see [Local rehearsal](#local-rehearsal-2026-09-12) and [API-up pairing](#api-up-pairing-2026-09-12) | No `backend/.env`, no `DATABASE_URL`, nothing on `:5000` or `:5432` |
+| Local staging | 2026-09-13 | Pass for migrate/seed/admin/export + locales — see [Local staging](#local-staging-2026-09-13) | No assigned remote staging host; admin publish cycle and live inquiry receipt still open |
 | Staging | | | Host not assigned |
 | Production | | | Not this pass |
 
 Staging sign-off is the P6 acceptance gate. Production still needs a separate pass after cutover — runbook: [`cutover.md`](cutover.md).
+
+## Local staging (2026-09-13)
+
+Local API-up rehearsal via `./scripts/staging-local-prep.sh` (Postgres container + migrate/seed/admin). Evidence also recorded in [`p4-cms-cutover.md`](p4-cms-cutover.md).
+
+| Check | Result |
+| --- | --- |
+| Migrations | Applied through `20260913090000_public_catalogue_journal` |
+| Seed | Approved catalogue loaded |
+| Admin bootstrap | Non-default admin created |
+| Catalogue locales | EN + published ES/DE/FR in public catalogue |
+| `npm run content:export` | `frontend/lib/generated/catalogue.json` with `"provenance": "cms-export"` |
+| Photo credits | All `lib/photo-credits.ts` entries verified; Commons files present |
+| Structured data | ContactPage JSON-LD on `/plan`; FAQ/Organization builders omit AggregateRating/prices (`seo.test.ts`) |
+| Assistant | Default-off; privacy discloses transcript/IP-hash; deletion via operator email |
+| Gates | `content:audit`, `content:drift`, `content:localization --strict`, `qa:content`, frontend/backend unit tests green locally |
+
+**Still open for remote staging / production:** assigned host DNS/certs, crawl of every sitemap URL, authenticated admin publish/unpublish on staging, live inquiry/newsletter receipt, GSC/Bing submit, production CDN/object storage, 48h post-launch watch.
 
 ## Local rehearsal (2026-09-12)
 
@@ -157,3 +217,24 @@ These match on paper. Confirm after someone adds `backend/.env` and starts Postg
 - Rate-limit skip checks `req.path === "/ready"` but readiness is `GET /health/ready`.
 
 **To finish this pairing:** copy `backend/.env.example` → `.env`, set a real `DATABASE_URL` / `JWT_SECRET`, `pnpm install && pnpm prisma:deploy && pnpm db:admin && pnpm dev`, then rerun the API-up rows above.
+
+## Local staging evidence (2026-09-13)
+
+| Check | Result |
+| --- | --- |
+| Postgres | podman `gst-postgres` on `:5432` |
+| Migrations | `prisma migrate deploy` — all applied through `20260913090000_public_catalogue_journal` |
+| Seed | 28 tours published, 32 destinations, gallery, blog drafts |
+| Admin | `npm run db:admin` created local admin |
+| Catalogue API | `GET /api/v1/catalogue` → 112 tours / 128 destinations (EN+ES+DE+FR) |
+| Health | `GET /health` → 200 |
+| Translations | `content:translations` + `content:localization --strict` → 0 missing |
+| Export | `content:export` provenance `cms-export` |
+| Audits | `content:audit`, `content:drift`, frontend `qa:content`, locale-audit green |
+| Tests | backend 40, frontend 7 vitest |
+| Photo credits | 10/10 verified (Commons + operator) |
+| Socials | Instagram + Facebook from operator site |
+| Assistant | Default `ASSISTANT_ENABLED=false`; context from public catalogue |
+| Booking | Inquiry-only; `/contact` → `/plan` with ContactPage JSON-LD |
+
+Production DNS, TLS, GSC/Bing, and 48-hour observation are deploy-time steps in [`cutover.md`](cutover.md).

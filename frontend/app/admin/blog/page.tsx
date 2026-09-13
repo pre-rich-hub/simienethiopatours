@@ -12,6 +12,7 @@ import {
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
 type BlogPost = {
+  isPublished: boolean; author: string | null; imageAlt: string | null;
   id: number;
   slug: string;
   blogTitle: string;
@@ -33,6 +34,9 @@ export default function AdminBlogPage() {
   const [editing, setEditing] = useState<BlogPost | null>(null);
   const [showForm, setShowForm] = useState(false);
 
+  const [isPublished, setIsPublished] = useState(false);
+  const [author, setAuthor] = useState("");
+  const [imageAlt, setImageAlt] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
   const [blogDescription, setBlogDescription] = useState("");
   const [content, setContent] = useState("");
@@ -59,6 +63,7 @@ export default function AdminBlogPage() {
 
   function openNew() {
     setEditing(null);
+    setIsPublished(false); setAuthor(""); setImageAlt("");
     setBlogTitle(""); setBlogDescription(""); setContent(""); setHref(""); setCategoryId("");
     setFile(null); setExistingImage(""); setFormError(null);
     setShowForm(true);
@@ -72,6 +77,7 @@ export default function AdminBlogPage() {
       const full = await adminRequestClient<BlogPost>(`/api/v1/admin/blog/${p.id}`);
       const row = full ?? p;
       setEditing(row);
+      setIsPublished(row.isPublished); setAuthor(row.author || ""); setImageAlt(row.imageAlt || "");
       setBlogTitle(row.blogTitle);
       setBlogDescription(row.description || "");
       setContent(row.content || "");
@@ -81,6 +87,7 @@ export default function AdminBlogPage() {
     } catch (err) {
       setFormError(err instanceof Error ? err.message : "Failed to load post");
       setEditing(p);
+      setIsPublished(p.isPublished); setAuthor(p.author || ""); setImageAlt(p.imageAlt || "");
       setBlogTitle(p.blogTitle);
       setBlogDescription(p.description || "");
       setContent(p.content || "");
@@ -101,6 +108,7 @@ export default function AdminBlogPage() {
       fd.append("blogTitle", blogTitle);
       fd.append("blogDescription", blogDescription);
       fd.append("content", content);
+      fd.append("isPublished", String(isPublished)); fd.append("author", author); fd.append("imageAlt", imageAlt);
       if (href) fd.append("href", href);
       if (categoryId) fd.append("categoryId", categoryId);
       if (file) fd.append("blogImage", file);
@@ -151,12 +159,19 @@ export default function AdminBlogPage() {
           <AdminCard title={editing ? "Edit post" : "New post"}>
             {formError && <AdminNotice variant="error" className="mb-4">{formError}</AdminNotice>}
             <form onSubmit={handleSubmit}>
+              <AdminField label="Publication">
+                <AdminSelect value={String(isPublished)} onChange={e => setIsPublished(e.target.value === "true")}>
+                  <option value="false">Draft</option><option value="true">Published</option>
+                </AdminSelect>
+              </AdminField>
+              <AdminField label="Author"><AdminInput required={isPublished} value={author} onChange={e => setAuthor(e.target.value)} /></AdminField>
+              <AdminField label="Image alt text"><AdminInput value={imageAlt} onChange={e => setImageAlt(e.target.value)} /></AdminField>
               <AdminField label="Title" className={adminFormSection}>
                 <AdminInput required value={blogTitle} onChange={(e) => setBlogTitle(e.target.value)} />
               </AdminField>
 
               {editing && (
-                <AdminField label="Slug (auto-generated)">
+                <AdminField label="Slug (stable URL)">
                   <AdminInput readOnly value={editing.slug} />
                 </AdminField>
               )}
@@ -213,7 +228,7 @@ export default function AdminBlogPage() {
                 <AdminTd>
                   {p.imageUrl && <img className={adminThumb} src={p.imageUrl} alt={p.blogTitle} />}
                 </AdminTd>
-                <AdminTd className="font-semibold">{p.blogTitle}</AdminTd>
+                <AdminTd className="font-semibold">{p.blogTitle} · {p.isPublished ? "Published" : "Draft"}</AdminTd>
                 <AdminTd slug>{p.slug}</AdminTd>
                 <AdminTd>{p.categoryName || "—"}</AdminTd>
                 <AdminTd>{new Date(p.createdAt).toLocaleDateString()}</AdminTd>
