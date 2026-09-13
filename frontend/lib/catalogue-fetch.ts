@@ -1,1 +1,1 @@
-export { fetchCatalogue, CatalogueFetchError } from "../../backend/src/modules/catalog/public-catalogue-fetch";
+export { fetchCatalogue, CatalogueFetchError } from "@/lib/catalogue-contract/public-catalogue-fetch";
