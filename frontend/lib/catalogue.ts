@@ -1,9 +1,9 @@
-import { catalogueFromSnapshot } from "../../backend/src/modules/catalog/catalogue-snapshot";
+import { catalogueFromSnapshot } from "@/lib/catalogue-contract/catalogue-snapshot";
 import "server-only";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
-import { type PublicCatalogue, type PublicTour, type PublicDestination, type PublicPost } from "../../backend/src/modules/catalog/public-catalogue.schema";
+import { type PublicCatalogue, type PublicTour, type PublicDestination, type PublicPost } from "@/lib/catalogue-contract/public-catalogue.schema";
 import snapshot from "@/lib/generated/catalogue.json";
 import type { JourneyPackage } from "@/lib/journey-packages";
 import { fetchCatalogue, CatalogueFetchError } from "@/lib/catalogue-fetch";

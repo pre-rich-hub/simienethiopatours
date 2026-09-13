@@ -1,6 +1,6 @@
 // Type-only import keeps the server's validator out of the browser bundle.
-export type { TourContent, TourDay } from "../../backend/src/modules/catalog/tour-content";
-import type { TourContent } from "../../backend/src/modules/catalog/tour-content";
+export type { TourContent, TourDay } from "@/lib/catalogue-contract/tour-content";
+import type { TourContent } from "@/lib/catalogue-contract/tour-content";
 import { journeyPackages, type JourneyPackage } from "@/lib/journey-packages";
 
 type JourneyType = TourContent["journeyType"];
