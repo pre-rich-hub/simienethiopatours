@@ -39,6 +39,9 @@ model Tour {
   noOfRates     Int?     @map("no_of_rates")
   isFeatured    Boolean? @default(false) @map("is_featured")
   overview      String?  @db.Text
+  summary       String?  @db.Text
+  itineraryIntro String? @map("itinerary_intro") @db.Text
+  itineraryNotes String? @map("itinerary_notes") @db.Text // JSON string[]
   included      String?  @db.Text
   excluded      String?  @db.Text
   itinerary     String?  @db.Text
@@ -53,6 +56,9 @@ model Tour {
   style       String?  @db.VarChar(255)
   difficulty  String?  @db.VarChar(255)
   fit         String?  @db.VarChar(500)
+  journeyType String   @default("core-trek") @map("journey_type") @db.VarChar(50)
+  editorialStatus String @default("published") @map("editorial_status") @db.VarChar(20)
+  editorialSourceNotes String? @map("editorial_source_notes") @db.Text
   inquiry     String?  @db.VarChar(255)
   notice      String?  @db.Text
   route       String?  @db.Text // JSON string[]
@@ -69,6 +75,7 @@ model Tour {
 
   destination  Destination?         @relation(fields: [destinationId], references: [id], onDelete: SetNull)
   gallery      Gallery[]
+  media        TourMedia[]
   bookings     Booking[]
   categories   TourCategoryJunction[]
   destinations TourDestinationJunction[]
@@ -78,13 +85,30 @@ model Tour {
 }
 
 model Destination {
-  id              Int      @id @default(autoincrement())
-  slug            String   @unique @db.VarChar(255)
-  destinationName String   @map("destination_name")
-  description     String?  @db.Text
-  imageUrl        String?  @map("image_url")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  id               Int      @id @default(autoincrement())
+  slug             String   @unique @db.VarChar(255)
+  destinationName  String   @map("destination_name")
+  description      String?  @db.Text
+  area             String   @default("gondar") @db.VarChar(40)
+  type             String   @default("other") @db.VarChar(40)
+  location         String?  @db.Text
+  alsoKnownAs      String?  @map("also_known_as") @db.Text
+  heroTitle        String?  @map("hero_title") @db.VarChar(500)
+  heroAccent       String?  @map("hero_accent") @db.VarChar(500)
+  overview         String?  @db.Text
+  highlights       String?  @db.Text
+  thingsToDo       String?  @map("things_to_do") @db.Text
+  imageUrl         String?  @map("image_url")
+  imageAlt         String?  @map("image_alt") @db.VarChar(500)
+  sourceReferences String?  @map("source_references") @db.Text
+  editorialStatus String @default("published") @map("editorial_status") @db.VarChar(20)
+  editorialSourceNotes String? @map("editorial_source_notes") @db.Text
+  isPublished      Boolean  @default(true) @map("is_published")
+  sortOrder        Int      @default(0) @map("sort_order")
   tours           Tour[]
   tourLinks       TourDestinationJunction[]
+  media           DestinationMedia[]
 
   @@map("destinations")
 }
@@ -185,6 +209,11 @@ model Contact {
 // ---------------------------------------------------------------------------
 
 model Blog {
+  isPublished Boolean @default(false) @map("is_published")
+  author String? @db.VarChar(255)
+  imageAlt String? @map("image_alt") @db.VarChar(500)
+  publishedAt DateTime? @map("published_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
   id          Int           @id @default(autoincrement())
   slug        String        @unique @db.VarChar(255)
   blogTitle   String        @map("blog_title")
@@ -237,13 +266,81 @@ model Testimonial {
 
 model MediaAsset {
   id           String   @id @default(uuid()) @db.Uuid
-  content      Bytes
+  content      Bytes?
   mimeType     String   @map("mime_type")
   originalName String?  @map("original_name")
   size         Int
+  altText      String?  @map("alt_text") @db.VarChar(500)
+  attribution  String?  @db.Text
+  license      String?  @db.VarChar(255)
+  sourceUrl    String?  @unique @map("source_url") @db.Text
+  width        Int?
+  height       Int?
+  focalPoint   String?  @map("focal_point") @db.VarChar(100)
+  tourMedia    TourMedia[]
+  destinationMedia DestinationMedia[]
   createdAt    DateTime @default(now()) @map("created_at")
 
   @@map("media_assets")
+}
+
+model TourMedia {
+  tourId       Int    @map("tour_id")
+  mediaAssetId String @map("media_asset_id") @db.Uuid
+  role         String @default("hero") @db.VarChar(40)
+  sortOrder    Int    @default(0) @map("sort_order")
+  tour         Tour @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  mediaAsset   MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Cascade)
+  @@id([tourId, mediaAssetId, role])
+  @@map("tour_media")
+}
+
+model DestinationMedia {
+  destinationId Int @map("destination_id")
+  mediaAssetId  String @map("media_asset_id") @db.Uuid
+  role          String @default("hero") @db.VarChar(40)
+  sortOrder     Int    @default(0) @map("sort_order")
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+  mediaAsset    MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Cascade)
+  @@id([destinationId, mediaAssetId, role])
+  @@map("destination_media")
+}
+
+model ContentTranslation {
+  id          Int       @id @default(autoincrement())
+  entityType  String    @map("entity_type") @db.VarChar(40)
+  entitySlug  String    @map("entity_slug") @db.VarChar(255)
+  locale      String    @db.VarChar(10)
+  status      String    @default("missing") @db.VarChar(20)
+  content     String    @db.Text
+  sourceHash  String?   @map("source_hash") @db.VarChar(128)
+  reviewedAt  DateTime? @map("reviewed_at")
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  @@unique([entityType, entitySlug, locale])
+  @@index([locale, status])
+  @@map("content_translations")
+}
+
+model EditorialReview {
+  id                   Int       @id @default(autoincrement())
+  entityType           String    @map("entity_type") @db.VarChar(40)
+  entitySlug           String    @map("entity_slug") @db.VarChar(255)
+  status               String    @default("draft") @db.VarChar(20)
+  sourceNotes          String?   @map("source_notes") @db.Text
+  reviewerId           Int?      @map("reviewer_id")
+  routeApproved        Boolean   @default(false) @map("route_approved")
+  commercialApproved   Boolean   @default(false) @map("commercial_approved")
+  safetyApproved       Boolean   @default(false) @map("safety_approved")
+  translationApproved  Boolean   @default(false) @map("translation_approved")
+  reviewedAt           DateTime? @map("reviewed_at")
+  publishedAt          DateTime? @map("published_at")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+  @@unique([entityType, entitySlug])
+  @@index([status])
+  @@map("editorial_reviews")
 }
 
 // ---------------------------------------------------------------------------

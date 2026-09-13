@@ -1,3 +1,4 @@
+import path from "node:path";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
@@ -18,10 +19,21 @@ function apiImagePatterns(): NonNullable<NextConfig["images"]>["remotePatterns"]
   }
 }
 
+function apiOrigin(): string {
+  const raw = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  try {
+    return new URL(raw).origin;
+  } catch {
+    return "http://localhost:5000";
+  }
+}
+
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: path.resolve(__dirname, ".."),
   turbopack: {
+    root: path.resolve(__dirname, ".."),
     resolveAlias: {
-      "next-intl/config": "./i18n/request.ts",
+      "next-intl/config": path.resolve(__dirname, "i18n/request.ts"),
     },
   },
   images: {
@@ -31,6 +43,40 @@ const nextConfig: NextConfig = {
     qualities: [75],
     minimumCacheTTL: 60 * 60 * 24,
     remotePatterns: apiImagePatterns(),
+  },
+  /**
+   * Draft CSP for production hardening (P11-T2).
+   * Allows same-origin assets, the configured API origin (chat/CMS/admin fetch +
+   * /assets images), and Google Fonts if ever reintroduced. Tighten further
+   * before go-live once video/webhook hosts are known.
+   */
+  async headers() {
+    const api = apiOrigin();
+    const csp = [
+      "default-src 'self'",
+      `script-src 'self' 'unsafe-inline' 'unsafe-eval'`,
+      `style-src 'self' 'unsafe-inline'`,
+      `img-src 'self' data: blob: ${api}`,
+      `font-src 'self' data:`,
+      `connect-src 'self' ${api}`,
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "object-src 'none'",
+    ].join("; ");
+
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "Content-Security-Policy", value: csp },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
+    ];
   },
   async redirects() {
     const legacy = [
@@ -42,7 +88,6 @@ const nextConfig: NextConfig = {
       { source: "/ras-dashen", destination: "/treks/ras-dashen-challenge" },
       { source: "/whats-included", destination: "/treks" },
       { source: "/reviews", destination: "/" },
-      { source: "/photo-credits", destination: "/gallery" },
       { source: "/travel-guide", destination: "/plan" },
     ] as const;
 

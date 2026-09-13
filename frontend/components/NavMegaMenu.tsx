@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown } from "@/components/Icon";
 
 export type NavMegaMenuCard = {
+  locale?: "en" | "es" | "de" | "fr";
+  imageAlt?: string;
   slug: string;
   href: string;
   tag: string;
@@ -171,9 +173,9 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
 
           <div className="journey-menu__cards">
             {cards.map((card) => (
-              <Link className="journey-menu-card" href={card.href} key={card.slug}>
+              <Link className="journey-menu-card" href={card.href} locale={card.locale} key={card.slug}>
                 <div className="journey-menu-card__image">
-                  <Image src={card.image} alt="" fill sizes="(min-width: 1440px) 280px, 22vw" />
+                  {card.image && <Image src={card.image} alt={card.imageAlt ?? ""} fill sizes="(min-width: 1440px) 280px, 22vw" />}
                   <span>{card.tag}</span>
                 </div>
                 <h3>{card.title}</h3>

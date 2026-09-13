@@ -4,81 +4,48 @@ import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
-import { EditorialHero, Itinerary, SectionIntro, StorySection } from "@/components/Editorial";
-import { getJourneyPackage, journeyPackagePath, journeyPackages, type JourneyPackage, type JourneySegment } from "@/lib/journey-packages";
-import { jsonLdScript, localeFromParam, pageMetadata, tourJsonLd } from "@/lib/seo";
-
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return journeyPackages.map(({ slug }) => ({ slug }));
-}
+import { EditorialHero, Itinerary, SectionIntro, StorySection, PlanningCall, FeatureGrid } from "@/components/Editorial";
+import { getTourForRoute, getTours, getDestinations, requireContentLocale, tourToJourney } from "@/lib/catalogue";
+import { catalogueMetadata } from "@/lib/catalogue-seo";
+import { breadcrumbJsonLd, jsonLdScript, localeFromParam, tourJsonLd } from "@/lib/seo";
+const journeyPackagePath = (slug: string) => `/treks/${slug}`;
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale: localeParam, slug } = await params;
   const locale = localeFromParam(localeParam);
-  const journey = getJourneyPackage(slug);
-  if (!journey) return {};
-  const tNav = await getTranslations({ locale, namespace: "nav" });
-  if (slug === "simien-day-trip") {
-    const t = await getTranslations({ locale, namespace: "trek" });
-    const overview = t.raw("dayTrip.overview") as string[];
-    return pageMetadata({
-      locale,
-      title: `${t("dayTrip.name")} | ${tNav("journeys")}`,
-      description: overview[0] ?? "",
-      path: journeyPackagePath(journey.slug),
-      image: { url: journey.image, alt: journey.imageAlt },
-    });
-  }
-  return pageMetadata({
-    locale,
-    title: `${journey.name} | ${tNav("journeys")}`,
-    description: journey.overview[0] ?? "",
-    path: journeyPackagePath(journey.slug),
-    image: { url: journey.image, alt: journey.imageAlt },
-  });
-}
-
-function localizeDayTrip(journey: JourneyPackage, t: Awaited<ReturnType<typeof getTranslations<"trek">>>): JourneyPackage {
-  return {
-    ...journey,
-    name: t("dayTrip.name"),
-    duration: t("dayTrip.duration"),
-    route: t("dayTrip.route"),
-    difficulty: t("dayTrip.difficulty"),
-    heroTitle: t("dayTrip.heroTitle"),
-    heroAccent: t("dayTrip.heroAccent"),
-    overview: t.raw("dayTrip.overview"),
-    highlights: t.raw("dayTrip.highlights"),
-    segments: t.raw("dayTrip.segments") as JourneySegment[],
-    included: t.raw("dayTrip.included"),
-    excluded: t.raw("dayTrip.excluded"),
-  };
+  const record = await getTourForRoute(slug, locale);
+  if (!record) return {};
+  requireContentLocale(record, locale);
+  const journey = tourToJourney(record);
+  return catalogueMetadata({ locale, title: journey.name, description: record.summary ?? journey.overview[0] ?? "", path: record.path, image: { url: journey.image, alt: journey.imageAlt } }, record.availableLocales);
 }
 
 export default async function JourneyPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale: localeParam, slug } = await params;
   const locale = localeFromParam(localeParam);
-  const source = getJourneyPackage(slug);
+  const record = await getTourForRoute(slug, locale);
+  if (!record) notFound();
+  requireContentLocale(record, locale);
+  const source = tourToJourney(record);
   if (!source) notFound();
   const t = await getTranslations("trek");
   const tNav = await getTranslations("nav");
-  const journey = slug === "simien-day-trip" ? localizeDayTrip(source, t) : source;
+  const tCommon = await getTranslations("common");
+  const journey = source;
 
+  const allDestinations = await getDestinations(locale);
+  const destinations = allDestinations.filter(p => p.tourSlugs.includes(slug));
+  const publishedPaths = new Set([...(await getTours(locale)).map(t => t.path), ...allDestinations.map(p => p.path), "/plan", "/treks", "/gondar", "/simien-mountains", "/northern-ethiopia", "/about", "/gallery", "/journal"]);
+  const related = record.related.map(item => ({ ...item, href: item.href && (/^https?:\/\//.test(item.href) || publishedPaths.has(item.href)) ? item.href : undefined }));
   const lead = [journey.duration, journey.route, journey.difficulty].filter(Boolean).join(" · ");
 
   return (
-    <PageShell lightHeader={false}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(tourJsonLd({
-        name: journey.name,
-        description: journey.overview[0] ?? "",
-        path: journeyPackagePath(journey.slug),
-        locale,
-        image: journey.image,
-        duration: journey.duration,
-        route: journey.route,
-      })) }} />
+    <PageShell lightHeader={!journey.image}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript({ "@context": "https://schema.org", "@graph": [
+        tourJsonLd({ name: journey.name, description: journey.overview[0] ?? "", path: journeyPackagePath(journey.slug), locale, image: journey.image, duration: journey.duration, route: journey.route }),
+        breadcrumbJsonLd([{ name: tCommon("home"), path: "/", locale }, { name: tNav("journeys"), path: "/treks", locale }, { name: journey.name, path: journeyPackagePath(journey.slug), locale }]),
+      ] }) }} />
       <EditorialHero
         eyebrow={tNav("journeys")}
         title={journey.heroTitle}
@@ -88,6 +55,8 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
         parent={{ label: tNav("journeys"), href: "/treks" }}
       />
 
+      {journey.fit && <p className="shell content-note">{journey.fit}</p>}
+      {journey.facts.length > 0 && <dl className="shell">{journey.facts.map(f => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>}
       <StorySection id="overview" tag={t("overview")} title={journey.name} paragraphs={journey.overview} />
 
       {journey.highlights.length > 0 && (
@@ -95,10 +64,10 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
           <div className="shell">
             <SectionIntro tag={t("highlights")} title={t("highlights")} />
             <div className={`dest-highlights dest-highlights--${journey.highlights.length > 1 ? "2" : "1"}`}>
-              {journey.highlights.map((item, index) => (
-                <article className="dest-highlight" key={item}>
-                  <span className="eyebrow eyebrow--copper">{String(index + 1).padStart(2, "0")}</span>
-                  <p>{item}</p>
+              {record.highlights.map((item, index) => (
+                <article className="dest-highlight" key={`${index}-${item.title}`}>
+                  <span className="eyebrow eyebrow--copper">{item.title}</span>
+                  <p>{item.body}</p>
                 </article>
               ))}
             </div>
@@ -109,6 +78,7 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
       <section className={`section ${journey.highlights.length ? "" : "section--paper"}`} id="itinerary">
         <div className="shell">
           <SectionIntro tag={t("itinerary")} title={t("itinerary")} />
+          {journey.itineraryIntro && <p className="content-note">{journey.itineraryIntro}</p>}
           {journey.itineraryMode === "days" && journey.days && (
             <Itinerary days={journey.days} id="day-by-day" />
           )}
@@ -131,6 +101,8 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
         </div>
       </section>
 
+      {journey.itineraryNotes && <div className="shell content-note">{journey.itineraryNotes.map((note) => <p key={note}>{note}</p>)}</div>}
+
       <section className="section section--paper" id="included">
         <div className="shell editorial-grid">
           <div>
@@ -150,12 +122,15 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
             </ul>
           </div>
         </div>
-        <div className="shell content-note">
-          {journey.includedNote && <p>{journey.includedNote}</p>}
-          <p>{t("inclusionsNote")}</p>
-        </div>
+        {journey.includedNote && (
+          <div className="shell content-note"><p>{journey.includedNote}</p></div>
+        )}
       </section>
 
+      {journey.preparation.length > 0 && <section className="section shell"><SectionIntro tag={t("preparationTag")} title={t("preparationTitle")} /><ul className="editorial-list">{journey.preparation.map(item => <li key={item}>{item}</li>)}</ul></section>}
+      {destinations.length > 0 && <section className="section shell"><SectionIntro tag={t("destinationsTag")} title={t("destinationsTitle")} /><nav className="page-links">{destinations.map(p => <Link key={p.slug} href={p.path} locale={p.locale}>{p.name}</Link>)}</nav></section>}
+      {related.length > 0 && <section className="section shell"><FeatureGrid items={related} /></section>}
+      <PlanningCall title={journey.name} experience={record.inquiry ?? record.slug} />
       <p className="shell dest-back">
         <Link className="text-link" href="/treks">
           {t("allJourneys")} <ArrowUpRight />

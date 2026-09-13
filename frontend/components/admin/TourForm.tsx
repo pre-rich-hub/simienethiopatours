@@ -12,18 +12,12 @@ import {
   adminCheckGrid, adminCheckbox, adminCheckboxChecked, adminRepeater,
   adminImagePreview,
 } from "@/components/admin/ui";
+import { dayToForm, dayToDb, type TourDayForm } from "@/lib/admin/tour-day-form";
 import { useFilePreview } from "@/components/admin/useFilePreview";
 
 /* ── Types ────────────────────────────────────────────────────────── */
 
-type ItineraryDay = {
-  title: string;
-  subtitle: string;
-  paragraphs: string;
-  overnight: string;
-  notes: string;
-  stages: { label: string; body: string }[];
-};
+type ItineraryDay = TourDayForm;
 
 type Fact = { label: string; value: string };
 type TitleBody = { title: string; body: string };
@@ -42,8 +36,14 @@ type Form = {
   duration: string;
   style: string;
   difficulty: string;
+  journeyType: string;
+  editorialStatus: string;
+  editorialSourceNotes: string;
   fit: string;
   tourOverview: string;
+  summary: string;
+  itineraryIntro: string;
+  itineraryNotes: string[];
   inquiry: string;
   notice: string;
   heroTitle: string;
@@ -67,17 +67,17 @@ type Form = {
 };
 
 const EMPTY_DAY: ItineraryDay = {
-  title: "", subtitle: "", paragraphs: "", overnight: "", notes: "", stages: [],
+  title: "", subtitle: "", dayLabel: "", paragraphs: "", overnight: "", notes: "", stages: [],
 };
 
 const BLANK: Form = {
   tourTitle: "", tourDestination: "", tourDestinations: [], tourCategories: [],
   adultPrice: "", childPrice: "", tourDiscount: "", tourRating: "", tourReviews: "",
-  duration: "", style: "", difficulty: "", fit: "", tourOverview: "", inquiry: "", notice: "",
+  duration: "", style: "", difficulty: "", journeyType: "core-trek", editorialStatus: "draft", editorialSourceNotes: "", fit: "", tourOverview: "", inquiry: "", notice: "",
   heroTitle: "", heroAccent: "", imageAlt: "", isFeatured: false, isPublished: false,
   sortOrder: "0", tourImageFile: null, image: "", route: [], facts: [], introduction: [],
   highlights: [], preparation: [], related: [], tourIncluded: [], tourExcluded: [],
-  itinerary: [], tourMap: "",
+  itinerary: [], tourMap: "", summary: "", itineraryIntro: "", itineraryNotes: [],
 };
 
 /* ── Helpers ──────────────────────────────────────────────────────── */
@@ -100,30 +100,6 @@ function strToList(raw: string | null | undefined): string[] {
   } catch {
     return [];
   }
-}
-
-function dayToForm(raw: Record<string, unknown>): ItineraryDay {
-  return {
-    title: String(raw.title ?? ""),
-    subtitle: String(raw.subtitle ?? ""),
-    paragraphs: Array.isArray(raw.paragraphs) ? raw.paragraphs.join("\n\n") : String(raw.paragraphs ?? ""),
-    overnight: String(raw.overnight ?? ""),
-    notes: Array.isArray(raw.notes) ? raw.notes.join("\n") : String(raw.notes ?? ""),
-    stages: Array.isArray(raw.stages)
-      ? raw.stages.map((s: Record<string, unknown>) => ({ label: String(s.label ?? ""), body: String(s.body ?? "") }))
-      : [],
-  };
-}
-
-function dayToDb(d: ItineraryDay): Record<string, unknown> {
-  return {
-    title: d.title,
-    subtitle: d.subtitle,
-    paragraphs: d.paragraphs.split(/\n\n+/).map((s) => s.trim()).filter(Boolean),
-    overnight: d.overnight || undefined,
-    notes: d.notes.trim() ? d.notes.split(/\n+/).map((s) => s.trim()).filter(Boolean) : undefined,
-    stages: d.stages.length ? d.stages.filter((s) => s.label.trim()) : undefined,
-  };
 }
 
 /* ── List Repeater ────────────────────────────────────────────────── */
@@ -306,6 +282,9 @@ function ItineraryEditor({
             <AdminField label="Title">
               <AdminInput value={day.title} onChange={(e) => updateDay(i, { title: e.target.value })} />
             </AdminField>
+            <AdminField label="Day label (optional)" hint="For grouped days, e.g. 1–3 or 9–10. Leave empty for automatic numbering.">
+              <AdminInput value={day.dayLabel} onChange={(e) => updateDay(i, { dayLabel: e.target.value })} />
+            </AdminField>
             <AdminField label="Subtitle">
               <AdminInput value={day.subtitle} onChange={(e) => updateDay(i, { subtitle: e.target.value })} />
             </AdminField>
@@ -389,8 +368,14 @@ export default function TourForm({
       duration: String(initialData.duration ?? ""),
       style: String(initialData.style ?? ""),
       difficulty: String(initialData.difficulty ?? ""),
+      journeyType: String(initialData.journeyType ?? "core-trek"),
+      editorialStatus: String(initialData.editorialStatus ?? (initialData.isPublished ? "published" : "draft")),
+      editorialSourceNotes: String(initialData.editorialSourceNotes ?? ""),
       fit: String(initialData.fit ?? ""),
       tourOverview: String(initialData.overview ?? ""),
+      summary: String(initialData.summary ?? ""),
+      itineraryIntro: String(initialData.itineraryIntro ?? ""),
+      itineraryNotes: strToList(initialData.itineraryNotes as string | null),
       inquiry: String(initialData.inquiry ?? ""),
       notice: String(initialData.notice ?? ""),
       heroTitle: String(initialData.heroTitle ?? ""),
@@ -445,39 +430,45 @@ export default function TourForm({
     try {
       const fd = new FormData();
       fd.append("tourTitle", form.tourTitle);
-      if (form.tourDestination) fd.append("tourDestination", form.tourDestination);
-      if (form.tourDestinations.length) fd.append("tourDestinations", JSON.stringify(form.tourDestinations));
-      if (form.tourCategories.length) fd.append("tourCategories", JSON.stringify(form.tourCategories));
-      if (form.adultPrice) fd.append("adultPrice", form.adultPrice);
-      if (form.childPrice) fd.append("childPrice", form.childPrice);
-      if (form.tourDiscount) fd.append("tourDiscount", form.tourDiscount);
-      if (form.tourRating) fd.append("tourRating", form.tourRating);
-      if (form.tourReviews) fd.append("tourReviews", form.tourReviews);
+      fd.append("tourDestination", form.tourDestination);
+      fd.append("tourDestinations", JSON.stringify(form.tourDestinations));
+      fd.append("tourCategories", JSON.stringify(form.tourCategories));
+      fd.append("adultPrice", form.adultPrice);
+      fd.append("childPrice", form.childPrice);
+      fd.append("tourDiscount", form.tourDiscount);
+      fd.append("tourRating", form.tourRating);
+      fd.append("tourReviews", form.tourReviews);
       fd.append("isFeatured", String(form.isFeatured));
       fd.append("isPublished", String(form.isPublished));
       fd.append("sortOrder", form.sortOrder);
       fd.append("tourOverview", form.tourOverview);
-      if (form.inquiry) fd.append("inquiry", form.inquiry);
-      if (form.notice) fd.append("notice", form.notice);
-      if (form.heroTitle) fd.append("heroTitle", form.heroTitle);
-      if (form.heroAccent) fd.append("heroAccent", form.heroAccent);
-      if (form.imageAlt) fd.append("imageAlt", form.imageAlt);
-      if (form.duration) fd.append("duration", form.duration);
-      if (form.style) fd.append("style", form.style);
-      if (form.difficulty) fd.append("difficulty", form.difficulty);
-      if (form.fit) fd.append("fit", form.fit);
+      fd.append("summary", form.summary);
+      fd.append("itineraryIntro", form.itineraryIntro);
+      fd.append("itineraryNotes", JSON.stringify(form.itineraryNotes));
+      fd.append("inquiry", form.inquiry);
+      fd.append("notice", form.notice);
+      fd.append("heroTitle", form.heroTitle);
+      fd.append("heroAccent", form.heroAccent);
+      fd.append("imageAlt", form.imageAlt);
+      fd.append("duration", form.duration);
+      fd.append("style", form.style);
+      fd.append("difficulty", form.difficulty);
+      fd.append("journeyType", form.journeyType);
+      fd.append("editorialStatus", form.editorialStatus);
+      fd.append("editorialSourceNotes", form.editorialSourceNotes);
+      fd.append("fit", form.fit);
       if (form.tourImageFile) fd.append("tourImage", form.tourImageFile);
-      if (!form.tourImageFile && form.image) fd.append("image", form.image);
-      if (form.route.length) fd.append("route", JSON.stringify(form.route));
-      if (form.facts.length) fd.append("facts", JSON.stringify(form.facts));
-      if (form.introduction.length) fd.append("introduction", JSON.stringify(form.introduction));
-      if (form.highlights.length) fd.append("highlights", JSON.stringify(form.highlights));
-      if (form.preparation.length) fd.append("preparation", JSON.stringify(form.preparation));
-      if (form.related.length) fd.append("related", JSON.stringify(form.related));
-      if (form.tourIncluded.length) fd.append("tourIncluded", JSON.stringify(form.tourIncluded));
-      if (form.tourExcluded.length) fd.append("tourExcluded", JSON.stringify(form.tourExcluded));
-      if (form.itinerary.length) fd.append("tourItinerary", JSON.stringify(form.itinerary.map(dayToDb)));
-      if (form.tourMap) fd.append("tourMap", form.tourMap);
+      if (!form.tourImageFile) fd.append("image", form.image);
+      fd.append("route", JSON.stringify(form.route));
+      fd.append("facts", JSON.stringify(form.facts));
+      fd.append("introduction", JSON.stringify(form.introduction));
+      fd.append("highlights", JSON.stringify(form.highlights));
+      fd.append("preparation", JSON.stringify(form.preparation));
+      fd.append("related", JSON.stringify(form.related));
+      fd.append("tourIncluded", JSON.stringify(form.tourIncluded));
+      fd.append("tourExcluded", JSON.stringify(form.tourExcluded));
+      fd.append("tourItinerary", JSON.stringify(form.itinerary.map(dayToDb)));
+      fd.append("tourMap", form.tourMap);
 
       const path = isNew
         ? `/api/v1/admin/tours`
@@ -493,8 +484,9 @@ export default function TourForm({
       }
     } catch (err) {
       setNotice({ type: "error", msg: err instanceof Error ? err.message : "Save failed" });
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
   }, [form, isNew, tourId, router]);
 
   return (
@@ -509,11 +501,16 @@ export default function TourForm({
             <AdminInput required value={form.tourTitle} onChange={(e) => set("tourTitle", e.target.value)} />
           </AdminField>
           {!isNew && typeof initialData?.slug === "string" && (
-            <AdminField label="Slug (auto-generated)">
+            <AdminField label="Stable URL slug (unchanged when renamed)">
               <AdminInput readOnly value={initialData.slug} />
             </AdminField>
           )}
         </div>
+        <div className={adminFormGrid} style={{ marginBottom: 20 }}>
+          <AdminField label="Journey type"><select value={form.journeyType} onChange={(e) => set("journeyType", e.target.value)}><option value="core-trek">Core trek</option><option value="summit-expedition">Summit expedition</option><option value="wildlife-journey">Wildlife journey</option><option value="photography-journey">Photography journey</option><option value="gondar-cultural">Gondar cultural experience</option><option value="seasonal-festival">Seasonal festival journey</option><option value="private-combination">Private combination journey</option></select></AdminField>
+          <AdminField label="Editorial status"><select value={form.editorialStatus} onChange={(e) => set("editorialStatus", e.target.value)}><option value="draft">Draft</option><option value="reviewed">Reviewed</option><option value="published">Published</option></select></AdminField>
+        </div>
+        <AdminField label="Private source/review notes" hint="Never shown to travelers, search engines, or the assistant."><AdminTextarea value={form.editorialSourceNotes} rows={2} onChange={(e) => set("editorialSourceNotes", e.target.value)} /></AdminField>
         <div className={adminFormGrid} style={{ marginBottom: 20 }}>
           <AdminField label="Destination" error={fieldErrors.tourDestination}>
             <AdminSelect value={form.tourDestination} onChange={(e) => set("tourDestination", e.target.value)} placeholder="Select destination">
@@ -599,6 +596,9 @@ export default function TourForm({
             <AdminInput value={form.fit} placeholder="e.g. Active first-time trekkers" onChange={(e) => set("fit", e.target.value)} />
           </AdminField>
         </div>
+        <AdminField label="Summary" hint="Short card and search description. The overview below holds the full story.">
+          <AdminTextarea value={form.summary} rows={2} onChange={(e) => set("summary", e.target.value)} />
+        </AdminField>
         <AdminField label="Overview">
           <AdminTextarea value={form.tourOverview} rows={4} onChange={(e) => set("tourOverview", e.target.value)} />
         </AdminField>
@@ -607,8 +607,8 @@ export default function TourForm({
           <AdminField
             label="Visibility"
             hint={form.isPublished
-              ? "Published tours appear on the public site when the API is healthy."
-              : "Draft tours stay in admin only. They will not appear on the public site."}
+              ? "Published tours are available through the public API. Detail-page CMS cutover is a later production-plan task."
+              : "Draft tours are excluded from the public API. Existing bundled detail pages remain until CMS cutover."}
           >
             <div className="flex items-center gap-3">
               <AdminToggle checked={form.isPublished} onChange={(v) => set("isPublished", v)} label="Published" />
@@ -714,8 +714,8 @@ export default function TourForm({
 
       {/* Introduction */}
       <div className={adminFormSection}>
-        <h3 className={adminFormTitle}>Introduction</h3>
-        <p className={adminFormDesc}>Opening paragraphs for &ldquo;The journey&rdquo; section.</p>
+        <h3 className={adminFormTitle}>Additional overview paragraphs</h3>
+        <p className={adminFormDesc}>Continuation of the overview; do not repeat the summary or opening paragraph.</p>
         <ListRepeater value={form.introduction} onChange={(v) => set("introduction", v)} placeholder="Paragraph" />
       </div>
 
@@ -724,7 +724,13 @@ export default function TourForm({
       {/* Itinerary */}
       <div className={adminFormSection}>
         <h3 className={adminFormTitle}>Itinerary</h3>
-        <p className={adminFormDesc}>Day-by-day breakdown. Paragraphs split on blank lines. Stages are optional sub-stops within a day.</p>
+        <p className={adminFormDesc}>Use one entry per day. For a day trip or half/full-day alternatives, use one programme entry with labelled stages. Paragraphs split on blank lines.</p>
+        <AdminField label="Itinerary introduction" hint="For example: Sample 3-day outline, adapted at booking.">
+          <AdminTextarea value={form.itineraryIntro} rows={2} onChange={(e) => set("itineraryIntro", e.target.value)} />
+        </AdminField>
+        <AdminField label="Itinerary notes" hint="Return logistics, shorter variants and other schedule-specific qualifications.">
+          <ListRepeater value={form.itineraryNotes} onChange={(v) => set("itineraryNotes", v)} placeholder="Itinerary note" />
+        </AdminField>
         <ItineraryEditor value={form.itinerary} onChange={(v) => set("itinerary", v)} />
       </div>
 

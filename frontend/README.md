@@ -89,6 +89,59 @@ frontend/
 
 ---
 
+## Content source of truth
+
+The production content policy is **edit once, publish once**. After the CMS
+cutover in Phases 2–4 of [`productionPlan.md`](productionPlan.md), the
+database and admin UI are the editable source of truth for tours,
+destinations, gallery entries, testimonials, and journal/blog posts. Feature
+work must not require an editor to repeat the same change in a database record
+and a TypeScript catalogue.
+
+Content ownership is divided as follows:
+
+| Content | Authoritative owner |
+| --- | --- |
+| Tours, destinations, gallery, testimonials, and journal/blog posts | Database, edited through admin after CMS cutover |
+| Business name, legal operator, verified contact details, canonical site URLs, and brand asset paths | [`lib/site.ts`](lib/site.ts) |
+| Interface labels and other non-CMS translations | Repository message files in [`messages/`](messages/) until localized CMS fields are implemented |
+| Contacts, bookings, subscribers, admin accounts, and assistant sessions | Operational database only; never seed or fallback content |
+
+### Transition rule
+
+The current repository catalogues are legacy bootstrap and emergency-fallback
+inputs. The current backend seed imports those frontend modules and overwrites
+most matching content fields when it is rerun. Therefore:
+
+- Do not make independent production CMS edits until the reproducible snapshot
+  pipeline in P2-T5 is complete.
+- Do not run the full content seed against an established production database.
+  Use it only to bootstrap an empty environment or as part of an explicitly
+  reviewed disaster-recovery procedure.
+- During the migration, treat catalogue changes as controlled release work;
+  do not maintain a separate admin version and bundled TypeScript version.
+- After cutover, make public content changes through admin only. Repository
+  fallback files become generated artifacts and must not be edited manually.
+
+### Approved fallback snapshot
+
+Tours, destinations and journal now use the shared public CMS catalogue. Run
+`npm run content:export` from `backend` after reviewing and publishing the content
+release. It writes a deterministic, validated, versioned JSON snapshot consumed
+by the frontend emergency fallback. Commit this generated artifact with the
+release; never edit it by hand. Private review and operational records are excluded.
+
+The initial committed snapshot has development-only `bootstrap` provenance.
+Production requires a `cms-export` snapshot to show fallback catalogue records.
+Successful empty responses and missing records never resurrect bootstrap content.
+Legacy seed/catalogue adapters remain bootstrap tooling; gallery/testimonial export
+consolidation remains separate work.
+
+See [Phase 4 CMS cutover](docs/p4-cms-cutover.md) for the publication boundary,
+translation policy, cache invalidation, deployment order and verification limits.
+
+---
+
 ## Getting started
 
 ```bash
@@ -114,13 +167,17 @@ Full local / staging / production matrix: [`docs/environments.md`](docs/environm
 ### Scripts
 
 ```bash
-npm run dev     # development server
-npm run build   # production build
-npm start       # serve production build
-npm run lint    # TypeScript check (`tsc --noEmit`)
+npm run dev              # development server
+npm run build            # production build
+npm start                # serve production build
+npm run lint             # ESLint (eslint-config-next)
+npm run typecheck        # TypeScript (`tsc --noEmit`)
+npm test                 # Vitest unit tests
+npm run qa:content       # catalogue / social / alt integrity gate
+npm run content:locale-audit
 ```
 
-For CMS, admin, and AI chat against live data, run the backend in [`../backend`](../backend) and point `NEXT_PUBLIC_API_URL` at it.
+For CMS, admin, and AI chat against live data, run the backend in [`../backend`](../backend) and point `NEXT_PUBLIC_API_URL` at it. Keep backend `ASSISTANT_ENABLED=false` until the grounded eval set passes.
 
 ### Deploy
 

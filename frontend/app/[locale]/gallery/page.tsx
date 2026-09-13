@@ -5,38 +5,40 @@ import { Gallery } from "@/components/Gallery";
 import { buttonVariants } from "@/components/ui/button";
 import { cms } from "@/lib/cms";
 import { localeFromParam, pageMetadata } from "@/lib/seo";
+import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale: localeFromParam(locale), namespace: "gallery" });
   return pageMetadata({
     locale: localeFromParam(locale),
-    title: "Gallery | Gondar & the Simien Mountains",
-    description: "A visual journey through the Simien Mountains and Gondar. Explore highland landscapes, wild geladas, royal architecture and life along the trail.",
+    title: t("title"), description: t("description"),
     path: "/gallery",
     ogTitle: "A little closer to extraordinary | Gondar Simien Gallery",
     image: {
       url: "/images/simien-panorama.jpg",
-      alt: "The layered landscape of the Simien Mountains",
+      alt: t("imageAlt"),
     },
   });
 }
 
 export default async function GalleryPage() {
   const photographs = await cms.getGallery();
+  const t = await getTranslations("gallery");
 
   return <PageShell>
     <section className="gallery-intro shell" aria-labelledby="gallery-heading">
-      <div className="gallery-intro__top"><p className="eyebrow eyebrow--copper">Gondar & the Simien Mountains</p><span>A visual collection · 01—08</span></div>
+      <div className="gallery-intro__top"><p className="eyebrow eyebrow--copper">{t("eyebrow")}</p><span>{t("collection")}</span></div>
       <div className="gallery-intro__body">
-        <h1 id="gallery-heading">A little closer to<br /><em>extraordinary.</em></h1>
-        <div><p>Beyond the map, before the journey. A glimpse of the landscapes, everyday encounters and quiet moments that stay with you.</p><span className="gallery-intro__invitation">Our world, through the lens <ArrowUpRight size={20} style={{ transform: "rotate(225deg)" }} /></span></div>
+        <h1 id="gallery-heading">{t.rich("heading", { br: () => <br />, em: chunks => <em>{chunks}</em> })}</h1>
+        <div><p>{t("lead")}</p><p className="gallery-intro__scenic">{t("scenicNote")}</p><span className="gallery-intro__invitation">{t("invitation")} <ArrowUpRight size={20} style={{ transform: "rotate(225deg)" }} /></span></div>
       </div>
     </section>
     <Gallery photographs={photographs} />
     <section className="gallery-next shell" aria-labelledby="gallery-next-heading">
-      <div><p className="eyebrow eyebrow--copper">From a photograph to a memory</p><h2 id="gallery-next-heading">Imagine yourself <em>here.</em></h2><p>Tell us what caught your eye. We’ll help you find your own way into the highlands.</p><Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan">Make it your journey <ArrowUpRight size={16} /></Link></div>
-      <aside className="gallery-field-notes"><span className="eyebrow eyebrow--copper">A little preparation</span><h3>Before you go,<br /><em>ask us.</em></h3><p>Seasons, packing, altitude and life on the trail. Tell us what you are imagining and we will help you prepare.</p><Link className="text-link" href="/plan">Start the planner <ArrowUpRight size={16} /></Link></aside>
+      <div><p className="eyebrow eyebrow--copper">{t("nextEyebrow")}</p><h2 id="gallery-next-heading">{t.rich("nextTitle", { em: chunks => <em>{chunks}</em> })}</h2><p>{t("nextLead")}</p><Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan">{t("makeJourney")} <ArrowUpRight size={16} /></Link></div>
+      <aside className="gallery-field-notes"><span className="eyebrow eyebrow--copper">{t("prepEyebrow")}</span><h3>{t.rich("prepTitle", { br: () => <br />, em: chunks => <em>{chunks}</em> })}</h3><p>{t("prepLead")}</p><Link className="text-link" href="/plan">{t("startPlanner")} <ArrowUpRight size={16} /></Link></aside>
     </section>
   </PageShell>;
 }

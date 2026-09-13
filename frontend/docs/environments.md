@@ -4,6 +4,18 @@ Frontend env for **local**, **staging**, and **production**. Host and API hostna
 
 `NEXT_PUBLIC_*` values are inlined at **build** time. Rebuild (or redeploy) after changing them.
 
+## Local API-up pairing (before real staging hosts exist)
+
+Use the repo-root `docker-compose.yml` when the Compose plugin is available, or run `./scripts/staging-local-prep.sh`, which starts Postgres with plain `docker run` (Compose plugin not required).
+
+```bash
+# from repository root
+./scripts/staging-local-prep.sh
+# then run backend + frontend `npm run dev` in separate terminals
+```
+
+Defaults: `postgresql://gst:gst@127.0.0.1:5432/gondar_simien_tours` in container `gst-postgres`. After migrate/seed/admin bootstrap, rehearse publish → public page → invalidation → `npm run content:export`. Record results in [`qa.md`](qa.md). Replace `<staging-host>` / `<staging-api-host>` only when ops assigns them.
+
 ## Frontend matrix
 
 | Variable | Local | Staging | Production | Notes |
@@ -57,7 +69,14 @@ Each frontend origin needs a matching backend env. See [`backend/.env.example`](
 | `FRONTEND_ORIGIN` | `http://localhost:3000` | Same origin as `NEXT_PUBLIC_SITE_URL` (scheme + host, no path) |
 | `COOKIE_SECURE` | `false` | `true` (HTTPS) |
 | `AUTH_COOKIE_NAME` | `admin_session` | keep in sync with frontend expectations |
-| `ASSISTANT_ENABLED` | as needed | set by backend owner; frontend already handles off / 503 |
+| `ASSISTANT_ENABLED` | `false` (default) | keep `false` until grounded eval passes; one-env flip to enable |
+| `CONTACT_RETENTION_DAYS` | `730` | `730` unless an approved policy changes it |
+| `ASSISTANT_RETENTION_DAYS` | `30` | `30` unless an approved policy changes it |
+
+The backend must run `pnpm data:purge` daily in staging and production. A
+long-running backend also runs cleanup at startup and every 24 hours; public
+form and assistant requests provide a throttled fallback for serverless
+instances. The independent daily job remains required for predictable cleanup.
 
 ## Cookie auth (designed model)
 
@@ -103,3 +122,20 @@ Do not rename `CONTACT_WEBHOOK_URL`, `ERROR_WEBHOOK_URL`, or `API_URL` to `NEXT_
 - [ ] API host is same-site with the frontend (localhost ports, or a subdomain of `gondarsimientours.com`)
 - [ ] `COOKIE_SECURE=true` on HTTPS staging and production
 - [ ] No secrets in frontend env except unused empty optionals — never `NEXT_PUBLIC_` on webhooks or keys
+- [ ] Draft CSP in `next.config.ts` still allows the API origin used by chat/CMS/admin; tighten before go-live
+
+## Quality scripts (local)
+
+```bash
+npm run typecheck
+npm run lint          # warnings OK on first pass; fix errors in touched files
+npm test
+npm run qa:content
+npm run qa:metadata
+npm run qa:secrets
+npm run content:locale-audit
+```
+
+## Phase 4 catalogue invalidation
+
+Set the same server-only `CATALOGUE_REVALIDATE_SECRET` in frontend and backend. Set backend `CATALOGUE_REVALIDATE_URL` to the deployed frontend `/api/revalidate` endpoint. Do not expose either secret through `NEXT_PUBLIC_`. Catalogue reads use `API_URL`; browser-facing `/assets/` images use `NEXT_PUBLIC_API_URL` when set. Install both frontend and backend dependencies when building the shared catalogue schema. See [CMS cutover](p4-cms-cutover.md).

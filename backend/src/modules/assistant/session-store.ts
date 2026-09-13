@@ -159,21 +159,3 @@ export async function getUsageState(
     dailyTokenCount: daily?.tokenCount ?? null,
   };
 }
-
-// ---------------------------------------------------------------------------
-// Cleanup
-// ---------------------------------------------------------------------------
-
-export async function purgeOldSessions(): Promise<number> {
-  const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-  const old = await prisma.chatSession.findMany({
-    where: { updatedAt: { lt: cutoff } },
-    take: 100,
-    select: { id: true },
-  });
-  const ids = (old ?? []).map((row) => row.id);
-  if (ids.length > 0) {
-    await prisma.chatSession.deleteMany({ where: { id: { in: ids } } });
-  }
-  return ids.length;
-}

@@ -1,3 +1,4 @@
+import { publishedBlogWhere } from "../catalog/public-catalogue.js";
 import { Router } from "express";
 import { prisma } from "../../config/database.js";
 import { HttpError } from "../../middleware/error.middleware.js";
@@ -51,6 +52,7 @@ function serializePost(post: BlogRow) {
 blogRouter.get("/", async (_req, res, next) => {
   try {
     const posts = await prisma.blog.findMany({
+      where: publishedBlogWhere,
       select: blogSelect,
       orderBy: { createdAt: "desc" },
     });
@@ -65,7 +67,7 @@ blogRouter.get("/", async (_req, res, next) => {
 blogRouter.get("/slug/:slug", async (req, res, next) => {
   try {
     const post = await prisma.blog.findFirst({
-      where: { slug: req.params.slug },
+      where: { ...publishedBlogWhere, slug: req.params.slug },
       select: blogSelect,
     });
     if (!post) throw new HttpError(404, "Blog post not found");

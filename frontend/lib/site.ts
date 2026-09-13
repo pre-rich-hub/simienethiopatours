@@ -1,3 +1,5 @@
+import { getJourneyPackage } from "@/lib/journey-packages";
+
 export const site = {
   name: "Gondar Simien Tours",
   legalOperator: "Simien Ethio Tours",
@@ -17,14 +19,26 @@ export const site = {
     /** Open lockup (no circle). Not used in chrome. */
     lockup: "/images/gondar-simien-tours-logo.png",
   },
+  /**
+   * Verified public social profiles from simienethiotours.com.
+   * Empty slots stay hidden in the footer.
+   */
   social: {
-    x: "#",
-    instagram: "#",
-    facebook: "#",
-    tiktok: "#",
-    youtube: "#",
+    x: "",
+    instagram: "https://www.instagram.com/tesemaethiopiatour/",
+    facebook: "https://www.facebook.com/tesema.travels.Ethiopia/",
+    tiktok: "",
+    youtube: "",
   },
 } as const;
+
+export type SocialNetwork = keyof typeof site.social;
+
+export function verifiedSocialLinks(): Array<{ network: SocialNetwork; href: string }> {
+  return (Object.entries(site.social) as Array<[SocialNetwork, string]>)
+    .filter(([, href]) => /^https?:\/\//i.test(href))
+    .map(([network, href]) => ({ network, href }));
+}
 
 export const journeys = [
   {
@@ -87,7 +101,10 @@ export const journeys = [
     image: "/images/simien-panorama.jpg",
     fit: "Experienced trekkers who value depth",
   },
-] as const;
+].map((card) => {
+  const approved = getJourneyPackage(card.slug)!;
+  return { ...card, duration: approved.duration, difficulty: approved.difficulty, summary: approved.overview[0] ?? "" };
+});
 
 export const sourceLinks = {
   simienUnesco: "https://whc.unesco.org/en/list/9/",

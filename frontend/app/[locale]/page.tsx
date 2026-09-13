@@ -10,11 +10,8 @@ import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
 import { ReviewsShowcase } from "@/components/ReviewsShowcase";
 import { DurationSelector } from "@/components/DurationSelector";
 import { site, sourceLinks } from "@/lib/site";
-import {
-  homeBeyondTheTrail,
-  homeHorizons,
-  homeSignatureJourneys,
-} from "@/lib/home-cards";
+import { getHomeCatalogue } from "@/lib/home-catalogue";
+import { getLocale } from "next-intl/server";
 import { cms } from "@/lib/cms";
 import { buttonVariants } from "@/components/ui/button";
 import { messagePageMetadata } from "@/lib/seo";
@@ -32,16 +29,12 @@ async function HomeReviews() {
   return <ReviewsShowcase reviews={reviews} />;
 }
 
-type HorizonCopy = Record<string, { title: string; tag: string; short: string; detail: string }>;
-type SignatureCopy = Record<string, { duration: string; title: string; summary: string }>;
-type BeyondCopy = Record<string, { title: string; tag: string; body: string }>;
-
 export default async function Home() {
   const t = await getTranslations("home");
   const tCta = await getTranslations("cta");
-  const horizons = t.raw("horizons" as never) as HorizonCopy;
-  const signatures = t.raw("signature" as never) as SignatureCopy;
-  const beyond = t.raw("beyond" as never) as BeyondCopy;
+  const home = await getHomeCatalogue(await getLocale());
+  const homeHorizons = home.horizons;
+  const homeSignatureJourneys = home.signatures;
 
   return (
     <>
@@ -111,22 +104,26 @@ export default async function Home() {
             <p className="lead">{t("horizonsLead")}</p>
           </div>
           <div className="discover-grid shell">
-            {homeHorizons.map((place) => (
+            {homeHorizons.map((place) => {
+              const key = place.slug === "gelada-country" ? "gelada" : place.slug === "imet-gogo" ? "imet-gogo" : place.slug === "ras-dashen" ? "ras-dashen" : null;
+              const copy = key ? (t.raw(`horizons.${key}` as never) as { title?: string; tag?: string; short: string; detail: string }) : null;
+              return (
               <Link
-                href={place.href}
+                href={place.href} locale={place.locale}
                 className={`discover-card${place.tall ? " discover-card--tall" : ""}`}
                 key={place.href}
               >
-                <Image src={place.image} alt={place.imageAlt} fill sizes={place.tall ? "(max-width: 720px) 100vw, 43vw" : "(max-width: 720px) 100vw, 28vw"} />
+                {place.image && <Image src={place.image} alt={place.imageAlt} fill sizes={place.tall ? "(max-width: 720px) 100vw, 43vw" : "(max-width: 720px) 100vw, 28vw"} />}
                 <div>
-                  <span>{horizons[place.id].tag}</span>
-                  <h3>{horizons[place.id].title}</h3>
-                  <p>{horizons[place.id].short}</p>
-                  <div className="discover-card__details"><div><p>{horizons[place.id].detail}</p></div></div>
+                  <span>{copy?.tag ?? place.tag}</span>
+                  <h3>{copy?.title ?? place.title}</h3>
+                  <p>{copy?.short ?? place.short}</p>
+                  <div className="discover-card__details"><div><p>{copy?.detail ?? place.detail}</p></div></div>
                   <span className="discover-card__cta">{t("exploreMore")} <ArrowUpRight /></span>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -136,7 +133,7 @@ export default async function Home() {
             <h2 className="section-title">{t.rich("clarityTitle", em)}</h2>
             <p className="lead">{t("clarityLead")}</p>
           </div>
-          <div className="shell"><DurationSelector /></div>
+          <div className="shell"><DurationSelector collections={home.collections} /></div>
         </section>
 
         <section className="section featured-journeys">
@@ -146,12 +143,12 @@ export default async function Home() {
           </div>
           <div className="shell journey-mosaic">
             {homeSignatureJourneys.map((journey, index) => (
-              <Link id={journey.slug} key={journey.slug} className={`journey-tile journey-tile--${index + 1}`} href={journey.href}>
-                <Image src={journey.image} alt={journey.imageAlt} fill sizes="(max-width: 720px) 100vw, 45vw" />
+              <Link id={journey.slug} key={journey.slug} className={`journey-tile journey-tile--${index + 1}`} href={journey.href} locale={journey.locale}>
+                {journey.image && <Image src={journey.image} alt={journey.imageAlt} fill sizes="(max-width: 720px) 100vw, 45vw" />}
                 <div className="journey-tile__overlay">
-                  <span>{signatures[journey.slug].duration}</span>
-                  <h3>{signatures[journey.slug].title}</h3>
-                  <p>{signatures[journey.slug].summary}</p>
+                  <span>{journey.duration}{journey.difficulty ? ` · ${journey.difficulty}` : ""}</span>
+                  <h3>{journey.title}</h3>
+                  <p>{journey.summary}</p>
                   <b>{t("discover")} <ArrowUpRight /></b>
                 </div>
               </Link>
@@ -214,12 +211,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="section section--paper"><div className="shell"><SectionIntro tag={t("beyondTag")} title={t("beyondTitle")} accent={t("beyondAccent")} /><ExperiencePhotoCards items={homeBeyondTheTrail.map((item) => ({
-          ...item,
-          title: beyond[item.id].title,
-          tag: beyond[item.id].tag,
-          body: beyond[item.id].body,
-        }))} /></div></section>
+        <section className="section section--paper"><div className="shell"><SectionIntro tag={t("beyondTag")} title={t("beyondTitle")} accent={t("beyondAccent")} /><ExperiencePhotoCards items={home.beyond} /></div></section>
         <section className="final-call">
           <Image src="/images/simien-panorama.jpg" alt={t("finalAlt")} fill sizes="100vw" />
           <div className="final-call__veil" />

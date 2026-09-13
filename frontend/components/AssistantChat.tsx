@@ -13,9 +13,17 @@ type ChatMessage = {
   id: string;
   role: "user" | "assistant" | "error";
   text: string;
+  incomplete?: boolean;
 };
 
-type ErrorKind = "disabled" | "rateLimited" | "quota" | "stream" | "unavailable";
+type ErrorKind =
+  | "disabled"
+  | "rateLimited"
+  | "quota"
+  | "stream"
+  | "validation"
+  | "conflict"
+  | "unavailable";
 type Availability = "ready" | "disabled" | "quota";
 
 type SsePayload = {
@@ -28,6 +36,8 @@ type JsonPayload = { status?: unknown; message?: unknown; data?: { text?: unknow
 function classifyStatus(status: number): ErrorKind {
   if (status === 503) return "disabled";
   if (status === 429) return "rateLimited";
+  if (status === 400 || status === 422) return "validation";
+  if (status === 409) return "conflict";
   return "unavailable";
 }
 
@@ -154,6 +164,8 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
     if (kind === "rateLimited") return t("rateLimited");
     if (kind === "quota") return t("quota");
     if (kind === "stream") return t("streamError");
+    if (kind === "validation") return t("validation");
+    if (kind === "conflict") return t("conflict");
     return t("unavailable");
   };
 
@@ -185,15 +197,18 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
     if (thread) thread.scrollTop = thread.scrollHeight;
   }, [messages, streaming]);
 
-  const pushError = (kind: ErrorKind) => {
+  /** Mark or clear a partial assistant reply so it never looks like a finished answer. */
+  const failAssistant = (assistantId: string, kind: ErrorKind) => {
     if (kind === "disabled") setAvailability("disabled");
     if (kind === "quota") setAvailability("quota");
     setMessages((prev) => {
-      const next = prev.slice();
-      const last = next[next.length - 1];
-      // Drop a trailing empty assistant placeholder so failures do not leave an
-      // empty pill behind the error bubble.
-      if (last && last.role === "assistant" && last.text === "") next.pop();
+      const next = prev
+        .map((message) => {
+          if (message.id !== assistantId) return message;
+          if (message.text === "") return null;
+          return { ...message, incomplete: true };
+        })
+        .filter((message): message is ChatMessage => message != null);
       next.push({
         id: crypto.randomUUID(),
         role: "error",
@@ -236,12 +251,12 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
       });
 
       if (!response.ok) {
-        pushError(classifyStatus(response.status));
+        failAssistant(assistantId, classifyStatus(response.status));
         return;
       }
 
       if (!response.body) {
-        pushError("unavailable");
+        failAssistant(assistantId, "unavailable");
         return;
       }
 
@@ -255,7 +270,7 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
             prev.map((m) => (m.id === assistantId ? { ...m, text: reply } : m)),
           );
         } else {
-          pushError("unavailable");
+          failAssistant(assistantId, "unavailable");
         }
         return;
       }
@@ -269,21 +284,32 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
             );
           },
           (handoff) => {
-            if (handoff === "limit") pushError("quota");
+            if (handoff === "limit") {
+              // Limit reply was streamed as a complete polite message — do not mark it incomplete.
+              setAvailability("quota");
+              setMessages((prev) => [
+                ...prev,
+                {
+                  id: crypto.randomUUID(),
+                  role: "error",
+                  text: errorText("quota"),
+                },
+              ]);
+            }
           },
-          () => pushError("stream"),
+          () => failAssistant(assistantId, "stream"),
         );
         return;
       }
 
-      pushError("unavailable");
+      failAssistant(assistantId, "unavailable");
     } catch {
       if (intentionalAbortRef.current.delete(controller)) {
         // Intentional abort (Start over, panel close, unmount): drop the
         // half-finished reply instead of showing an error.
         setMessages((prev) => prev.filter((m) => m.id !== assistantId));
       } else {
-        pushError("unavailable");
+        failAssistant(assistantId, "unavailable");
       }
     } finally {
       setStreaming(false);
@@ -365,7 +391,7 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
             return (
               <div
                 key={message.id}
-                className={`assistant-chat__message assistant-chat__message--${message.role}${pending ? " assistant-chat__message--pending" : ""}`}
+                className={`assistant-chat__message assistant-chat__message--${message.role}${pending ? " assistant-chat__message--pending" : ""}${message.incomplete ? " assistant-chat__message--incomplete" : ""}`}
                 aria-busy={pending || undefined}
               >
                 {pending ? (
@@ -376,7 +402,12 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
                     <span className="sr-only">{t("thinking")}</span>
                   </span>
                 ) : (
-                  message.text
+                  <>
+                    {message.text}
+                    {message.incomplete ? (
+                      <p className="assistant-chat__incomplete-note">{t("incomplete")}</p>
+                    ) : null}
+                  </>
                 )}
               </div>
             );

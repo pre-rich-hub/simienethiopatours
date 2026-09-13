@@ -35,6 +35,10 @@ const envSchema = z.object({
   ADMIN_PASSWORD: z.string().optional().default(""),
   EMAIL_ENABLED: z.preprocess(envBoolean, z.boolean()).default(false),
 
+  // Privacy retention
+  CONTACT_RETENTION_DAYS: z.coerce.number().int().positive().default(730),
+  ASSISTANT_RETENTION_DAYS: z.coerce.number().int().positive().default(30),
+
   // File uploads
   UPLOAD_ROOT: z.string().default("uploads"),
   PUBLIC_FILE_BASE_URL: z.string().optional().default(""),
@@ -84,6 +88,10 @@ if (parsed.ASSISTANT_ENABLED) {
   if (parsed.ASSISTANT_PROVIDER === "gemini" && !parsed.GEMINI_API_KEY) {
     throw new Error("ASSISTANT_ENABLED is true but GEMINI_API_KEY is not configured.");
   }
+}
+
+if (parsed.NODE_ENV === "production" && parsed.STORAGE_DRIVER === "local" && !parsed.PUBLIC_FILE_BASE_URL) {
+  throw new Error("Production file uploads require a durable public storage URL; configure STORAGE_DRIVER or PUBLIC_FILE_BASE_URL.");
 }
 
 export const env = parsed;

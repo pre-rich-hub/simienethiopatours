@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { simienReasons } from "@/lib/simien-guide";
+import { cardBlurb } from "@/lib/card-blurb";
 
 // Replace these six paths when the final photography is ready.
 const reasonPhotography = [
@@ -29,7 +30,7 @@ export async function SimienReasonCards() {
         <div className="simien-reason-card__body">
           <p className="eyebrow eyebrow--copper">{reason.tag}</p>
           <h3>{reason.title}</h3>
-          <p>{reason.body}</p>
+          <p>{cardBlurb(reason.body, 140)}</p>
           {reason.href && <Link href={reason.href} className="text-link">{reason.linkLabel || t("exploreExperience")}<ArrowUpRight /></Link>}
         </div>
       </article>;

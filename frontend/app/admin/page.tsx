@@ -98,7 +98,8 @@ export default function AdminDashboardPage() {
             { href: "/admin/destinations", label: "Destinations" },
             { href: "/admin/gallery", label: "Gallery" },
             { href: "/admin/bookings", label: "Bookings" },
-            { href: "/admin/blog", label: "Blog posts" },
+    { href: "/admin/blog", label: "Blog posts" },
+    { href: "/admin/translations", label: "Translations" },
           ].map((link) => (
             <AdminQuickLink key={link.href} href={link.href}>{link.label}</AdminQuickLink>
           ))}

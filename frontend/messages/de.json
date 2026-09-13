@@ -54,7 +54,9 @@
       "explore": "Gondar erkunden",
       "royalCity": "Gondar: die königliche Stadt",
       "royalAdventure": "5 Tage königliche Stadt und Bergabenteuer"
-    }
+    },
+    "northern": "Nordäthiopien",
+    "journal": "Journal"
   },
   "cta": {
     "planWithTevan": "Mit Tevan planen",
@@ -101,7 +103,9 @@
     "subscribe": "Abonnieren",
     "sending": "Wird gesendet…",
     "success": "Danke — Sie stehen auf der Liste.",
-    "error": "Wir konnten diese E-Mail nicht hinzufügen. Bitte versuchen Sie es erneut."
+    "error": "Wir konnten diese E-Mail nicht hinzufügen. Bitte versuchen Sie es erneut.",
+    "consent": "Mit dem Abonnieren willigen Sie ein, dass wir Ihnen Updates senden, wie in unserem <privacy>Datenschutzhinweis</privacy> beschrieben.",
+    "unavailable": "Die Liste ist gerade nicht erreichbar. <email>Schreiben Sie uns zur Anmeldung</email>, oder versuchen Sie es später erneut."
   },
   "inquiry": {
     "experience": "Welche Erfahrung interessiert Sie?",
@@ -161,7 +165,48 @@
     "submit": "Meine Anfrage senden",
     "emailOpened": "Ihre E-Mail-App sollte sich jetzt mit Ihren Reisedetails öffnen.",
     "preferChat": "Lieber ein Gespräch?",
-    "messageWhatsApp": "Schreiben Sie uns per WhatsApp."
+    "messageWhatsApp": "Schreiben Sie uns per WhatsApp.",
+    "experiences": {
+      "simien-day": "Simien an einem Tag",
+      "simien-classic": "Der Simien-Klassiker — 3 Tage",
+      "simien-essential": "Simien-Klassiker — 4 Tage",
+      "ras-dashen": "Ras Dashen — Gipfelanreise und Rückkehrplanung",
+      "simien-two-day": "Zweitägige Simien-Bergauszeit",
+      "gondar-royal-mountains": "Königliche Stadt Gondar & Berge — 5 Tage",
+      "full-simien": "Simien- & Ras-Dashen-Expedition — 10 Tage",
+      "gondar-heritage-simien": "Gondar, Kulturerbe & Simien — 5 Tage",
+      "festivals": "Feste und Feiertagsreisen",
+      "timkat-simien": "Timkat & Simien — 6 Tage",
+      "timkat-ras-dashen": "Timkat & Ras Dashen — 8–10 Tage",
+      "genna-simien": "Genna & Simien — 6–8 Tage",
+      "meskel-simien": "Meskel & Simien",
+      "enkutatash-simien": "Enkutatash & Simien",
+      "gondar-running": "Verborgenes Gondar-Lauferlebnis",
+      "photography": "Simien-Fotoreise",
+      "photo-day": "1-tägiges Simien-Fotografie-Erlebnis",
+      "photo-wildlife": "2–3 Tage Wildtier- und Landschaftsfotografie",
+      "photo-expedition": "4–5-tägige Fotoexpedition",
+      "gondar": "Mein Gondar-Erlebnis planen",
+      "royal-gondar": "Königliches Gondar-Erlebnis",
+      "local-gondar": "Gondar mit lokalen Augen",
+      "food-coffee": "Gondar Essen & Kaffee",
+      "gondar-photo": "Gondar-Fotografiewanderung",
+      "history-culture": "Gondar Geschichte & Kultur",
+      "market-life": "Gondar Markt & lokales Leben",
+      "kosoye": "Gondar & Kosoye-Hochland",
+      "community": "Dorf- und Gemeinschaftserlebnis",
+      "accommodation": "Unterkunft in Gondar & Simien",
+      "travel-services": "Transport, Führung & Reiseservices",
+      "custom": "Individuelle Nordäthiopien-Reise"
+    },
+    "consent": "Mit dem Absenden dieser Anfrage willigen Sie ein, dass wir Ihre Angaben zur Antwort speichern, wie in unserem <privacy>Datenschutzhinweis</privacy> beschrieben.",
+    "validationError": "Bitte prüfen Sie Name, E-Mail und Auswahl, und versuchen Sie es erneut.",
+    "rateLimited": "Zu viele Anfragen in kurzer Zeit. Warten Sie ein paar Minuten, oder schreiben Sie uns auf WhatsApp.",
+    "mailtoNotDecided": "Noch offen",
+    "mailtoNotSpecified": "Nicht angegeben",
+    "mailtoNotSure": "Unsicher",
+    "mailtoPleaseAdvise": "Bitte beraten",
+    "mailtoDefaultMessage": "Bitte helfen Sie mir bei der Planung meiner Reise."
   },
   "booking": {
     "eyebrow": "Preis",
@@ -201,6 +246,9 @@
     "quota": "Der Assistent hat sein Limit vorerst erreicht. Erreichen Sie das lokale Team direkt:",
     "quotaSubtitle": "Das Assistentenlimit ist erreicht. WhatsApp, E-Mail oder der Planer erreichen Tevan weiterhin.",
     "streamError": "Die Antwort wurde unterbrochen. Versuchen Sie es erneut, oder erreichen Sie uns direkt:",
+    "validation": "Diese Nachricht konnte nicht gesendet werden. Kürzen Sie sie und versuchen Sie es erneut, oder erreichen Sie uns direkt:",
+    "conflict": "Für diesen Chat wird noch eine Antwort beendet. Warten Sie einen Moment oder starten Sie neu:",
+    "incomplete": "Diese Antwort wurde unterbrochen und kann unvollständig sein.",
     "thinking": "Denkt nach",
     "sending": "Wird gesendet…",
     "email": "E-Mail",
@@ -251,20 +299,20 @@
       "imet-gogo": {
         "title": "Imet Gogo",
         "tag": "Simien-Ikone",
-        "short": "Prägnanter Simien-Aussichtspunkt auf etwa 3,926 m — tiefe Schluchten, Grate und steile Felswände.",
-        "detail": "Visueller Höhepunkt vieler 3-Tage- und Klassik-Trekkings; auch ein Fokus von Fotografieprogrammen."
+        "short": "Hineingehen in den Blick.",
+        "detail": "Prägnanter Simien-Aussichtspunkt auf etwa 3,926 m — tiefe Schluchten, Grate und steile Felswände."
       },
       "gelada": {
         "title": "Gelada-Land",
         "tag": "Wildtiere",
-        "short": "Bekanntes Habitat der Gelada; Walia ibex und (selten) der Äthiopische Wolf kommen ebenfalls im Park vor.",
-        "detail": "Sichtungen sind nie garantiert; die Programme lassen Zeit zur Beobachtung, wenn Trupps oder einzelne Tiere gefunden werden."
+        "short": "Beobachten. Nie inszenieren.",
+        "detail": "Bekanntes Habitat der Gelada; Walia ibex und (selten) der Äthiopische Wolf kommen ebenfalls im Park vor."
       },
       "ras-dashen": {
         "title": "Ras Dashen",
         "tag": "Hochland",
-        "short": "Äthiopiens höchster Gipfel (auch Ras Dejen; etwa 4,500+ m / ~4,543–4,550 m in der Formulierung der Quellen).",
-        "detail": "Ein anspruchsvoller Gipfeltag von Ambiko aus auf Challenge- und Expeditionsreisen — der Erfolg hängt von den Bedingungen ab."
+        "short": "Die Gipfelreise.",
+        "detail": "Äthiopiens höchster Gipfel (auch Ras Dejen; etwa 4,500+ m). Ein anspruchsvoller Gipfeltag von Ambiko — der Erfolg hängt von den Bedingungen ab."
       }
     },
     "clarityTag": "Mit Klarheit wählen",
@@ -494,7 +542,10 @@
     "whatsappTevan": "Tevan per WhatsApp",
     "timezone": "Gondar liegt in der ostafrikanischen Zeit (UTC+3).",
     "formTag": "Der Rahmen Ihrer Reise",
-    "formTitle": "Beginnen Sie dort, wo Sie sind."
+    "formTitle": "Beginnen Sie dort, wo Sie sind.",
+    "guidesNav": "Planungsleitfäden",
+    "simienGuide": "Simien-Planungsleitfaden",
+    "gondarGuide": "Gondar-Planungsleitfaden"
   },
   "treks": {
     "crumb": "Reisen",
@@ -512,7 +563,10 @@
     "how": "Wie es weitergeht",
     "howBody": "Lesen Sie einen Rahmen und nennen Sie uns dann Ihre Zeit und Ihren Gehkomfort. Ein schriftlicher Vorschlag bestätigt, was für Ihre Daten enthalten ist.",
     "planThis": "Diese Reise planen",
-    "about": "Über {name}"
+    "about": "Über {name}",
+    "planningGuide": "Planungsleitfäden",
+    "planningGuideBody": "Bevor Sie eine Länge wählen, lesen Sie praktische Hinweise zu Simien-Routen und Gondar-Stadtzeit.",
+    "planningGuideLink": "Simien-Planungsleitfaden öffnen"
   },
   "simien": {
     "crumb": "Simien-Gebirge",
@@ -530,7 +584,10 @@
     "how": "Wie Sie diese Seiten nutzen",
     "howBody": "Lesen Sie einen Ort, wählen Sie dann eine Reise oder nennen Sie uns Ihre Zeit. Wildtiersichtungen und Gipfelerfolg sind nicht garantiert.",
     "plan": "Eine Simien-Reise planen",
-    "about": "Über {name}"
+    "about": "Über {name}",
+    "planningGuide": "Planungsleitfaden",
+    "planningGuideBody": "Routenwahl, Höhe, Wetter, Packliste, Camping, Genehmigungen, Fitness und verantwortungsvolle Wildtierbeobachtung—praktische Antworten vor der Anfrage.",
+    "planningGuideLink": "Simien-Planungsleitfaden lesen"
   },
   "trek": {
     "overview": "Überblick",
@@ -538,7 +595,6 @@
     "itinerary": "Reiseverlauf",
     "included": "Enthalten",
     "excluded": "Nicht enthalten",
-    "inclusionsNote": "Die genauen Leistungen einer Buchung werden im endgültigen Angebot bestätigt.",
     "allJourneys": "Alle Reisen",
     "day": "Tag {n}",
     "overnight": "Übernachtung",
@@ -602,7 +658,13 @@
         "Persönliche Trekkingausrüstung; persönliche Snacks und Getränke; Alkohol; Trinkgeld; persönliche Einkäufe",
         "Optionale Aktivitäten; jede Leistung, die nicht ausdrücklich im Angebot aufgeführt ist"
       ]
-    }
+    },
+    "preparationTag": "Vorbereitung",
+    "preparationTitle": "Vor der Reise",
+    "destinationsTag": "Ziele",
+    "destinationsTitle": "Orte auf dieser Reise",
+    "relatedTag": "Verwandte Reisen",
+    "relatedTitle": "Reisen, die diesen Ort einschließen"
   },
   "meta": {
     "home": {
@@ -625,6 +687,261 @@
     "simien": {
       "title": "Ziele im Simien-Gebirge | Orte, Camps und Aussichtspunkte",
       "description": "Achtzehn Ziele im Simien-Gebirge — von Debark und Sankaber bis Imet Gogo, Chenek, Ras Dashen und Adi Arkay — jedes mit einer eigenen Seite."
+    }
+  },
+  "journal": {
+    "journal": "Journal",
+    "journalIntro": "Notizen und Geschichten vom lokalen Team.",
+    "emptyJournal": "Neue Geschichten erscheinen hier nach der Veröffentlichung.",
+    "categories": "Kategorien",
+    "readArticle": "Artikel lesen",
+    "by": "Von",
+    "updated": "Aktualisiert"
+  },
+  "gallery": {
+    "title": "Galerie | Gondar und die Simien-Berge",
+    "description": "Eine visuelle Reise durch die Simien-Berge und Gondar.",
+    "imageAlt": "Die geschichtete Landschaft der Simien-Berge",
+    "eyebrow": "Gondar und die Simien-Berge",
+    "collection": "Eine visuelle Sammlung · 01—08",
+    "heading": "Ein wenig näher an<br></br><em>dem Außergewöhnlichen.</em>",
+    "lead": "Jenseits der Karte, vor der Reise. Ein Blick auf Landschaften, Begegnungen und stille Momente.",
+    "scenicNote": "Landschaftsfotos zeigen echte Hochland- und Kulturerbeorte; sie garantieren nicht die genaue Aussicht, Jahreszeit oder Wildtiere einer einzelnen Reise.",
+    "invitation": "Unsere Welt durch die Linse",
+    "nextEyebrow": "Vom Foto zur Erinnerung",
+    "nextTitle": "Stell dir vor, du bist <em>hier.</em>",
+    "nextLead": "Erzähl uns, was dir aufgefallen ist. Wir helfen dir, deinen Weg ins Hochland zu finden.",
+    "makeJourney": "Mach es zu deiner Reise",
+    "prepEyebrow": "Ein wenig Vorbereitung",
+    "prepTitle": "Bevor du reist,<br></br><em>frag uns.</em>",
+    "prepLead": "Jahreszeiten, Gepäck, Höhe und das Leben auf dem Weg. Wir helfen dir bei der Vorbereitung.",
+    "startPlanner": "Planer starten",
+    "galleryAria": "Fotogalerie",
+    "filterAria": "Fotos filtern",
+    "filter": {
+      "all": "Alle Fotos",
+      "landscapes": "Landschaften",
+      "wildlife": "Wildtiere",
+      "culture": "Kultur und Leben",
+      "trail": "Auf dem Weg"
+    },
+    "count": "{count, plural, =1 {# Foto} other {# Fotos}}",
+    "view": "{title} ansehen — {location}",
+    "close": "Foto schließen",
+    "previous": "Vorheriges Foto",
+    "next": "Nächstes Foto",
+    "colophon": "Ein Blick auf den Ort. Ein Anfang für deine Reise."
+  },
+  "gondarExperiences": {
+    "filterAria": "Gondar-Erlebnisse filtern",
+    "countOne": "{count} Erlebnis",
+    "countMany": "{count} Erlebnisse",
+    "countFiltered": " · {category}",
+    "countAll": " zum Selbstgestalten",
+    "time": "Zeit",
+    "style": "Stil",
+    "bestFor": "Geeignet für",
+    "timeHeritage": "5-tägiger Einstiegs-Reiseplan",
+    "timeTailored": "An Ihre verfügbare Zeit angepasst",
+    "styleValue": "Privat oder kleine Gruppe · Start in Gondar",
+    "readItinerary": "Fünf-Tage-Reiseplan lesen",
+    "requestExperience": "Dieses Erlebnis anfragen",
+    "note": "Ihr Angebot bestätigt Führung, Transport, Eintritte, Verpflegung und weitere Inklusionen für das gewählte Erlebnis.",
+    "categories": {
+      "All": "Alle",
+      "History": "Geschichte",
+      "Food": "Essen",
+      "Coffee": "Kaffee",
+      "Photography": "Fotografie",
+      "Local life": "Lokales Leben",
+      "Culture": "Kultur",
+      "Gondar + Simien": "Gondar + Simien"
+    },
+    "items": {
+      "royal-gondar": {
+        "title": "Königliches Gondar-Erlebnis",
+        "body": "Erkunden Sie Fasil Ghebbi und die königliche Stadt mit den Geschichten ihrer Kaiser, Architektur und Hofleben. Verbinden Sie die historische Anlage mit dem Gondar drumherum.",
+        "fit": "Erste Besuche, Geschichtsinteressierte und Architekturfotografie"
+      },
+      "local-gondar": {
+        "title": "Gondar mit lokalen Augen",
+        "body": "Spazieren Sie durch Viertel, besuchen Sie kleine Betriebe und teilen Sie Kaffee und Gespräch. Ihr Guide stellt die Alltagsstadt vor, in der er lebt.",
+        "fit": "Reisende, die Gespräch und ein ruhiges Tempo schätzen"
+      },
+      "food-coffee": {
+        "title": "Essens- und Kaffee-Erlebnis",
+        "body": "Folgen Sie dem Kaffeerösten, lokalen Zutaten und den Geschichten hinter Injera, Gewürzen und gemeinsamen Mahlzeiten. Kaffeezubereitung, Lebensmittelmärkte und traditionelle Gerichte können den Tag prägen.",
+        "fit": "Neugierige Esser und Kaffeeliebhaber; teilen Sie Ihre Ernährungsbedürfnisse mit"
+      },
+      "gondar-photo": {
+        "title": "Gondar-Fotografiewanderung",
+        "body": "Suchen Sie Morgenlicht an Steinmauern, öffnenden Läden und ruhigeren Straßen. Es bleibt Zeit für Fotos und Gespräche — mit Erlaubnis, bevor Menschen fotografiert werden.",
+        "fit": "Handyfotografen, Enthusiasten und visuelle Erzähler"
+      },
+      "history-culture": {
+        "title": "Geschichts- und Kulturtour",
+        "body": "Verbinden Sie Kirchen, religiöse Traditionen, Architektur, Handel, Kunst und Musik mit dem modernen äthiopischen Leben. Die Route folgt den Geschichten, die Sie am meisten interessieren.",
+        "fit": "Reisende, die einen tieferen historischen und kulturellen Kontext wollen"
+      },
+      "market-life": {
+        "title": "Markt und lokales Leben",
+        "body": "Erkunden Sie Marktgebiete, wenn Bedingungen und Handelstage passen. Lernen Sie lokale Produkte, landwirtschaftliche Verbindungen und den Warenfluss zwischen Gondar und dem Hochland kennen.",
+        "fit": "Besucher mit Interesse an Essen, Handel und Alltagsleben"
+      },
+      "kosoye": {
+        "title": "Gondar & Kosoye-Hochland",
+        "body": "Reisen Sie von der Stadt aufs Land, zu Feldern und ländlichen Wanderwegen. Dorfbesuche, lokales Essen, Kaffee und Familiengespräche werden respektvoll mit Gastgebern organisiert.",
+        "fit": "Wanderer und Reisende mit Interesse am Landleben"
+      },
+      "gondar-heritage-simien": {
+        "title": "Kombination Gondar & Simien",
+        "body": "Beginnen Sie mit königlichem Erbe, Essen und Kaffee; folgen Sie dann der Straße über Debark zu Steilhängen, Wildtieren und Bergpfaden. Starten Sie mit unserer fünftägigen Kulturerbe-Reise.",
+        "fit": "Reisende, die Kultur und Berge in einer Reise wollen"
+      }
+    }
+  },
+  "destination": {
+    "about": "Über",
+    "highlights": "Highlights",
+    "thingsToDo": "Aktivitäten",
+    "alsoKnownAs": "Auch bekannt als: {names}",
+    "relatedJourneysTag": "Reisen",
+    "relatedJourneysTitle": "Routen, die diesen Ort besuchen",
+    "backSimien": "Alle Simien-Ziele",
+    "backGondar": "Alle Gondar-Ziele",
+    "backNorthern": "Alle Ziele in Nordäthiopien",
+    "simienEyebrow": "Simien-Gebirge",
+    "gondarEyebrow": "Gondar",
+    "northernEyebrow": "Nordäthiopien"
+  },
+  "operatorFaq": {
+    "tag": "Antworten des Betreibers",
+    "title": "Wer wir sind,",
+    "accent": "und wie die Buchung funktioniert.",
+    "whoQ": "Wer betreibt das?",
+    "whoA": "{name} ist die öffentliche Marke für Reisen, die mit Tesema „Tevan“ Mulualem geplant werden. Das Betriebsunternehmen ist {operator}.",
+    "whereQ": "Wo sitzt ihr?",
+    "whereA": "Wir sind in Gondar, Äthiopien, ansässig. Die Büroadresse lautet {address}.",
+    "bookingQ": "Wie funktioniert die Buchung?",
+    "bookingA": "Diese Website nutzt ein reines Anfragemodell. Teilen Sie Daten, Gruppe und Interessen über den Reiseplaner oder per Telefon, E-Mail oder WhatsApp. Tevan antwortet mit Fragen und danach mit Route und Angebot für die aktuellen Bedingungen. Eine Reise ist erst bestätigt, wenn Sie ein schriftliches Angebot des Betriebsunternehmens annehmen—das Absenden des Formulars ist keine Buchung."
+  },
+  "simienPlanning": {
+    "metaTitle": "Planungsleitfaden Simien-Gebirge",
+    "metaDescription": "Praktische Simien-Planung: Routenwahl, Höhe, Wetter, Packliste, Camping, Genehmigungen, Fitness und verantwortungsvolle Wildtierbeobachtung.",
+    "crumb": "Planungsleitfaden",
+    "eyebrow": "Vor dem Trek",
+    "title": "Planen Sie Ihre Simien-Reise <em>mit klaren Antworten.</em>",
+    "lead": "Routenlänge, Höhe, Wetter, Packen, Camping, Parkprozess, Fitness und Wildtierethik—ehrliche Orientierung vor der Anfrage.",
+    "unescoLink": "UNESCO-Welterbeliste — Simien-Gebirge ↗",
+    "introTag": "Hier beginnen",
+    "introTitle": "Ein Hochland,",
+    "introAccent": "erreicht von Gondar.",
+    "linkPlan": "Mit Tevan planen",
+    "linkTreks": "Simien-Trek-Skizzen ansehen",
+    "linkDurations": "Routenlängen",
+    "linkFaq": "Betreiber-Fragen",
+    "durationsTag": "Wie lange?",
+    "durationsTitle": "Wählen Sie eine Startlänge,",
+    "durationsAccent": "dann passen Sie die Tage an.",
+    "callTitle": "Sagen Sie uns Zeit und Gehkomfort.",
+    "callEyebrow": "Nur Anfrage · schriftliches Angebot bestätigt",
+    "callLabel": "Planer starten",
+    "sections": {
+      "routeChoice": {
+        "nav": "Routenwahl",
+        "tag": "01 · Route",
+        "title": "Tage abstimmen",
+        "accent": "auf den gewünschten Korridor."
+      },
+      "altitude": {
+        "nav": "Höhe",
+        "tag": "02 · Höhe",
+        "title": "Höhengewinn,",
+        "accent": "ernst genommen."
+      },
+      "weather": {
+        "nav": "Wetter",
+        "tag": "03 · Wetter",
+        "title": "Hochlandwetter",
+        "accent": "ändert sich schnell."
+      },
+      "packing": {
+        "nav": "Packen",
+        "tag": "04 · Packen",
+        "title": "Was vorbereiten,",
+        "accent": "was klären."
+      },
+      "camping": {
+        "nav": "Camping",
+        "tag": "05 · Camping",
+        "title": "Nächte im Camp,",
+        "accent": "Tage auf dem Trail."
+      },
+      "permits": {
+        "nav": "Genehmigungen",
+        "tag": "06 · Genehmigungen",
+        "title": "Debark,",
+        "accent": "dann der Park."
+      },
+      "fitness": {
+        "nav": "Fitness",
+        "tag": "07 · Fitness",
+        "title": "Ehrlicher Gehkomfort,",
+        "accent": "bessere Reisen."
+      },
+      "wildlife": {
+        "nav": "Wildtiere",
+        "tag": "08 · Wildtiere",
+        "title": "Achtsam beobachten,",
+        "accent": "nie als Garantie."
+      }
+    }
+  },
+  "gondarPlanning": {
+    "metaTitle": "Planungsleitfaden Gondar",
+    "metaDescription": "Planen Sie Stadtzeit in Gondar, Kulturerbe-Etikette, Kombinationen mit Simien-Treks und Erweiterungen in Nordäthiopien.",
+    "hubCrumb": "Gondar",
+    "crumb": "Planungsleitfaden",
+    "eyebrow": "Vor der Ankunft",
+    "title": "Gondar planen <em>mit lokaler Klarheit.</em>",
+    "lead": "Stadtzeit, Kulturerbe-Etikette, Gondar mit Simien kombinieren und nördliche Erweiterungen—praktische Antworten vor der Anfrage.",
+    "unescoLink": "UNESCO-Welterbeliste — Fasil Ghebbi ↗",
+    "introTag": "Hier beginnen",
+    "introTitle": "Die königliche Stadt,",
+    "introAccent": "und der Weg nach Norden.",
+    "linkPlan": "Mit Tevan planen",
+    "linkSimienGuide": "Simien-Planungsleitfaden lesen",
+    "linkNorthern": "Nördliche Destinationen erkunden",
+    "linkNext": "Nächste Schritte",
+    "linkFaq": "Betreiber-Fragen",
+    "callTitle": "Teilen Sie Stadtnächte und Bergtage.",
+    "callEyebrow": "Nur Anfrage · schriftliches Angebot bestätigt",
+    "callLabel": "Planer starten",
+    "sections": {
+      "cityTime": {
+        "nav": "Stadtzeit",
+        "tag": "01 · Stadt",
+        "title": "Wie viel Gondar,",
+        "accent": "vor oder nach dem Trail."
+      },
+      "heritageEtiquette": {
+        "nav": "Kulturerbe-Etikette",
+        "tag": "02 · Kulturerbe",
+        "title": "Respektvoll besuchen,",
+        "accent": "an lebendigen Orten."
+      },
+      "combiningSimien": {
+        "nav": "Mit Simien",
+        "tag": "03 · Kombiniert",
+        "title": "Stadt und Berge,",
+        "accent": "in einer Reise."
+      },
+      "northernExtensions": {
+        "nav": "Nördliche Erweiterungen",
+        "tag": "04 · Norden",
+        "title": "Wenn die Zeit reicht,",
+        "accent": "weiter nach Norden."
+      }
     }
   }
 }

@@ -1,56 +1,63 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { DestinationRoutes } from "@/components/JourneyPhotoCards";
 import { EditorialHero, SectionIntro, StorySection } from "@/components/Editorial";
-import { journeysThroughPlace } from "@/lib/destination-routes";
-import { getSimienPlace, simienPlacePath, simienPlaces } from "@/lib/simien-destinations";
-import { localeFromParam, pageMetadata } from "@/lib/seo";
-
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return simienPlaces.map(({ slug }) => ({ slug }));
-}
+import { getDestinationForRoute, getTours, tourToJourney, destinationToPlace, requireContentLocale } from "@/lib/catalogue";
+import { catalogueMetadata } from "@/lib/catalogue-seo";
+import { localeFromParam } from "@/lib/seo";
+import { permanentRedirect } from "next/navigation";
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const place = getSimienPlace(slug);
+  const record = await getDestinationForRoute(slug, locale);
+  const place = record ? destinationToPlace(record) : null;
   if (!place) return {};
-  return pageMetadata({
+  requireContentLocale(record!, locale);
+  return catalogueMetadata({
     locale: localeFromParam(locale),
     title: `${place.name} | Simien Mountains`,
     description: place.about[0] ?? "",
-    path: simienPlacePath(place.slug),
+    path: place.path,
     image: { url: place.image, alt: place.imageAlt },
-  });
+  }, record!.availableLocales);
 }
 
-export default async function SimienPlacePage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const place = getSimienPlace(slug);
+export default async function SimienPlacePage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
+  const { slug, locale } = await params;
+  const t = await getTranslations("destination");
+  const record = await getDestinationForRoute(slug, locale);
+  const place = record ? destinationToPlace(record) : null;
   if (!place) notFound();
-  const routes = journeysThroughPlace("simien", place.slug);
+  if (!record) notFound();
+  if (!record.path.startsWith("/simien-mountains/")) permanentRedirect(`/${locale}${record.path}`);
+  requireContentLocale(record, locale);
+  const routes = (await getTours(locale)).filter((tour) => record.tourSlugs.includes(tour.slug)).map(tourToJourney);
 
   return (
-    <PageShell lightHeader={false}>
+    <PageShell lightHeader={!place.image}>
       <EditorialHero
-        eyebrow="Simien Mountains"
+        eyebrow={t("simienEyebrow")}
         title={place.heroTitle}
         accent={place.heroAccent}
         lead={place.location}
         image={{ src: place.image, alt: place.imageAlt }}
-        parent={{ label: "Simien Mountains", href: "/simien-mountains" }}
+        parent={{ label: t("simienEyebrow"), href: "/simien-mountains" }}
       />
 
-      <StorySection id="about" tag="About" title={place.name} paragraphs={place.about} />
+      {place.alsoKnownAs.length > 0 && (
+        <p className="shell content-note">{t("alsoKnownAs", { names: place.alsoKnownAs.join(", ") })}</p>
+      )}
+      <StorySection id="about" tag={t("about")} title={place.name} paragraphs={place.about} />
 
       {place.highlights.length > 0 && (
         <section className="section section--paper" id="highlights">
           <div className="shell">
-            <SectionIntro tag="Highlights" title="Highlights" />
+            <SectionIntro tag={t("highlights")} title={t("highlights")} />
             <div className={`dest-highlights dest-highlights--${place.highlights.length > 1 ? "2" : "1"}`}>
               {place.highlights.map((item, index) => (
                 <article className="dest-highlight" key={item}>
@@ -65,7 +72,7 @@ export default async function SimienPlacePage({ params }: { params: Promise<{ sl
 
       <section className={`section ${place.highlights.length ? "" : "section--paper"}`} id="things-to-do">
         <div className="shell editorial-grid">
-          <SectionIntro tag="Things to do" title="Things to do" />
+          <SectionIntro tag={t("thingsToDo")} title={t("thingsToDo")} />
           <ul className="editorial-list dest-things">
             {place.thingsToDo.map((item) => (
               <li key={item}>{item}</li>
@@ -78,7 +85,7 @@ export default async function SimienPlacePage({ params }: { params: Promise<{ sl
 
       <p className="shell dest-back">
         <Link className="text-link" href="/simien-mountains">
-          All Simien destinations <ArrowUpRight />
+          {t("backSimien")} <ArrowUpRight />
         </Link>
       </p>
     </PageShell>

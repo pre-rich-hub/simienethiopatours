@@ -22,254 +22,118 @@
  * tsc resolve these specifiers without pulling in frontend source.
  */
 import "dotenv/config";
+import { createHash } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
-import { detailedJourneys, timkatDays } from "@/lib/itineraries";
-import { moreSimienPlaces } from "@/lib/simien-guide";
+import { approvedTourContents } from "@/lib/tour-content";
+import type { TourContent } from "../src/modules/catalog/tour-content.js";
+import { simienPlaces } from "@/lib/simien-destinations";
+import { gondarPlaces } from "@/lib/gondar-destinations";
 import { travelerReviews } from "@/lib/reviews";
 import { fieldNotes } from "@/lib/field-notes";
 import { experienceLinks, gondarExperiences } from "@/lib/experiences";
 import { photographs } from "@/lib/gallery-data";
 import { journeys } from "@/lib/site";
+import { journeysThroughPlace } from "@/lib/destination-routes";
 
 const prisma = new PrismaClient();
+const supportedLocales = ["en", "es", "de", "fr"] as const;
+const sha = (value: string) => createHash("sha256").update(value).digest("hex");
+const mimeFor = (value: string) => value.endsWith(".png") ? "image/png" : value.endsWith(".webp") ? "image/webp" : "image/jpeg";
 
-// ---------------------------------------------------------------------------
-// Structural shapes used by the seed. The day shape mirrors the ItineraryDay
-// the frontend renders (frontend/components/Editorial.tsx), including the
-// richer overnight/notes/stages fields.
-// ---------------------------------------------------------------------------
+async function upsertEditorialMedia(sourceUrl: string, altText: string | null) {
+  return prisma.mediaAsset.upsert({
+    where: { sourceUrl },
+    update: { altText, originalName: sourceUrl.split("/").pop() ?? sourceUrl },
+    create: { sourceUrl, altText, originalName: sourceUrl.split("/").pop() ?? sourceUrl, mimeType: mimeFor(sourceUrl), size: 0 },
+  });
+}
 
-type SeedDay = {
-  title: string;
-  subtitle?: string;
-  paragraphs: string[];
-  overnight?: string;
-  notes?: string[];
-  stages?: { label: string; body: string }[];
-};
+async function upsertTranslations(entityType: "tour" | "destination", entitySlug: string, content: unknown) {
+  const source = JSON.stringify(content);
+  for (const locale of supportedLocales) {
+    const english = locale === "en";
+    await prisma.contentTranslation.upsert({
+      where: { entityType_entitySlug_locale: { entityType, entitySlug, locale } },
+      update: english ? { content: source, status: "published", sourceHash: sha(source), publishedAt: new Date() } : {},
+      create: {
+        entityType, entitySlug, locale, content: english ? source : "{}",
+        status: english ? "published" : "missing", sourceHash: english ? sha(source) : null,
+        publishedAt: english ? new Date() : null,
+      },
+    });
+  }
+}
 
-type SeedJourney = {
-  slug: string;
-  inquiry?: string;
-  title: string;
-  description?: string;
-  heroTitle?: string;
-  heroAccent?: string;
-  image?: string;
-  imageAlt?: string;
-  duration?: string;
-  notice?: string;
-  route?: string[];
-  facts?: { label: string; value: string }[];
-  introduction?: string[];
-  days: SeedDay[];
-  highlights?: { title: string; body: string }[];
-  preparation?: string[];
-  related?: { title: string; body: string; href?: string }[];
-  inclusions: string[];
-  exclusions?: string[];
-};
-
-type TourSeed = {
-  slug: string;
-  tourName: string;
-  heroTitle: string | null;
-  heroAccent: string | null;
-  image: string | null;
-  imageAlt: string | null;
-  duration: string | null;
-  style: string | null;
-  difficulty: string | null;
-  fit: string | null;
-  inquiry: string | null;
-  notice: string | null;
-  route: string | null;
-  facts: string | null;
-  introduction: string | null;
-  highlights: string | null;
-  preparation: string | null;
-  related: string | null;
-  overview: string | null;
-  included: string | null;
-  excluded: string | null;
-  itinerary: string | null;
-  isPublished: boolean;
-  sortOrder: number;
-  isFeatured: boolean;
-};
-
+// The same canonical objects feed the seed, public serializer and CMS adapter.
+function mapJourneyTour(tour: TourContent) {
+  const card = (journeys as Array<{ slug: string; style?: string; fit?: string }>).find((item) => item.slug === tour.slug);
+  return {
+    slug: tour.slug, tourName: tour.tourName,
+    summary: tour.summary, overview: tour.overview,
+    heroTitle: tour.heroTitle, heroAccent: tour.heroAccent,
+    image: tour.image, imageAlt: tour.imageAlt,
+    duration: tour.duration, difficulty: tour.difficulty,
+    journeyType: tour.journeyType,
+    style: card?.style ?? tour.style, fit: card?.fit ?? tour.fit,
+    inquiry: tour.inquiry, notice: tour.notice,
+    itineraryIntro: tour.itineraryIntro,
+    itineraryNotes: JSON.stringify(tour.itineraryNotes),
+    route: JSON.stringify(tour.route), facts: JSON.stringify(tour.facts),
+    introduction: JSON.stringify(tour.introduction),
+    highlights: JSON.stringify(tour.highlights), preparation: JSON.stringify(tour.preparation),
+    related: JSON.stringify(tour.related), included: JSON.stringify(tour.included),
+    excluded: JSON.stringify(tour.excluded), itinerary: JSON.stringify(tour.itinerary),
+    isPublished: tour.isPublished, editorialStatus: "published", editorialSourceNotes: null,
+    sortOrder: tour.sortOrder, isFeatured: tour.isFeatured,
+  };
+}
 type DestinationSeed = {
-  slug: string;
-  destinationName: string;
-  description: string | null;
+  slug: string; destinationName: string; description: string | null;
+  area: string; type: string; location: string | null; alsoKnownAs: string;
+  heroTitle: string | null; heroAccent: string | null; overview: string;
+  highlights: string; thingsToDo: string; imageUrl: string | null;
+  imageAlt: string | null; sourceReferences: string; isPublished: boolean; sortOrder: number;
+  editorialStatus: string; editorialSourceNotes: string | null;
+  tourIds: number[];
 };
 
-// ---------------------------------------------------------------------------
-// Editorial publishing rules
-// ---------------------------------------------------------------------------
-
-// sortOrder doubles as the editorial ordering on the site. timkat-simien is
-// not published (isPublished=false, sortOrder 0).
-const publishedOrder: Record<string, number> = {
-  "simien-day-trip": 1,
-  "3-day-simien-trek": 2,
-  "4-day-simien-classic": 3,
-  "ras-dashen-challenge": 4,
-  "10-day-simien-ras-dashen": 5,
-  "5-day-gondar-simien": 6,
-  "gondar-heritage-simien": 7,
+const simienTypes: Record<string, string> = {
+  "simien-mountains-national-park": "park", debark: "gateway", "buyit-ras": "gateway",
+  sankaber: "camp", geech: "camp", "jinbar-waterfall": "waterfall", "imet-gogo": "viewpoint",
+  inatye: "corridor", chenek: "camp", ambaras: "gateway", "siha-gorge": "viewpoint",
+  "bwahit-pass": "viewpoint", ambiko: "camp", "ras-dashen": "viewpoint",
+  "meseha-valley": "corridor", sona: "camp", mulit: "camp", "adi-arkay": "gateway",
 };
-
-const featuredSlugs = new Set([
-  "3-day-simien-trek",
-  "4-day-simien-classic",
-  "ras-dashen-challenge",
-]);
-
-// ---------------------------------------------------------------------------
-// Mapping helpers
-// ---------------------------------------------------------------------------
-
-function jsonList(items: string[] | undefined | null): string | null {
-  if (!items || items.length === 0) return null;
-  return JSON.stringify(items);
-}
-
-function jsonArray(items: unknown[] | undefined | null): string | null {
-  if (!items || items.length === 0) return null;
-  return JSON.stringify(items);
-}
-
-function jsonObjects(
-  items: Record<string, unknown>[] | undefined | null,
-): string | null {
-  if (!items || items.length === 0) return null;
-  return JSON.stringify(items);
-}
-
-// style/difficulty/fit only exist in frontend/lib/site.ts journeys. The
-// journey's inquiry value matches journeys[].slug there; entries without a
-// match (5-day-gondar-simien, gondar-heritage-simien, timkat) keep null.
-function styleFromJourneys(journey: SeedJourney): {
-  style: string | null;
-  difficulty: string | null;
-  fit: string | null;
-} {
-  const match = (journeys as readonly { slug: string; style?: string; difficulty?: string; fit?: string }[]).find(
-    (entry) => entry.slug === journey.inquiry,
-  );
-  return {
-    style: match?.style ?? null,
-    difficulty: match?.difficulty ?? null,
-    fit: match?.fit ?? null,
-  };
-}
-
-function mapJourneyTour(journey: SeedJourney): TourSeed {
-  const overview = journey.description
-    ? [journey.description, ...(journey.introduction ?? [])].join("\n\n")
-    : (journey.introduction ?? []).join("\n\n");
-
-  const style = styleFromJourneys(journey);
-
-  return {
-    slug: journey.slug,
-    tourName: journey.title,
-    heroTitle: journey.heroTitle ?? null,
-    heroAccent: journey.heroAccent ?? null,
-    image: journey.image ?? null,
-    imageAlt: journey.imageAlt ?? null,
-    duration: journey.duration ?? null,
-    style: style.style,
-    difficulty: style.difficulty,
-    fit: style.fit,
-    inquiry: journey.inquiry ?? null,
-    notice: journey.notice ?? null,
-    route: jsonList(journey.route),
-    facts: jsonObjects(journey.facts),
-    introduction: jsonList(journey.introduction),
-    highlights: jsonObjects(journey.highlights),
-    preparation: jsonList(journey.preparation),
-    related: jsonObjects(journey.related),
-    overview,
-    included: jsonList(journey.inclusions),
-    excluded: jsonList(journey.exclusions),
-    itinerary: jsonArray(journey.days),
-    isPublished: journey.slug in publishedOrder,
-    sortOrder: publishedOrder[journey.slug] ?? 0,
-    isFeatured: featuredSlugs.has(journey.slug),
-  };
-}
-
-const timkatTour: TourSeed = {
-  slug: "timkat-simien",
-  tourName: "Timkat & Simien — 6 days",
-  heroTitle: null,
-  heroAccent: null,
-  image: null,
-  imageAlt: null,
-  duration: null,
-  style: null,
-  difficulty: null,
-  fit: null,
-  inquiry: null,
-  notice: null,
-  route: null,
-  facts: null,
-  introduction: null,
-  highlights: null,
-  preparation: null,
-  related: null,
-  overview:
-    "Experience the Timkat festival in Gondar with local interpretation, then continue into the Simien Mountains.",
-  included: null,
-  excluded: null,
-  itinerary: jsonArray(timkatDays),
-  isPublished: false,
-  sortOrder: 0,
-  isFeatured: false,
+const gondarTypes: Record<string, string> = {
+  gondar: "heritage", "fasil-ghebbi": "heritage", "fasilides-bath": "heritage",
+  "debre-berhan-selassie": "heritage", kuskuam: "heritage", woleka: "rural",
+  "kosoye-mountains": "rural", debark: "gateway", "lake-tana": "lake",
+  "blue-nile-falls": "waterfall", lalibela: "heritage", "yemrehanna-kristos": "heritage",
+  axum: "heritage", yeha: "heritage", "highland-villages": "corridor",
 };
-
-// ---------------------------------------------------------------------------
-// Destinations
-// ---------------------------------------------------------------------------
-
-const simienMountainsDescription =
-  "A landscape of high plateaus, cliffs and deep valleys, with walking for every " +
-  "level from a short introduction to consecutive days on the trail. Watch geladas, " +
-  "look for Walia ibex in suitable habitat and notice highland birdlife; for prepared " +
-  "walkers there are higher objectives such as Bwahit and Ras Dashen. Communities " +
-  "farm and live around the mountains, and even a single day from Gondar can reach " +
-  "selected viewpoints.";
-
-const destinations: DestinationSeed[] = [
-  ...moreSimienPlaces.map((place: any) => ({
-    slug: place.id ?? place.title.toLowerCase().replace(/\s+/g, "-"),
-    destinationName: place.title,
-    description: place.body,
-  })),
-  {
-    slug: "gondar",
-    destinationName: "Gondar",
-    description:
-      "Gondar is the royal city on the gateway to the Simien Mountains. Its historic " +
-      "center includes the Fasil Ghebbi royal compound and the Debre Berhan Selassie " +
-      "church.",
-  },
-  {
-    slug: "simien-mountains",
-    destinationName: "Simien Mountains",
-    description: simienMountainsDescription,
-  },
-  {
-    slug: "woleka",
-    destinationName: "Woleka",
-    description:
-      "Woleka is a village near Gondar associated with Ethiopia's Beta Israel heritage. " +
-      "Guided visits offer historical context and respectful encounters with community " +
-      "life.",
-  },
-];
+// Destination storage preserves the legacy description while filling every
+// structured field from the approved frontend records.
+type ApprovedPlace = { slug: string; name: string; location: string; about: string[]; highlights: string[]; thingsToDo: string[] };
+const destinationMap = new Map<string, DestinationSeed>();
+for (const [index, place] of [...simienPlaces, ...gondarPlaces].entries() as Iterable<[number, ApprovedPlace]>) {
+  const source = place as ApprovedPlace & { image?: string; imageAlt?: string; heroTitle?: string; heroAccent?: string; alsoKnownAs?: string[] };
+  const area = simienTypes[place.slug] || place.slug === "highland-villages" ? "simien" : ["lalibela", "yemrehanna-kristos", "axum", "yeha", "blue-nile-falls", "lake-tana"].includes(place.slug) ? "northern" : "gondar";
+  const description = [place.location, "About", ...place.about, "Highlights", ...place.highlights, "Things to Do", ...place.thingsToDo].join("\n\n");
+  const existing = destinationMap.get(place.slug);
+  destinationMap.set(place.slug, {
+    slug: place.slug,
+    destinationName: place.name,
+    description: existing ? existing.description + "\n\nGondar approach context\n\n" + description : description,
+    area, type: simienTypes[place.slug] ?? gondarTypes[place.slug] ?? "other",
+    location: place.location, alsoKnownAs: JSON.stringify(source.alsoKnownAs ?? []),
+    heroTitle: source.heroTitle ?? place.name, heroAccent: source.heroAccent ?? "",
+    overview: JSON.stringify(place.about), highlights: JSON.stringify(place.highlights),
+    thingsToDo: JSON.stringify(place.thingsToDo), imageUrl: source.image ?? null,
+    imageAlt: source.imageAlt ?? null, sourceReferences: "[]", editorialStatus: "published", editorialSourceNotes: null, isPublished: true,
+    sortOrder: index + 1, tourIds: [],
+  });
+}
+const destinations = [...destinationMap.values()];
 
 async function getOrCreateCategory(name: string, slug: string) {
   const category = await prisma.blogCategory.upsert({
@@ -288,10 +152,7 @@ let categoryCount = 0;
 // ---------------------------------------------------------------------------
 
 async function main(): Promise<void> {
-  const tourSeeds: TourSeed[] = [
-    ...(detailedJourneys as any[]).map(mapJourneyTour),
-    timkatTour,
-  ];
+  const tourSeeds = (approvedTourContents as TourContent[]).map(mapJourneyTour);
 
   let tourCount = 0;
   for (const data of tourSeeds) {
@@ -309,16 +170,47 @@ async function main(): Promise<void> {
       update: updateWithFeature,
       create: data,
     });
+    if (data.image) {
+      const media = await upsertEditorialMedia(data.image, data.imageAlt);
+      await prisma.tourMedia.upsert({
+        where: { tourId_mediaAssetId_role: { tourId: (await prisma.tour.findUniqueOrThrow({ where: { slug: data.slug }, select: { id: true } })).id, mediaAssetId: media.id, role: "hero" } },
+        update: { sortOrder: 0 },
+        create: { tourId: (await prisma.tour.findUniqueOrThrow({ where: { slug: data.slug }, select: { id: true } })).id, mediaAssetId: media.id, role: "hero", sortOrder: 0 },
+      });
+    }
+    await upsertTranslations("tour", data.slug, data);
     tourCount += 1;
   }
 
   let destinationCount = 0;
   for (const data of destinations) {
-    await prisma.destination.upsert({
+    const { tourIds: _tourIds, ...destinationData } = data;
+    const destination = await prisma.destination.upsert({
       where: { slug: data.slug },
-      update: data,
-      create: data,
+      update: destinationData,
+      create: destinationData,
     });
+    if (data.imageUrl) {
+      const media = await upsertEditorialMedia(data.imageUrl, data.imageAlt);
+      await prisma.destinationMedia.upsert({
+        where: { destinationId_mediaAssetId_role: { destinationId: destination.id, mediaAssetId: media.id, role: "hero" } },
+        update: { sortOrder: 0 },
+        create: { destinationId: destination.id, mediaAssetId: media.id, role: "hero", sortOrder: 0 },
+      });
+    }
+    await upsertTranslations("destination", data.slug, data);
+    const area = data.area === "simien" ? "simien" : "gondar";
+    const relatedSlugs = (journeysThroughPlace(area, data.slug) as Array<{ slug: string }>).map((journey) => journey.slug);
+    const relatedTours = relatedSlugs.length
+      ? await prisma.tour.findMany({ where: { slug: { in: relatedSlugs } }, select: { id: true } })
+      : [];
+    await prisma.tourDestinationJunction.deleteMany({ where: { destinationId: destination.id } });
+    if (relatedTours.length) {
+      await prisma.tourDestinationJunction.createMany({
+        data: relatedTours.map((tour) => ({ destinationId: destination.id, tourId: tour.id })),
+        skipDuplicates: true,
+      });
+    }
     destinationCount += 1;
   }
 
