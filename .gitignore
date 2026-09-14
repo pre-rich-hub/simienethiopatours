@@ -1,0 +1,8 @@
+# Browser automation snapshots (playwright-cli)
+.playwright-cli/
+
+# Package manager lockfiles: backend and frontend deploy with npm. pnpm 12
+# blocks dependency build scripts (ERR_PNPM_IGNORED_BUILDS), which broke the
+# backend Prisma generate during Vercel builds.
+**/pnpm-lock.yaml
+**/pnpm-workspace.yaml
