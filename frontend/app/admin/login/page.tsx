@@ -4,8 +4,6 @@ import { type FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminButton, AdminField, AdminInput, AdminNotice } from "@/components/admin/ui";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -24,7 +22,9 @@ export default function AdminLoginPage() {
     setError("");
     setBusy(true);
     try {
-      const res = await fetch(`${API_BASE}/api/v1/auth/login`, {
+      // Same-origin: next.config.ts rewrites /api/:path* to the backend so the
+      // admin_session cookie lands on this origin.
+      const res = await fetch("/api/v1/auth/login", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

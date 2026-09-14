@@ -82,6 +82,17 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  /**
+   * Proxy API calls to the backend so authenticated admin requests stay
+   * same-origin. A cross-origin Set-Cookie from the API host is dropped by
+   * modern browsers (admin login bounced to /admin/login?expired=1), so the
+   * httpOnly admin_session cookie must land on this origin. Mirrors the
+   * working Ethio-afro-tour setup.
+   */
+  async rewrites() {
+    const apiBase = (process.env.API_BASE_URL || "http://localhost:5000").replace(/\/$/, "");
+    return [{ source: "/api/:path*", destination: `${apiBase}/api/:path*` }];
+  },
   async redirects() {
     const legacy = [
       { source: "/beyond-the-trail", destination: "/gondar" },

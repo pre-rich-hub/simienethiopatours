@@ -1,0 +1,44 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#admin-main"
+  - alert [ref=e14]
+  - generic:
+    - region "Notifications"
+  - generic [ref=e15]:
+    - complementary [ref=e16]:
+      - link "SET Admin" [ref=e17] [cursor=pointer]:
+        - /url: /admin
+        - generic [ref=e18]: SET
+        - text: Admin
+      - navigation "Admin" [ref=e19]:
+        - link "Dashboard" [ref=e20] [cursor=pointer]:
+          - /url: /admin
+        - link "Tours" [ref=e26] [cursor=pointer]:
+          - /url: /admin/tours
+        - link "Destinations" [ref=e30] [cursor=pointer]:
+          - /url: /admin/destinations
+        - link "Gallery" [ref=e34] [cursor=pointer]:
+          - /url: /admin/gallery
+        - link "Testimonials" [ref=e39] [cursor=pointer]:
+          - /url: /admin/testimonials
+        - link "Blog" [ref=e42] [cursor=pointer]:
+          - /url: /admin/blog
+        - link "Blog categories" [ref=e45] [cursor=pointer]:
+          - /url: /admin/blog-categories
+        - link "Bookings" [ref=e48] [cursor=pointer]:
+          - /url: /admin/bookings
+        - link "Contacts" [ref=e52] [cursor=pointer]:
+          - /url: /admin/contacts
+        - link "Subscribers" [ref=e56] [cursor=pointer]:
+          - /url: /admin/subscribers
+      - generic [ref=e62]:
+        - link "View site" [ref=e63] [cursor=pointer]:
+          - /url: /
+        - button "Logout" [ref=e68]
+    - generic [ref=e72]:
+      - generic [ref=e73]:
+        - link "View site" [ref=e74] [cursor=pointer]:
+          - /url: /
+        - button "Logout" [ref=e75]
+      - main [ref=e76]:
+        - generic [ref=e77]: Loading...

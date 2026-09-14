@@ -1,5 +1,4 @@
 import { adminToast } from "@/lib/admin/toast";
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 const LOGIN_PATH = "/admin/login";
 
@@ -18,9 +17,8 @@ function redirectToLogin(expired: boolean) {
 
 /**
  * Authenticated read wrapper for the admin API.
- * Sends credentials so the httpOnly admin_session cookie is included.
- * That cookie is SameSite=Lax: it is sent when the API is same-site
- * (localhost ports, or a subdomain of the public host). See docs/environments.md.
+ * Calls are same-origin: next.config.ts rewrites /api/:path* to the backend,
+ * so the httpOnly admin_session cookie is set on and sent to this origin.
  * On 401: redirects to login (session expired) unless redirectOn401 is false.
  * On non-ok: parses { message } and throws.
  * On ok: parses body.data and returns it.
@@ -30,7 +28,7 @@ export async function adminRequestClient<T = unknown>(
   init?: RequestInit & { redirectOn401?: boolean },
 ): Promise<T | null> {
   const { redirectOn401 = true, ...fetchInit } = init ?? {};
-  const url = `${API_BASE}${path}`;
+  const url = path;
   const res = await fetch(url, {
     ...fetchInit,
     credentials: "include",
@@ -60,6 +58,7 @@ export async function adminRequestClient<T = unknown>(
 /**
  * Authenticated mutation wrapper (POST/PUT/DELETE) for the admin API.
  * Accepts either a JSON payload or FormData (file uploads).
+ * Same-origin via the /api/:path* rewrite, so the admin_session cookie is sent.
  * On 401: sends the user to /admin/login?expired=1.
  * On non-ok: throws with the server's { message } when present.
  * On ok: returns body.data (or the whole body when data is absent).
@@ -72,7 +71,7 @@ export async function adminMutate<T = unknown>(
     formData?: FormData;
   },
 ): Promise<T | null> {
-  const url = `${API_BASE}${path}`;
+  const url = path;
   const isForm = options.formData !== undefined;
   const res = await fetch(url, {
     method: options.method,

@@ -21,10 +21,9 @@ import {
   Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
 } from "@/components/ui/table";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
 function logout() {
-  fetch(`${API_BASE}/api/v1/auth/logout`, { method: "POST", credentials: "include" })
+  // Same-origin via the /api/:path* rewrite so the admin_session cookie is sent.
+  fetch("/api/v1/auth/logout", { method: "POST", credentials: "include" })
     .then(() => { window.location.href = "/admin/login"; })
     .catch(() => { window.location.href = "/admin/login"; });
 }
