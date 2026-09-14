@@ -1,5 +1,7 @@
+import { resolveMediaUrl } from "@/lib/media-url";
+import clientPhotos from "@/lib/client-photos.json";
 import type { ReactNode } from "react";
-import Image from "next/image";
+import Image from "@/components/Image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
@@ -26,7 +28,7 @@ export default async function TreksPage() {
   return (
     <PageShell lightHeader={false}>
       <section className="page-hero--image simien-page-hero editorial-hero">
-        <Image src="/images/simien-panorama.jpg" alt={t("heroAlt")} fill priority sizes="100vw" />
+        <Image src={resolveMediaUrl(clientPhotos.sankaber.url)} alt={t("heroAlt")} fill priority sizes="100vw" />
         <div className="page-hero__content shell">
           <div className="breadcrumbs"><Link href="/">{tCommon("home")}</Link><span>/</span><span>{t("crumb")}</span></div>
           <p className="eyebrow">{t("eyebrow")}</p>

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/Image";
 import type { Metadata } from "next";
 import { PageShell } from "@/components/PageShell";
 import { localeFromParam, pageMetadata } from "@/lib/seo";

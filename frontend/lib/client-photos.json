@@ -1,0 +1,326 @@
+{
+  "kosoye": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386874/kosoye-mountain.jpg",
+    "alt": {
+      "en": "A visitor pointing across the green Kosoye Mountains",
+      "es": "Un visitante señala las verdes montañas de Kosoye",
+      "de": "Ein Besucher zeigt auf die grünen Kosoye-Berge",
+      "fr": "Un visiteur montre les montagnes verdoyantes de Kosoye"
+    }
+  },
+  "kuskuam": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/kuskuam-church.jpg",
+    "alt": {
+      "en": "Visitors standing beside the stone ruins at Kuskuam",
+      "es": "Visitantes junto a las ruinas de piedra de Kuskuam",
+      "de": "Besucher neben den Steinruinen von Kuskuam",
+      "fr": "Des visiteurs près des ruines en pierre de Kuskuam"
+    }
+  },
+  "buyit-ras": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386873/buhit-ras.jpg",
+    "alt": {
+      "en": "A hiker overlooking the mountains at Buyit Ras",
+      "es": "Un senderista contempla las montañas en Buyit Ras",
+      "de": "Ein Wanderer blickt bei Buyit Ras über die Berge",
+      "fr": "Un randonneur contemple les montagnes à Buyit Ras"
+    }
+  },
+  "sankaber": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg",
+    "alt": {
+      "en": "Layered cliffs and green valleys near Sankaber in the Simien Mountains",
+      "es": "Acantilados y valles verdes cerca de Sankaber, en las montañas Simien",
+      "de": "Gestaffelte Felswände und grüne Täler bei Sankaber im Simien-Gebirge",
+      "fr": "Falaises étagées et vallées verdoyantes près de Sankaber dans les montagnes du Simien"
+    }
+  },
+  "chenek": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg",
+    "alt": {
+      "en": "Travellers sharing an outdoor meal at Chenek camp",
+      "es": "Viajeros comparten una comida al aire libre en el campamento Chenek",
+      "de": "Reisende beim gemeinsamen Essen im Freien im Chenek-Camp",
+      "fr": "Des voyageurs partagent un repas en plein air au camp de Chenek"
+    }
+  },
+  "jinbar": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386844/Jinbar_Waterfall.jpg",
+    "alt": {
+      "en": "Two visitors at the Jinbar Waterfall viewpoint",
+      "es": "Dos visitantes en el mirador de la cascada Jinbar",
+      "de": "Zwei Besucher am Aussichtspunkt des Jinbar-Wasserfalls",
+      "fr": "Deux visiteurs au belvédère de la cascade de Jinbar"
+    }
+  },
+  "geech": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg",
+    "alt": {
+      "en": "A tent beside a shelter and giant lobelias at Geech camp",
+      "es": "Una tienda junto a un refugio y lobelias gigantes en el campamento Geech",
+      "de": "Ein Zelt neben einer Hütte und Riesenlobelien im Geech-Camp",
+      "fr": "Une tente près d’un abri et de lobélies géantes au camp de Geech"
+    }
+  },
+  "fasil": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+    "alt": {
+      "en": "Stone castle and towers at Fasil Ghebbi in Gondar",
+      "es": "Castillo de piedra y torres de Fasil Ghebbi en Gondar",
+      "de": "Steinburg und Türme von Fasil Ghebbi in Gondar",
+      "fr": "Château en pierre et tours de Fasil Ghebbi à Gondar"
+    }
+  },
+  "simien": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386859/simien-mountains.jpg",
+    "alt": {
+      "en": "A waterfall descending between green cliffs in the Simien Mountains",
+      "es": "Una cascada entre acantilados verdes en las montañas Simien",
+      "de": "Ein Wasserfall zwischen grünen Felswänden im Simien-Gebirge",
+      "fr": "Une cascade entre des falaises verdoyantes dans les montagnes du Simien"
+    }
+  },
+  "bahir-dar": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386854/bahir-dar.jpg",
+    "alt": {
+      "en": "A pelican floating on the water at Bahir Dar",
+      "es": "Un pelícano flota en el agua en Bahir Dar",
+      "de": "Ein Pelikan schwimmt auf dem Wasser bei Bahir Dar",
+      "fr": "Un pélican flotte sur l’eau à Bahir Dar"
+    }
+  },
+  "lalibela": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389640/lalibela.jpg",
+    "alt": {
+      "en": "A person in white ceremonial clothing inside a rock-hewn church in Lalibela",
+      "es": "Una persona con vestimenta ceremonial blanca dentro de una iglesia excavada en la roca en Lalibela",
+      "de": "Eine Person in weißer zeremonieller Kleidung in einer Felsenkirche in Lalibela",
+      "fr": "Une personne en tenue cérémonielle blanche dans une église creusée dans la roche à Lalibela"
+    }
+  },
+  "yemrehanna-kristos": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389635/yemrehanna-kistos.png",
+    "alt": {
+      "en": "Yemrehanna Kristos church beneath a rocky cave roof",
+      "es": "La iglesia de Yemrehanna Kristos bajo el techo rocoso de una cueva",
+      "de": "Die Kirche Yemrehanna Kristos unter einem felsigen Höhlendach",
+      "fr": "L’église de Yemrehanna Kristos sous la voûte rocheuse d’une grotte"
+    }
+  },
+  "yeha": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389631/yeha.png",
+    "alt": {
+      "en": "Ancient stone walls and steps at Yeha",
+      "es": "Antiguos muros de piedra y escalones en Yeha",
+      "de": "Antike Steinmauern und Stufen in Yeha",
+      "fr": "Murs anciens en pierre et marches à Yeha"
+    }
+  },
+  "axum": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389630/xum.png",
+    "alt": {
+      "en": "Carved stone stelae at Axum beneath a blue sky",
+      "es": "Estelas de piedra tallada en Axum bajo un cielo azul",
+      "de": "Geschnitzte Steinstelen in Axum unter blauem Himmel",
+      "fr": "Stèles en pierre sculptée à Axum sous un ciel bleu"
+    }
+  },
+  "blue-nile-falls": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389618/blue-nile-falls.jpg",
+    "alt": {
+      "en": "Blue Nile Falls cascading into a green gorge",
+      "es": "Las cataratas del Nilo Azul caen en un desfiladero verde",
+      "de": "Die Wasserfälle des Blauen Nils stürzen in eine grüne Schlucht",
+      "fr": "Les chutes du Nil Bleu se déversent dans une gorge verdoyante"
+    }
+  },
+  "gondar": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392021/irenelik-gondar-3388882.jpg",
+    "alt": {
+      "en": "Gondar viewed across its historic highland landscape",
+      "es": "Gondar visto a través de su paisaje histórico de las tierras altas",
+      "de": "Gondar in seiner historischen Hochlandlandschaft",
+      "fr": "Gondar dans son paysage historique des hauts plateaux"
+    }
+  },
+  "debre-berhan-selassie": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392019/bebre-berhan-selassie.jpg",
+    "alt": {
+      "en": "Debre Berhan Selassie church and its historic grounds in Gondar",
+      "es": "La iglesia Debre Berhan Selassie y sus terrenos históricos en Gondar",
+      "de": "Die Kirche Debre Berhan Selassie und ihr historisches Gelände in Gondar",
+      "fr": "L’église Debre Berhan Selassie et son site historique à Gondar"
+    }
+  },
+  "woleka": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392021/woleka-beta-israel.png",
+    "alt": {
+      "en": "Woleka Beta Israel heritage site near Gondar",
+      "es": "Sitio patrimonial Beta Israel de Woleka cerca de Gondar",
+      "de": "Beta-Israel-Kulturerbe in Woleka bei Gondar",
+      "fr": "Site patrimonial Beta Israel de Woleka près de Gondar"
+    }
+  },
+  "fasilides-bath": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392032/fasilides_-bath-fasil_s-pool.jpg",
+    "alt": {
+      "en": "Fasilides’ Bath, also known as Fasil’s Pool, in Gondar",
+      "es": "Los Baños de Fasilides, también conocidos como la Piscina de Fasil, en Gondar",
+      "de": "Das Fasilides-Bad, auch Fasil’s Pool genannt, in Gondar",
+      "fr": "Les bains de Fasilides, aussi appelés la piscine de Fasil, à Gondar"
+    }
+  },
+  "adi-arkay": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397608/adi-arkay.png",
+    "alt": {
+      "en": "A winding road through green hills near Adi Arkay",
+      "es": "Una carretera sinuosa entre colinas verdes cerca de Adi Arkay",
+      "de": "Eine kurvenreiche Straße durch grüne Hügel bei Adi Arkay",
+      "fr": "Une route sinueuse dans les collines verdoyantes près d’Adi Arkay"
+    }
+  },
+  "incya-river": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/incya-river.png",
+    "alt": {
+      "en": "A clear pool between rocks along the Incya River corridor",
+      "es": "Una poza de agua clara entre rocas en el corredor del río Incya",
+      "de": "Ein klares Wasserbecken zwischen Felsen im Incya-Flusskorridor",
+      "fr": "Un bassin d’eau claire entre les rochers du corridor de la rivière Incya"
+    }
+  },
+  "ras-dashen": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png",
+    "alt": {
+      "en": "A grassy escarpment overlooking the mountains on the Ras Dashen route",
+      "es": "Una escarpa cubierta de hierba sobre las montañas en la ruta de Ras Dashen",
+      "de": "Eine grasbewachsene Steilkante über den Bergen auf der Ras-Dashen-Route",
+      "fr": "Un escarpement herbeux dominant les montagnes sur l’itinéraire du Ras Dashen"
+    }
+  },
+  "meseha-river": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397598/meseha-river.png",
+    "alt": {
+      "en": "A pool and waterfall between rock walls in the Meseha River landscape",
+      "es": "Una poza y una cascada entre paredes rocosas en el paisaje del río Meseha",
+      "de": "Ein Wasserbecken und Wasserfall zwischen Felswänden in der Landschaft des Meseha-Flusses",
+      "fr": "Un bassin et une cascade entre des parois rocheuses dans le paysage de la rivière Meseha"
+    }
+  },
+  "highland-villages": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397588/highland-villages.png",
+    "alt": {
+      "en": "Thatched homes above cultivated fields in a highland village",
+      "es": "Casas con techos de paja sobre campos cultivados en una aldea de las tierras altas",
+      "de": "Häuser mit Strohdächern über bestellten Feldern in einem Hochlanddorf",
+      "fr": "Maisons aux toits de chaume au-dessus des champs cultivés d’un village des hauts plateaux"
+    }
+  },
+  "bwahit": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397585/Bwahit.png",
+    "alt": {
+      "en": "Rocky ridges and open highland terrain around Bwahit",
+      "es": "Crestas rocosas y terreno abierto de montaña alrededor de Bwahit",
+      "de": "Felsige Grate und offenes Hochland rund um Bwahit",
+      "fr": "Crêtes rocheuses et hauts plateaux ouverts autour de Bwahit"
+    }
+  },
+  "debark": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397581/Debark.png",
+    "alt": {
+      "en": "Thatched buildings and green grounds near Debark",
+      "es": "Edificios con techos de paja y jardines verdes cerca de Debark",
+      "de": "Gebäude mit Strohdächern und grüne Anlagen bei Debark",
+      "fr": "Bâtiments aux toits de chaume et espaces verdoyants près de Debark"
+    }
+  },
+  "sona": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397573/Sona.png",
+    "alt": {
+      "en": "Grazing animals and fields beneath the mountains near Sona",
+      "es": "Animales pastando y campos al pie de las montañas cerca de Sona",
+      "de": "Weidende Tiere und Felder unterhalb der Berge bei Sona",
+      "fr": "Animaux au pâturage et champs au pied des montagnes près de Sona"
+    }
+  },
+  "ambiko": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397573/Ambiko.png",
+    "alt": {
+      "en": "A thatched stone hut on a mountainside near Ambiko",
+      "es": "Una cabaña de piedra con techo de paja en una ladera cerca de Ambiko",
+      "de": "Eine Steinhütte mit Strohdach an einem Berghang bei Ambiko",
+      "fr": "Une cabane en pierre au toit de chaume sur un versant près d’Ambiko"
+    }
+  },
+  "siha-gorge": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397564/siha-gorge.png",
+    "alt": {
+      "en": "An ibex standing on a rocky ridge in the Simien Mountains",
+      "es": "Un íbice sobre una cresta rocosa en las montañas Simien",
+      "de": "Ein Steinbock auf einem felsigen Grat im Simien-Gebirge",
+      "fr": "Un bouquetin sur une crête rocheuse dans les montagnes du Simien"
+    }
+  },
+  "inatye": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397558/Inatye.png",
+    "alt": {
+      "en": "Steep cliffs above green slopes near Inatye",
+      "es": "Acantilados escarpados sobre laderas verdes cerca de Inatye",
+      "de": "Steile Felswände über grünen Hängen bei Inatye",
+      "fr": "Falaises abruptes au-dessus de pentes verdoyantes près d’Inatye"
+    }
+  },
+  "ambaras": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/Ambaras.png",
+    "alt": {
+      "en": "Rocky pinnacles rising above green slopes near Ambaras",
+      "es": "Pináculos rocosos sobre laderas verdes cerca de Ambaras",
+      "de": "Felsspitzen über grünen Hängen bei Ambaras",
+      "fr": "Pitons rocheux dominant des pentes verdoyantes près d’Ambaras"
+    }
+  },
+  "imet-gogo": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "alt": {
+      "en": "Cliffs and deep valleys seen from Imet Gogo",
+      "es": "Acantilados y valles profundos vistos desde Imet Gogo",
+      "de": "Felswände und tiefe Täler vom Imet Gogo aus gesehen",
+      "fr": "Falaises et vallées profondes vues depuis Imet Gogo"
+    }
+  },
+  "gondar-running": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789400230/Gondar-Hidden-Running-Experience.png",
+    "alt": {
+      "en": "Historic stone buildings and ruins in Gondar",
+      "es": "Edificios históricos de piedra y ruinas en Gondar",
+      "de": "Historische Steingebäude und Ruinen in Gondar",
+      "fr": "Bâtiments historiques en pierre et ruines à Gondar"
+    }
+  },
+  "gelada-country": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789400264/Gelada-Country.png",
+    "alt": {
+      "en": "A gelada sitting above green valleys in the Simien Mountains",
+      "es": "Un gelada sentado sobre los valles verdes de las montañas Simien",
+      "de": "Ein Gelada sitzt über grünen Tälern im Simien-Gebirge",
+      "fr": "Un gélada assis au-dessus des vallées verdoyantes des montagnes du Simien"
+    }
+  },
+  "gondar-market-local-life": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789400256/Gondar-Market-Local-Life.png",
+    "alt": {
+      "en": "Shoppers among colourful clothing stalls in a Gondar market",
+      "es": "Compradores entre puestos de ropa colorida en un mercado de Gondar",
+      "de": "Menschen zwischen bunten Kleiderständen auf einem Markt in Gondar",
+      "fr": "Des clients parmi les étals de vêtements colorés d’un marché de Gondar"
+    }
+  },
+  "gondar-food-coffee": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789400249/Gondar-Food-Coffee-Experience.png",
+    "alt": {
+      "en": "Injera served with a variety of Ethiopian dishes",
+      "es": "Injera servida con una variedad de platos etíopes",
+      "de": "Injera mit verschiedenen äthiopischen Gerichten",
+      "fr": "Injera servie avec une variété de plats éthiopiens"
+    }
+  }
+}

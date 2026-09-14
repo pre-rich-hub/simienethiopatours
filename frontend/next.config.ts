@@ -41,12 +41,17 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    formats: ["image/avif", "image/webp"],
+    // Local/backend images still use Next's optimizer; avoid expensive AVIF
+    // encoding on first loads. Cloudinary photos use the shared Image loader.
+    formats: ["image/webp"],
     // Cap retina srcset so 100vw heroes do not request a 3840w derivative.
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     qualities: [75],
     minimumCacheTTL: 60 * 60 * 24,
-    remotePatterns: apiImagePatterns(),
+    remotePatterns: [
+      ...(apiImagePatterns() ?? []),
+      { protocol: "https", hostname: "res.cloudinary.com", port: "", pathname: "/ps4gvvqu/image/upload/**", search: "" },
+    ],
   },
   /**
    * Draft CSP for production hardening (P11-T2).
@@ -60,7 +65,7 @@ const nextConfig: NextConfig = {
       "default-src 'self'",
       `script-src 'self' 'unsafe-inline' 'unsafe-eval'`,
       `style-src 'self' 'unsafe-inline'`,
-      `img-src 'self' data: blob: ${api}`,
+      `img-src 'self' data: blob: ${api} https://res.cloudinary.com/ps4gvvqu/`,
       `font-src 'self' data:`,
       `connect-src 'self' ${api}`,
       "frame-ancestors 'none'",

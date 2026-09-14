@@ -81,8 +81,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Personal trekking equipment; personal snacks and drinks; alcohol; tips; personal purchases",
       "Optional activities; any service not specifically listed in the quotation"
     ],
-    "image": "/images/chenek-camp.jpg",
-    "imageAlt": "Highland landscape in the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg",
+    "imageAlt": "Layered cliffs and green valleys near Sankaber in the Simien Mountains",
     "segments": [
       {
         "label": "Morning",
@@ -144,8 +144,8 @@ export const journeyPackages: JourneyPackage[] = [
       "International and domestic flights; visa/eVisa; travel insurance",
       "Personal trekking equipment; personal snacks and drinks; alcohol; tips; personal purchases; optional activities"
     ],
-    "image": "/images/gelada-troop.jpg",
-    "imageAlt": "A wild troop of geladas grazing in the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789400264/Gelada-Country.png",
+    "imageAlt": "A gelada sitting above green valleys in the Simien Mountains",
     "segments": [
       {
         "label": "Morning",
@@ -203,8 +203,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks/extra drinks; laundry; SIM/data/roaming; tips; personal expenses",
       "Medical treatment/evacuation; optional activities"
     ],
-    "image": "/images/geech-camp.jpg",
-    "imageAlt": "Tents on a high plateau in the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg",
+    "imageAlt": "Layered cliffs and green valleys near Sankaber in the Simien Mountains",
     "days": [
       {
         "title": "Gondar to Sankaber",
@@ -257,8 +257,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks and extra drinks; laundry; communications costs; tips; personal purchases",
       "Medical/evacuation costs; optional activities"
     ],
-    "image": "/images/imet-gogo.jpg",
-    "imageAlt": "The immense cliffs and valleys seen from Imet Gogo",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "imageAlt": "Cliffs and deep valleys seen from Imet Gogo",
     "days": [
       {
         "title": "Gondar to Sankaber",
@@ -317,8 +317,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks/extra drinks; laundry; SIM/data/roaming; tips; personal shopping",
       "Medical treatment; emergency evacuation; optional activities"
     ],
-    "image": "/images/imet-gogo.jpg",
-    "imageAlt": "The immense cliffs and valleys seen from Imet Gogo",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "imageAlt": "Cliffs and deep valleys seen from Imet Gogo",
     "days": [
       {
         "title": "Gondar to Sankaber",
@@ -384,8 +384,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Personal expenses; alcoholic drinks; tips; travel insurance; personal trekking equipment",
       "Expenses caused by circumstances outside operator control"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Stone arches at the royal fortress of Fasil Ghebbi in Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "imageAlt": "Cliffs and deep valleys seen from Imet Gogo",
     "days": [
       {
         "title": "Arrive in Gondar",
@@ -461,8 +461,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks/extra drinks; tips; personal shopping; optional activities",
       "Extra hotel nights; services not stated in the quotation"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Stone arches at the royal fortress of Fasil Ghebbi in Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392021/woleka-beta-israel.png",
+    "imageAlt": "Woleka Beta Israel heritage site near Gondar",
     "days": [
       {
         "title": "Welcome to Gondar",
@@ -538,8 +538,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks/extra drinks; laundry; communications; tips; personal purchases",
       "Medical treatment; emergency evacuation; optional activities"
     ],
-    "image": "/images/giant-lobelia.jpg",
-    "imageAlt": "Giant lobelias across the high Afroalpine landscape of the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png",
+    "imageAlt": "A grassy escarpment overlooking the mountains on the Ras Dashen route",
     "itineraryIntro": "Detailed 5-Day approach (ends Ambiko after summit)",
     "itineraryNotes": [
       "Return / acclimatisation note: On the 5-day detailed approach, Day 5 ends at Ambiko. Bookings that require vehicle return to Gondar add descent and transfer days (as on the 6-day Challenge: return toward Chenek → Gondar) or continue into a longer expedition. Exact return logistics are confirmed in the quotation."
@@ -623,8 +623,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks/extra drinks; laundry; communications; tips; personal purchases",
       "Medical treatment; emergency evacuation; optional activities"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Wide panorama across the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png",
+    "imageAlt": "A grassy escarpment overlooking the mountains on the Ras Dashen route",
     "itineraryNotes": [
       "Summit success and exact daily distances depend on weather and group condition; the guide may adjust pacing within this framework."
     ],
@@ -719,8 +719,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks/extra drinks; laundry; communications; tips; personal expenses",
       "Medical treatment; emergency evacuation; optional services"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Wide panorama across the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397585/Bwahit.png",
+    "imageAlt": "Rocky ridges and open highland terrain around Bwahit",
     "days": [
       {
         "title": "Gondar to Sankaber",
@@ -821,8 +821,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Professional photography/video; medical treatment; emergency evacuation; optional activities",
       "Any service not specifically listed in the final quotation"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Ridges and escarpments across the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png",
+    "imageAlt": "A grassy escarpment overlooking the mountains on the Ras Dashen route",
     "days": [
       {
         "title": "Arrival in Gondar",
@@ -935,8 +935,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Flights; visa; insurance; personal equipment; personal expenses; alcohol; tips",
       "Professional photography services; optional activities"
     ],
-    "image": "/images/gelada-troop.jpg",
-    "imageAlt": "A wild troop of geladas grazing in the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397564/siha-gorge.png",
+    "imageAlt": "An ibex standing on a rocky ridge in the Simien Mountains",
     "itineraryIntro": "Sample 3-day outline (adapted at booking)",
     "itineraryNotes": [
       "2-day versions compress to Sankaber overnight and return; 4-day versions add a Chenek or Imet Gogo wildlife day."
@@ -998,8 +998,8 @@ export const journeyPackages: JourneyPackage[] = [
       "International and domestic flights; visa; travel insurance",
       "Personal expenses; alcohol; tips; optional activities"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Wide panorama across the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386859/simien-mountains.jpg",
+    "imageAlt": "A waterfall descending between green cliffs in the Simien Mountains",
     "segments": [
       {
         "label": "Early morning",
@@ -1053,8 +1053,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Professional photographer unless specifically booked; photography equipment; camera/lens rental unless arranged; drone services",
       "International/domestic flights; visa; travel insurance; personal expenses; alcohol; tips; optional services"
     ],
-    "image": "/images/imet-gogo.jpg",
-    "imageAlt": "The immense cliffs and valleys seen from Imet Gogo",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "imageAlt": "Cliffs and deep valleys seen from Imet Gogo",
     "itineraryIntro": "Sample 3-day outline",
     "itineraryNotes": [
       "2-day versions overnight at Sankaber and return after a second highland photography morning."
@@ -1114,8 +1114,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Professional photographer unless booked; camera equipment; drone services",
       "Flights; visa; insurance; personal expenses; alcohol; tips; optional activities"
     ],
-    "image": "/images/chenek-camp.jpg",
-    "imageAlt": "Mountain landscape around Chenek camp in the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "imageAlt": "Cliffs and deep valleys seen from Imet Gogo",
     "itineraryIntro": "Sample 5-day outline",
     "itineraryNotes": [
       "4-day versions compress Day 3–4 into a single Imet Gogo → Chenek day and earlier return."
@@ -1189,8 +1189,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Flights; visa; insurance; meals unless stated; drinks; personal expenses; tips",
       "Attractions not listed; optional activities"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Stone arches at the royal fortress of Fasil Ghebbi in Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392032/fasilides_-bath-fasil_s-pool.jpg",
+    "imageAlt": "Fasilides’ Bath, also known as Fasil’s Pool, in Gondar",
     "segments": [
       {
         "label": "Half Day (approximately 3–4 hours)",
@@ -1231,8 +1231,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Attraction entrance fees for monument sites (this is not a castle tour)",
       "Tips; flights; visa; insurance; optional add-ons"
     ],
-    "image": "/images/tevan-portrait.jpg",
-    "imageAlt": "Local perspective on Gondar and northern Ethiopia",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392021/irenelik-gondar-3388882.jpg",
+    "imageAlt": "Gondar viewed across its historic highland landscape",
     "itineraryNotes": [
       "Pace is conversational and flexible; exact stops vary by day, season and guest interest."
     ],
@@ -1291,8 +1291,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Additional food/drinks outside the agreed experience; alcohol; personal purchases; tips",
       "Flights; visa; insurance; optional experiences"
     ],
-    "image": "/images/tevan-founder.jpg",
-    "imageAlt": "A local guide sharing the landscape and stories of northern Ethiopia",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789400249/Gondar-Food-Coffee-Experience.png",
+    "imageAlt": "Injera served with a variety of Ethiopian dishes",
     "segments": [
       {
         "label": "Orientation",
@@ -1349,8 +1349,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Meals and drinks unless listed; tips; personal shopping",
       "Flights; visa; insurance"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Historic stone architecture in Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+    "imageAlt": "Stone castle and towers at Fasil Ghebbi in Gondar",
     "segments": [
       {
         "label": "Meet",
@@ -1402,8 +1402,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Meals unless specifically stated; drinks; personal purchases; tips",
       "Optional attractions not listed; personal expenses"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Stone arches at the royal fortress of Fasil Ghebbi in Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392019/bebre-berhan-selassie.jpg",
+    "imageAlt": "Debre Berhan Selassie church and its historic grounds in Gondar",
     "segments": [
       {
         "label": "Half Day",
@@ -1442,8 +1442,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Purchases of any kind; meals and drinks; tips",
       "Flights; visa; insurance; optional activities"
     ],
-    "image": "/images/tevan-portrait.jpg",
-    "imageAlt": "Local perspective on Gondar and northern Ethiopia",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789400256/Gondar-Market-Local-Life.png",
+    "imageAlt": "Shoppers among colourful clothing stalls in a Gondar market",
     "segments": [
       {
         "label": "Orientation",
@@ -1494,8 +1494,8 @@ export const journeyPackages: JourneyPackage[] = [
     "excluded": [
       "Personal expenses; alcoholic drinks; tips; personal purchases; activities not listed above"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Everyday life in the northern Ethiopian highlands",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386874/kosoye-mountain.jpg",
+    "imageAlt": "A visitor pointing across the green Kosoye Mountains",
     "itineraryNotes": [
       "Full-day versions add longer walking, additional village time and a more leisurely meal."
     ],
@@ -1555,8 +1555,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Additional meals and drinks beyond the optional finish; tips",
       "Flights; visa; insurance; optional photography services"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Highland paths in the countryside around Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789400230/Gondar-Hidden-Running-Experience.png",
+    "imageAlt": "Historic stone buildings and ruins in Gondar",
     "segments": [
       {
         "label": "Meet",
@@ -1611,8 +1611,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Personal expenses; alcohol; tips; optional activities",
       "Festival-period surcharges where separately quoted; services not listed in the quotation"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Historic stone architecture in Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+    "imageAlt": "Stone castle and towers at Fasil Ghebbi in Gondar",
     "days": [
       {
         "title": "Arrive in Gondar",
@@ -1694,8 +1694,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Personal sleeping bag and trekking kit unless stated; alcohol; tips; personal expenses",
       "Optional activities; any service not listed in the quotation"
     ],
-    "image": "/images/giant-lobelia.jpg",
-    "imageAlt": "Giant lobelias across the high Afroalpine landscape of the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png",
+    "imageAlt": "A grassy escarpment overlooking the mountains on the Ras Dashen route",
     "itineraryIntro": "Sample 9-day outline",
     "itineraryNotes": [
       "Return timing depends on the 8-, 9- or 10-day booking."
@@ -1794,8 +1794,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Flights; visa; insurance; personal expenses; alcohol; tips",
       "Optional activities; services not listed in the quotation"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Historic stone architecture in Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+    "imageAlt": "Stone castle and towers at Fasil Ghebbi in Gondar",
     "itineraryIntro": "Sample 7-day outline",
     "days": [
       {
@@ -1883,8 +1883,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Flights; visa; insurance; personal expenses; alcohol; tips",
       "Optional activities; services not listed in the quotation"
     ],
-    "image": "/images/geech-camp.jpg",
-    "imageAlt": "Tents on a high plateau in the Simien Mountains",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg",
+    "imageAlt": "A tent beside a shelter and giant lobelias at Geech camp",
     "itineraryIntro": "Sample 6-day outline",
     "days": [
       {
@@ -1968,8 +1968,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; tips; personal shopping; optional Yemrehanna Kristos costs if not listed",
       "Any service not specifically listed in the final quotation"
     ],
-    "image": "/images/tevan-founder.jpg",
-    "imageAlt": "A local guide sharing the landscape and stories of northern Ethiopia",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389640/lalibela.jpg",
+    "imageAlt": "A person in white ceremonial clothing inside a rock-hewn church in Lalibela",
     "itineraryNotes": [
       "For 7–8 day versions: compress Simien to two mountain days and/or combine Lalibela church days as confirmed in the quotation."
     ],

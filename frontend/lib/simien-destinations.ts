@@ -50,8 +50,8 @@ export const simienPlaces: SimienPlace[] = [
       "Mountain camping at established trek camps",
       "Ras Dashen summit expeditions (demanding; summit success not guaranteed)"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Wide panorama across the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386859/simien-mountains.jpg",
+    "imageAlt": "A waterfall descending between green cliffs in the Simien Mountains"
   },
   {
     "slug": "debark",
@@ -73,8 +73,8 @@ export const simienPlaces: SimienPlace[] = [
       "Brief transit stop on Gondar–Simien itineraries",
       "Stock final supplies if needed before entering the park"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Highland road in northern Ethiopia on the approach toward the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397581/Debark.png",
+    "imageAlt": "Thatched buildings and green grounds near Debark"
   },
   {
     "slug": "buyit-ras",
@@ -97,8 +97,8 @@ export const simienPlaces: SimienPlace[] = [
       "Wildlife watching and photography along the approach",
       "Acclimatisation walking before the first overnight camp"
     ],
-    "image": "/images/imet-gogo.jpg",
-    "imageAlt": "Highland landscape in the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386873/buhit-ras.jpg",
+    "imageAlt": "A hiker overlooking the mountains at Buyit Ras"
   },
   {
     "slug": "sankaber",
@@ -121,8 +121,8 @@ export const simienPlaces: SimienPlace[] = [
       "Overnight camping at Sankaber Camp",
       "Photography of cliffs, valleys and highland light"
     ],
-    "image": "/images/imet-gogo.jpg",
-    "imageAlt": "Open plateau and escarpment typical of Simien trail country around Sankaber"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg",
+    "imageAlt": "Layered cliffs and green valleys near Sankaber in the Simien Mountains"
   },
   {
     "slug": "geech",
@@ -146,8 +146,8 @@ export const simienPlaces: SimienPlace[] = [
       "Optional sunset viewpoint walk when conditions allow",
       "Rest and acclimatisation before higher viewpoint days"
     ],
-    "image": "/images/geech-camp.jpg",
-    "imageAlt": "Tents on the high plateau near Geech"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg",
+    "imageAlt": "A tent beside a shelter and giant lobelias at Geech camp"
   },
   {
     "slug": "jinbar-waterfall",
@@ -174,8 +174,8 @@ export const simienPlaces: SimienPlace[] = [
       "Photography of the waterfall and gorge",
       "Short guided approach walks to safe viewing positions"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Deep valleys and escarpments in the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386844/Jinbar_Waterfall.jpg",
+    "imageAlt": "Two visitors at the Jinbar Waterfall viewpoint"
   },
   {
     "slug": "imet-gogo",
@@ -198,8 +198,8 @@ export const simienPlaces: SimienPlace[] = [
       "Wildlife watching around cliffs when present",
       "Rest and interpretation with your guide at the viewpoint"
     ],
-    "image": "/images/imet-gogo.jpg",
-    "imageAlt": "The immense cliffs and valleys seen from Imet Gogo"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "imageAlt": "Cliffs and deep valleys seen from Imet Gogo"
   },
   {
     "slug": "inatye",
@@ -221,8 +221,8 @@ export const simienPlaces: SimienPlace[] = [
       "Photography of ridges, valleys and distant camps",
       "Wildlife observation while moving between viewpoints"
     ],
-    "image": "/images/chenek-camp.jpg",
-    "imageAlt": "Highland ridges in the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397558/Inatye.png",
+    "imageAlt": "Steep cliffs above green slopes near Inatye"
   },
   {
     "slug": "chenek",
@@ -248,8 +248,8 @@ export const simienPlaces: SimienPlace[] = [
       "Optional morning hikes toward the Bwahit area (fitness, weather and time permitting)",
       "Rest day or staging before Ambiko on summit itineraries"
     ],
-    "image": "/images/chenek-camp.jpg",
-    "imageAlt": "Chenek camp among the Simien cliffs"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg",
+    "imageAlt": "Travellers sharing an outdoor meal at Chenek camp"
   },
   {
     "slug": "ambaras",
@@ -271,8 +271,8 @@ export const simienPlaces: SimienPlace[] = [
       "Vehicle pickup and transfer toward Debark / Gondar",
       "Short photography stops along the highland road when time allows"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Mountain road in the Simien highlands"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/Ambaras.png",
+    "imageAlt": "Rocky pinnacles rising above green slopes near Ambaras"
   },
   {
     "slug": "siha-gorge",
@@ -294,8 +294,8 @@ export const simienPlaces: SimienPlace[] = [
       "Viewpoint and photography stops with your guide",
       "Wildlife watching along cliff edges when animals are present"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Highland scenery in the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397564/siha-gorge.png",
+    "imageAlt": "An ibex standing on a rocky ridge in the Simien Mountains"
   },
   {
     "slug": "bwahit-pass",
@@ -322,8 +322,8 @@ export const simienPlaces: SimienPlace[] = [
       "Photography of the high massif and surrounding valleys",
       "Acclimatisation walking before Ambiko on summit itineraries"
     ],
-    "image": "/images/chenek-camp.jpg",
-    "imageAlt": "High mountain terrain in the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397585/Bwahit.png",
+    "imageAlt": "Rocky ridges and open highland terrain around Bwahit"
   },
   {
     "slug": "ambiko",
@@ -346,8 +346,8 @@ export const simienPlaces: SimienPlace[] = [
       "Start and finish of the Ras Dashen ascent day",
       "Rest and recovery after the summit attempt"
     ],
-    "image": "/images/giant-lobelia.jpg",
-    "imageAlt": "Afro-alpine highland landscape in the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397573/Ambiko.png",
+    "imageAlt": "A thatched stone hut on a mountainside near Ambiko"
   },
   {
     "slug": "ras-dashen",
@@ -372,8 +372,8 @@ export const simienPlaces: SimienPlace[] = [
       "Photography when conditions allow",
       "Guided pacing and turnaround decisions based on weather and group condition"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Layered ridges in the high Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png",
+    "imageAlt": "A grassy escarpment overlooking the mountains on the Ras Dashen route"
   },
   {
     "slug": "meseha-valley",
@@ -399,8 +399,8 @@ export const simienPlaces: SimienPlace[] = [
       "Photography of valley walls and river landscapes",
       "Observation of changing vegetation and birdlife at lower elevations"
     ],
-    "image": "/images/simien-panorama.jpg",
-    "imageAlt": "Highland landscape in the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397598/meseha-river.png",
+    "imageAlt": "A pool and waterfall between rock walls in the Meseha River landscape"
   },
   {
     "slug": "sona",
@@ -423,8 +423,8 @@ export const simienPlaces: SimienPlace[] = [
       "Observation of rural life and changing ecosystems",
       "Possible natural-pool stop when conditions allow (Mekarebya corridor)"
     ],
-    "image": "/images/giant-lobelia.jpg",
-    "imageAlt": "Highland landscape in the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397573/Sona.png",
+    "imageAlt": "Grazing animals and fields beneath the mountains near Sona"
   },
   {
     "slug": "mulit",
@@ -447,8 +447,8 @@ export const simienPlaces: SimienPlace[] = [
       "Photography of river valleys and village landscapes",
       "Preparation for the final walk to the vehicle pickup"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Rural highland landscape in northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/incya-river.png",
+    "imageAlt": "A clear pool between rocks along the Incya River corridor"
   },
   {
     "slug": "adi-arkay",
@@ -470,7 +470,7 @@ export const simienPlaces: SimienPlace[] = [
       "Vehicle transfer toward Gondar",
       "Rest and debrief after the expedition"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Road through the northern Ethiopian highlands"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397608/adi-arkay.png",
+    "imageAlt": "A winding road through green hills near Adi Arkay"
   }
 ];

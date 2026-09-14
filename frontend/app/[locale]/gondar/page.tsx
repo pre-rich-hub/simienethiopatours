@@ -1,6 +1,8 @@
+import { resolveMediaUrl } from "@/lib/media-url";
+import clientPhotos from "@/lib/client-photos.json";
 import { getDestinations, destinationToPlace } from "@/lib/catalogue";
 import { getLocale } from "next-intl/server";
-import Image from "next/image";
+import Image from "@/components/Image";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
@@ -24,7 +26,7 @@ export default async function GondarPage() {
   return (
     <PageShell lightHeader={false}>
       <section className="page-hero--image simien-page-hero editorial-hero">
-        <Image src="/images/fasil-ghebbi.jpg" alt="Stone arches at the royal fortress of Fasil Ghebbi in Gondar" fill priority sizes="100vw" />
+        <Image src={resolveMediaUrl(clientPhotos.fasil.url)} alt={clientPhotos.fasil.alt.en} fill priority sizes="100vw" />
         <div className="page-hero__content shell">
           <div className="breadcrumbs"><Link href="/">Home</Link><span>/</span><span>Gondar</span></div>
           <p className="eyebrow">Gondar destinations</p>

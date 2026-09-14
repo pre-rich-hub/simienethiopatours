@@ -50,8 +50,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Hidden countryside running",
       "Departures for Simien day trips and multi-day treks"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Stone arches at the royal fortress of Fasil Ghebbi in Gondar"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392021/irenelik-gondar-3388882.jpg",
+    "imageAlt": "Gondar viewed across its historic highland landscape"
   },
   {
     "slug": "fasil-ghebbi",
@@ -78,8 +78,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Photography of courtyards, walls and towers",
       "Combine with churches and Fasilides’ Bath on city itineraries"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Stone arches at the royal fortress of Fasil Ghebbi in Gondar"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+    "imageAlt": "Stone castle and towers at Fasil Ghebbi in Gondar"
   },
   {
     "slug": "fasilides-bath",
@@ -105,8 +105,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Photography of the pool complex and surrounding walls",
       "Combine with Fasil Ghebbi and Debre Berhan Selassie"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "A local guide sharing the landscape and stories of northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392032/fasilides_-bath-fasil_s-pool.jpg",
+    "imageAlt": "Fasilides’ Bath, also known as Fasil’s Pool, in Gondar"
   },
   {
     "slug": "debre-berhan-selassie",
@@ -129,8 +129,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Quiet time for observation and interpretation",
       "Combine with other Gondar churches and royal sites"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Local perspective on Gondar and northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392019/bebre-berhan-selassie.jpg",
+    "imageAlt": "Debre Berhan Selassie church and its historic grounds in Gondar"
   },
   {
     "slug": "kuskuam",
@@ -156,8 +156,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Photography of ruins and highland city views",
       "Combine with Fasil Ghebbi and Debre Berhan Selassie"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "A local guide sharing the landscape and stories of northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/kuskuam-church.jpg",
+    "imageAlt": "Visitors standing beside the stone ruins at Kuskuam"
   },
   {
     "slug": "woleka",
@@ -180,8 +180,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Combine with the road journey toward Debark and Simien",
       "Photography only with consent and guide guidance"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Local perspective on Gondar and northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392021/woleka-beta-israel.png",
+    "imageAlt": "Woleka Beta Israel heritage site near Gondar"
   },
   {
     "slug": "kosoye-mountains",
@@ -204,8 +204,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Cultural interaction and photography",
       "Combine with Gondar heritage before or after Simien journeys"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Everyday life in the northern Ethiopian highlands"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386874/kosoye-mountain.jpg",
+    "imageAlt": "A visitor pointing across the green Kosoye Mountains"
   },
   {
     "slug": "debark",
@@ -227,8 +227,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Transit toward trekking areas and camps",
       "Brief town stop on day trips and multi-day programmes"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Highland road in northern Ethiopia on the approach toward the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397581/Debark.png",
+    "imageAlt": "Thatched buildings and green grounds near Debark"
   },
   {
     "slug": "lake-tana",
@@ -252,8 +252,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Optional Blue Nile Falls visit when season and conditions allow",
       "Combine with Gondar heritage and Simien trekking"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "A local guide sharing the landscape and stories of northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386854/bahir-dar.jpg",
+    "imageAlt": "A pelican floating on the water at Bahir Dar"
   },
   {
     "slug": "blue-nile-falls",
@@ -275,8 +275,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Viewpoint walking and photography",
       "Local guide interpretation of the Blue Nile corridor"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Highland landscape in northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389618/blue-nile-falls.jpg",
+    "imageAlt": "Blue Nile Falls cascading into a green gorge"
   },
   {
     "slug": "lalibela",
@@ -300,8 +300,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Optional Yemrehanna Kristos extension where practical",
       "Combine with Gondar and Simien on private northern circuits"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "Historic stone architecture in northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389640/lalibela.jpg",
+    "imageAlt": "A person in white ceremonial clothing inside a rock-hewn church in Lalibela"
   },
   {
     "slug": "yemrehanna-kristos",
@@ -324,8 +324,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Photography where permitted",
       "Combine with additional Lalibela churches and countryside stops"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Local perspective on Gondar and northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389635/yemrehanna-kistos.png",
+    "imageAlt": "Yemrehanna Kristos church beneath a rocky cave roof"
   },
   {
     "slug": "axum",
@@ -351,8 +351,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Optional Yeha or other historical sites according to current access and conditions",
       "Combine with Gondar, Simien and Lalibela on longer northern circuits"
     ],
-    "image": "/images/fasil-ghebbi.jpg",
-    "imageAlt": "A local guide sharing the landscape and stories of northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389630/xum.png",
+    "imageAlt": "Carved stone stelae at Axum beneath a blue sky"
   },
   {
     "slug": "yeha",
@@ -375,8 +375,8 @@ export const gondarPlaces: GondarPlace[] = [
       "Photography of monumental masonry",
       "Combine with Axum stelae, museum and St Mary of Zion visits"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Local perspective on Gondar and northern Ethiopia"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389631/yeha.png",
+    "imageAlt": "Ancient stone walls and steps at Yeha"
   },
   {
     "slug": "highland-villages",
@@ -399,7 +399,7 @@ export const gondarPlaces: GondarPlace[] = [
       "Related rural walking and village visits on separate Kosoye programmes near Gondar",
       "Photography of highland fields and settlements from roadside stops"
     ],
-    "image": "/images/road-to-simien.jpg",
-    "imageAlt": "Women collecting water along the road to the Simien Mountains"
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397588/highland-villages.png",
+    "imageAlt": "Thatched homes above cultivated fields in a highland village"
   }
 ];

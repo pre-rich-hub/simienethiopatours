@@ -1,5 +1,7 @@
+import { resolveMediaUrl } from "@/lib/media-url";
+import clientPhotos from "@/lib/client-photos.json";
 import { Suspense, type ReactNode } from "react";
-import Image from "next/image";
+import Image from "@/components/Image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight, CheckCircle2, Compass, Map, Mountain, Route, TentTree } from "@/components/Icon";
@@ -42,7 +44,7 @@ export default async function Home() {
       <main id="main-content" tabIndex={-1}>
         <section className="hero">
           <div className="hero__media">
-            <Image src="/images/imet-gogo.jpg" alt={t("heroAlt")} fill priority fetchPriority="high" loading="eager" sizes="100vw" />
+            <Image src={resolveMediaUrl(clientPhotos.sankaber.url)} alt={t("heroAlt")} fill priority fetchPriority="high" loading="eager" sizes="100vw" />
             <div className="hero__veil" /><div className="hero__grain" />
           </div>
           <div className="hero__content">
@@ -213,7 +215,7 @@ export default async function Home() {
 
         <section className="section section--paper"><div className="shell"><SectionIntro tag={t("beyondTag")} title={t("beyondTitle")} accent={t("beyondAccent")} /><ExperiencePhotoCards items={home.beyond} /></div></section>
         <section className="final-call">
-          <Image src="/images/simien-panorama.jpg" alt={t("finalAlt")} fill sizes="100vw" />
+          <Image src={resolveMediaUrl(clientPhotos.sankaber.url)} alt={t("finalAlt")} fill sizes="100vw" />
           <div className="final-call__veil" />
           <div className="final-call__content shell">
             <p className="eyebrow">{t("finalEyebrow")}</p>
