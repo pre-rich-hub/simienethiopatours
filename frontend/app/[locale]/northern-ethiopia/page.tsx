@@ -1,6 +1,6 @@
 import { getDestinations, destinationToPlace } from "@/lib/catalogue";
 import { getLocale } from "next-intl/server";
-import Image from "next/image";
+import Image from "@/components/Image";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";

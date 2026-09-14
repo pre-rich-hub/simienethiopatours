@@ -1,0 +1,395 @@
+[
+  {
+    "entity": "destination",
+    "slug": "simien-mountains-national-park",
+    "photo": "simien",
+    "previousImage": "/images/simien-panorama.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "buyit-ras",
+    "photo": "buyit-ras",
+    "previousImage": "/images/imet-gogo.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "sankaber",
+    "photo": "sankaber",
+    "previousImage": "/images/imet-gogo.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "geech",
+    "photo": "geech",
+    "previousImage": "/images/geech-camp.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "jinbar-waterfall",
+    "photo": "jinbar",
+    "previousImage": "/images/simien-panorama.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "chenek",
+    "photo": "chenek",
+    "previousImage": "/images/chenek-camp.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "gondar",
+    "photo": "gondar",
+    "previousImage": "/images/fasil-ghebbi.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+    ]
+  },
+  {
+    "entity": "destination",
+    "slug": "fasil-ghebbi",
+    "photo": "fasil",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "kuskuam",
+    "photo": "kuskuam",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "kosoye-mountains",
+    "photo": "kosoye",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "simien-day-trip",
+    "photo": "sankaber",
+    "previousImage": "/images/chenek-camp.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "simien-introduction",
+    "photo": "sankaber",
+    "previousImage": "/images/geech-camp.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "3-day-simien-trek",
+    "photo": "imet-gogo",
+    "previousImage": "/images/imet-gogo.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "4-day-simien-classic",
+    "photo": "imet-gogo",
+    "previousImage": "/images/imet-gogo.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "5-day-gondar-simien",
+    "photo": "imet-gogo",
+    "previousImage": "/images/fasil-ghebbi.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "gondar-heritage-simien",
+    "photo": "woleka",
+    "previousImage": "/images/fasil-ghebbi.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "10-day-simien-ras-dashen",
+    "photo": "ras-dashen",
+    "previousImage": "/images/simien-panorama.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "simien-photography-day",
+    "photo": "simien",
+    "previousImage": "/images/simien-panorama.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "wildlife-landscape-photography",
+    "photo": "imet-gogo",
+    "previousImage": "/images/imet-gogo.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "simien-photography-expedition",
+    "photo": "imet-gogo",
+    "previousImage": "/images/chenek-camp.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "royal-gondar",
+    "photo": "fasilides-bath",
+    "previousImage": "/images/fasil-ghebbi.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "gondar-photography-walk",
+    "photo": "fasil",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "gondar-history-culture",
+    "photo": "debre-berhan-selassie",
+    "previousImage": "/images/fasil-ghebbi.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+    ]
+  },
+  {
+    "entity": "tour",
+    "slug": "gondar-kosoye",
+    "photo": "kosoye",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "timkat-simien",
+    "photo": "fasil",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "genna-simien",
+    "photo": "fasil",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "meskel-simien",
+    "photo": "geech",
+    "previousImage": "/images/geech-camp.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "mountains-sacred-stone",
+    "photo": "lalibela",
+    "previousImage": "/images/tevan-founder.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+    ]
+  },
+  {
+    "entity": "destination",
+    "slug": "lake-tana",
+    "photo": "bahir-dar",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "lalibela",
+    "photo": "lalibela",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "yemrehanna-kristos",
+    "photo": "yemrehanna-kristos",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "yeha",
+    "photo": "yeha",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "axum",
+    "photo": "axum",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "blue-nile-falls",
+    "photo": "blue-nile-falls",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "fasilides-bath",
+    "photo": "fasilides-bath",
+    "previousImage": "/images/fasil-ghebbi.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "debre-berhan-selassie",
+    "photo": "debre-berhan-selassie",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "woleka",
+    "photo": "woleka",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "gondar-through-local-eyes",
+    "photo": "gondar",
+    "previousImage": "/images/tevan-portrait.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "adi-arkay",
+    "photo": "adi-arkay",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "mulit",
+    "photo": "incya-river",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "ras-dashen",
+    "photo": "ras-dashen",
+    "previousImage": "/images/simien-panorama.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "meseha-valley",
+    "photo": "meseha-river",
+    "previousImage": "/images/simien-panorama.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "highland-villages",
+    "photo": "highland-villages",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "bwahit-pass",
+    "photo": "bwahit",
+    "previousImage": "/images/chenek-camp.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "debark",
+    "photo": "debark",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "sona",
+    "photo": "sona",
+    "previousImage": "/images/giant-lobelia.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "ambiko",
+    "photo": "ambiko",
+    "previousImage": "/images/giant-lobelia.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "siha-gorge",
+    "photo": "siha-gorge",
+    "previousImage": "/images/simien-panorama.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "inatye",
+    "photo": "inatye",
+    "previousImage": "/images/chenek-camp.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "ambaras",
+    "photo": "ambaras",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "destination",
+    "slug": "imet-gogo",
+    "photo": "imet-gogo",
+    "previousImage": "/images/imet-gogo.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "ras-dashen-challenge",
+    "photo": "ras-dashen",
+    "previousImage": "/images/giant-lobelia.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "ras-dashen-expedition",
+    "photo": "ras-dashen",
+    "previousImage": "/images/simien-panorama.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "simien-ras-dashen-8-day",
+    "photo": "bwahit",
+    "previousImage": "/images/simien-panorama.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "timkat-ras-dashen",
+    "photo": "ras-dashen",
+    "previousImage": "/images/giant-lobelia.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "simien-wildlife-journey",
+    "photo": "siha-gorge",
+    "previousImage": "/images/gelada-troop.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "gondar-running",
+    "photo": "gondar-running",
+    "previousImage": "/images/road-to-simien.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "gelada-country",
+    "photo": "gelada-country",
+    "previousImage": "/images/gelada-troop.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "gondar-market-local-life",
+    "photo": "gondar-market-local-life",
+    "previousImage": "/images/tevan-portrait.jpg"
+  },
+  {
+    "entity": "tour",
+    "slug": "gondar-food-coffee",
+    "photo": "gondar-food-coffee",
+    "previousImage": "/images/tevan-founder.jpg"
+  }
+]
