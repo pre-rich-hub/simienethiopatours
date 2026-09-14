@@ -16,11 +16,30 @@ export const app = express();
 app.set("trust proxy", 1);
 
 app.use(helmet());
+const allowedFrontendOrigins = env.FRONTEND_ORIGIN.split(",")
+	.map((origin) => origin.trim())
+	.filter(Boolean);
+
+// Own Vercel origins for this project: the production alias
+// (simienethiopatours.vercel.app, with or without www) and preview
+// deployments from the same Vercel team
+// (simienethiopatours-<hash>-pr3r1chh-1328s-projects.vercel.app).
+// Scoped to the team slug so arbitrary *.vercel.app sites stay blocked.
+const ownVercelOriginPattern =
+	/^https:\/\/(?:www\.)?simienethiopatours(?:-[a-z0-9]+)*-pr3r1chh-1328s-projects\.vercel\.app$/;
+
 app.use(
 	cors({
-		origin: env.FRONTEND_ORIGIN.split(",")
-			.map((origin) => origin.trim())
-			.filter(Boolean),
+		origin(origin, callback) {
+			if (
+				!origin ||
+				allowedFrontendOrigins.includes(origin) ||
+				ownVercelOriginPattern.test(origin)
+			) {
+				return callback(null, true);
+			}
+			return callback(null, false);
+		},
 		credentials: true,
 	}),
 );
