@@ -14,11 +14,11 @@ Express + TypeScript + Prisma backend template for client projects. Includes a c
 ## Quick Start
 
 ```bash
-pnpm install
+npm install
 cp .env.example .env
 # Fill in DATABASE_URL, DIRECT_URL, JWT_SECRET, GEMINI_API_KEY
-pnpm prisma:migrate
-pnpm dev
+npm run prisma:migrate
+npm run dev
 ```
 
 ## What's Included
@@ -118,13 +118,13 @@ Public-form and assistant data use the privacy defaults below:
 
 Long-running servers run retention cleanup at startup and every 24 hours.
 Public contact, newsletter, and assistant requests also trigger a throttled
-cleanup attempt for serverless deployments. Schedule `pnpm data:purge` daily as
+cleanup attempt for serverless deployments. Schedule `npm run data:purge` daily as
 an independent production safeguard. The command logs deletion counts only and
 does not print personal data.
 
 ## Public editorial audit
 
-Run `pnpm content:audit` before seeding or publishing catalog content. It
+Run `npm run content:audit` before seeding or publishing catalog content. It
 checks bundled tours and destination records for internal research language,
 package-mapping notes, and other wording that must not appear in public HTML.
 
