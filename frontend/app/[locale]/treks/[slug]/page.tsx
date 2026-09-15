@@ -57,7 +57,7 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
         parent={{ label: tNav("journeys"), href: "/treks" }}
       />
 
-      <section className="section" id="journey-details">
+      <section className="section section--paper" id="journey-details">
         <div className="shell">
           <div className="journey-split">
             <div className="journey-split__main">
@@ -105,36 +105,36 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
                 )}
                 {journey.itineraryNotes && <div className="content-note">{journey.itineraryNotes.map((note) => <p key={note}>{note}</p>)}</div>}
               </div>
+
+              <div id="included">
+                <div className="editorial-grid">
+                  <div>
+                    <SectionIntro tag={t("included")} title={t("included")} />
+                    <ul className="editorial-list dest-things">
+                      {journey.included.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <SectionIntro tag={t("excluded")} title={t("excluded")} />
+                    <ul className="editorial-list dest-things">
+                      {journey.excluded.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                {journey.includedNote && (
+                  <p className="content-note">{journey.includedNote}</p>
+                )}
+              </div>
             </div>
             <aside className="journey-split__aside">
               <BookingCard duration={journey.duration} difficulty={journey.difficulty} route={journey.route} experience={record.inquiry ?? record.slug} />
             </aside>
           </div>
         </div>
-      </section>
-
-      <section className="section section--paper" id="included">
-        <div className="shell editorial-grid">
-          <div>
-            <SectionIntro tag={t("included")} title={t("included")} />
-            <ul className="editorial-list dest-things">
-              {journey.included.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <SectionIntro tag={t("excluded")} title={t("excluded")} />
-            <ul className="editorial-list dest-things">
-              {journey.excluded.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        {journey.includedNote && (
-          <div className="shell content-note"><p>{journey.includedNote}</p></div>
-        )}
       </section>
 
       {journey.preparation.length > 0 && <section className="section shell"><SectionIntro tag={t("preparationTag")} title={t("preparationTitle")} /><ul className="editorial-list">{journey.preparation.map(item => <li key={item}>{item}</li>)}</ul></section>}
