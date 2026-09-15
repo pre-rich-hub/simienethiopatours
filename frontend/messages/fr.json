@@ -673,7 +673,7 @@
       "ogTitle": "Votre porte d’entrée locale vers les montagnes du Simien"
     },
     "about": {
-      "title": "À propos | L’histoire de Tevan",
+      "title": "À propos",
       "description": "Rencontrez Tesema ‘Tevan’ Mulualem, le fondateur et guide basé à Gondar derrière Gondar Simien Tours. Savoir local, accompagnement personnel et préparation soignée."
     },
     "plan": {
@@ -681,17 +681,21 @@
       "description": "Indiquez à Tevan votre temps, votre aisance à la marche et vos intérêts pour recevoir un voyage à Gondar et dans le Simien planifié localement."
     },
     "treks": {
-      "title": "Voyages | Treks du Simien, expériences à Gondar et voyages de fête",
+      "title": "Treks du Simien et expériences à Gondar",
       "description": "Vingt-huit formules de voyage — d’une journée dans le Simien et du trek classique jusqu’au Ras Dashen, aux expériences à Gondar et aux voyages de fête — chacune avec sa propre page."
     },
     "simien": {
-      "title": "Destinations des montagnes du Simien | Lieux, camps et points de vue",
+      "title": "Destinations des montagnes du Simien",
       "description": "Dix-huit destinations des montagnes du Simien — de Debark et Sankaber à Imet Gogo, Chenek, Ras Dashen et Adi Arkay — chacune avec sa propre page."
+    },
+    "gondar": {
+      "title": "Destinations de Gondar",
+      "description": "Destinations de la ville et de la campagne de Gondar — patrimoine royal, quartiers vivants, hauts plateaux de Kosoye et extensions vers le nord — chacune avec sa propre page."
     }
   },
   "journal": {
     "journal": "Carnet de voyage",
-    "journalIntro": "Notes et récits de l’équipe locale.",
+    "journalIntro": "Récits de l’équipe basée à Gondar — sentiers des montagnes du Simien, Gondar royal et les personnes qui façonnent chaque voyage.",
     "emptyJournal": "Les nouveaux récits apparaîtront ici après leur publication.",
     "categories": "Catégories",
     "readArticle": "Lire l’article",
@@ -699,7 +703,7 @@
     "updated": "Mis à jour"
   },
   "gallery": {
-    "title": "Galerie | Gondar et les montagnes du Simien",
+    "title": "Galerie",
     "description": "Un voyage visuel à travers les montagnes du Simien et Gondar.",
     "imageAlt": "Le paysage en strates des montagnes du Simien",
     "eyebrow": "Gondar et les montagnes du Simien",

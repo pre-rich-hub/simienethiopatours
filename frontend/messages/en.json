@@ -673,7 +673,7 @@
       "ogTitle": "Your Local Gateway to the Simien Mountains"
     },
     "about": {
-      "title": "About Us | Tevan’s Story",
+      "title": "About Us",
       "description": "Meet Tesema ‘Tevan’ Mulualem, the Gondar-based founder and guide behind Gondar Simien Tours. Local knowledge, personal guiding and careful preparation."
     },
     "plan": {
@@ -681,17 +681,21 @@
       "description": "Tell Tevan your timing, walking comfort and interests to receive a locally planned Gondar and Simien journey."
     },
     "treks": {
-      "title": "Journeys | Simien Treks, Gondar Experiences & Festival Packages",
+      "title": "Simien Treks & Gondar Experiences",
       "description": "Twenty-eight journey packages — from Simien in a Day and the Classic trek to Ras Dashen, Gondar experiences and festival journeys — each with its own page."
     },
     "simien": {
-      "title": "Simien Mountains Destinations | Places, Camps & Viewpoints",
+      "title": "Simien Mountains Destinations",
       "description": "Eighteen Simien Mountains destinations — from Debark and Sankaber to Imet Gogo, Chenek, Ras Dashen and Adi Arkay — each with its own page."
+    },
+    "gondar": {
+      "title": "Gondar Destinations",
+      "description": "Gondar city and countryside destinations — royal heritage, living neighbourhoods, Kosoye highlands and northern extensions — each with its own page."
     }
   },
   "journal": {
     "journal": "Journal",
-    "journalIntro": "Notes and stories from the local team.",
+    "journalIntro": "Stories from the Gondar-based team — Simien Mountains trails, royal Gondar, and the people who shape each journey.",
     "emptyJournal": "New stories will appear here when published.",
     "categories": "Categories",
     "readArticle": "Read article",
@@ -699,7 +703,7 @@
     "updated": "Updated"
   },
   "gallery": {
-    "title": "Gallery | Gondar & the Simien Mountains",
+    "title": "Gallery",
     "description": "A visual journey through the Simien Mountains and Gondar.",
     "imageAlt": "A traveller overlooking the layered valleys of the Simien Mountains",
     "eyebrow": "Gondar & the Simien Mountains",

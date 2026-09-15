@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     locale: localeFromParam(locale),
     title: t("title"), description: t("description"),
     path: "/gallery",
-    ogTitle: "A little closer to extraordinary | Gondar Simien Gallery",
+    ogTitle: "A little closer to extraordinary",
     image: {
       url: resolveMediaUrl(galleryImageUrl(2)),
       alt: t("imageAlt"),

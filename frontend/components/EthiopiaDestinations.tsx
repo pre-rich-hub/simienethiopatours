@@ -8,7 +8,7 @@ import { DestinationRoutes } from '@/components/JourneyPhotoCards';
 import { ArrowUpRight } from '@/components/Icon';
 import { getDestinations, getDestinationForRoute, getTours, requireContentLocale, tourToJourney, resolveMediaUrl, type PublicDestination } from '@/lib/catalogue';
 import { localizedMetadata } from '@/lib/catalogue-seo';
-import { localeFromParam, pageMetadata } from '@/lib/seo';
+import { breadcrumbJsonLd, destinationJsonLd, jsonLdScript, localeFromParam, pageMetadata } from '@/lib/seo';
 
 type Area = 'explore' | 'southern';
 const areaPath = (area: Area) => area === 'southern' ? '/southern-ethiopia' : '/explore-ethiopia';
@@ -60,7 +60,7 @@ export async function ethiopiaDestinationMetadata(localeParam: string, slug: str
   if(!record || record.area!==area) return {};
   requireContentLocale(record,locale);
   const t=await getTranslations({locale,namespace:'ethiopia'});
-  return localizedMetadata({locale,title:`${record.name} | ${t(area)}`,description:record.overview[0]??'',path:record.path,image:record.imageUrl?{url:resolveMediaUrl(record.imageUrl),alt:record.imageAlt}:null},record.availableLocales);
+  return localizedMetadata({locale,title:`${record.name} — ${t(area)}`,description:record.overview[0]??'',path:record.path,image:record.imageUrl?{url:resolveMediaUrl(record.imageUrl),alt:record.imageAlt}:null},record.availableLocales);
 }
 
 export async function EthiopiaDestination({locale: localeParam,slug,area}: {locale:string;slug:string;area:Area}) {
@@ -71,8 +71,14 @@ export async function EthiopiaDestination({locale: localeParam,slug,area}: {loca
   requireContentLocale(record,locale);
   const t=await getTranslations('ethiopia');
   const d=await getTranslations('destination');
+  const tCommon=await getTranslations('common');
   const routes=(await getTours(locale)).filter(tour=>record.tourSlugs.includes(tour.slug)).map(tourToJourney);
+  const imageUrl=record.imageUrl?resolveMediaUrl(record.imageUrl):'';
   return <PageShell lightHeader={!record.imageUrl}>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:jsonLdScript({"@context":"https://schema.org","@graph":[
+      destinationJsonLd({name:record.name,description:record.overview[0]??'',path:record.path,locale,image:imageUrl||undefined,location:record.location,alternateName:record.alsoKnownAs}),
+      breadcrumbJsonLd([{name:tCommon('home'),path:'/',locale},{name:t(area),path:areaPath(area),locale},{name:record.name,path:record.path,locale}]),
+    ]})}} />
     <EditorialHero eyebrow={record.type==='extension'?`${t(area)} · ${t('extension')}`:t(area)} title={record.heroTitle} accent={record.heroAccent} lead={record.location} image={record.imageUrl?{src:resolveMediaUrl(record.imageUrl),alt:record.imageAlt}:undefined} parent={{label:t(area),href:areaPath(area)}}/>
     {record.alsoKnownAs.length>0 && <p className="shell content-note">{d('alsoKnownAs',{names:record.alsoKnownAs.join(', ')})}</p>}
     <StorySection id="about" tag={d('about')} title={record.name} paragraphs={record.overview}/>

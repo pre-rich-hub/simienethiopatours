@@ -673,7 +673,7 @@
       "ogTitle": "Ihr lokales Tor zum Simien-Gebirge"
     },
     "about": {
-      "title": "Über uns | Tevans Geschichte",
+      "title": "Über uns",
       "description": "Lernen Sie Tesema ‘Tevan’ Mulualem kennen, den in Gondar ansässigen Gründer und Guide hinter Gondar Simien Tours. Lokales Wissen, persönliche Begleitung und sorgfältige Vorbereitung."
     },
     "plan": {
@@ -681,17 +681,21 @@
       "description": "Nennen Sie Tevan Ihre Zeit, Ihren Gehkomfort und Ihre Interessen — und erhalten Sie eine lokal geplante Reise nach Gondar und ins Simien."
     },
     "treks": {
-      "title": "Reisen | Simien-Treks, Gondar-Erlebnisse und Festtagsreisen",
+      "title": "Simien-Treks und Gondar-Erlebnisse",
       "description": "Achtundzwanzig Reisepakete — vom Simien-Tagesausflug und dem Klassik-Trekking bis Ras Dashen, Gondar-Erlebnissen und Festtagsreisen — jedes mit einer eigenen Seite."
     },
     "simien": {
-      "title": "Ziele im Simien-Gebirge | Orte, Camps und Aussichtspunkte",
+      "title": "Ziele im Simien-Gebirge",
       "description": "Achtzehn Ziele im Simien-Gebirge — von Debark und Sankaber bis Imet Gogo, Chenek, Ras Dashen und Adi Arkay — jedes mit einer eigenen Seite."
+    },
+    "gondar": {
+      "title": "Ziele in Gondar",
+      "description": "Stadt- und Landziele in Gondar — königliches Erbe, lebendige Viertel, das Kosoye-Hochland und nördliche Erweiterungen — jedes mit einer eigenen Seite."
     }
   },
   "journal": {
     "journal": "Journal",
-    "journalIntro": "Notizen und Geschichten vom lokalen Team.",
+    "journalIntro": "Geschichten vom Team mit Sitz in Gondar — Wege im Simien-Gebirge, das königliche Gondar und die Menschen hinter jeder Reise.",
     "emptyJournal": "Neue Geschichten erscheinen hier nach der Veröffentlichung.",
     "categories": "Kategorien",
     "readArticle": "Artikel lesen",
@@ -699,7 +703,7 @@
     "updated": "Aktualisiert"
   },
   "gallery": {
-    "title": "Galerie | Gondar und die Simien-Berge",
+    "title": "Galerie",
     "description": "Eine visuelle Reise durch die Simien-Berge und Gondar.",
     "imageAlt": "Die geschichtete Landschaft der Simien-Berge",
     "eyebrow": "Gondar und die Simien-Berge",

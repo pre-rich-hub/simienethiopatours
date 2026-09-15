@@ -54,6 +54,7 @@ const META_PATHS = {
   plan: "/plan",
   treks: "/treks",
   simien: "/simien-mountains",
+  gondar: "/gondar",
 } as const;
 
 export type MetaPage = keyof typeof META_PATHS;
@@ -236,6 +237,23 @@ export function organizationJsonLd() {
   };
 }
 
+/** WebSite entity for the public site. No SearchAction — there is no site search. */
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: nap.name,
+    url: SITE_URL,
+    publisher: {
+      "@type": "TravelAgency",
+      name: nap.name,
+      legalName: nap.legalOperator,
+      url: SITE_URL,
+    },
+    inLanguage: [...routing.locales],
+  };
+}
+
 /** ContactPage for the journey planner (locale /contact redirects here). */
 export function contactPageJsonLd(locale: AppLocale = routing.defaultLocale) {
   return {
@@ -255,6 +273,42 @@ export function contactPageJsonLd(locale: AppLocale = routing.defaultLocale) {
   };
 }
 
+export type HowToStepInput = {
+  name: string;
+  text: string;
+};
+
+export type HowToJsonLdInput = {
+  name: string;
+  description: string;
+  path: string;
+  locale?: AppLocale;
+  steps: HowToStepInput[];
+};
+
+/** HowTo from visible numbered steps only. No tools, supplies, or invented durations. */
+export function howToJsonLd({
+  name,
+  description,
+  path,
+  locale = routing.defaultLocale,
+  steps,
+}: HowToJsonLdInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    url: absoluteUrl(localePath(path, locale)),
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+  };
+}
+
 export function jsonLdScript(data: unknown) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
@@ -267,6 +321,17 @@ export type TourJsonLdInput = {
   image?: string;
   duration?: string;
   route?: string;
+};
+
+export type DestinationJsonLdInput = {
+  name: string;
+  description: string;
+  path: string;
+  locale?: AppLocale;
+  image?: string;
+  /** Free-text location line from the catalogue (e.g. "Near Debark, Simien Mountains"). */
+  location?: string;
+  alternateName?: string[];
 };
 
 /** ISO-8601 day duration only when the source starts with a single day count. */
@@ -320,6 +385,36 @@ export function tourJsonLd({
         position: index + 1,
         item: { "@type": "Place", name: stop },
       })),
+    };
+  }
+
+  return data;
+}
+
+/** TouristAttraction from published destination fields only. No coordinates or invented facts. */
+export function destinationJsonLd({
+  name,
+  description,
+  path,
+  locale = routing.defaultLocale,
+  image,
+  location,
+  alternateName,
+}: DestinationJsonLdInput) {
+  const data: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    name,
+    url: absoluteUrl(localePath(path, locale)),
+  };
+
+  if (description) data.description = description;
+  if (image) data.image = absoluteUrl(image);
+  if (alternateName && alternateName.length > 0) data.alternateName = alternateName;
+  if (location) {
+    data.containedInPlace = {
+      "@type": "Place",
+      name: location,
     };
   }
 

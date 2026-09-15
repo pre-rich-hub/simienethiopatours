@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   return pageMetadata({
     locale: localeFromParam(locale),
-    title: "Photo credits | Gondar Simien Tours",
+    title: "Photo credits",
     description: "Source, authorship, licensing and attribution records for photographs used by Gondar Simien Tours.",
     path: "/photo-credits",
   });

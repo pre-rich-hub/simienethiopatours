@@ -8,7 +8,12 @@ import { DestinationRoutes } from "@/components/JourneyPhotoCards";
 import { EditorialHero, SectionIntro, StorySection } from "@/components/Editorial";
 import { getDestinationForRoute, getTours, tourToJourney, destinationToPlace, requireContentLocale } from "@/lib/catalogue";
 import { catalogueMetadata } from "@/lib/catalogue-seo";
-import { localeFromParam } from "@/lib/seo";
+import {
+  breadcrumbJsonLd,
+  destinationJsonLd,
+  jsonLdScript,
+  localeFromParam,
+} from "@/lib/seo";
 import { permanentRedirect } from "next/navigation";
 export const dynamicParams = true;
 
@@ -20,16 +25,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   requireContentLocale(record!, locale);
   return catalogueMetadata({
     locale: localeFromParam(locale),
-    title: `${place.name} | Simien Mountains`,
+    title: `${place.name} — Simien Mountains`,
     description: place.about[0] ?? "",
     path: place.path,
-    image: { url: place.image, alt: place.imageAlt },
+    image: place.image ? { url: place.image, alt: place.imageAlt } : undefined,
   }, record!.availableLocales);
 }
 
 export default async function SimienPlacePage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
   const { slug, locale } = await params;
   const t = await getTranslations("destination");
+  const tCommon = await getTranslations("common");
   const record = await getDestinationForRoute(slug, locale);
   const place = record ? destinationToPlace(record) : null;
   if (!place) notFound();
@@ -37,9 +43,34 @@ export default async function SimienPlacePage({ params }: { params: Promise<{ sl
   if (!record.path.startsWith("/simien-mountains/")) permanentRedirect(`/${locale}${record.path}`);
   requireContentLocale(record, locale);
   const routes = (await getTours(locale)).filter((tour) => record.tourSlugs.includes(tour.slug)).map(tourToJourney);
+  const appLocale = localeFromParam(locale);
 
   return (
     <PageShell lightHeader={!place.image}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript({
+            "@context": "https://schema.org",
+            "@graph": [
+              destinationJsonLd({
+                name: place.name,
+                description: place.about[0] ?? "",
+                path: place.path,
+                locale: appLocale,
+                image: place.image || undefined,
+                location: place.location,
+                alternateName: place.alsoKnownAs,
+              }),
+              breadcrumbJsonLd([
+                { name: tCommon("home"), path: "/", locale: appLocale },
+                { name: t("simienEyebrow"), path: "/simien-mountains", locale: appLocale },
+                { name: place.name, path: place.path, locale: appLocale },
+              ]),
+            ],
+          }),
+        }}
+      />
       <EditorialHero
         eyebrow={t("simienEyebrow")}
         title={place.heroTitle}
