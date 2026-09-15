@@ -74,14 +74,24 @@ const cachedCatalogue = unstable_cache(async (): Promise<CatalogueLoad> => {
     }
     return { ok: false, kind: "network", allowFallback: true };
   }
-}, ["public-catalogue-v1"], { revalidate: 60, tags: ["catalogue"] });
+}, ["public-catalogue-v2"], { revalidate: 60, tags: ["catalogue"] });
 
 export const getCatalogue = cache(async (): Promise<PublicCatalogue> => {
   const result = await cachedCatalogue();
-  if (result.ok) return result.data;
+  const fallback = () => {
+    console.warn(JSON.stringify({ event: "catalogue_fallback", reason: result.ok ? "missing_explore" : result.kind, version: snapshot.version }));
+    return catalogueFromSnapshot(snapshot, process.env.NODE_ENV === "production");
+  };
+
+  if (result.ok) {
+    const hasExploreHub = result.data.destinations.some(
+      (row) => row.area === "explore" || row.area === "southern",
+    );
+    if (result.data.destinations.length > 0 && hasExploreHub) return result.data;
+    return fallback();
+  }
   if (!result.allowFallback) throw new CatalogueFetchError(result.kind, false);
-  console.warn(JSON.stringify({ event: "catalogue_fallback", reason: result.kind, version: snapshot.version }));
-  return catalogueFromSnapshot(snapshot, process.env.NODE_ENV === "production");
+  return fallback();
 });
 export function requireContentLocale<T extends { locale: string; path: string }>(record: T, locale: string): T {
   if (record.locale !== locale) redirect(`/${record.locale}${record.path}`);
