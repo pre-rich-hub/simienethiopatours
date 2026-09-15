@@ -4,7 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
-import { AtAGlance, EditorialHero, Itinerary, SectionIntro, StorySection, PlanningCall, FeatureGrid } from "@/components/Editorial";
+import { AtAGlance, BookingCard, EditorialHero, Itinerary, SectionIntro, StorySection, PlanningCall, FeatureGrid } from "@/components/Editorial";
 import { getTourForRoute, getTours, getDestinations, requireContentLocale, tourToJourney } from "@/lib/catalogue";
 import { enrichTourRecord } from "@/lib/tour-enrichment";
 import { catalogueMetadata } from "@/lib/catalogue-seo";
@@ -80,25 +80,32 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
         <div className="shell">
           <SectionIntro tag={t("itinerary")} title={t("itinerary")} />
           {journey.itineraryIntro && <p className="content-note">{journey.itineraryIntro}</p>}
-          {journey.itineraryMode === "days" && journey.days && (
-            <Itinerary days={journey.days} id="day-by-day" />
-          )}
-          {journey.itineraryMode === "segments" && journey.segments && (
-            <ol className="editorial-list dest-things">
-              {journey.segments.map((segment) => (
-                <li key={segment.label}>
-                  <strong>{segment.label}</strong> {segment.body}
-                </li>
-              ))}
-            </ol>
-          )}
-          {journey.itineraryMode === "outline" && journey.outline && (
-            <div className="prose">
-              {journey.outline.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
+          <div className="itinerary-split">
+            <div className="itinerary-split__main">
+              {journey.itineraryMode === "days" && journey.days && (
+                <Itinerary days={journey.days} id="day-by-day" />
+              )}
+              {journey.itineraryMode === "segments" && journey.segments && (
+                <ol className="editorial-list dest-things">
+                  {journey.segments.map((segment) => (
+                    <li key={segment.label}>
+                      <strong>{segment.label}</strong> {segment.body}
+                    </li>
+                  ))}
+                </ol>
+              )}
+              {journey.itineraryMode === "outline" && journey.outline && (
+                <div className="prose">
+                  {journey.outline.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
+            <aside className="itinerary-split__aside">
+              <BookingCard duration={journey.duration} difficulty={journey.difficulty} route={journey.route} experience={record.inquiry ?? record.slug} />
+            </aside>
+          </div>
         </div>
       </section>
 

@@ -64,6 +64,29 @@ export function AtAGlance({ facts }: { facts: readonly { label: string; value: s
   return <dl className="trip-facts shell">{facts.map((fact) => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>;
 }
 
+export async function BookingCard({ duration, difficulty, route, experience }: {
+  duration: string; difficulty: string; route: string; experience: string;
+}) {
+  const t = await getTranslations("booking");
+  const startFinish = route.split(" → ")[0] || route;
+  return <aside className="booking-card">
+    <div className="booking-card__header">
+      <p className="booking-card__eyebrow">{t("eyebrow")}</p>
+      <h3>{t("title")}</h3>
+    </div>
+    <dl className="booking-card__facts">
+      {duration && <div><dt>{t("duration")}</dt><dd>{duration}</dd></div>}
+      <div><dt>{t("groupSize")}</dt><dd>{t("groupSizeValue")}</dd></div>
+      {difficulty && <div><dt>{t("difficulty")}</dt><dd>{difficulty}</dd></div>}
+      {startFinish && <div><dt>{t("startFinish")}</dt><dd>{startFinish}</dd></div>}
+    </dl>
+    <div className="booking-card__actions booking-card__actions--last">
+      <Link className="booking-card__book" href={`/plan?experience=${experience}`}>{t("book")} <ArrowUpRight size={14} /></Link>
+      <a className="booking-card__ask" href={site.whatsapp} target="_blank" rel="noreferrer">{t("ask")}</a>
+    </div>
+  </aside>;
+}
+
 export async function Itinerary({ days, id = "itinerary" }: { days: readonly ItineraryDay[]; id?: string }) {
   const t = await getTranslations("trek");
   return <div className="itinerary" id={id}>{days.map((day, index) => <details key={day.title} className="itinerary__day" open={index === 0}>

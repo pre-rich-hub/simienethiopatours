@@ -213,6 +213,7 @@
     "title": "Custom quote",
     "duration": "Duration",
     "groupSize": "Group size",
+    "groupSizeValue": "Private or small group",
     "difficulty": "Difficulty",
     "startFinish": "Start & finish",
     "book": "Book this tour",
