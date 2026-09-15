@@ -1,0 +1,518 @@
+{
+  "en": {
+    "lake-tana": {
+      "slug": "lake-tana",
+      "destinationName": "Lake Tana / Bahir Dar",
+      "area": "northern",
+      "type": "lake",
+      "location": "Northern-circuit extension — Northern Ethiopia; Lake Tana basin",
+      "alsoKnownAs": [],
+      "heroTitle": "Lake Tana",
+      "heroAccent": "Bahir Dar.",
+      "overview": [
+        "Lake Tana / Bahir Dar is a major cultural landscape with historic monasteries and islands or shore sites on northern Ethiopia’s tourism circuit. It offers a soft-adventure contrast to the Simien highlands — lake landscapes, selected monasteries, boat excursions subject to conditions, and optional Blue Nile Falls (appearance varies with season and water conditions). Commonly combined with Gondar and Simien on 5–7 day private journeys."
+      ],
+      "highlights": [
+        "Water, monasteries and cultural lake landscape",
+        "Soft-adventure contrast to Simien highlands",
+        "Boat access to selected island and shore monasteries (conditions permitting)",
+        "Optional Blue Nile Falls add-on when season allows"
+      ],
+      "thingsToDo": [
+        "Boat excursion subject to conditions",
+        "Monastery visits with a local guide",
+        "Lakefront time in Bahir Dar",
+        "Optional Blue Nile Falls visit when season and conditions allow",
+        "Combine with Gondar heritage and Simien trekking"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386854/bahir-dar.jpg",
+      "imageAlt": "A pelican floating on the water at Bahir Dar",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 27,
+      "tourIds": []
+    },
+    "blue-nile-falls": {
+      "slug": "blue-nile-falls",
+      "destinationName": "Blue Nile Falls",
+      "area": "northern",
+      "type": "waterfall",
+      "location": "Northern-circuit extension — Near Lake Tana / Bahir Dar area (optional add-on)",
+      "alsoKnownAs": [],
+      "heroTitle": "Blue Nile Falls",
+      "heroAccent": "when conditions allow.",
+      "overview": [
+        "Blue Nile Falls is an optional add-on depending on season and conditions. Appearance varies with season and water conditions and should not be presented as permanently spectacular. When flow is strong, the falls and surrounding gorge walks are a worthwhile half-day from Bahir Dar; in drier periods the volume may be modest."
+      ],
+      "highlights": [
+        "Waterfall scenery when conditions are favourable",
+        "Seasonal variation in volume and spray",
+        "Gorge and countryside walks near the falls",
+        "Easy add-on to Lake Tana / Bahir Dar programmes"
+      ],
+      "thingsToDo": [
+        "Optional visit as part of Lake Tana / Bahir Dar programmes",
+        "Viewpoint walking and photography",
+        "Local guide interpretation of the Blue Nile corridor"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389618/blue-nile-falls.jpg",
+      "imageAlt": "Blue Nile Falls cascading into a green gorge",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 28,
+      "tourIds": []
+    },
+    "lalibela": {
+      "slug": "lalibela",
+      "destinationName": "Lalibela",
+      "area": "northern",
+      "type": "heritage",
+      "location": "Northern-circuit extension — Northern Ethiopia",
+      "alsoKnownAs": [],
+      "heroTitle": "Lalibela",
+      "heroAccent": "carved in stone.",
+      "overview": [
+        "Lalibela is the destination of rock-hewn church complexes, a sacred landscape carved downward into stone. The churches remain part of a living religious landscape, with active worship alongside heritage tourism. Optional Yemrehanna Kristos extension is available where practical. Lalibela pairs naturally with Gondar and Simien on 7–10 day northern combination journeys."
+      ],
+      "highlights": [
+        "Principal rock-hewn church complexes",
+        "Sacred stone architecture and living faith culture",
+        "Strong subject for guided cultural and photographic visits",
+        "Optional countryside and Yemrehanna Kristos extensions"
+      ],
+      "thingsToDo": [
+        "Church visits with a local guide",
+        "Religious and cultural experiences",
+        "Optional countryside walk and coffee",
+        "Optional Yemrehanna Kristos extension where practical",
+        "Combine with Gondar and Simien on private northern circuits"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389640/lalibela.jpg",
+      "imageAlt": "A person in white ceremonial clothing inside a rock-hewn church in Lalibela",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 29,
+      "tourIds": []
+    },
+    "axum": {
+      "slug": "axum",
+      "destinationName": "Axum / Aksum",
+      "area": "northern",
+      "type": "heritage",
+      "location": "Northern-circuit extension — Northern Ethiopia; ancient Aksumite kingdom centre",
+      "alsoKnownAs": [
+        "Aksum"
+      ],
+      "heroTitle": "Axum",
+      "heroAccent": "ancient kingdom.",
+      "overview": [
+        "Axum (Aksum) is the ancient African kingdom centre with monuments evidencing a major civilisation. It is a history-focused destination on northern circuits, with stelae, inscriptions, archaeological areas, royal tombs, the St Mary of Zion complex, the Aksum Museum, and optional Yeha or other historical sites according to current access. Commonly combined with Gondar and Simien on 7–10 day historic northern routes."
+      ],
+      "highlights": [
+        "Ancient kingdom heritage",
+        "Northern Stelae Park / major stelae, Ezana inscriptions, archaeological areas, royal tombs",
+        "St Mary of Zion complex and Aksum Museum",
+        "Optional Yeha excursion when access allows"
+      ],
+      "thingsToDo": [
+        "Historical exploration with a local guide",
+        "Museum and archaeological visits",
+        "Optional Yeha or other historical sites according to current access and conditions",
+        "Combine with Gondar, Simien and Lalibela on longer northern circuits"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389630/xum.png",
+      "imageAlt": "Carved stone stelae at Axum beneath a blue sky",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 31,
+      "tourIds": []
+    }
+  },
+  "es": {
+    "lake-tana": {
+      "slug": "lake-tana",
+      "destinationName": "Lake Tana / Bahir Dar",
+      "area": "northern",
+      "type": "lake",
+      "location": "Northern-circuit extension — Northern Ethiopia; Lake Tana basin",
+      "alsoKnownAs": [],
+      "heroTitle": "Lake Tana",
+      "heroAccent": "Bahir Dar.",
+      "overview": [
+        "Lake Tana / Bahir Dar is a major cultural landscape with historic monasteries and islands or shore sites on northern Ethiopia’s tourism circuit. It offers a soft-adventure contrast to the Simien highlands — lake landscapes, selected monasteries, boat excursions subject to conditions, and optional Blue Nile Falls (appearance varies with season and water conditions). Commonly combined with Gondar and Simien on 5–7 day private journeys."
+      ],
+      "highlights": [
+        "Water, monasteries and cultural lake landscape",
+        "Soft-adventure contrast to Simien highlands",
+        "Boat access to selected island and shore monasteries (conditions permitting)",
+        "Optional Blue Nile Falls add-on when season allows"
+      ],
+      "thingsToDo": [
+        "Boat excursion subject to conditions",
+        "Monastery visits with a local guide",
+        "Lakefront time in Bahir Dar",
+        "Optional Blue Nile Falls visit when season and conditions allow",
+        "Combine with Gondar heritage and Simien trekking"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386854/bahir-dar.jpg",
+      "imageAlt": "Un pelícano flota en el agua en Bahir Dar",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 27,
+      "tourIds": []
+    },
+    "blue-nile-falls": {
+      "slug": "blue-nile-falls",
+      "destinationName": "Blue Nile Falls",
+      "area": "northern",
+      "type": "waterfall",
+      "location": "Northern-circuit extension — Near Lake Tana / Bahir Dar area (optional add-on)",
+      "alsoKnownAs": [],
+      "heroTitle": "Blue Nile Falls",
+      "heroAccent": "when conditions allow.",
+      "overview": [
+        "Blue Nile Falls is an optional add-on depending on season and conditions. Appearance varies with season and water conditions and should not be presented as permanently spectacular. When flow is strong, the falls and surrounding gorge walks are a worthwhile half-day from Bahir Dar; in drier periods the volume may be modest."
+      ],
+      "highlights": [
+        "Waterfall scenery when conditions are favourable",
+        "Seasonal variation in volume and spray",
+        "Gorge and countryside walks near the falls",
+        "Easy add-on to Lake Tana / Bahir Dar programmes"
+      ],
+      "thingsToDo": [
+        "Optional visit as part of Lake Tana / Bahir Dar programmes",
+        "Viewpoint walking and photography",
+        "Local guide interpretation of the Blue Nile corridor"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389618/blue-nile-falls.jpg",
+      "imageAlt": "Las cataratas del Nilo Azul caen en un desfiladero verde",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 28,
+      "tourIds": []
+    },
+    "lalibela": {
+      "slug": "lalibela",
+      "destinationName": "Lalibela",
+      "area": "northern",
+      "type": "heritage",
+      "location": "Northern-circuit extension — Northern Ethiopia",
+      "alsoKnownAs": [],
+      "heroTitle": "Lalibela",
+      "heroAccent": "carved in stone.",
+      "overview": [
+        "Lalibela is the destination of rock-hewn church complexes, a sacred landscape carved downward into stone. The churches remain part of a living religious landscape, with active worship alongside heritage tourism. Optional Yemrehanna Kristos extension is available where practical. Lalibela pairs naturally with Gondar and Simien on 7–10 day northern combination journeys."
+      ],
+      "highlights": [
+        "Principal rock-hewn church complexes",
+        "Sacred stone architecture and living faith culture",
+        "Strong subject for guided cultural and photographic visits",
+        "Optional countryside and Yemrehanna Kristos extensions"
+      ],
+      "thingsToDo": [
+        "Church visits with a local guide",
+        "Religious and cultural experiences",
+        "Optional countryside walk and coffee",
+        "Optional Yemrehanna Kristos extension where practical",
+        "Combine with Gondar and Simien on private northern circuits"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389640/lalibela.jpg",
+      "imageAlt": "Una persona con vestimenta ceremonial blanca dentro de una iglesia excavada en la roca en Lalibela",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 29,
+      "tourIds": []
+    },
+    "axum": {
+      "slug": "axum",
+      "destinationName": "Axum / Aksum",
+      "area": "northern",
+      "type": "heritage",
+      "location": "Northern-circuit extension — Northern Ethiopia; ancient Aksumite kingdom centre",
+      "alsoKnownAs": [
+        "Aksum"
+      ],
+      "heroTitle": "Axum",
+      "heroAccent": "ancient kingdom.",
+      "overview": [
+        "Axum (Aksum) is the ancient African kingdom centre with monuments evidencing a major civilisation. It is a history-focused destination on northern circuits, with stelae, inscriptions, archaeological areas, royal tombs, the St Mary of Zion complex, the Aksum Museum, and optional Yeha or other historical sites according to current access. Commonly combined with Gondar and Simien on 7–10 day historic northern routes."
+      ],
+      "highlights": [
+        "Ancient kingdom heritage",
+        "Northern Stelae Park / major stelae, Ezana inscriptions, archaeological areas, royal tombs",
+        "St Mary of Zion complex and Aksum Museum",
+        "Optional Yeha excursion when access allows"
+      ],
+      "thingsToDo": [
+        "Historical exploration with a local guide",
+        "Museum and archaeological visits",
+        "Optional Yeha or other historical sites according to current access and conditions",
+        "Combine with Gondar, Simien and Lalibela on longer northern circuits"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389630/xum.png",
+      "imageAlt": "Estelas de piedra tallada en Axum bajo un cielo azul",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 31,
+      "tourIds": []
+    }
+  },
+  "de": {
+    "lake-tana": {
+      "slug": "lake-tana",
+      "destinationName": "Lake Tana / Bahir Dar",
+      "area": "northern",
+      "type": "lake",
+      "location": "Northern-circuit extension — Northern Ethiopia; Lake Tana basin",
+      "alsoKnownAs": [],
+      "heroTitle": "Lake Tana",
+      "heroAccent": "Bahir Dar.",
+      "overview": [
+        "Lake Tana / Bahir Dar is a major cultural landscape with historic monasteries and islands or shore sites on northern Ethiopia’s tourism circuit. It offers a soft-adventure contrast to the Simien highlands — lake landscapes, selected monasteries, boat excursions subject to conditions, and optional Blue Nile Falls (appearance varies with season and water conditions). Commonly combined with Gondar and Simien on 5–7 day private journeys."
+      ],
+      "highlights": [
+        "Water, monasteries and cultural lake landscape",
+        "Soft-adventure contrast to Simien highlands",
+        "Boat access to selected island and shore monasteries (conditions permitting)",
+        "Optional Blue Nile Falls add-on when season allows"
+      ],
+      "thingsToDo": [
+        "Boat excursion subject to conditions",
+        "Monastery visits with a local guide",
+        "Lakefront time in Bahir Dar",
+        "Optional Blue Nile Falls visit when season and conditions allow",
+        "Combine with Gondar heritage and Simien trekking"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386854/bahir-dar.jpg",
+      "imageAlt": "Ein Pelikan schwimmt auf dem Wasser bei Bahir Dar",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 27,
+      "tourIds": []
+    },
+    "blue-nile-falls": {
+      "slug": "blue-nile-falls",
+      "destinationName": "Blue Nile Falls",
+      "area": "northern",
+      "type": "waterfall",
+      "location": "Northern-circuit extension — Near Lake Tana / Bahir Dar area (optional add-on)",
+      "alsoKnownAs": [],
+      "heroTitle": "Blue Nile Falls",
+      "heroAccent": "when conditions allow.",
+      "overview": [
+        "Blue Nile Falls is an optional add-on depending on season and conditions. Appearance varies with season and water conditions and should not be presented as permanently spectacular. When flow is strong, the falls and surrounding gorge walks are a worthwhile half-day from Bahir Dar; in drier periods the volume may be modest."
+      ],
+      "highlights": [
+        "Waterfall scenery when conditions are favourable",
+        "Seasonal variation in volume and spray",
+        "Gorge and countryside walks near the falls",
+        "Easy add-on to Lake Tana / Bahir Dar programmes"
+      ],
+      "thingsToDo": [
+        "Optional visit as part of Lake Tana / Bahir Dar programmes",
+        "Viewpoint walking and photography",
+        "Local guide interpretation of the Blue Nile corridor"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389618/blue-nile-falls.jpg",
+      "imageAlt": "Die Wasserfälle des Blauen Nils stürzen in eine grüne Schlucht",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 28,
+      "tourIds": []
+    },
+    "lalibela": {
+      "slug": "lalibela",
+      "destinationName": "Lalibela",
+      "area": "northern",
+      "type": "heritage",
+      "location": "Northern-circuit extension — Northern Ethiopia",
+      "alsoKnownAs": [],
+      "heroTitle": "Lalibela",
+      "heroAccent": "carved in stone.",
+      "overview": [
+        "Lalibela is the destination of rock-hewn church complexes, a sacred landscape carved downward into stone. The churches remain part of a living religious landscape, with active worship alongside heritage tourism. Optional Yemrehanna Kristos extension is available where practical. Lalibela pairs naturally with Gondar and Simien on 7–10 day northern combination journeys."
+      ],
+      "highlights": [
+        "Principal rock-hewn church complexes",
+        "Sacred stone architecture and living faith culture",
+        "Strong subject for guided cultural and photographic visits",
+        "Optional countryside and Yemrehanna Kristos extensions"
+      ],
+      "thingsToDo": [
+        "Church visits with a local guide",
+        "Religious and cultural experiences",
+        "Optional countryside walk and coffee",
+        "Optional Yemrehanna Kristos extension where practical",
+        "Combine with Gondar and Simien on private northern circuits"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389640/lalibela.jpg",
+      "imageAlt": "Eine Person in weißer zeremonieller Kleidung in einer Felsenkirche in Lalibela",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 29,
+      "tourIds": []
+    },
+    "axum": {
+      "slug": "axum",
+      "destinationName": "Axum / Aksum",
+      "area": "northern",
+      "type": "heritage",
+      "location": "Northern-circuit extension — Northern Ethiopia; ancient Aksumite kingdom centre",
+      "alsoKnownAs": [
+        "Aksum"
+      ],
+      "heroTitle": "Axum",
+      "heroAccent": "ancient kingdom.",
+      "overview": [
+        "Axum (Aksum) is the ancient African kingdom centre with monuments evidencing a major civilisation. It is a history-focused destination on northern circuits, with stelae, inscriptions, archaeological areas, royal tombs, the St Mary of Zion complex, the Aksum Museum, and optional Yeha or other historical sites according to current access. Commonly combined with Gondar and Simien on 7–10 day historic northern routes."
+      ],
+      "highlights": [
+        "Ancient kingdom heritage",
+        "Northern Stelae Park / major stelae, Ezana inscriptions, archaeological areas, royal tombs",
+        "St Mary of Zion complex and Aksum Museum",
+        "Optional Yeha excursion when access allows"
+      ],
+      "thingsToDo": [
+        "Historical exploration with a local guide",
+        "Museum and archaeological visits",
+        "Optional Yeha or other historical sites according to current access and conditions",
+        "Combine with Gondar, Simien and Lalibela on longer northern circuits"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389630/xum.png",
+      "imageAlt": "Geschnitzte Steinstelen in Axum unter blauem Himmel",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 31,
+      "tourIds": []
+    }
+  },
+  "fr": {
+    "lake-tana": {
+      "slug": "lake-tana",
+      "destinationName": "Lake Tana / Bahir Dar",
+      "area": "northern",
+      "type": "lake",
+      "location": "Northern-circuit extension — Northern Ethiopia; Lake Tana basin",
+      "alsoKnownAs": [],
+      "heroTitle": "Lake Tana",
+      "heroAccent": "Bahir Dar.",
+      "overview": [
+        "Lake Tana / Bahir Dar is a major cultural landscape with historic monasteries and islands or shore sites on northern Ethiopia’s tourism circuit. It offers a soft-adventure contrast to the Simien highlands — lake landscapes, selected monasteries, boat excursions subject to conditions, and optional Blue Nile Falls (appearance varies with season and water conditions). Commonly combined with Gondar and Simien on 5–7 day private journeys."
+      ],
+      "highlights": [
+        "Water, monasteries and cultural lake landscape",
+        "Soft-adventure contrast to Simien highlands",
+        "Boat access to selected island and shore monasteries (conditions permitting)",
+        "Optional Blue Nile Falls add-on when season allows"
+      ],
+      "thingsToDo": [
+        "Boat excursion subject to conditions",
+        "Monastery visits with a local guide",
+        "Lakefront time in Bahir Dar",
+        "Optional Blue Nile Falls visit when season and conditions allow",
+        "Combine with Gondar heritage and Simien trekking"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386854/bahir-dar.jpg",
+      "imageAlt": "Un pélican flotte sur l’eau à Bahir Dar",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 27,
+      "tourIds": []
+    },
+    "blue-nile-falls": {
+      "slug": "blue-nile-falls",
+      "destinationName": "Blue Nile Falls",
+      "area": "northern",
+      "type": "waterfall",
+      "location": "Northern-circuit extension — Near Lake Tana / Bahir Dar area (optional add-on)",
+      "alsoKnownAs": [],
+      "heroTitle": "Blue Nile Falls",
+      "heroAccent": "when conditions allow.",
+      "overview": [
+        "Blue Nile Falls is an optional add-on depending on season and conditions. Appearance varies with season and water conditions and should not be presented as permanently spectacular. When flow is strong, the falls and surrounding gorge walks are a worthwhile half-day from Bahir Dar; in drier periods the volume may be modest."
+      ],
+      "highlights": [
+        "Waterfall scenery when conditions are favourable",
+        "Seasonal variation in volume and spray",
+        "Gorge and countryside walks near the falls",
+        "Easy add-on to Lake Tana / Bahir Dar programmes"
+      ],
+      "thingsToDo": [
+        "Optional visit as part of Lake Tana / Bahir Dar programmes",
+        "Viewpoint walking and photography",
+        "Local guide interpretation of the Blue Nile corridor"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389618/blue-nile-falls.jpg",
+      "imageAlt": "Les chutes du Nil Bleu se déversent dans une gorge verdoyante",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 28,
+      "tourIds": []
+    },
+    "lalibela": {
+      "slug": "lalibela",
+      "destinationName": "Lalibela",
+      "area": "northern",
+      "type": "heritage",
+      "location": "Northern-circuit extension — Northern Ethiopia",
+      "alsoKnownAs": [],
+      "heroTitle": "Lalibela",
+      "heroAccent": "carved in stone.",
+      "overview": [
+        "Lalibela is the destination of rock-hewn church complexes, a sacred landscape carved downward into stone. The churches remain part of a living religious landscape, with active worship alongside heritage tourism. Optional Yemrehanna Kristos extension is available where practical. Lalibela pairs naturally with Gondar and Simien on 7–10 day northern combination journeys."
+      ],
+      "highlights": [
+        "Principal rock-hewn church complexes",
+        "Sacred stone architecture and living faith culture",
+        "Strong subject for guided cultural and photographic visits",
+        "Optional countryside and Yemrehanna Kristos extensions"
+      ],
+      "thingsToDo": [
+        "Church visits with a local guide",
+        "Religious and cultural experiences",
+        "Optional countryside walk and coffee",
+        "Optional Yemrehanna Kristos extension where practical",
+        "Combine with Gondar and Simien on private northern circuits"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389640/lalibela.jpg",
+      "imageAlt": "Une personne en tenue cérémonielle blanche dans une église creusée dans la roche à Lalibela",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 29,
+      "tourIds": []
+    },
+    "axum": {
+      "slug": "axum",
+      "destinationName": "Axum / Aksum",
+      "area": "northern",
+      "type": "heritage",
+      "location": "Northern-circuit extension — Northern Ethiopia; ancient Aksumite kingdom centre",
+      "alsoKnownAs": [
+        "Aksum"
+      ],
+      "heroTitle": "Axum",
+      "heroAccent": "ancient kingdom.",
+      "overview": [
+        "Axum (Aksum) is the ancient African kingdom centre with monuments evidencing a major civilisation. It is a history-focused destination on northern circuits, with stelae, inscriptions, archaeological areas, royal tombs, the St Mary of Zion complex, the Aksum Museum, and optional Yeha or other historical sites according to current access. Commonly combined with Gondar and Simien on 7–10 day historic northern routes."
+      ],
+      "highlights": [
+        "Ancient kingdom heritage",
+        "Northern Stelae Park / major stelae, Ezana inscriptions, archaeological areas, royal tombs",
+        "St Mary of Zion complex and Aksum Museum",
+        "Optional Yeha excursion when access allows"
+      ],
+      "thingsToDo": [
+        "Historical exploration with a local guide",
+        "Museum and archaeological visits",
+        "Optional Yeha or other historical sites according to current access and conditions",
+        "Combine with Gondar, Simien and Lalibela on longer northern circuits"
+      ],
+      "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789389630/xum.png",
+      "imageAlt": "Stèles en pierre sculptée à Axum sous un ciel bleu",
+      "sourceReferences": [],
+      "isPublished": true,
+      "sortOrder": 31,
+      "tourIds": []
+    }
+  }
+}

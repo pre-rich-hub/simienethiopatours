@@ -1611,8 +1611,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Personal expenses; alcohol; tips; optional activities",
       "Festival-period surcharges where separately quoted; services not listed in the quotation"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392032/fasilides_-bath-fasil_s-pool.jpg",
-    "imageAlt": "Fasilides’ Bath, also known as Fasil’s Pool, in Gondar",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465909/timket.jpg",
+    "imageAlt": "Timkat celebration in Gondar",
     "days": [
       {
         "title": "Arrive in Gondar",
@@ -1694,8 +1694,8 @@ export const journeyPackages: JourneyPackage[] = [
       "Personal sleeping bag and trekking kit unless stated; alcohol; tips; personal expenses",
       "Optional activities; any service not listed in the quotation"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png",
-    "imageAlt": "A grassy escarpment overlooking the mountains on the Ras Dashen route",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465909/timket.jpg",
+    "imageAlt": "Timkat celebration in Gondar",
     "itineraryIntro": "Sample 9-day outline",
     "itineraryNotes": [
       "Return timing depends on the 8-, 9- or 10-day booking."

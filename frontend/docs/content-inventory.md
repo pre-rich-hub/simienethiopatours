@@ -43,8 +43,10 @@ All public content uses an explicit locale prefix: `en`, `es`, `de`, or `fr`.
 | `/{locale}/treks/{slug}` | Journey detail | Catalogue | Public now | Keep; incomplete records remain draft during production work |
 | `/{locale}/gondar` | Gondar and nearby countryside hub | Catalogue | Public now | Keep and narrow taxonomy |
 | `/{locale}/gondar/{slug}` | Gondar destination detail | Catalogue | Public now | Keep only Gondar-area entities |
-| `/{locale}/northern-ethiopia` | Northern extensions hub | Catalogue | Planned | Add for launch |
-| `/{locale}/northern-ethiopia/{slug}` | Northern extension detail | Catalogue | Planned | Add for launch |
+| `/{locale}/explore-ethiopia` | Explore Ethiopia destination hub | Catalogue | Implemented | Publish after CMS expansion import |
+| `/{locale}/explore-ethiopia/{slug}` | Explore Ethiopia destination detail | Catalogue | Implemented | Publish after CMS expansion import |
+| `/{locale}/southern-ethiopia` | Southern Ethiopia destination hub | Catalogue | Implemented | Publish after CMS expansion import |
+| `/{locale}/southern-ethiopia/{slug}` | Southern Ethiopia destination detail | Catalogue | Implemented | Publish after CMS expansion import |
 | `/{locale}/journal` | Journal index | Editorial | Planned | Add for launch |
 | `/{locale}/journal/{slug}` | Journal article | Editorial | Planned | Add for launch |
 | `/{locale}/about` | Founder and operator story | Business identity | Public now | Keep |
@@ -70,7 +72,7 @@ The desktop and mobile primary navigation will contain these six entries in this
 1. Simien
 2. Journeys
 3. Gondar
-4. Northern Ethiopia
+4. Explore Ethiopia (including Southern Ethiopia groups)
 5. Our Story
 6. Gallery
 
@@ -125,18 +127,18 @@ Gondar contains seven target records. It no longer contains Debark, the Simien a
 | Woleka | `/gondar/woleka` | Same | Repository | Basic | EN only | Draft — research; handle Beta Israel history sensitively and replace generic media |
 | Kosoye Mountains | `/gondar/kosoye-mountains` | Same | Repository | Useful baseline | EN only | Draft — research; verify community, duration, and operating claims |
 
-### Northern Ethiopia extensions
+### Explore Ethiopia destinations
 
-These six records move out of Gondar. Their old localized paths remain permanent redirects after the new pages exist.
+The expanded Explore Ethiopia collection includes the historic and gateway destinations, optional northern extensions, and retained Yeha/Yemrehanna Kristos records. The old Northern Ethiopia URLs remain permanent redirects.
 
 | Destination | Current route | Canonical route | Current source | Current content | Translation | Target state / next action |
 | --- | --- | --- | --- | --- | --- | --- |
-| Lake Tana / Bahir Dar | `/gondar/lake-tana` | `/northern-ethiopia/lake-tana` | Repository | Basic | EN only | Move; expand lake, monastery, access, and responsible-visit context |
-| Blue Nile Falls | `/gondar/blue-nile-falls` | `/northern-ethiopia/blue-nile-falls` | Repository | Thin | EN only | Move; verify seasonality/access and replace unrelated image |
-| Lalibela | `/gondar/lalibela` | `/northern-ethiopia/lalibela` | Repository | Basic | EN only | Move; expand verified living-heritage and visit context; replace Gondar image |
-| Yemrehanna Kristos | `/gondar/yemrehanna-kristos` | `/northern-ethiopia/yemrehanna-kristos` | Repository | Thin | EN only | Move; expand or incorporate into Lalibela if research finds insufficient standalone value |
-| Axum / Aksum | `/gondar/axum` | `/northern-ethiopia/axum` | Repository | Basic | EN only | Move; expand verified site context and replace unrelated image |
-| Yeha | `/gondar/yeha` | `/northern-ethiopia/yeha` | Repository | Thin | EN only | Move; expand or incorporate into Axum if research finds insufficient standalone value |
+| Lake Tana / Bahir Dar | `/gondar/lake-tana` | `/explore-ethiopia/lake-tana` | Client expansion | Expanded | EN/ES/DE/FR prepared | Move; preserve existing media and tour links |
+| Blue Nile Falls | `/gondar/blue-nile-falls` | `/explore-ethiopia/blue-nile-falls` | Client expansion | Expanded | EN/ES/DE/FR prepared | Move; preserve existing media and tour links |
+| Lalibela | `/gondar/lalibela` | `/explore-ethiopia/lalibela` | Client expansion | Expanded | EN/ES/DE/FR prepared | Move; preserve existing media and tour links |
+| Yemrehanna Kristos | `/gondar/yemrehanna-kristos` | `/explore-ethiopia/yemrehanna-kristos` | Existing catalogue | Retained | Existing locale availability | Normalize area and preserve media and tour links |
+| Axum / Aksum | `/gondar/axum` | `/explore-ethiopia/axum` | Client expansion | Expanded | EN/ES/DE/FR prepared | Move; preserve existing media and tour links |
+| Yeha | `/gondar/yeha` | `/explore-ethiopia/yeha` | Existing catalogue | Retained | Existing locale availability | Normalize area and preserve media and tour links |
 
 ### Required destination redirects
 
@@ -146,12 +148,12 @@ Each mapping applies to all four locale prefixes.
 | --- | --- | --- |
 | `/gondar/debark` | `/simien-mountains/debark` | Permanent |
 | `/gondar/highland-villages` | `/simien-mountains/highland-villages` | Permanent |
-| `/gondar/lake-tana` | `/northern-ethiopia/lake-tana` | Permanent |
-| `/gondar/blue-nile-falls` | `/northern-ethiopia/blue-nile-falls` | Permanent |
-| `/gondar/lalibela` | `/northern-ethiopia/lalibela` | Permanent |
-| `/gondar/yemrehanna-kristos` | `/northern-ethiopia/yemrehanna-kristos` | Permanent |
-| `/gondar/axum` | `/northern-ethiopia/axum` | Permanent |
-| `/gondar/yeha` | `/northern-ethiopia/yeha` | Permanent |
+| `/gondar/lake-tana` | `/explore-ethiopia/lake-tana` | Permanent |
+| `/gondar/blue-nile-falls` | `/explore-ethiopia/blue-nile-falls` | Permanent |
+| `/gondar/lalibela` | `/explore-ethiopia/lalibela` | Permanent |
+| `/gondar/yemrehanna-kristos` | `/explore-ethiopia/yemrehanna-kristos` | Permanent |
+| `/gondar/axum` | `/explore-ethiopia/axum` | Permanent |
+| `/gondar/yeha` | `/explore-ethiopia/yeha` | Permanent |
 
 Do not remove an old route until its redirect and replacement canonical are deployed together. New canonicals, internal links, hreflang, and sitemap entries must use only the target route.
 
@@ -244,7 +246,8 @@ A journey can move from `Draft — research` to publishable only when it has:
 | Simien hub | Repository | EN/ES/DE/FR UI implemented; destination cards remain English | Expand guide content and localize catalogue data |
 | Journey hub | Repository | EN/ES/DE/FR UI implemented; cards remain English | Retain only researched publishable products and add comparison clarity |
 | Gondar hub | Repository | English body in all locales | Narrow to seven Gondar-area records and fully localize |
-| Northern Ethiopia hub | Missing | Missing | Add localized hub and six moved records |
+| Explore Ethiopia hub | Implemented | EN/ES/DE/FR catalogue content prepared; human review required | Apply the CMS expansion import and export the approved catalogue |
+| Southern Ethiopia hub | Implemented | EN/ES/DE/FR catalogue content prepared; human review required | Apply the CMS expansion import and export the approved catalogue |
 | Journal | Admin/API exist; no public route | Missing | Add localized index and article routes for launch |
 | About | Repository | EN/ES/DE/FR implemented; human review required | Verify credentials and translations |
 | Gallery | CMS with repository fallback | English body in all locales | Localize UI and expose complete photo credits |
@@ -307,8 +310,8 @@ Every researched record must capture:
 
 - [x] Top-level public sections are confirmed.
 - [x] `/contact` is a dedicated localized general-contact page.
-- [x] Northern Ethiopia is a separate top-level destination hub.
-- [x] The six northern extensions are removed from the target Gondar taxonomy.
+- [x] Explore Ethiopia is the broader destination hub, with Southern Ethiopia as a linked subgroup.
+- [x] The six former northern records are removed from the target Gondar taxonomy.
 - [x] Debark has one canonical Simien record.
 - [x] Highland villages moves to the Simien approach collection.
 - [x] The primary navigation placement is confirmed.

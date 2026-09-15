@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const destinationAreas = ["simien", "gondar", "northern"] as const;
+export const destinationAreas = ["simien", "gondar", "northern", "explore", "southern"] as const;
 export const destinationTypes = [
   "park", "gateway", "camp", "viewpoint", "waterfall", "heritage",
   "rural", "lake", "extension", "corridor", "other",

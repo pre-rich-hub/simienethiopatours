@@ -21,10 +21,10 @@ export const gondarPlanningCards: Feature[] = [
     linkLabel: "See a combined outline",
   },
   {
-    title: "Northern extensions",
+    title: "Explore Ethiopia extensions",
     body: "Lake Tana / Bahir Dar, Lalibela, Axum and related stops can extend a Gondar–Simien journey when your schedule allows.",
-    href: "/northern-ethiopia",
-    linkLabel: "Browse northern destinations",
+    href: "/explore-ethiopia",
+    linkLabel: "Explore Ethiopia",
   },
 ];
 

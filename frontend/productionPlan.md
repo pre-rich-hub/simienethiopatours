@@ -40,17 +40,17 @@ Avoid rebuilding the same content model twice. Decide what is public, what admin
   - Simien Mountains
   - Journeys / tours
   - Gondar
-  - Northern Ethiopia extensions
+  - Explore Ethiopia (including Southern Ethiopia)
   - About
   - Gallery
   - Plan and dedicated Contact
   - Journal
 - [x] Make `/contact` a standalone localized general-contact page; keep `/plan` as the detailed journey planner.
-- [x] Move Lake Tana/Bahir Dar, Blue Nile Falls, Lalibela, Yemrehanna Kristos, Axum, and Yeha into a new `/northern-ethiopia` hub.
+- [x] Move Lake Tana/Bahir Dar, Blue Nile Falls, Lalibela, Yemrehanna Kristos, Axum, and Yeha into the `/explore-ethiopia` hub; link Southern Ethiopia as its own subgroup.
 - [x] Keep all 28 journeys in the research inventory and allow evidence-based merging of true duplicates with permanent redirects.
 - [x] Mark every journey `Draft — research` until the production completeness checklist passes.
 - [x] Record canonical ownership for Debark and Highland villages under Simien.
-- [x] Lock the primary navigation order: Simien, Journeys, Gondar, Northern Ethiopia, Our Story, Gallery.
+- [x] Lock the primary navigation order: Simien, Journeys, Gondar, Explore Ethiopia, Our Story, Gallery.
 
 **Acceptance:** Complete. The route/content inventory, ownership, redirects, journey status, merge rule, and research boundaries are recorded in [`docs/content-inventory.md`](docs/content-inventory.md).
 
@@ -161,7 +161,7 @@ Make admin-managed database records capable of representing the actual public we
 ### P2-T2 — Expand the destination model
 
 - [x] Add destination area/type, hero title/accent, location, aliases, overview paragraphs, highlights, things to do, image/alt, source references, publish state, and sort order.
-- [x] Represent Gondar, Simien, and Northern Ethiopia as explicit areas or collections.
+- [x] Represent Gondar, Simien, Explore Ethiopia, and Southern Ethiopia as explicit areas or collections.
 - [x] Support destination-to-tour relationships in the database rather than `destination-routes.ts` maps.
 - [x] Add public list and detail endpoints for published destinations.
 - [x] Expand the admin destination editor and preserve existing destination URLs on rename.
@@ -355,7 +355,7 @@ Turn the sound technical foundation into a trustworthy, answer-ready travel site
 - [x] Add explicit metadata for contact/journal/extension routes.
 - [x] Use catalogue `updatedAt` values for entity sitemap `lastModified` timestamps.
 
-**Evidence:** `npm run qa:metadata` (`scripts/metadata-uniqueness.mjs`) crawls catalogue tour/destination rows + static planning/home/plan paths for duplicate titles/descriptions and editorial phrasing; length warnings logged. Planning/journal/northern-ethiopia/`/plan` emit `pageMetadata`; `content:audit` / `qa:content` reject research/placeholder phrasing. Live host crawl of every sitemap URL remains P12.
+**Evidence:** `npm run qa:metadata` (`scripts/metadata-uniqueness.mjs`) crawls catalogue tour/destination rows + static planning/home/plan paths for duplicate titles/descriptions and editorial phrasing; length warnings logged. Planning/journal/explore-ethiopia/southern-ethiopia/`/plan` emit `pageMetadata`; `content:audit` / `qa:content` reject research/placeholder phrasing. Live host crawl of every sitemap URL remains P12.
 
 ### P6-T2 — Add useful structured data
 

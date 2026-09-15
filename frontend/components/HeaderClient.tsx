@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { Menu, X, ArrowUpRight } from "@/components/Icon";
-import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
+import { useEffect, useRef, useState, Fragment, type ComponentProps, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { BrandMark } from "./BrandMark";
 import { NavMegaMenu } from "./NavMegaMenu";
@@ -16,13 +16,14 @@ const links = [
   { href: "/simien-mountains", key: "simien" },
   { href: "/treks", key: "journeys" },
   { href: "/gondar", key: "gondar" },
-  { href: "/northern-ethiopia", key: "northern" },
+  { href: "/explore-ethiopia", key: "northern" },
   { href: "/about", key: "ourStory" },
   { href: "/gallery", key: "gallery" },
 ] as const;
 
 export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, journeyMenuCards, publishedPaths }: { light?: boolean; simienMenuCards: NavMegaMenuCard[]; gondarMenuCards: NavMegaMenuCard[]; journeyMenuCards: NavMegaMenuCard[]; publishedPaths: string[] }) {
   const t = useTranslations("nav");
+  const e = useTranslations("ethiopia");
   const tCommon = useTranslations("common");
   const tCta = useTranslations("cta");
   const [open, setOpen] = useState(false);
@@ -69,6 +70,16 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
         { href: "/treks/gondar-heritage-simien", label: t("journeysMenu.heritage") },
       ],
       cards: journeyMenuCards,
+    },
+    "/explore-ethiopia": {
+      id: "ethiopia-menu", label: e("explore"), matchPath: "/explore-ethiopia",
+      eyebrow: e("destinations"), heading: e("explore"), description: e("exploreLead"),
+      exploreHref: "/explore-ethiopia", exploreLabel: e("explore"), extraLinks: [],
+      cards: [
+        { slug: "historic", href: "/explore-ethiopia#historic", title: e("historic"), summary: e("historicLead") },
+        { slug: "extensions", href: "/explore-ethiopia#extensions", title: e("extensions"), summary: e("extensionsLead") },
+        { slug: "southern", href: "/southern-ethiopia", title: e("southern"), summary: e("southernLead") },
+      ].map(card => ({...card, image: "", tag: e("destinations"), style: ""})),
     },
     "/gondar": {
       id: "gondar-menu",
@@ -175,10 +186,17 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
         </div>
         <nav aria-label={tCommon("mobileNav")}>
           {links.map((link, index) => (
-            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
+            <Fragment key={link.href}><Link href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
               <span>0{index + 1}</span>{t(link.key)}<ArrowUpRight />
             </Link>
+            {link.href === "/explore-ethiopia" && (<div className="ethiopia-mobile-groups" aria-label={e("groups")}>
+            <Link href="/explore-ethiopia#historic" onClick={() => setOpen(false)}>{e("historic")}</Link>
+            <Link href="/explore-ethiopia#extensions" onClick={() => setOpen(false)}>{e("extensions")}</Link>
+            <Link href="/southern-ethiopia" onClick={() => setOpen(false)}>{e("southern")}</Link>
+          </div>)}
+            </Fragment>
           ))}
+
         </nav>
         <div className="mobile-menu__contact">
           <LanguageSwitcher mobile />

@@ -55,7 +55,7 @@
       "royalCity": "Gondar: la ciudad real",
       "royalAdventure": "5 días: ciudad real y aventura de montaña"
     },
-    "northern": "Norte de Etiopía",
+    "northern": "Explora Etiopía",
     "journal": "Diario"
   },
   "cta": {
@@ -703,7 +703,7 @@
     "description": "Un recorrido visual por las montañas Simien y Gondar.",
     "imageAlt": "El paisaje estratificado de las montañas Simien",
     "eyebrow": "Gondar y las montañas Simien",
-    "collection": "Una colección visual · 01—08",
+    "collection": "Una colección visual · 01—{count}",
     "heading": "Un poco más cerca de<br></br><em>lo extraordinario.</em>",
     "lead": "Más allá del mapa, antes del viaje. Un vistazo a paisajes, encuentros cotidianos y momentos tranquilos.",
     "scenicNote": "Las fotografías de paisaje ilustran lugares reales de las tierras altas y el patrimonio; no garantizan la vista exacta, la estación ni la fauna de una salida concreta.",
@@ -809,10 +809,10 @@
     "relatedJourneysTitle": "Rutas que visitan este lugar",
     "backSimien": "Todos los destinos de Simien",
     "backGondar": "Todos los destinos de Gondar",
-    "backNorthern": "Todos los destinos del norte de Etiopía",
+    "backNorthern": "Todos los destinos de Explora Etiopía",
     "simienEyebrow": "Montañas Simien",
     "gondarEyebrow": "Gondar",
-    "northernEyebrow": "Norte de Etiopía"
+    "northernEyebrow": "Explora Etiopía"
   },
   "operatorFaq": {
     "tag": "Respuestas del operador",
@@ -911,7 +911,7 @@
     "introAccent": "y el camino al norte.",
     "linkPlan": "Planificar con Tevan",
     "linkSimienGuide": "Leer la guía del Simien",
-    "linkNorthern": "Explorar destinos del norte",
+    "linkNorthern": "Explorar destinos de Etiopía",
     "linkNext": "Siguientes pasos",
     "linkFaq": "Preguntas al operador",
     "callTitle": "Comparta sus noches en la ciudad y días en la montaña.",
@@ -943,5 +943,25 @@
         "accent": "siga hacia el norte."
       }
     }
+  },
+  "ethiopia": {
+    "explore": "Explora Etiopía",
+    "southern": "Sur de Etiopía",
+    "destinations": "Destinos",
+    "groups": "Explorar grupos de destinos",
+    "historic": "Puertas de entrada e historia",
+    "extensions": "Extensiones",
+    "extension": "Extensión opcional",
+    "bale": "Extensiones a las montañas Bale",
+    "exploreLead": "Comienza en Addis Ababa, descubre paisajes lacustres e históricos o continúa hacia el sur de Etiopía. Gondar es nuestro hogar y las montañas Simien siguen siendo el corazón de nuestros viajes.",
+    "southernLead": "Recorre el valle del Rift, las comunidades de las tierras altas, South Omo y las regiones cafeteras, con una extensión opcional a las montañas Bale.",
+    "historicLead": "Ciudades de entrada, Lake Tana y los paisajes históricos y sagrados de Etiopía.",
+    "extensionsLead": "Gheralta, Danakil y opciones de alta montaña, organizadas cuando las condiciones lo permiten.",
+    "discoverSouth": "Explorar el sur de Etiopía",
+    "discover": "Descubrir {name}",
+    "plan": "Planifica tu viaje",
+    "planTitle": "Un viaje a tu medida",
+    "planLead": "Habla con nuestro equipo local sobre cómo incluir {name} en un itinerario privado. La ruta, el acceso y las actividades se confirman para tus fechas.",
+    "back": "Todos los destinos de {region}"
   }
 }

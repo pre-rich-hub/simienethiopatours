@@ -27,7 +27,7 @@ try {
     const detail = await page('/en/treks/simien-day-trip'); assert.equal(detail.status, 200); assert.match(detail.body, /TouristTrip/); assert.match(detail.body, /Morning/);
   });
   await check('Destination hubs and related journeys', async () => {
-    const hub = await page('/en/northern-ethiopia'); assert.equal(hub.status, 200); assert.match(hub.body, /Lake Tana/);
+    const hub = await page('/en/explore-ethiopia'); assert.equal(hub.status, 200); assert.match(hub.body, /Lake Tana/);
     const gondar = await page('/en/gondar'); assert.equal(gondar.status, 200); assert.doesNotMatch(gondar.body.match(/id="destinations"[\s\S]*?<\/section>/)?.[0] ?? '', /\/gondar\/lalibela/);
     const place = await page('/en/simien-mountains/imet-gogo'); assert.equal(place.status, 200); assert.match(place.body, /Routes that pass through here/);
   });

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   if (!record) return {};
   requireContentLocale(record, locale);
   const journey = tourToJourney(record);
-  return catalogueMetadata({ locale, title: journey.name, description: record.summary ?? journey.overview[0] ?? "", path: record.path, image: { url: journey.image, alt: journey.imageAlt } }, record.availableLocales);
+  return catalogueMetadata({ locale, title: journey.name, description: record.summary ?? journey.overview[0] ?? "", path: record.path, image: journey.image ? { url: journey.image, alt: journey.imageAlt } : null }, record.availableLocales);
 }
 
 export default async function JourneyPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
@@ -36,7 +36,7 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
 
   const allDestinations = await getDestinations(locale);
   const destinations = allDestinations.filter(p => p.tourSlugs.includes(slug));
-  const publishedPaths = new Set([...(await getTours(locale)).map(t => t.path), ...allDestinations.map(p => p.path), "/plan", "/treks", "/gondar", "/simien-mountains", "/northern-ethiopia", "/about", "/gallery", "/journal"]);
+  const publishedPaths = new Set([...(await getTours(locale)).map(t => t.path), ...allDestinations.map(p => p.path), "/plan", "/treks", "/gondar", "/simien-mountains", "/explore-ethiopia", "/southern-ethiopia", "/about", "/gallery", "/journal"]);
   const related = record.related.map(item => ({ ...item, href: item.href && (/^https?:\/\//.test(item.href) || publishedPaths.has(item.href)) ? item.href : undefined }));
   const lead = [journey.duration, journey.route, journey.difficulty].filter(Boolean).join(" · ");
 

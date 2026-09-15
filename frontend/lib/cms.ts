@@ -82,13 +82,14 @@ export const cms = {
     return travelerReviews;
   },
 
-  /** Gallery photographs. */
+  /** The selected collection, with CMS captions for matching images when available. */
   async getGallery(): Promise<readonly Photograph[]> {
     const api = await fetchUrl<ApiGalleryItem[]>("/api/v1/gallery");
-    if (api !== null) {
-      return api.map(apiGalleryToPhotograph);
-    }
-    return photographs;
+    const byImage = new Map((api ?? []).map(item => [resolveMediaUrl(item.imageUrl), item]));
+    return photographs.map(photo => {
+      const item = byImage.get(resolveMediaUrl(photo.src));
+      return item ? { ...apiGalleryToPhotograph(item), src: photo.src } : photo;
+    });
   },
 
 };

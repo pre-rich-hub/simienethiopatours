@@ -174,10 +174,10 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
           <div className="journey-menu__cards">
             {cards.map((card) => (
               <Link className="journey-menu-card" href={card.href} locale={card.locale} key={card.slug}>
-                <div className="journey-menu-card__image">
+                {card.image ? <div className="journey-menu-card__image">
                   {card.image && <Image src={card.image} alt={card.imageAlt ?? ""} fill sizes="(min-width: 1440px) 280px, 22vw" />}
                   <span>{card.tag}</span>
-                </div>
+                </div> : <p className="eyebrow eyebrow--copper">{card.tag}</p>}
                 <h3>{card.title}</h3>
                 <p className="journey-menu-card__style">{card.style}</p>
                 <p className="journey-menu-card__summary">{card.summary}</p>

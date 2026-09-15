@@ -82,7 +82,7 @@ export default function AdminDestinationsPage() {
       setEditing(row);
       setName(row.name);
       setDesc(row.description || "");
-      setArea(row.area || "gondar"); setType(row.type || "other"); setLocation(row.location || "");
+      setArea(row.area === "northern" ? "explore" : row.area || "gondar"); setType(row.type || "other"); setLocation(row.location || "");
       setAliases(lines(row.alsoKnownAs || [])); setHeroTitle(row.heroTitle || ""); setHeroAccent(row.heroAccent || "");
       setOverview(lines(row.overview || [])); setHighlights(lines(row.highlights || [])); setThingsToDo(lines(row.thingsToDo || []));
       setImageAlt(row.imageAlt || ""); setSourceReferences(lines(row.sourceReferences || []));
@@ -181,7 +181,7 @@ export default function AdminDestinationsPage() {
                 <AdminTextarea value={desc} onChange={(e) => setDesc(e.target.value)} />
               </AdminField>
               <div className="grid gap-4 md:grid-cols-2">
-                <AdminField label="Area"><select value={area} onChange={(e) => setArea(e.target.value)}><option value="simien">Simien</option><option value="gondar">Gondar</option><option value="northern">Northern</option></select></AdminField>
+                <AdminField label="Area"><select value={area} onChange={(e) => setArea(e.target.value)}><option value="simien">Simien</option><option value="gondar">Gondar</option><option value="explore">Explore Ethiopia</option><option value="southern">Southern Ethiopia</option></select></AdminField>
                 <AdminField label="Type"><select value={type} onChange={(e) => setType(e.target.value)}>{["park","gateway","camp","viewpoint","waterfall","heritage","rural","lake","extension","corridor","other"].map((value) => <option key={value} value={value}>{value}</option>)}</select></AdminField>
                 <AdminField label="Location"><AdminInput value={location} onChange={(e) => setLocation(e.target.value)} /></AdminField>
                 <AdminField label="Aliases (one per line)"><AdminTextarea value={aliases} rows={2} onChange={(e) => setAliases(e.target.value)} /></AdminField>

@@ -55,7 +55,7 @@
       "royalCity": "Gondar: die königliche Stadt",
       "royalAdventure": "5 Tage königliche Stadt und Bergabenteuer"
     },
-    "northern": "Nordäthiopien",
+    "northern": "Äthiopien entdecken",
     "journal": "Journal"
   },
   "cta": {
@@ -703,7 +703,7 @@
     "description": "Eine visuelle Reise durch die Simien-Berge und Gondar.",
     "imageAlt": "Die geschichtete Landschaft der Simien-Berge",
     "eyebrow": "Gondar und die Simien-Berge",
-    "collection": "Eine visuelle Sammlung · 01—08",
+    "collection": "Eine visuelle Sammlung · 01—{count}",
     "heading": "Ein wenig näher an<br></br><em>dem Außergewöhnlichen.</em>",
     "lead": "Jenseits der Karte, vor der Reise. Ein Blick auf Landschaften, Begegnungen und stille Momente.",
     "scenicNote": "Landschaftsfotos zeigen echte Hochland- und Kulturerbeorte; sie garantieren nicht die genaue Aussicht, Jahreszeit oder Wildtiere einer einzelnen Reise.",
@@ -809,10 +809,10 @@
     "relatedJourneysTitle": "Routen, die diesen Ort besuchen",
     "backSimien": "Alle Simien-Ziele",
     "backGondar": "Alle Gondar-Ziele",
-    "backNorthern": "Alle Ziele in Nordäthiopien",
+    "backNorthern": "Alle Reiseziele: Äthiopien entdecken",
     "simienEyebrow": "Simien-Gebirge",
     "gondarEyebrow": "Gondar",
-    "northernEyebrow": "Nordäthiopien"
+    "northernEyebrow": "Äthiopien entdecken"
   },
   "operatorFaq": {
     "tag": "Antworten des Betreibers",
@@ -911,7 +911,7 @@
     "introAccent": "und der Weg nach Norden.",
     "linkPlan": "Mit Tevan planen",
     "linkSimienGuide": "Simien-Planungsleitfaden lesen",
-    "linkNorthern": "Nördliche Destinationen erkunden",
+    "linkNorthern": "Äthiopien entdecken",
     "linkNext": "Nächste Schritte",
     "linkFaq": "Betreiber-Fragen",
     "callTitle": "Teilen Sie Stadtnächte und Bergtage.",
@@ -943,5 +943,25 @@
         "accent": "weiter nach Norden."
       }
     }
+  },
+  "ethiopia": {
+    "explore": "Äthiopien entdecken",
+    "southern": "Südäthiopien",
+    "destinations": "Reiseziele",
+    "groups": "Reisezielgruppen entdecken",
+    "historic": "Anreiseorte & Geschichte",
+    "extensions": "Verlängerungen",
+    "extension": "Optionale Verlängerung",
+    "bale": "Verlängerungen in die Bale-Berge",
+    "exploreLead": "Beginnen Sie in Addis Ababa, entdecken Sie Seen und historische Landschaften oder reisen Sie weiter nach Südäthiopien. Gondar ist unsere Heimat und die Simien-Berge bleiben das Herz unserer Reisen.",
+    "southernLead": "Folgen Sie dem Rift Valley zu Hochlandgemeinschaften, nach South Omo und ins Kaffeeland, mit einer optionalen Verlängerung in die Bale-Berge.",
+    "historicLead": "Anreiseorte, Lake Tana und Äthiopiens historische und religiöse Landschaften.",
+    "extensionsLead": "Gheralta, Danakil und Hochgebirgsoptionen, die wir bei geeigneten Bedingungen organisieren.",
+    "discoverSouth": "Südäthiopien entdecken",
+    "discover": "{name} entdecken",
+    "plan": "Ihre Reise planen",
+    "planTitle": "Eine Reise nach Ihren Wünschen",
+    "planLead": "Sprechen Sie mit unserem Team vor Ort darüber, wie sich {name} in eine individuelle Reise einbinden lässt. Route, Zugang und Aktivitäten werden für Ihre Reisedaten bestätigt.",
+    "back": "Alle Reiseziele: {region}"
   }
 }
