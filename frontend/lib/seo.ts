@@ -13,6 +13,7 @@ import { getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { site, verifiedSocialLinks } from "@/lib/site";
+import clientPhotos from "@/lib/client-photos.json";
 
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://gondarsimientours.com"
@@ -27,11 +28,12 @@ export const nap = {
   address: site.address,
 } as const;
 
+/** Matches the Sankaber Cloudinary hero used on home / treks / Simien hubs. */
 export const DEFAULT_OG_IMAGE = {
-  url: "/images/imet-gogo.jpg",
-  width: 2560,
-  height: 1920,
-  alt: "The high plateau and dramatic escarpment at Imet Gogo in the Simien Mountains",
+  url: clientPhotos.sankaber.url,
+  width: 1600,
+  height: 1200,
+  alt: clientPhotos.sankaber.alt.en,
 } as const;
 
 export type OgImage = {
@@ -178,8 +180,35 @@ export async function messagePageMetadata(
     description: copy.description,
     ogTitle: copy.ogTitle,
     titleAbsolute: page === "home",
+    image: hubOgImage(page, locale),
     ...extras,
   });
+}
+
+/** Open Graph image aligned with each hub’s visible hero (not a generic Wikimedia fallback). */
+function hubOgImage(page: MetaPage, locale: AppLocale): OgImage {
+  if (page === "gondar") {
+    return {
+      url: clientPhotos.fasil.url,
+      alt: clientPhotos.fasil.alt[locale],
+      width: 1600,
+      height: 1200,
+    };
+  }
+  if (page === "about") {
+    return {
+      url: "/images/tevan-portrait.jpg",
+      alt: "Tesema ‘Tevan’ Mulualem, Gondar-based founder and guide",
+      width: 1200,
+      height: 1600,
+    };
+  }
+  return {
+    url: clientPhotos.sankaber.url,
+    alt: clientPhotos.sankaber.alt[locale],
+    width: 1600,
+    height: 1200,
+  };
 }
 
 /** Root layout defaults. Pages override via `pageMetadata`. */

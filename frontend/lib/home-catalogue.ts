@@ -1,25 +1,28 @@
 import "server-only";
-import { getTours, getDestinations, resolveMediaUrl } from "./catalogue";
+import { getTours, getDestinations, resolveMediaUrl, tourMedia } from "./catalogue";
 import { cardBlurb } from "./card-blurb";
 
 export async function getHomeCatalogue(locale: string) {
   const [tours, places] = await Promise.all([getTours(locale), getDestinations(locale)]);
-  const tourCards = tours.map((t) => ({
-    id: t.slug,
-    slug: t.slug,
-    href: t.path,
-    locale: t.locale,
-    title: t.tourName,
-    summary: cardBlurb(t.summary ?? t.overview ?? "", 130),
-    image: resolveMediaUrl(t.image),
-    imageAlt: t.imageAlt ?? "",
-    tag: t.duration ?? "",
-    detail: cardBlurb(t.fit ?? t.summary ?? "", 160),
-    duration: t.duration ?? "",
-    style: t.style ?? "",
-    difficulty: t.difficulty ?? "",
-    fit: t.fit ?? "",
-  }));
+  const tourCards = tours.map((t) => {
+    const media = tourMedia(t);
+    return {
+      id: t.slug,
+      slug: t.slug,
+      href: t.path,
+      locale: t.locale,
+      title: t.tourName,
+      summary: cardBlurb(t.summary ?? t.overview ?? "", 130),
+      image: media.image,
+      imageAlt: media.imageAlt,
+      tag: t.duration ?? "",
+      detail: cardBlurb(t.fit ?? t.summary ?? "", 160),
+      duration: t.duration ?? "",
+      style: t.style ?? "",
+      difficulty: t.difficulty ?? "",
+      fit: t.fit ?? "",
+    };
+  });
   const placeCards = places.map((p) => ({
     id: p.slug,
     slug: p.slug,

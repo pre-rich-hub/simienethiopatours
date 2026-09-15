@@ -44,7 +44,7 @@ describe("pageMetadata titles", () => {
       path: "/gondar",
     });
     expect(withDefault.openGraph?.images).toEqual(
-      expect.arrayContaining([expect.objectContaining({ url: "/images/imet-gogo.jpg" })]),
+      expect.arrayContaining([expect.objectContaining({ url: expect.stringContaining("Sankaber") })]),
     );
 
     const withoutImage = pageMetadata({

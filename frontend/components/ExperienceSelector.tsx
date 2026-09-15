@@ -7,19 +7,19 @@ import { useTranslations } from "next-intl";
 import { ArrowUpRight } from "@/components/Icon";
 import { gondarExperiences } from "@/lib/experiences";
 import { cardBlurb } from "@/lib/card-blurb";
+import clientPhotos from "@/lib/client-photos.json";
 
 const categoryIds = ["All", "History", "Food", "Coffee", "Photography", "Local life", "Culture", "Gondar + Simien"] as const;
 
-// Replace these paths as the final Gondar photography becomes available.
 const experiencePhotography = {
-  "royal-gondar": { src: "/images/fasil-ghebbi.jpg", alt: "Stone arches and royal architecture at Fasil Ghebbi", caption: "Fasil Ghebbi · Royal Gondar" },
-  "local-gondar": { src: "/images/tevan-founder.jpg", alt: "A local Gondar guide in the northern Ethiopian highlands", caption: "Gondar · Through local eyes" },
-  "food-coffee": { src: "/images/road-to-simien.jpg", alt: "Everyday life around Gondar and the northern highlands", caption: "Food & coffee · Shared locally" },
-  "gondar-photo": { src: "/images/fasil-ghebbi.jpg", alt: "Historic stone details for a Gondar photography walk", caption: "Gondar · Light and architecture" },
-  "history-culture": { src: "/images/fasil-ghebbi.jpg", alt: "Historic royal architecture in Gondar", caption: "Royal city · History and culture" },
-  "market-life": { src: "/images/road-to-simien.jpg", alt: "Daily life connecting Gondar with the surrounding highlands", caption: "Gondar · Market and local life" },
-  "kosoye": { src: "/images/simien-panorama.jpg", alt: "Open highland country beyond Gondar", caption: "Kosoye · Countryside and views" },
-  "gondar-heritage-simien": { src: "/images/imet-gogo.jpg", alt: "The Simien escarpment reached from Gondar", caption: "Gondar to Simien · One journey" },
+  "royal-gondar": { src: clientPhotos.fasil.url, alt: clientPhotos.fasil.alt.en, caption: "Fasil Ghebbi · Royal Gondar" },
+  "local-gondar": { src: clientPhotos.kuskuam.url, alt: clientPhotos.kuskuam.alt.en, caption: "Gondar · Through local eyes" },
+  "food-coffee": { src: clientPhotos["gondar-food-coffee"].url, alt: clientPhotos["gondar-food-coffee"].alt.en, caption: "Food & coffee · Shared locally" },
+  "gondar-photo": { src: clientPhotos.fasil.url, alt: clientPhotos.fasil.alt.en, caption: "Gondar · Light and architecture" },
+  "history-culture": { src: clientPhotos["debre-berhan-selassie"].url, alt: clientPhotos["debre-berhan-selassie"].alt.en, caption: "Royal city · History and culture" },
+  "market-life": { src: clientPhotos["gondar-market-local-life"].url, alt: clientPhotos["gondar-market-local-life"].alt.en, caption: "Gondar · Market and local life" },
+  "kosoye": { src: clientPhotos.kosoye.url, alt: clientPhotos.kosoye.alt.en, caption: "Kosoye · Countryside and views" },
+  "gondar-heritage-simien": { src: clientPhotos["imet-gogo"].url, alt: clientPhotos["imet-gogo"].alt.en, caption: "Gondar to Simien · One journey" },
 } as const;
 
 export function ExperienceSelector() {

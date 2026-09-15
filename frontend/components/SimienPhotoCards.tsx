@@ -17,10 +17,10 @@ const photography: Record<PhotoSet, readonly Photo[]> = {
     { src: clientPhotos["ras-dashen"].url, alt: clientPhotos["ras-dashen"].alt.en, caption: "Ras Dashen · Expedition country" },
   ],
   wildlife: [
-    { src: "/images/gelada-troop.jpg", alt: "A gelada troop feeding in highland grass", caption: "Gelada · Highland grasslands" },
+    { src: clientPhotos["gelada-country"].url, alt: clientPhotos["gelada-country"].alt.en, caption: "Gelada · Highland grasslands" },
     { src: clientPhotos["siha-gorge"].url, alt: clientPhotos["siha-gorge"].alt.en, caption: "Walia ibex · Rocky habitat" },
-    { src: "/images/giant-lobelia.jpg", alt: "Afro-alpine habitat in the Simien highlands", caption: "Ethiopian wolf · Afro-alpine habitat" },
-    { src: "/images/simien-panorama.jpg", alt: "Open cliffs and valleys where highland birds can be observed", caption: "Birdlife · Cliffs and sky" },
+    { src: clientPhotos.chenek.url, alt: clientPhotos.chenek.alt.en, caption: "Afro-alpine habitat · Highland camps" },
+    { src: clientPhotos.simien.url, alt: clientPhotos.simien.alt.en, caption: "Birdlife · Cliffs and sky" },
   ],
   durations: [
     { src: clientPhotos["sankaber"].url, alt: clientPhotos["sankaber"].alt.en, caption: "One day · First impressions" },
@@ -36,7 +36,7 @@ const photography: Record<PhotoSet, readonly Photo[]> = {
     { src: clientPhotos["geech"].url, alt: clientPhotos["geech"].alt.en, caption: "Packing · Mountain nights" },
     { src: clientPhotos["imet-gogo"].url, alt: clientPhotos["imet-gogo"].alt.en, caption: "Difficulty · Terrain and altitude" },
     { src: clientPhotos["chenek"].url, alt: clientPhotos["chenek"].alt.en, caption: "Stays · City, lodge and camp" },
-    { src: "/images/giant-lobelia.jpg", alt: "Highland landscape used to illustrate a personally planned journey", caption: "Your quote · Built around you" },
+    { src: clientPhotos.simien.url, alt: clientPhotos.simien.alt.en, caption: "Your quote · Built around you" },
   ],
 };
 

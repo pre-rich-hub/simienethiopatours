@@ -18,6 +18,7 @@ export { selectLocale };
 // also covers an older local/exported catalogue that still has null or stale media.
 const journeyImageOverrides: Record<string, { url: string; alt: string }> = {
   "southern-ethiopia-journey": {
+    // Cloudinary public_id still has the missing leading "S"; rename on re-upload.
     url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465911/outhern-Ethiopia-Journey.jpg",
     alt: "Southern Ethiopia landscapes and road journey",
   },

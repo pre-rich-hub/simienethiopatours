@@ -40,70 +40,53 @@ export function verifiedSocialLinks(): Array<{ network: SocialNetwork; href: str
     .map(([network, href]) => ({ network, href }));
 }
 
+/** Teaser cards — images always taken from the approved journey package (not legacy /images/). */
 export const journeys = [
   {
     slug: "simien-day-trip",
     href: "/treks/simien-day-trip",
-    duration: "1 Day",
     title: "Simien in a Day",
     style: "First encounter",
-    difficulty: "Easy to Moderate",
-    summary:
-      "A one-day introduction to Simien Mountains National Park from Gondar: short walks, escarpment viewpoints and time in known Gelada habitat.",
-    image: "/images/chenek-camp.jpg",
     fit: "Travellers with limited time",
   },
   {
     slug: "3-day-simien-trek",
     href: "/treks/3-day-simien-trek",
-    duration: "3 Days / 2 Nights",
     title: "3-Day Simien Trek",
     style: "Western corridor",
-    difficulty: "Moderate to Challenging",
-    summary:
-      "A three-day trek as far as Imet Gogo, with overnight camps at Sankaber and Geech. Does not reach Chenek.",
-    image: "/images/geech-camp.jpg",
     fit: "Active first-time trekkers",
   },
   {
     slug: "4-day-simien-classic",
     href: "/treks/4-day-simien-classic",
-    duration: "4 Days / 3 Nights",
     title: "4-Day Simien Classic",
     style: "Signature journey",
-    difficulty: "Moderate to Challenging",
-    summary:
-      "The signature classic corridor: Sankaber, Geech, Imet Gogo and Chenek, with three nights in mountain camps.",
-    image: "/images/imet-gogo.jpg",
     fit: "Travellers who want the classic trail",
   },
   {
     slug: "ras-dashen-challenge",
     href: "/treks/ras-dashen-challenge",
-    duration: "5 Days / 4 Nights",
     title: "Ras Dashen Challenge",
     style: "Summit objective",
-    difficulty: "Challenging",
-    summary:
-      "Classic corridor into Chenek, then Bwahit Pass and Ambiko for a Ras Dashen summit attempt. Success is not guaranteed.",
-    image: "/images/giant-lobelia.jpg",
     fit: "Fit hikers prepared for a mountain challenge",
   },
   {
     slug: "10-day-simien-ras-dashen",
     href: "/treks/10-day-simien-ras-dashen",
-    duration: "10 Days / 9 Nights",
     title: "10-Day Simien Expedition",
     style: "Full crossing",
-    difficulty: "Challenging",
-    summary:
-      "Full Simien crossing: classic corridor, Ras Dashen summit attempt, then the quieter eastern transect toward Adi Arkay.",
-    image: "/images/simien-panorama.jpg",
     fit: "Experienced trekkers who value depth",
   },
 ].map((card) => {
   const approved = getJourneyPackage(card.slug)!;
-  return { ...card, duration: approved.duration, difficulty: approved.difficulty, summary: approved.overview[0] ?? "" };
+  return {
+    ...card,
+    duration: approved.duration,
+    difficulty: approved.difficulty,
+    summary: approved.overview[0] ?? "",
+    image: approved.image,
+    imageAlt: approved.imageAlt,
+  };
 });
 
 export const sourceLinks = {
