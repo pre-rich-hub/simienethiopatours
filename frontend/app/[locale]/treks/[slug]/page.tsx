@@ -57,59 +57,61 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
         parent={{ label: tNav("journeys"), href: "/treks" }}
       />
 
-      {journey.facts.length > 0 && <AtAGlance facts={journey.facts} />}
-      <StorySection id="overview" tag={t("overview")} title={journey.name} paragraphs={journey.overview} />
-
-      {journey.highlights.length > 0 && (
-        <section className="section section--paper" id="highlights">
-          <div className="shell">
-            <SectionIntro tag={t("highlights")} title={t("highlights")} />
-            <div className={`dest-highlights dest-highlights--${journey.highlights.length > 1 ? "2" : "1"}`}>
-              {record.highlights.map((item, index) => (
-                <article className="dest-highlight" key={`${index}-${item.title}`}>
-                  <span className="eyebrow eyebrow--copper">{item.title}</span>
-                  <p>{item.body}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      <section className={`section ${journey.highlights.length ? "" : "section--paper"}`} id="itinerary">
+      <section className="section" id="journey-details">
         <div className="shell">
-          <SectionIntro tag={t("itinerary")} title={t("itinerary")} />
-          {journey.itineraryIntro && <p className="content-note">{journey.itineraryIntro}</p>}
-          <div className="itinerary-split">
-            <div className="itinerary-split__main">
-              {journey.itineraryMode === "days" && journey.days && (
-                <Itinerary days={journey.days} id="day-by-day" />
-              )}
-              {journey.itineraryMode === "segments" && journey.segments && (
-                <ol className="editorial-list dest-things">
-                  {journey.segments.map((segment) => (
-                    <li key={segment.label}>
-                      <strong>{segment.label}</strong> {segment.body}
-                    </li>
-                  ))}
-                </ol>
-              )}
-              {journey.itineraryMode === "outline" && journey.outline && (
-                <div className="prose">
-                  {journey.outline.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
+          <div className="journey-split">
+            <div className="journey-split__main">
+              {journey.facts.length > 0 && <AtAGlance facts={journey.facts} bare />}
+
+              <div id="overview">
+                <StorySection tag={t("overview")} title={journey.name} paragraphs={journey.overview} bare />
+              </div>
+
+              {journey.highlights.length > 0 && (
+                <div id="highlights">
+                  <SectionIntro tag={t("highlights")} title={t("highlights")} />
+                  <div className={`dest-highlights dest-highlights--${journey.highlights.length > 1 ? "2" : "1"}`}>
+                    {record.highlights.map((item, index) => (
+                      <article className="dest-highlight" key={`${index}-${item.title}`}>
+                        <span className="eyebrow eyebrow--copper">{item.title}</span>
+                        <p>{item.body}</p>
+                      </article>
+                    ))}
+                  </div>
                 </div>
               )}
+
+              <div id="itinerary">
+                <SectionIntro tag={t("itinerary")} title={t("itinerary")} />
+                {journey.itineraryIntro && <p className="content-note">{journey.itineraryIntro}</p>}
+                {journey.itineraryMode === "days" && journey.days && (
+                  <Itinerary days={journey.days} id="day-by-day" />
+                )}
+                {journey.itineraryMode === "segments" && journey.segments && (
+                  <ol className="editorial-list dest-things">
+                    {journey.segments.map((segment) => (
+                      <li key={segment.label}>
+                        <strong>{segment.label}</strong> {segment.body}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+                {journey.itineraryMode === "outline" && journey.outline && (
+                  <div className="prose">
+                    {journey.outline.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                )}
+                {journey.itineraryNotes && <div className="content-note">{journey.itineraryNotes.map((note) => <p key={note}>{note}</p>)}</div>}
+              </div>
             </div>
-            <aside className="itinerary-split__aside">
+            <aside className="journey-split__aside">
               <BookingCard duration={journey.duration} difficulty={journey.difficulty} route={journey.route} experience={record.inquiry ?? record.slug} />
             </aside>
           </div>
         </div>
       </section>
-
-      {journey.itineraryNotes && <div className="shell content-note">{journey.itineraryNotes.map((note) => <p key={note}>{note}</p>)}</div>}
 
       <section className="section section--paper" id="included">
         <div className="shell editorial-grid">

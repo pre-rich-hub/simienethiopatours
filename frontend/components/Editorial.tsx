@@ -33,11 +33,12 @@ export function SectionIntro({ tag, title, accent }: { tag: string; title: strin
   return <div className="content-heading"><p className="eyebrow eyebrow--copper">{tag}</p><h2 className="section-title">{title} {accent && <em>{accent}</em>}</h2></div>;
 }
 
-export function StorySection({ id, tag, title, accent, paragraphs, children, paper = false, image }: {
+export function StorySection({ id, tag, title, accent, paragraphs, children, paper = false, image, bare = false }: {
   id?: string; tag: string; title: string; accent?: string; paragraphs: string[]; children?: ReactNode; paper?: boolean;
-  image?: { src: string; alt: string; caption?: string; position?: string };
+  image?: { src: string; alt: string; caption?: string; position?: string }; bare?: boolean;
 }) {
   const content = <><SectionIntro tag={tag} title={title} accent={accent} /><div className="prose">{paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{children}</div></>;
+  if (bare) return content;
   if (image) return <section id={id} className={`section story-section-photo ${paper ? "section--paper" : ""}`}>
     <div className="shell story-section-photo__layout">
       <div className="story-section-photo__image image-frame"><Image src={image.src} alt={image.alt} fill sizes="(max-width: 720px) 100vw, 48vw" style={{ objectPosition: image.position || "center" }} />{image.caption && <span className="image-caption">{image.caption}</span>}</div>
@@ -60,8 +61,8 @@ export async function FeatureGrid({ items, columns = 3 }: { items: readonly Feat
   </div>;
 }
 
-export function AtAGlance({ facts }: { facts: readonly { label: string; value: string }[] }) {
-  return <dl className="trip-facts shell">{facts.map((fact) => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>;
+export function AtAGlance({ facts, bare = false }: { facts: readonly { label: string; value: string }[]; bare?: boolean }) {
+  return <dl className={bare ? "trip-facts" : "trip-facts shell"}>{facts.map((fact) => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>;
 }
 
 export async function BookingCard({ duration, difficulty, route, experience }: {
