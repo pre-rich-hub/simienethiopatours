@@ -38,7 +38,7 @@ export default async function PlanPage({
   const requested = query.experience || query.journey;
   const selected = planningOptions.find((option) => option.id === requested)?.id || "";
   const message = prefillMessage(query);
-  const planMeta = tMeta.raw("plan") as { title: string; description: string };
+  const planMeta = tMeta.raw("plan" as never) as { title: string; description: string };
   return (
     <PageShell>
       <script

@@ -39,6 +39,6 @@ describe("fetchCatalogue resilience", () => {
     const catalogue = await fetchCatalogue(fetcher as unknown as typeof fetch);
     const explore = catalogue.destinations.filter((d) => d.locale === "en" && d.area === "explore");
     expect(explore.length).toBeGreaterThan(0);
-    expect(catalogue.destinations.some((d) => d.area === "northern")).toBe(false);
+    expect(catalogue.destinations.some((d) => (d.area as string) === "northern")).toBe(false);
   });
 });
