@@ -80,8 +80,13 @@ p { text-wrap: pretty; }
 .section { padding: 136px 0; }
 .section--compact { padding: 88px 0; }
 .section--paper { background: var(--paper); }
-.section--paper + .section--paper { padding-top: 0; }
 .section--dark { background: var(--highland-deep); color: var(--ivory); }
+/* Two sections with the same background sitting back-to-back have no color
+   break to justify each carrying its own top+bottom padding — collapse the
+   second one's top padding so they read as one gap, not a blank double gap. */
+.section--paper + .section--paper,
+.section--dark + .section--dark,
+.section:not(.section--paper):not(.section--dark) + .section:not(.section--paper):not(.section--dark) { padding-top: 0; }
 .eyebrow { margin: 0 0 22px; font-size: 11px; font-weight: 600; letter-spacing: .22em; line-height: 1.4; text-transform: uppercase; }
 .eyebrow--copper { color: var(--copper-ink); }
 .section--dark .eyebrow--copper { color: var(--gold); }
@@ -743,10 +748,13 @@ p { text-wrap: pretty; }
 .content-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .content-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .content-card { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; padding: 38px 0; border-top: 1px solid var(--line); }
+.content-card__image { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; margin-bottom: 24px; background: var(--limestone); }
+.content-card__image img { object-fit: cover; transition: transform .6s var(--ease); }
+.content-card__image:hover img { transform: scale(1.035); }
 .content-card > .eyebrow { margin-bottom: 18px; font-size: 9px; }
 .content-card h3 { margin: 0 0 16px; font-size: 34px; line-height: 1.08; letter-spacing: -.025em; }
 .content-card > p { margin: 0 0 26px; color: var(--stone); font-size: 13px; line-height: 1.85; }
-.content-card > .text-link { margin-top: auto; font-size: 9px; }
+.content-card > .text-link { align-self: center; margin-top: auto; font-size: 9px; }
 .content-subtitle { margin: 0 0 22px; font-family: var(--serif); font-size: 34px; font-weight: 500; line-height: 1.12; }
 .content-note { margin: 28px 0 0; color: var(--stone); font-size: 11px; line-height: 1.8; }
 .content-note a, .accommodation-options a { text-decoration: underline; text-underline-offset: 3px; }

@@ -6,7 +6,7 @@ import { ArrowUpRight, ChevronDown } from "@/components/Icon";
 import { site } from "@/lib/site";
 import { buttonVariants } from "@/components/ui/button";
 
-export type Feature = { title: string; body: string; tag?: string; href?: string; linkLabel?: string; id?: string };
+export type Feature = { title: string; body: string; tag?: string; href?: string; linkLabel?: string; id?: string; image?: string; imageAlt?: string };
 export type { TourDay as ItineraryDay } from "@/lib/tour-content";
 import type { TourDay as ItineraryDay } from "@/lib/tour-content";
 
@@ -54,6 +54,9 @@ export async function FeatureGrid({ items, columns = 3 }: { items: readonly Feat
   const t = await getTranslations("cta");
   return <div className={`content-grid content-grid--${columns}`}>
     {items.map((item, index) => <article className="content-card" id={item.id} key={item.title}>
+      {item.image && (item.href
+        ? <Link href={item.href} className="content-card__image"><Image src={item.image} alt={item.imageAlt ?? ""} fill sizes="(max-width: 720px) 100vw, 31vw" /></Link>
+        : <span className="content-card__image"><Image src={item.image} alt={item.imageAlt ?? ""} fill sizes="(max-width: 720px) 100vw, 31vw" /></span>)}
       <span className="eyebrow eyebrow--copper">{item.tag || String(index + 1).padStart(2, "0")}</span>
       <h3>{item.title}</h3><p>{item.body}</p>
       {item.href && <Link href={item.href} className="text-link">{item.linkLabel || t("exploreExperience")}<ArrowUpRight /></Link>}

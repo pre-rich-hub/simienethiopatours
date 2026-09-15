@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { AtAGlance, BookingCard, EditorialHero, Itinerary, SectionIntro, StorySection, PlanningCall, FeatureGrid } from "@/components/Editorial";
-import { getTourForRoute, getTours, getDestinations, requireContentLocale, tourToJourney } from "@/lib/catalogue";
+import { getTourForRoute, getTours, getDestinations, requireContentLocale, tourToJourney, tourMedia } from "@/lib/catalogue";
 import { enrichTourRecord } from "@/lib/tour-enrichment";
 import { catalogueMetadata } from "@/lib/catalogue-seo";
 import { breadcrumbJsonLd, jsonLdScript, localeFromParam, tourJsonLd } from "@/lib/seo";
@@ -38,8 +38,19 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
 
   const allDestinations = await getDestinations(locale);
   const destinations = allDestinations.filter(p => p.tourSlugs.includes(slug));
-  const publishedPaths = new Set([...(await getTours(locale)).map(t => t.path), ...allDestinations.map(p => p.path), "/plan", "/treks", "/gondar", "/simien-mountains", "/explore-ethiopia", "/southern-ethiopia", "/about", "/gallery", "/journal"]);
-  const related = record.related.map(item => ({ ...item, href: item.href && (/^https?:\/\//.test(item.href) || publishedPaths.has(item.href)) ? item.href : undefined }));
+  const allTours = await getTours(locale);
+  const tourMediaBySlug = new Map(allTours.map(row => [row.slug, tourMedia(row)]));
+  const publishedPaths = new Set([...allTours.map(t => t.path), ...allDestinations.map(p => p.path), "/plan", "/treks", "/gondar", "/simien-mountains", "/explore-ethiopia", "/southern-ethiopia", "/about", "/gallery", "/journal"]);
+  const related = record.related.map(item => {
+    const relatedSlug = item.href?.match(/^\/treks\/([a-z0-9-]+)$/)?.[1];
+    const media = relatedSlug ? tourMediaBySlug.get(relatedSlug) : undefined;
+    return {
+      ...item,
+      href: item.href && (/^https?:\/\//.test(item.href) || publishedPaths.has(item.href)) ? item.href : undefined,
+      image: media?.image || undefined,
+      imageAlt: media?.imageAlt,
+    };
+  });
   const lead = [journey.duration, journey.route, journey.difficulty].filter(Boolean).join(" · ");
 
   return (
