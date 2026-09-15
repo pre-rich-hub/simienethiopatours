@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { PageShell } from '@/components/PageShell';
-import { EditorialHero, SectionIntro, StorySection } from '@/components/Editorial';
+import { EditorialHero, SectionIntro, StorySection, PlanningCall } from '@/components/Editorial';
 import { DestinationRoutes } from '@/components/JourneyPhotoCards';
 import { ArrowUpRight } from '@/components/Icon';
 import { getDestinations, getDestinationForRoute, getTours, requireContentLocale, tourToJourney, resolveMediaUrl, type PublicDestination } from '@/lib/catalogue';
@@ -84,7 +84,8 @@ export async function EthiopiaDestination({locale: localeParam,slug,area}: {loca
     <StorySection id="about" tag={d('about')} title={record.name} paragraphs={record.overview}/>
     <section className="section section--paper"><div className="shell"><SectionIntro tag={d('highlights')} title={d('highlights')}/><div className="dest-highlights dest-highlights--2">{record.highlights.map((text,index)=><article className="dest-highlight" key={text}><span className="eyebrow eyebrow--copper">{String(index+1).padStart(2,'0')}</span><p>{text}</p></article>)}</div></div></section>
     <section className="section"><div className="shell editorial-grid"><SectionIntro tag={d('thingsToDo')} title={d('thingsToDo')}/><ul className="editorial-list dest-things">{record.thingsToDo.map(text=><li key={text}>{text}</li>)}</ul></div></section>
-    {routes.length>0?<DestinationRoutes journeys={routes} paper/>:<section className="section section--paper"><div className="shell"><SectionIntro tag={t('plan')} title={t('planTitle')}/><p>{t('planLead',{name:record.name})}</p><Link className="text-link" href="/plan">{t('plan')} <ArrowUpRight/></Link></div></section>}
+    {routes.length>0?<DestinationRoutes journeys={routes} paper/>:<section className="section section--paper"><div className="shell"><SectionIntro tag={t('plan')} title={t('planTitle')}/><p>{t('planLead',{name:record.name})}</p></div></section>}
+    <PlanningCall title={d('callTitle',{name:record.name})} eyebrow={d('callEyebrow')} label={d('callLabel')} />
     <p className="shell dest-back"><Link className="text-link" href={areaPath(area)}>{t('back',{region:t(area)})} <ArrowUpRight/></Link></p>
   </PageShell>;
 }

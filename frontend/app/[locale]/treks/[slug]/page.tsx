@@ -4,8 +4,9 @@ import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
-import { EditorialHero, Itinerary, SectionIntro, StorySection, PlanningCall, FeatureGrid } from "@/components/Editorial";
+import { AtAGlance, EditorialHero, Itinerary, SectionIntro, StorySection, PlanningCall, FeatureGrid } from "@/components/Editorial";
 import { getTourForRoute, getTours, getDestinations, requireContentLocale, tourToJourney } from "@/lib/catalogue";
+import { enrichTourRecord } from "@/lib/tour-enrichment";
 import { catalogueMetadata } from "@/lib/catalogue-seo";
 import { breadcrumbJsonLd, jsonLdScript, localeFromParam, tourJsonLd } from "@/lib/seo";
 const journeyPackagePath = (slug: string) => `/treks/${slug}`;
@@ -24,10 +25,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function JourneyPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale: localeParam, slug } = await params;
   const locale = localeFromParam(localeParam);
-  const record = await getTourForRoute(slug, locale);
-  if (!record) notFound();
-  requireContentLocale(record, locale);
-  const source = tourToJourney(record);
+  const raw = await getTourForRoute(slug, locale);
+  if (!raw) notFound();
+  requireContentLocale(raw, locale);
+  const record = enrichTourRecord(raw);
+  const source = tourToJourney(raw);
   if (!source) notFound();
   const t = await getTranslations("trek");
   const tNav = await getTranslations("nav");
@@ -55,8 +57,7 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
         parent={{ label: tNav("journeys"), href: "/treks" }}
       />
 
-      {journey.fit && <p className="shell content-note">{journey.fit}</p>}
-      {journey.facts.length > 0 && <dl className="shell">{journey.facts.map(f => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>}
+      {journey.facts.length > 0 && <AtAGlance facts={journey.facts} />}
       <StorySection id="overview" tag={t("overview")} title={journey.name} paragraphs={journey.overview} />
 
       {journey.highlights.length > 0 && (
