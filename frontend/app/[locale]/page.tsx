@@ -80,26 +80,6 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="section journey-arc" id="journey">
-          <div className="shell intro-grid">
-            <div><p className="eyebrow eyebrow--copper">{t("arcTag")}</p><h2 className="section-title">{t.rich("arcTitle", em)}</h2></div>
-            <p className="lead">{t("arcLead")}</p>
-          </div>
-          <div className="journey-arc__visual shell">
-            <div className="image-frame journey-arc__main"><Image src="/images/road-to-simien.jpg" alt={t("arcAlt")} fill sizes="(max-width: 720px) 100vw, 65vw" /><span className="image-caption">{t("arcCaption")}</span></div>
-            <div className="journey-arc__aside">
-              <div className="journey-arc__line" aria-hidden="true"><i /><i /><i /><i /></div>
-              <ol>
-                <li><span>01</span>{t("arcGondar")}</li>
-                <li><span>02</span>{t("arcRoad")}</li>
-                <li><span>03</span>{t("arcDebark")}</li>
-                <li><span>04</span>{t("arcEscarpment")}</li>
-              </ol>
-              <p>{t("arcPath")}</p>
-            </div>
-          </div>
-        </section>
-
         <section className="section section--paper discover-section">
           <div className="shell discover-section__heading">
             <div><p className="eyebrow eyebrow--copper">{t("horizonsTag")}</p><h2 className="section-title">{t.rich("horizonsTitle", em)}</h2></div>
