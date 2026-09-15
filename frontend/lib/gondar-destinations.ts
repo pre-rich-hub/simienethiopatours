@@ -130,7 +130,7 @@ export const gondarPlaces: GondarPlace[] = [
       "Combine with other Gondar churches and royal sites"
     ],
     "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392019/bebre-berhan-selassie.jpg",
-    "imageAlt": "Debre Berhan Selassie church and its historic grounds in Gondar"
+    "imageAlt": "Painted religious murals inside Debre Berhan Selassie church in Gondar"
   },
   {
     "slug": "kuskuam",
