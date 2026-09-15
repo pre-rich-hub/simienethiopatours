@@ -50,7 +50,7 @@ export function Gallery({ photographs }: { photographs: readonly Photograph[] })
     </div>
     <div className={`gallery-grid ${category !== categories[0] ? "gallery-grid--filtered" : ""}`}>
       {filtered.map((item, index) => <button type="button" className="gallery-tile" key={item.src} onClick={(event) => { triggerRef.current = event.currentTarget; setSelected(index); }} aria-label={t("view", { title: item.title, location: item.location })}>
-        <Image src={item.src} alt={item.alt} fill priority={index < 4} sizes={category !== categories[0] ? "(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" : index === 7 ? "100vw" : "(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"} />
+        <Image src={item.src} alt={item.alt} fill loading={index < 4 ? "eager" : "lazy"} sizes={category === categories[0] && index === 7 ? "(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 100vw" : `(max-width: 600px) 100vw, (max-width: 1000px) 50vw, ${category === categories[0] && index < 4 ? "25vw" : "33vw"}`} />
         <span className="gallery-tile__shade" />
         <span className="gallery-tile__category">{item.category}</span>
         <span className="gallery-tile__title">{item.title}</span>

@@ -102,7 +102,7 @@ export type PageMetadataInput = {
   locale?: AppLocale;
   /** Open Graph / Twitter title when it should differ from `title`. */
   ogTitle?: string;
-  image?: OgImage;
+  image?: OgImage | null;
   /** Privacy / terms should pass false. Default true. */
   index?: boolean;
   /** Skip the `%s | Brand` template (home document title). */
@@ -124,12 +124,12 @@ export function pageMetadata({
 }: PageMetadataInput): Metadata {
   const canonical = localePath(path, locale);
   const socialTitle = ogTitle ?? title;
-  const ogImage = {
+  const ogImage = image ? {
     url: image.url,
     alt: image.alt,
     width: image.width ?? 1600,
     height: image.height ?? 1200,
-  };
+  } : null;
 
   return {
     title: titleAbsolute ? { absolute: title } : title,
@@ -151,13 +151,13 @@ export function pageMetadata({
       title: socialTitle,
       description,
       url: canonical,
-      images: [ogImage],
+      images: ogImage ? [ogImage] : [],
     },
     twitter: {
-      card: "summary_large_image",
+      card: ogImage ? "summary_large_image" : "summary",
       title: socialTitle,
       description,
-      images: [ogImage.url],
+      images: ogImage ? [ogImage.url] : [],
     },
   };
 }

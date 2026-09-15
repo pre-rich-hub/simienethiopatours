@@ -50,7 +50,7 @@ async function readPublicCatalogue(client: Prisma.TransactionClient) {
       location: v.content.location ?? "", heroTitle: v.content.heroTitle ?? v.content.destinationName,
       heroAccent: v.content.heroAccent ?? "", imageAlt: v.content.imageAlt ?? "",
       tourSlugs: row.tourLinks.map(t => t.tour.slug), sortOrder: row.sortOrder,
-      path: `/${row.area === "simien" ? "simien-mountains" : row.area === "northern" ? "northern-ethiopia" : "gondar"}/${row.slug}`,
+      path: `/${row.area === "simien" ? "simien-mountains" : ["northern", "explore"].includes(row.area) ? "explore-ethiopia" : row.area === "southern" ? "southern-ethiopia" : "gondar"}/${row.slug}`,
       locale: v.locale, availableLocales: versions.map(v => v.locale),
       updatedAt: new Date(Math.max(row.updatedAt.getTime(), v.updatedAt?.getTime() ?? 0)).toISOString(),
     }));

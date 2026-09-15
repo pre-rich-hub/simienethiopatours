@@ -9,13 +9,17 @@ export const publicTourSchema = tourContentSchema.omit({ destinationIds: true })
   path: z.string().startsWith("/treks/"),
 });
 export const publicDestinationSchema = z.object({
-  slug, name: z.string().min(1), area: z.enum(["simien", "gondar", "northern"]), type: z.string(),
+  slug, name: z.string().min(1), area: z.enum(["simien", "gondar", "northern", "explore", "southern"]), type: z.string(),
   location: z.string(), alsoKnownAs: z.array(z.string()), heroTitle: z.string(), heroAccent: z.string(),
   overview: z.array(z.string()), highlights: z.array(z.string()), thingsToDo: z.array(z.string()),
   imageUrl: media, imageAlt: z.string(), sortOrder: z.number(), tourSlugs: z.array(slug),
-  path: z.string().regex(/^\/(simien-mountains|gondar|northern-ethiopia)\//),
+  path: z.string().regex(/^\/(simien-mountains|gondar|northern-ethiopia|explore-ethiopia|southern-ethiopia)\//),
   locale, availableLocales: z.array(locale), updatedAt: stamp,
-});
+}).transform(row => ({
+  ...row,
+  area: row.area === "northern" ? "explore" as const : row.area,
+  path: row.path.replace(/^\/northern-ethiopia\//, "/explore-ethiopia/"),
+}));
 export const publicPostSchema = z.object({
   slug, blogTitle: z.string().min(1), description: z.string().min(1), content: z.string().min(1),
   author: z.string().min(1), imageUrl: media.nullable(), imageAlt: z.string().nullable(),
@@ -45,7 +49,7 @@ export const publicCatalogueSchema = z.object({
     if (post.path !== `/journal/${post.slug}` || (post.imageUrl && !post.imageAlt?.trim())) ctx.addIssue({ code: "custom", message: "Invalid published article" });
   }
   for (const destination of data.destinations) {
-    const areaPath = destination.area === "simien" ? "simien-mountains" : destination.area === "northern" ? "northern-ethiopia" : "gondar";
+    const areaPath = destination.area === "simien" ? "simien-mountains" : destination.area === "explore" ? "explore-ethiopia" : destination.area === "southern" ? "southern-ethiopia" : "gondar";
     if (destination.path !== `/${areaPath}/${destination.slug}` || (destination.imageUrl && !destination.imageAlt.trim())) ctx.addIssue({ code: "custom", message: "Invalid destination path or image" });
     for (const tourSlug of destination.tourSlugs) {
       if (!data.tours.some(t => t.slug === tourSlug)) ctx.addIssue({ code: "custom", message: "Unknown related tour" });

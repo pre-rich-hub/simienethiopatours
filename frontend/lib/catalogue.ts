@@ -13,6 +13,52 @@ export { resolveMediaUrl };
 export type { PublicCatalogue, PublicTour, PublicDestination, PublicPost };
 export { selectLocale };
 
+// Keep approved client assets visible while a CMS catalogue is being refreshed.
+// The backend importer writes these values to the tour records; this fallback
+// also covers an older local/exported catalogue that still has null or stale media.
+const journeyImageOverrides: Record<string, { url: string; alt: string }> = {
+  "southern-ethiopia-journey": {
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465911/outhern-Ethiopia-Journey.jpg",
+    alt: "Southern Ethiopia landscapes and road journey",
+  },
+  "bale-mountains-extension": {
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386863/bale-mountains-national-park.jpg",
+    alt: "Bale Mountains National Park landscape",
+  },
+  "northern-ethiopia-long-way-north": {
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465910/Northern-Ethiopia.jpg",
+    alt: "Northern Ethiopia highland and historic landscapes",
+  },
+  "gheralta-tigray-extension": {
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465909/Gheralta.jpg",
+    alt: "Gheralta sandstone cliffs and rock churches in Tigray",
+  },
+  "ras-dashen-add-on": {
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465918/Ras-Dashen-Add-on.png",
+    alt: "Ras Dashen trekking landscape in the Simien Mountains",
+  },
+  "run-the-simien-7-days": {
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465910/run-simien.jpg",
+    alt: "Trail running in the Simien Mountains",
+  },
+  "timkat-simien": {
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465909/timket.jpg",
+    alt: "Timkat celebration in Gondar",
+  },
+  "timkat-ras-dashen": {
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465909/timket.jpg",
+    alt: "Timkat celebration in Gondar",
+  },
+};
+
+export function tourMedia(tour: Pick<PublicTour, "slug" | "image" | "imageAlt">) {
+  const override = journeyImageOverrides[tour.slug];
+  return {
+    image: resolveMediaUrl(override?.url || tour.image || null),
+    imageAlt: override?.alt || tour.imageAlt || "",
+  };
+}
+
 type CatalogueLoad =
   | { ok: true; data: PublicCatalogue }
   | { ok: false; kind: CatalogueFetchError["kind"]; allowFallback: boolean };
@@ -65,6 +111,7 @@ export async function getPostForRoute(slug: string, locale = "en") {
     ?? catalogue.posts.find(row => row.slug === slug && row.locale === "en") ?? null;
 }
 export function tourToJourney(tour: PublicTour): JourneyPackage & { locale: PublicTour["locale"]; summary: string; fit: string; preparation: string[]; facts: PublicTour["facts"] } {
+  const media = tourMedia(tour);
   return {
     slug: tour.slug, name: tour.tourName, duration: tour.duration ?? "", route: tour.route.join(" → "),
     difficulty: tour.difficulty ?? "", heroTitle: tour.heroTitle ?? tour.tourName, heroAccent: tour.heroAccent ?? "",
@@ -72,7 +119,7 @@ export function tourToJourney(tour: PublicTour): JourneyPackage & { locale: Publ
     highlights: tour.highlights.map(h => h.body), itineraryMode: "days", days: tour.itinerary,
     itineraryIntro: tour.itineraryIntro ?? undefined, itineraryNotes: tour.itineraryNotes,
     included: tour.included, excluded: tour.excluded, includedNote: tour.notice ?? undefined,
-    image: resolveMediaUrl(tour.image), imageAlt: tour.imageAlt ?? "", locale: tour.locale,
+    image: media.image, imageAlt: media.imageAlt, locale: tour.locale,
     summary: tour.summary ?? tour.overview ?? "", fit: tour.fit ?? "", preparation: tour.preparation, facts: tour.facts,
   };
 }

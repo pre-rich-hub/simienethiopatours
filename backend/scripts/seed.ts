@@ -117,7 +117,7 @@ type ApprovedPlace = { slug: string; name: string; location: string; about: stri
 const destinationMap = new Map<string, DestinationSeed>();
 for (const [index, place] of [...simienPlaces, ...gondarPlaces].entries() as Iterable<[number, ApprovedPlace]>) {
   const source = place as ApprovedPlace & { image?: string; imageAlt?: string; heroTitle?: string; heroAccent?: string; alsoKnownAs?: string[] };
-  const area = simienTypes[place.slug] || place.slug === "highland-villages" ? "simien" : ["lalibela", "yemrehanna-kristos", "axum", "yeha", "blue-nile-falls", "lake-tana"].includes(place.slug) ? "northern" : "gondar";
+  const area = simienTypes[place.slug] || place.slug === "highland-villages" ? "simien" : ["lalibela", "yemrehanna-kristos", "axum", "yeha", "blue-nile-falls", "lake-tana"].includes(place.slug) ? "explore" : "gondar";
   const description = [place.location, "About", ...place.about, "Highlights", ...place.highlights, "Things to Do", ...place.thingsToDo].join("\n\n");
   const existing = destinationMap.get(place.slug);
   destinationMap.set(place.slug, {
@@ -310,7 +310,7 @@ async function main(): Promise<void> {
 
   const blogCount = fieldNoteCount + experienceCount;
 
-  // Gallery: 8 editorial photographs, keyed by image URL. All rows keep
+  // Gallery: the client-selected collection, keyed by image URL. All rows keep
   // tourId null — photos are collection-wide, not tour-bound.
   let galleryCount = 0;
   for (const photo of photographs) {

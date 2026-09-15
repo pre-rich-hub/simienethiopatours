@@ -1,0 +1,1016 @@
+[
+  {
+    "slug": "addis-ababa",
+    "destinationName": "Addis Ababa",
+    "area": "explore",
+    "type": "gateway",
+    "location": "Tierras altas de Etiopía central; capital nacional y principal puerta de entrada internacional",
+    "alsoKnownAs": [],
+    "heroTitle": "Addis Ababa",
+    "heroAccent": "",
+    "overview": [
+      "Addis Ababa es el práctico punto de partida y llegada para la mayoría de los viajes a Etiopía organizados a través de Gondar Simien Tours / Simien Ethio Tours. Los viajeros llegan aquí en vuelos internacionales, hacen conexiones por aire nacional o por carretera y, a menudo, regresan para pasar la última noche antes de la salida. La ciudad se encuentra en la meseta y funciona como un centro logístico en lugar del paisaje especializado de la empresa: Gondar sigue siendo el hogar y Simien sigue siendo el producto principal de montaña, pero Addis es donde los viajes comienzan, se conectan y cierran.",
+      "Una estadía corta puede incluir orientación, descanso después de un viaje de larga distancia, visita a museos o mercados cuando los horarios lo permitan, y una cuidadosa coordinación de los vuelos posteriores a Bahir Dar, Lalibela, Axum o las puertas de entrada del sur. El tiempo depende de los horarios y el tráfico de las aerolíneas; Los planes se mantienen flexibles."
+    ],
+    "highlights": [
+      "Centro internacional de llegadas y salidas para itinerarios de Etiopía",
+      "Conexiones de vuelos nacionales hacia Bahir Dar, Lalibela, Axum y rutas del sur",
+      "Capital de las tierras altas con museos, mercados y cultura cafetera cuando el tiempo lo permite",
+      "Base práctica para el descanso de la primera noche y los traslados de la última noche"
+    ],
+    "thingsToDo": [
+      "Recepción en el aeropuerto y traslado al hotel según lo acordado.",
+      "Breve orientación sobre la ciudad o visitas seleccionadas a museos/mercados cuando el horario del vuelo lo permita",
+      "Parada para tomar café y descansar antes de continuar el viaje.",
+      "Coordinación de check-in de vuelos nacionales para trayectos al norte o al sur",
+      "Estancia de última noche y traslado al aeropuerto al final del viaje."
+    ],
+    "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789462243/addis-abebe.jpg",
+    "imageAlt": "Paisaje urbano de las tierras altas de Addis Ababa en Etiopía",
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 1,
+    "tourIds": []
+  },
+  {
+    "slug": "bahir-dar",
+    "destinationName": "Bahir Dar",
+    "area": "explore",
+    "type": "gateway",
+    "location": "Noroeste de Etiopía; costa sur de Lake Tana; Capital de la región de Amhara",
+    "alsoKnownAs": [],
+    "heroTitle": "Bahir Dar",
+    "heroAccent": "",
+    "overview": [
+      "Bahir Dar es una ciudad junto a un lago en la costa sur de Lake Tana y la puerta de entrada natural para visitas al monasterio del lago y excursiones estacionales de Blue Nile Falls. Amplias avenidas, paseos junto al lago y un ritmo diferente al de las calles de las tierras altas de Gondar lo convierten en un destino distinto por derecho propio, no solo una etiqueta bajo Lake Tana.",
+      "En los viajes de Explora Etiopía, Bahir Dar a menudo abre la progresión desde el agua y la cultura monástica hacia la historia real de Gondar y la escarpa Simien. Es adecuado para los viajeros que desean pasar tiempo junto al lago más grande de Etiopía antes de trasladarse tierra adentro. Los horarios de los barcos, el clima en el agua y las condiciones de la carretera hacia las cataratas afectan lo que es práctico en un día determinado."
+    ],
+    "highlights": [
+      "Ciudad junto al lago, puerta de entrada a monasterios e islas Lake Tana",
+      "Contraste del paisaje acuático con la zona montañosa más al norte",
+      "Punto de partida para muchos viajes privados de Explore Etiopía",
+      "Opcional Blue Nile Falls día que la temporada y el acceso lo permitan",
+      "Café local, mercados y paseos a orillas del lago."
+    ],
+    "thingsToDo": [
+      "Instalación después del vuelo nacional desde Addis Ababa",
+      "Paseos a orillas del lago y café local.",
+      "Organizar excursiones en barco a islas seleccionadas o monasterios costeros (las condiciones dependen)",
+      "Visita opcional Blue Nile Falls cuando la temporada y el acceso por carretera lo permitan",
+      "Traslado por carretera panorámica hacia Gondar"
+    ],
+    "imageUrl": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789462339/bahirdar.jpg",
+    "imageAlt": "Bahir Dar en la orilla sur del lago Tana",
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 2,
+    "tourIds": []
+  },
+  {
+    "slug": "lake-tana",
+    "destinationName": "Lake Tana",
+    "area": "explore",
+    "type": "lake",
+    "location": "Noroeste de Etiopía; El lago más grande de Etiopía; UNESCO Contexto de la Reserva de la Biosfera; accedido desde Bahir Dar",
+    "alsoKnownAs": [],
+    "heroTitle": "Lake Tana",
+    "heroAccent": "",
+    "overview": [
+      "Lake Tana cambia el ritmo de un viaje de Explora Etiopía. Desde Bahir Dar, el viaje en barco llega a iglesias y monasterios selectos de islas y costas, donde las tradiciones monásticas ortodoxas etíopes, el arte religioso y la cultura del lago son el foco de atención. El acceso a los sitios individuales depende de las condiciones operativas, las condiciones del agua y los arreglos locales; no todos los monasterios están abiertos ni se puede acceder a ellos en cada visita.",
+      "El lago se encuentra al principio de la progresión norteña: agua y fe antes que reino, montaña, piedra sagrada y antiguo imperio. La interpretación se centra en la práctica religiosa viva y los medios de vida en los lagos, en lugar de una lista fija de islas. Las excursiones en barco están sujetas al clima y a los horarios del operador."
+    ],
+    "highlights": [
+      "Viajes en barco por el lago más grande de Etiopía (depende del clima y las operaciones)",
+      "Monasterios e iglesias seleccionadas en islas y costas donde el acceso lo permite",
+      "Historia monástica ortodoxa etíope, arte religioso y cultura lacustre",
+      "Contraste más tranquilo con los días de trekking en las tierras altas Simien",
+      "Emparejamiento natural con Bahir Dar y viaje hacia Gondar"
+    ],
+    "thingsToDo": [
+      "Excursión guiada en barco desde Bahir Dar a monasterios/iglesias seleccionados",
+      "Interpretación de tradiciones monásticas, manuscritos y arte religioso cuando esté permitido.",
+      "Observación de medios de vida lacustres y paisajes costeros.",
+      "Fotografía con respeto a los sitios religiosos y orientación local.",
+      "Combinar con Bahir Dar hora de la ciudad y opcional Blue Nile Falls"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 3,
+    "tourIds": []
+  },
+  {
+    "slug": "blue-nile-falls",
+    "destinationName": "Blue Nile Falls",
+    "area": "explore",
+    "type": "waterfall",
+    "location": "Cerca del corredor Bahir Dar / Lake Tana; Excursión opcional de medio día o día.",
+    "alsoKnownAs": [],
+    "heroTitle": "Blue Nile Falls",
+    "heroAccent": "",
+    "overview": [
+      "Blue Nile Falls es una excursión opcional desde la zona Bahir Dar. El flujo y la apariencia varían mucho según la estación y las condiciones del agua. Después de las lluvias, las cataratas pueden tener un volumen considerable; en períodos más secos la cascada puede ser modesta. El acceso por carretera y las condiciones locales también afectan la viabilidad de una visita en un día determinado.",
+      "El sitio nunca debe promocionarse como permanentemente espectacular. Cuando las condiciones favorecen una visita, los paseos por el desfiladero y los miradores a lo largo del corredor Blue Nile añaden una nota paisajística diferente a los días centrados en el lago. Cuando las condiciones no lo permiten, es mejor aprovechar el tiempo en el lago o en Bahir Dar, paseando por encima de la lista de verificación."
+    ],
+    "highlights": [
+      "Paisaje estacional de cascadas y desfiladeros en el corredor Blue Nile",
+      "Complemento de medio día para los programas Bahir Dar / Lake Tana cuando las condiciones lo permitan",
+      "Senderos para caminar y miradores (el acceso y la comodidad varían según el clima)",
+      "Clara variación estacional: la apariencia no es fija durante todo el año"
+    ],
+    "thingsToDo": [
+      "Visita guiada desde Bahir Dar cuando la temporada, el acceso por carretera y el horario lo permitan",
+      "Caminatas cortas a miradores y bordes de desfiladeros según lo permitan las condiciones.",
+      "Interpretación local del corredor Blue Nile",
+      "Saltar o acortar la visita honestamente cuando el flujo o el acceso sean deficientes."
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 4,
+    "tourIds": []
+  },
+  {
+    "slug": "lalibela",
+    "destinationName": "Lalibela",
+    "area": "explore",
+    "type": "heritage",
+    "location": "Tierras altas de Lasta, norte de Etiopía; complejos de iglesias excavadas en la roca",
+    "alsoKnownAs": [],
+    "heroTitle": "Lalibela",
+    "heroAccent": "",
+    "overview": [
+      "Lalibela es conocido por sus iglesias excavadas en la roca volcánica, un paisaje sagrado que sigue siendo parte del culto ortodoxo etíope vivo, no solo un circuito patrimonial. En los viajes de Explore Etiopía, representa la etapa de la “piedra sagrada” de la progresión después del lago, el reino y el país montañoso.",
+      "Los programas generalmente permiten más que un pase único y apresurado: introducción a la llegada, un segundo día más profundo que cubre arquitectura, historia religiosa y prácticas de vida, y tiempo para caminatas locales o experiencias circundantes cuando sea práctico. Los horarios de apertura, los periodos festivos y el acceso respetuoso a los servicios tempranos dan forma al día. Se pueden agregar extensiones opcionales como Yemrehanna Kristos cuando el acceso a la carretera y el tiempo lo permitan."
+    ],
+    "highlights": [
+      "Complejos de iglesias excavadas en la roca dentro de un paisaje religioso vivo",
+      "Arquitectura, liturgia y entorno montañés juntos",
+      "Espacio para un segundo día más profundo en lugar de un solo pase de lista de verificación",
+      "Sitios sagrados circundantes opcionales cuando el acceso lo permita.",
+      "Combinación natural con Gondar, Simien y Axum en viajes más largos"
+    ],
+    "thingsToDo": [
+      "Visitas guiadas a iglesias seleccionadas según los horarios de apertura y la planificación local.",
+      "Interpretación de la historia religiosa, la arquitectura y el culto vivo.",
+      "Servicio de observación temprano en la mañana solo cuando corresponda, la bienvenida y el acceso lo permitan.",
+      "Paseos locales y tiempo en la ciudad de las tierras altas.",
+      "Yemrehanna Kristos opcional o extensiones rurales cuando sea práctico"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 5,
+    "tourIds": []
+  },
+  {
+    "slug": "axum",
+    "destinationName": "Axum / Aksum",
+    "area": "explore",
+    "type": "heritage",
+    "location": "Tigray Región, norte de Etiopía; centro del antiguo reino",
+    "alsoKnownAs": [
+      "Aksum"
+    ],
+    "heroTitle": "Axum / Aksum",
+    "heroAccent": "",
+    "overview": [
+      "Axum (Aksum) fue un importante centro de la antigua civilización etíope. Los campos de estelas, las áreas arqueológicas, las tumbas reales, el complejo de Santa María de Sión (donde se puede acceder) y las colecciones de museos dan a los viajeros la sensación de un imperio que unía las tierras altas con los mundos del Mar Rojo y el Nilo. En los viajes de Explora Etiopía, Axum cierra la progresión como “antiguo imperio” después del lago, el reino, la montaña y la piedra sagrada.",
+      "El objetivo es contar la historia de Axum (poder político, comercio, cristianismo primitivo y arqueología) en lugar de limitarse a fotografiar monumentos. La apertura del sitio, el horario del museo y el acceso a recintos específicos pueden cambiar; los planes se adaptan. Se pueden agregar excursiones históricas opcionales como Yeha según la carretera actual y el acceso al sitio."
+    ],
+    "highlights": [
+      "Monumentos del antiguo reino: estelas, tumbas y zonas arqueológicas",
+      "Patrimonio religioso alrededor de Santa María de Sión donde el acceso está disponible",
+      "Contexto de museo e inscripción para la historia de Aksumite",
+      "Capítulo final de viajes privados más largos de Explore Etiopía",
+      "Opcional Yeha u otros sitios históricos cuando el acceso lo permita"
+    ],
+    "thingsToDo": [
+      "Visita histórica guiada a campos de estelas y zonas arqueológicas clave.",
+      "Visitas a museos e interpretación histórica.",
+      "Zona de Santa María de Sión donde el acceso lo permite",
+      "Paseos nocturnos de orientación por la ciudad cuando el tiempo lo permita.",
+      "Excursión opcional Yeha según condiciones actuales"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 6,
+    "tourIds": []
+  },
+  {
+    "slug": "gheralta",
+    "destinationName": "Gheralta y Tigray Iglesias rupestres",
+    "area": "explore",
+    "type": "extension",
+    "location": "Tigray Región, norte de Etiopía; principalmente área del distrito Hawzen; acantilados y mesas de arenisca",
+    "alsoKnownAs": [
+      "Geralta"
+    ],
+    "heroTitle": "Gheralta y Tigray Iglesias rupestres",
+    "heroAccent": "",
+    "overview": [
+      "Las montañas Gheralta (Geralta) se elevan como acantilados de arenisca, mesas de cima plana y formaciones rocosas aisladas, con iglesias y monasterios históricos excavados en la roca ubicados en lugares exigentes. El paisaje se siente distinto tanto de las escarpaduras afroalpinas de Simien como de las iglesias urbanas de las tierras altas de Lalibela. A las iglesias aquí se llega a menudo por accesos empinados; Los sitios exactos visitados dependen del estado físico, el clima y el acceso actual.",
+      "Viajar en esta región depende de las condiciones locales actuales, el acceso por carretera y la seguridad operativa. Los viajes se planifican cuidadosamente y se confirman según sea práctico antes del viaje. Gheralta se ofrece como una extensión opcional de 2 a 3 días para los programas Explore Etiopía cuando las condiciones lo permitan, nunca como una promesa fija."
+    ],
+    "highlights": [
+      "Paisajes de acantilados y mesas de arenisca a diferencia del paisaje de tierras altas Simien",
+      "Iglesias rupestres históricas en entornos elevados y remotos (depende del acceso)",
+      "Gran potencial fotográfico cuando la luz y el acceso cooperan",
+      "Se organizaron guías locales especializadas para los accesos a la iglesia.",
+      "Complemento opcional solo cuando las condiciones hagan que el viaje sea apropiado"
+    ],
+    "thingsToDo": [
+      "Visitas guiadas a iglesias rupestres seleccionadas cuando el acceso y las condiciones lo permitan.",
+      "Caminata paisajística y fotografía entre acantilados y mesas.",
+      "Interpretación local de las tradiciones de la iglesia de las tierras altas Tigray",
+      "Rutas flexibles basadas en caminos confirmados y acceso al sitio",
+      "Combine con Axum o itinerarios privados del norte más amplios cuando sea práctico"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 7,
+    "tourIds": []
+  },
+  {
+    "slug": "danakil-depression",
+    "destinationName": "Depresión de Danakil",
+    "area": "explore",
+    "type": "extension",
+    "location": "Extremo noreste de Etiopía; Afar Región; paisajes desérticos y volcánicos de baja elevación",
+    "alsoKnownAs": [],
+    "heroTitle": "Depresión de Danakil",
+    "heroAccent": "",
+    "overview": [
+      "La depresión de Danakil es uno de los entornos más extremos de Etiopía: calor, salinas, terreno volcánico y horizontes muy abiertos. Es un viaje fundamentalmente diferente al de las frías tierras altas de Gondar y Simien. Para los viajeros que quieran ampliar aún más su Explora Etiopía, Danakil se puede combinar con un itinerario privado más amplio cuando las condiciones, la logística y el acceso lo permitan.",
+      "Este es un viaje especializado. Los arreglos involucran vehículos apropiados, socios locales, sincronización con las reglas de acceso y calor, e información honesta sobre la demanda física y la lejanía. Nada sobre el acceso a Danakil o las experiencias volcánicas/de sal específicas deben considerarse garantizados de antemano."
+    ],
+    "highlights": [
+      "Desierto de tierras bajas extremas y paisajes volcánicos",
+      "Fotografía de salares y horizontes cuando las condiciones lo permitan.",
+      "Fuerte contraste con los programas Simien y Gondar de las tierras altas",
+      "Disponible solo como una extensión cuidadosamente planificada o un viaje privado combinado",
+      "Logística y acceso confirmados cerca de fechas de viaje"
+    ],
+    "thingsToDo": [
+      "Diseño de itinerario privado con socios especialistas cuando las condiciones lo permitan.",
+      "Viaje guiado a zonas accesibles seleccionadas según las normas vigentes.",
+      "Fotografía de paisajes con expectativas realistas sobre el calor y el acceso.",
+      "Combinar con programas de las tierras altas del norte solo cuando toda la cadena logística sea sólida.",
+      "Sesión informativa previa al viaje sobre demanda física, embalaje y planificación de contingencias."
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 8,
+    "tourIds": []
+  },
+  {
+    "slug": "kidis-yared",
+    "destinationName": "Kidis Yared",
+    "area": "explore",
+    "type": "extension",
+    "location": "Simien Mountains tierras altas; contexto de alto nivel junto con Ras Dashen y Bwahit",
+    "alsoKnownAs": [],
+    "heroTitle": "Kidis Yared",
+    "heroAccent": "",
+    "overview": [
+      "Kidis Yared es un pico alto en el macizo Simien más amplio, discutido junto con Ras Dashen y Bwahit en caminatas serias orientadas a cumbres. Para la mayoría de los visitantes del sitio web, es un pico de referencia (parte de la comprensión de la escala del macizo Simien) en lugar de un destino estándar para una excursión de un día.",
+      "Los accesos a las cumbres son exigentes, la altitud es elevada y el éxito nunca está garantizado. Kidis Yared aparece en una copia de contexto pico junto a Ras Dashen y Bwahit para los viajeros que consideran complementos extendidos orientados a Simien o Ras Dashen, no como una parada de punto de vista casual."
+    ],
+    "highlights": [
+      "Pico alto en el macizo Simien junto a Ras Dashen y Bwahit",
+      "Contexto para conversaciones serias sobre trekking a gran altitud",
+      "Terreno afroalpino y elevación extrema.",
+      "Relevante principalmente para programas ampliados orientados a cumbres."
+    ],
+    "thingsToDo": [
+      "Discutir como contexto pico durante la planificación de la caminata Ras Dashen/larga Simien",
+      "Incluir sólo en itinerarios especializados de alta montaña donde la ruta y las condiciones lo permitan",
+      "Aclimatación, evaluación del estado físico y sesión informativa honesta sobre el éxito de la cumbre",
+      "No lo trate como una inclusión garantizada o estándar en estancias cortas Simien"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 9,
+    "tourIds": []
+  },
+  {
+    "slug": "arba-minch",
+    "destinationName": "Arba Minch",
+    "area": "southern",
+    "type": "gateway",
+    "location": "el sur de Etiopía; Valle del Rift; puerta de entrada al lago Chamo y las montañas Guge / tierras altas Dorze",
+    "alsoKnownAs": [],
+    "heroTitle": "Arba Minch",
+    "heroAccent": "",
+    "overview": [
+      "Arba Minch (“cuarenta manantiales”) es la principal puerta de entrada sur a The Southern Ethiopia Journey. Los viajeros llegan desde Addis Ababa a través de paisajes cambiantes del Valle del Rift y utilizan la ciudad como base para pasar el tiempo en barco por el lago Chamo y ascender hacia Dorze en las montañas Guge. Dos noches aquí permiten un mejor ritmo: vida silvestre y agua un día, cultura de las tierras altas al día siguiente, en lugar de comprimir todo en una sola noche.",
+      "La puesta de sol opcional con vista al paisaje de los lagos gemelos agrega un cierre tranquilo a la llegada o a los días de actividad cuando el clima coopera. Arba Minch es logística y paisaje: el lugar donde la historia de la carretera del sur comienza a tomar forma."
+    ],
+    "highlights": [
+      "Puerta sur después de la carretera del Valle del Rift desde Addis Ababa",
+      "Base para Lago Chamo y Dorze / Guge Días de Montaña",
+      "Entorno de dos lagos y miradores opcionales para el atardecer.",
+      "Paseo de dos noches en el característico viaje hacia el sur",
+      "Puente entre los viajes del Valle del Rift y las direcciones Konso / Omo"
+    ],
+    "thingsToDo": [
+      "Llegar desde Addis; descanso y orientación",
+      "Excursión en barco al lago Chamo cuando el clima y las operaciones lo permitan",
+      "Excursión de un día a las montañas Guge hacia Dorze",
+      "Miradores del lago al atardecer cuando las condiciones lo permiten.",
+      "Continuar por carretera hacia Konso"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 10,
+    "tourIds": []
+  },
+  {
+    "slug": "lake-chamo",
+    "destinationName": "Lago Chamo",
+    "area": "southern",
+    "type": "lake",
+    "location": "Valle del Rift Sur; al lado de Arba Minch",
+    "alsoKnownAs": [],
+    "heroTitle": "Lago Chamo",
+    "heroAccent": "",
+    "overview": [
+      "El lago Chamo es la mitad de vida silvestre y agua de una estadía Arba Minch. Las primeras excursiones en barco (sujetas al clima y las condiciones operativas) buscan cocodrilos del Nilo, hipopótamos, aves acuáticas, águilas pescadoras y otros animales salvajes del lago. Los avistamientos nunca están garantizados; la vida silvestre no actúa para los visitantes.",
+      "Junto con una visita por la tarde o en un día separado hacia Dorze, el lago Chamo evita que el viaje hacia el sur se convierta en solo una secuencia de paradas comunitarias. El paisaje y la vida silvestre se combinan con la cultura viva de las tierras altas: una combinación deliberada en lugar de un día temático único."
+    ],
+    "highlights": [
+      "Tiempo en barco en un importante lago del sur del Valle del Rift",
+      "Hábitat conocido de cocodrilos, hipopótamos y aves acuáticas (avistamientos no garantizados)",
+      "Enfoque matutino en la vida silvestre que equilibra los días culturales posteriores en el viaje.",
+      "Fotografía de agua, luz y costa cuando las condiciones cooperan."
+    ],
+    "thingsToDo": [
+      "Excursión en barco temprano desde Arba Minch cuando el clima y los operadores lo permitan",
+      "Observación de vida silvestre con expectativas realistas.",
+      "Fotografía de aves acuáticas y paisajes.",
+      "Regrese para almorzar antes de la hora de las montañas Dorze / Guge"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 11,
+    "tourIds": []
+  },
+  {
+    "slug": "dorze-guge-mountains",
+    "destinationName": "Dorze / Guge Montañas",
+    "area": "southern",
+    "type": "rural",
+    "location": "Tierras altas por encima de Arba Minch; Guge Montañas, sur de Etiopía",
+    "alsoKnownAs": [
+      "Dorze",
+      "Guge Mountains"
+    ],
+    "heroTitle": "Dorze / Guge Montañas",
+    "heroAccent": "",
+    "overview": [
+      "El camino de Arba Minch a las montañas Guge sube rápidamente; paisaje y cambio climático a poca distancia en coche. Las comunidades Dorze son conocidas por su distintiva arquitectura de bambú, tejido, agricultura de las tierras altas y tradiciones alimentarias adaptadas a la elevación. Las visitas se centran en cómo la gente vive y da forma a este entorno de las tierras altas (arquitectura, artesanía, agricultura y vida cotidiana) con experiencias gastronómicas preparadas localmente cuando sea apropiado y organizado.",
+      "Este no es un “espectáculo de pueblo” independiente. La interpretación se queda con el sustento y el paisaje. La fotografía de personas requiere pedir permiso."
+    ],
+    "highlights": [
+      "Ascenso espectacular desde los lagos Rift hasta el terreno montañoso Guge",
+      "Arquitectura tradicional, tejido y agricultura de montaña.",
+      "Experiencias gastronómicas locales cuando se organicen adecuadamente.",
+      "Enfoque en cultura viva combinado con tiempo de vida silvestre en el lago Chamo",
+      "Claro contraste de paisajes en un solo día en el circuito sur"
+    ],
+    "thingsToDo": [
+      "Visita guiada al paisaje cultural Dorze con interpretación local",
+      "Aprenda sobre arquitectura, tejido, agricultura y adaptación a las tierras altas.",
+      "Experiencia de comida preparada localmente cuando corresponda.",
+      "Fotografía respetuosa con consentimiento.",
+      "Regrese a Arba Minch para pasar la noche"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 12,
+    "tourIds": []
+  },
+  {
+    "slug": "konso",
+    "destinationName": "Konso Paisaje Cultural",
+    "area": "southern",
+    "type": "heritage",
+    "location": "el sur de Etiopía; Área Konso entre los corredores Arba Minch y Jinka",
+    "alsoKnownAs": [],
+    "heroTitle": "Konso Paisaje Cultural",
+    "heroAccent": "",
+    "overview": [
+      "Konso es un paisaje cultural incluido en la lista UNESCO. La agricultura en terrazas, los muros de piedra, los asentamientos tradicionales y los sistemas agrícolas muestran cómo las comunidades han dado forma a las tierras escarpadas a lo largo de generaciones. La visita debe explicar la historia del paisaje, no reducir la parada a fotografiar casas.",
+      "En The Southern Ethiopia Journey, Konso se encuentra entre los días de Rift/tierras altas y el movimiento hacia Jinka y las tierras bajas de Omo. Pasar la noche en el área Konso, siempre que sea posible en un entorno que permita a los huéspedes experimentar el paisaje circundante en lugar de solo una habitación de la ciudad, profundiza la parada. Konso es el paisaje como cultura."
+    ],
+    "highlights": [
+      "UNESCO paisaje cultural de terrazas, muros de piedra y asentamientos",
+      "Sistemas agrícolas generacionales y adaptación del paisaje.",
+      "Enfoque de la narración: cómo la gente dio forma a la tierra",
+      "Puente entre las tierras altas Arba Minch y los accesos Omo",
+      "Preferencia de alojamiento al atardecer y paisaje cuando sea práctico."
+    ],
+    "thingsToDo": [
+      "Exploración guiada de agricultura en terrazas y asentamientos tradicionales.",
+      "Interpretación de sistemas agrícolas, trabajos en piedra e historia cultural.",
+      "Fotografía de paisaje con respeto a los residentes y normas de consentimiento.",
+      "Alojamiento en el área Konso cuando el ritmo del itinerario lo permita",
+      "Continúe hacia el sur hacia Jinka"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 13,
+    "tourIds": []
+  },
+  {
+    "slug": "jinka",
+    "destinationName": "Jinka",
+    "area": "southern",
+    "type": "gateway",
+    "location": "el sur de Etiopía; ciudad de entrada hacia el Parque Nacional Mago y el Omo Sur",
+    "alsoKnownAs": [],
+    "heroTitle": "Jinka",
+    "heroAccent": "",
+    "overview": [
+      "Jinka es la base práctica para ingresar al área Mago / Mursi cuando las condiciones de la carretera y el parque lo permiten, y para el contexto cultural antes de un viaje más profundo Omo. Una visita al Centro de Investigación Omo del Sur o al museo local (cuando esté abierto y sea apropiado) ayuda a los viajeros a comprender los medios de vida, la historia y los cambios antes de las visitas a la comunidad, lo que reduce el riesgo de tratar a las personas como una lista de verificación fotográfica.",
+      "Dos noches en Jinka en el viaje característico respaldan un día Mago completo sin forzar un impulso inmediato a Turmi. Los mercados a lo largo del camino sólo podrán visitarse cuando estén realmente en funcionamiento; se presentan como mercados reales, no como espectáculos turísticos escenificados."
+    ],
+    "highlights": [
+      "Puerta de entrada para excursiones de un día al Parque Nacional Mago/área Mursi (condiciones dependientes)",
+      "Sur Omo Contexto del Centro de Investigación/museo cuando está abierto",
+      "Base de dos noches para un mejor ritmo antes de Turmi",
+      "El mercado se detiene sólo cuando opera localmente",
+      "Preparación cultural antes de los días Omo de tierras bajas"
+    ],
+    "thingsToDo": [
+      "Llega desde Konso con posible parada en el mercado si está en funcionamiento",
+      "Visita al museo/centro de investigación para el contexto cultural.",
+      "Salida anticipada hacia la zona Mago / Mursi cuando las condiciones lo permitan",
+      "Café por la tarde o experiencia comunitaria seleccionada si está disponible",
+      "Continúe hacia Key Afer y Turmi"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 14,
+    "tourIds": []
+  },
+  {
+    "slug": "mago-national-park",
+    "destinationName": "Mago Parque Nacional",
+    "area": "southern",
+    "type": "park",
+    "location": "el sur de Etiopía; se accede desde Jinka; accesos a parques y tierras bajas hacia el área Mursi",
+    "alsoKnownAs": [],
+    "heroTitle": "Mago Parque Nacional",
+    "heroAccent": "",
+    "overview": [
+      "El Parque Nacional Mago forma parte del acceso al área Mursi desde Jinka. La entrada y el viaje están sujetos a las condiciones actuales de la carretera y del parque. El paisaje del parque y el contexto de la vida silvestre son importantes, pero el énfasis del viaje característico en este día es la comprensión cultural en las áreas comunitarias vecinas (medios de vida, ganado, agricultura, medio ambiente y cambio), no una promesa de animales específicos o actuaciones de la aldea.",
+      "Las tarifas del parque, los arreglos locales o de exploración y los requisitos de los vehículos siguen las regulaciones vigentes. El acceso puede cambiar; Los itinerarios se adaptan."
+    ],
+    "highlights": [
+      "Paisaje protegido en el corredor Jinka–Mursi",
+      "Entrada sujeta a condiciones de carretera, parque y temporada.",
+      "La vida silvestre es posible pero nunca garantizada.",
+      "Combinado con visitas comunitarias respetuosas cuando se organizan localmente.",
+      "Día completo ida y vuelta desde Jinka por la ruta emblemática"
+    ],
+    "thingsToDo": [
+      "Salida anticipada desde Jinka cuando las condiciones lo permitan",
+      "Trámites de ingreso al parque y recorrido guiado por sectores accesibles",
+      "Observación de vida silvestre sin garantías de avistamiento.",
+      "Continuar con las visitas comunitarias programadas en el área Mursi cuando sea apropiado",
+      "Regresar a Jinka el mismo día"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 15,
+    "tourIds": []
+  },
+  {
+    "slug": "mursi-area",
+    "destinationName": "Mursi Área",
+    "area": "southern",
+    "type": "rural",
+    "location": "el sur de Etiopía; comunidades dentro y alrededor del corredor Mago desde Jinka",
+    "alsoKnownAs": [],
+    "heroTitle": "Mursi Área",
+    "heroAccent": "",
+    "overview": [
+      "Las visitas en el área Mursi, cuando son apropiadas y organizadas localmente, se centran en la comprensión cultural: medios de vida, ganado, agricultura, tradiciones sociales, medio ambiente, historia y cambio. Los guías no deben reducir la comunidad a una fotografía. Si la fotografía es apropiada, los invitados deben pedir permiso.",
+      "Nunca se prometen ceremonias culturales particulares. Las experiencias particulares de un pueblo nunca están garantizadas. La vida local no es una actuación. El tiempo en Jinka después se utiliza para reducir la velocidad (café o una experiencia comunitaria seleccionada, si está disponible) en lugar de apresurarse a la siguiente etiqueta en un mapa."
+    ],
+    "highlights": [
+      "Visitas a la comunidad centradas en los medios de vida y el medio ambiente, no en el espectáculo",
+      "Sólo fotografías basadas en el consentimiento",
+      "Contexto del museo/centro de investigación Jinka de antemano, siempre que sea posible",
+      "Arreglos flexibles según las condiciones locales.",
+      "Rechazo explícito del turismo organizado de “lista de control tribal”"
+    ],
+    "thingsToDo": [
+      "Visita comunitaria organizada localmente con orientación local especializada cuando sea necesario",
+      "Conversación e interpretación en torno a la ganadería, la agricultura, la vida social y el cambio.",
+      "Pide permiso antes de cualquier fotografía de personas.",
+      "Volver a Jinka; tarde a un ritmo más lento",
+      "Nunca esperes ni exijas una ceremonia"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 16,
+    "tourIds": []
+  },
+  {
+    "slug": "key-afer",
+    "destinationName": "Key Afer",
+    "area": "southern",
+    "type": "gateway",
+    "location": "el sur de Etiopía; en la carretera entre Jinka y Turmi",
+    "alsoKnownAs": [],
+    "heroTitle": "Key Afer",
+    "heroAccent": "",
+    "overview": [
+      "Key Afer es conocido por un mercado local que opera en días específicos. En The Southern Ethiopia Journey es una posible parada cuando el mercado está en marcha (confirmada antes del viaje, no supuesta). Cuando está abierto, se presenta como un mercado en funcionamiento donde la gente comercia con ganado, bienes y productos, no como un evento turístico escenificado.",
+      "Si la visita no coincide con un día de mercado, la parada se acorta o se salta para continuar por paisajes cambiantes Omo hacia Turmi. La flexibilidad es parte de un viaje honesto al sur."
+    ],
+    "highlights": [
+      "Mercado local al operar (día confirmado con anticipación)",
+      "Actividad comercial real en lugar de un espectáculo turístico",
+      "Parada de transición paisajística en la carretera Jinka–Turmi",
+      "Dependiente del tiempo; nunca garantizado como punto culminante fijo"
+    ],
+    "thingsToDo": [
+      "Deténgase en el mercado Key Afer solo cuando esté en funcionamiento",
+      "Observar y comprar respetuosamente; pregunta antes de fotografiar personas",
+      "Continúe a través de paisajes Omo hasta Turmi",
+      "Ajustar el día si el momento del mercado no se alinea"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 17,
+    "tourIds": []
+  },
+  {
+    "slug": "turmi",
+    "destinationName": "Turmi",
+    "area": "southern",
+    "type": "gateway",
+    "location": "el sur de Etiopía; Sur Omo; base para las direcciones Hamer, Karo y Omorate",
+    "alsoKnownAs": [],
+    "heroTitle": "Turmi",
+    "heroAccent": "",
+    "overview": [
+      "Turmi es la principal base nocturna para la sección de tierras bajas Omo del viaje hacia el sur. Varias noches aquí respaldan días culturales más lentos, Karo y Omo tiempo en el río, y la excursión Omorate / Dassanech sin cambios constantes de hotel. La llegada suele seguir la carretera Key Afer; Al final de la tarde puede incluir una visita a la comunidad Hamer cercana cuando sea apropiado y organizado localmente.",
+      "La ciudad es práctica (alojamiento, coordinación, descanso nocturno) mientras que los paisajes pastorales y las comunidades circundantes son la razón para quedarse. Desde Turmi, el camino continúa hasta el río y baja por Omo, luego finalmente gira hacia el norte nuevamente."
+    ],
+    "highlights": [
+      "Base Omo de varias noches para un mejor ritmo",
+      "Centro para los programas diurnos Hamer, Karo, Omo River y Omorate",
+      "Entorno pastoral de tierras bajas distinto de las terrazas Konso y las tierras altas Dorze",
+      "Luz del atardecer en paisajes abiertos Omo cuando el clima lo permite"
+    ],
+    "thingsToDo": [
+      "Regístrese y recupérese del viaje por carretera",
+      "Visita a la comunidad al final de la tarde, cuando sea apropiado y organizado.",
+      "Úselo como base para el día cultural Hamer completo, el día Karo/Omo del río y el día Omorate",
+      "Comience el regreso hacia el norte por la ruta Konso / Yirgalem"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 18,
+    "tourIds": []
+  },
+  {
+    "slug": "hamer-communities",
+    "destinationName": "Hamer Comunidades / Paisaje Cultural",
+    "area": "southern",
+    "type": "rural",
+    "location": "el sur de Etiopía; Paisajes pastorales alrededor de Turmi y áreas Hamer más amplias.",
+    "alsoKnownAs": [],
+    "heroTitle": "Hamer Comunidades / Paisaje Cultural",
+    "heroAccent": "",
+    "overview": [
+      "Hamer el tiempo comunitario en el viaje característico es deliberadamente más lento: una visita centrada en la vida pastoral, la agricultura, la vida familiar, la artesanía, las tradiciones de vestimenta, el ganado, la comida local y la música o danza solo cuando ocurren de forma natural y se organizan de manera adecuada. Si se lleva a cabo una ceremonia cultural genuina y los invitados son bienvenidos, es posible que se pueda asistir; las ceremonias no están garantizadas y nunca se organizan para turistas.",
+      "Las personas no son atracciones. La conversación, el consentimiento y la interpretación local importan más que la recopilación de imágenes. El tiempo de la tarde se podrá utilizar para fotografía (con permiso), descanso o caminata local, con atardecer en el paisaje Omo cuando las condiciones lo permitan."
+    ],
+    "highlights": [
+      "Un día cultural más lento en lugar de otro viaje largo",
+      "Interpretación de los medios de vida pastorales, la artesanía y la vida cotidiana.",
+      "Música/baile solo cuando sea natural y apropiadamente arreglado.",
+      "La asistencia a la ceremonia solo si es genuina, bienvenida y posible; nunca se promete",
+      "Fotografía basada en el consentimiento y ritmo respetuoso"
+    ],
+    "thingsToDo": [
+      "Visita a la comunidad Hamer organizada localmente desde Turmi",
+      "Aprenda sobre ganadería, agricultura, artesanía, alimentación y vida familiar.",
+      "Asista a una ceremonia solo si realmente se lleva a cabo y los invitados son bienvenidos.",
+      "Descanso por la tarde, fotografía consentida o caminata local.",
+      "Hora del atardecer en el paisaje circundante cuando sea práctico."
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 19,
+    "tourIds": []
+  },
+  {
+    "slug": "karo",
+    "destinationName": "Karo",
+    "area": "southern",
+    "type": "rural",
+    "location": "el sur de Etiopía; Omo Corredor fluvial desde la zona Turmi",
+    "alsoKnownAs": [],
+    "heroTitle": "Karo",
+    "heroAccent": "",
+    "overview": [
+      "Las visitas comunitarias Karo, cuando sean apropiadas y organizadas localmente, exploran la vida fluvial, los medios de vida, la agricultura, el ganado, el arte, las tradiciones de decoración corporal y la adaptación ambiental a lo largo del Omo. El día generalmente combina viajes a través de paisajes cambiantes con tiempo comunitario y miradores con vista al río Omo donde el acceso lo permita.",
+      "Este suele ser uno de los días más intensos para la fotografía en el viaje hacia el sur (luz, bancos de ríos y terreno abierto), pero la fotografía de personas aún requiere permiso. El Omo se trata como un río que ha dado forma al movimiento y el sustento durante generaciones, no simplemente como un telón de fondo."
+    ],
+    "highlights": [
+      "Visitas a la comunidad centradas en los medios de vida y la adaptación del río.",
+      "Omo Miradores fluviales donde el acceso lo permita",
+      "Fuerte potencial de fotografía de paisajes y cultura (se requiere consentimiento de las personas)",
+      "Estructura de excursión de un día desde Turmi con regreso durante la noche",
+      "Enlace de la historia: el río como parte de la vida regional, no solo una línea del mapa"
+    ],
+    "thingsToDo": [
+      "Salida temprana desde Turmi hacia la zona Karo",
+      "Visita comunitaria organizada localmente con interpretación.",
+      "Continuar hasta Omo Miradores del río cuando el acceso lo permita",
+      "Fotografía con consentimiento; énfasis en el paisaje y el río",
+      "Volver a Turmi"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 20,
+    "tourIds": []
+  },
+  {
+    "slug": "omo-river",
+    "destinationName": "Omo Río",
+    "area": "southern",
+    "type": "corridor",
+    "location": "el sur de Etiopía; corredor que une las comunidades Karo, Omorate y las comunidades Omo del Sur en general",
+    "alsoKnownAs": [],
+    "heroTitle": "Omo Río",
+    "heroAccent": "",
+    "overview": [
+      "El río Omo ha dado forma a los asentamientos, los movimientos, la agricultura y la vida pastoral en todo el sur de Etiopía durante generaciones. En el viaje característico, aparece como un paisaje de mirador (desde los accesos al área de Karo) y como una zona de cruce cerca de Omorate donde es posible que se requiera y esté en funcionamiento un barco o transporte local.",
+      "Comprender el río (niveles estacionales, acceso y cómo las comunidades viven con él) es más importante que tratarlo como un extra escénico. Los niveles de los ríos y las operaciones de cruce afectan lo que es posible; Los planes se mantienen flexibles."
+    ],
+    "highlights": [
+      "Definición del paisaje cultural y ecológico del curso de agua del Sur Omo",
+      "Miradores desde Karo-área de acceso donde el acceso lo permite",
+      "Logística de cruce cerca de Omorate cuando sea necesario y operativa",
+      "Variación estacional del nivel y acceso",
+      "Centro narrativo de los últimos días del viaje austral."
+    ],
+    "thingsToDo": [
+      "Visitar miradores con vistas al río cuando el acceso lo permita.",
+      "Utilice barco/transporte local para cruzar cuando sea necesario y esté operativo.",
+      "Interprete los medios de vida del río con guías locales.",
+      "Ajustar los planes cuando los niveles u operaciones cambien",
+      "Fotografiar paisajes con respeto; pregunta antes de fotografiar personas"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 21,
+    "tourIds": []
+  },
+  {
+    "slug": "omorate",
+    "destinationName": "Omorate",
+    "area": "southern",
+    "type": "gateway",
+    "location": "el sur de Etiopía; baje Omo hacia el área Dassanech",
+    "alsoKnownAs": [],
+    "heroTitle": "Omorate",
+    "heroAccent": "",
+    "overview": [
+      "Omorate es la solución de entrada para visitas de menor Omo hacia las comunidades Dassanech. Una salida temprana de Turmi, la aproximación al río y el cruce en barco o transporte local (cuando sea necesario y esté en funcionamiento) conducen a visitas comunitarias organizadas localmente centradas en el entorno fluvial, el pastoreo, la pesca y la agricultura, cuando corresponda, la artesanía, los patrones de asentamiento y el cambio de los medios de vida.",
+      "El regreso es hacia Turmi u otra región Omo durante la noche según el plan final. Como en el resto del sur, las ceremonias y los encuentros específicos no están garantizados."
+    ],
+    "highlights": [
+      "Puerta de enlace inferior Omo para visitas al área Dassanech",
+      "Logística de cruce de ríos cuando sea necesario y en funcionamiento.",
+      "Interpretación de los medios de vida pastorales y ribereños.",
+      "Estructura de día completo desde la base Turmi",
+      "Acceso dependiente de las condiciones"
+    ],
+    "thingsToDo": [
+      "Temprano viaje por carretera desde Turmi a Omorate",
+      "Cruce en barco/transporte local donde sea necesario y esté disponible.",
+      "Visita a la comunidad Dassanech organizada localmente",
+      "Regreso hacia la región Turmi / Omo durante la noche",
+      "Respuesta flexible a las condiciones del río y de la carretera"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 22,
+    "tourIds": []
+  },
+  {
+    "slug": "dassanech",
+    "destinationName": "Dassanech",
+    "area": "southern",
+    "type": "rural",
+    "location": "el sur de Etiopía; comunidades inferiores Omo a las que se accede a través de Omorate",
+    "alsoKnownAs": [],
+    "heroTitle": "Dassanech",
+    "heroAccent": "",
+    "overview": [
+      "Las visitas a la comunidad Dassanech, a través de acuerdos locales, se centran en la vida en torno a la parte baja Omo: medio ambiente fluvial, pastoreo, pesca y agricultura cuando corresponda, artesanía, patrones de asentamiento y cambios en los medios de vida. El encuadre coincide con el resto del producto sureño (comprender cómo se conectan el paisaje y los medios de vida), no con una lista fotográfica de etiquetas étnicas.",
+      "Los invitados piden permiso antes de fotografiar personas. Cuando sea necesario, se utilizan guías especializados locales. El acceso depende de la carretera, el río y las condiciones locales."
+    ],
+    "highlights": [
+      "Inferior Omo vida comunitaria y adaptación fluvial",
+      "Medios de vida pastoriles, pesqueros y agrícolas, cuando corresponda",
+      "Interpretación de patrones de artesanía y asentamiento.",
+      "Organizado únicamente a través de una coordinación local adecuada",
+      "Ninguna ceremonia o encuentro garantiza"
+    ],
+    "thingsToDo": [
+      "Visita organizada localmente con interpretación cultural.",
+      "Aprenda sobre los medios de vida y el cambio ribereños y pastorales.",
+      "Fotografía basada en el consentimiento",
+      "Regreso por Omorate hacia Turmi",
+      "Trate el día como intercambio y aprendizaje, no como espectáculo."
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 23,
+    "tourIds": []
+  },
+  {
+    "slug": "yirgalem",
+    "destinationName": "Yirgalem",
+    "area": "southern",
+    "type": "gateway",
+    "location": "tierras altas del sur de Etiopía; área Sidama; en rutas de regreso hacia el norte desde Omo hacia el Valle del Rift / Addis",
+    "alsoKnownAs": [],
+    "heroTitle": "Yirgalem",
+    "heroAccent": "",
+    "overview": [
+      "Yirgalem aparece en el regreso de The Southern Ethiopia Journey hacia el norte como una parada seleccionada en las tierras altas: un descanso deliberado de la logística de “conducir todo el día”. Dependiendo de las condiciones de la carretera y de la ruta final, la noche puede ser en Yirgalem o en otra ubicación elegida del Valle del Rift. El área une los días de tierras bajas Omo con la región cafetera y los lagos Rift.",
+      "Las posibles experiencias de café dependen de la ruta final y los arreglos locales. Yirgalem ayuda a los viajeros a ver que el sur de Etiopía no es solo una cultura Omo: la agricultura de las tierras altas y el café pertenecen a la misma historia regional."
+    ],
+    "highlights": [
+      "Parada en Highland en el regreso de Omo hacia Addis",
+      "Puente hacia el sur del país cafetalero",
+      "Divida los largos días de traslado en un viaje con lugares donde quedarse y visitar",
+      "Alojamiento flexible con opciones alternativas en el Valle del Rift"
+    ],
+    "thingsToDo": [
+      "Descanso nocturno después del viaje hacia el norte desde la ruta Turmi / Konso",
+      "Visitas relacionadas con el café cuando estén incluidas y disponibles en las cercanías.",
+      "Continúe hasta las paradas del corredor del lago Rift Valley según lo permita el tiempo.",
+      "Planificación de aproximación final hacia Addis Ababa"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 24,
+    "tourIds": []
+  },
+  {
+    "slug": "rift-valley-lakes",
+    "destinationName": "Corredor de los lagos del valle del Rift (Ziway / Langano)",
+    "area": "southern",
+    "type": "corridor",
+    "location": "Valle del Rift etíope; lagos que incluyen Ziway y Langano como paradas del viaje entre las tierras altas del sur y Addis Ababa",
+    "alsoKnownAs": [
+      "Ziway",
+      "Langano"
+    ],
+    "heroTitle": "Corredor de los lagos del valle del Rift (Ziway / Langano)",
+    "heroAccent": "",
+    "overview": [
+      "El corredor de los lagos del Valle del Rift, con posibles paradas alrededor de Ziway o Langano dependiendo de la ruta final, enmarca tanto el viaje de ida al sur desde Addis como el regreso al norte después de Omo y la región cafetera. Estos lagos no suelen ser destinos completos de varios días en el paquete exclusivo; son paradas de ritmo que recuerdan a los viajeros que el sur comienza y termina en los paisajes del Rift.",
+      "Las aves, la luz de la costa y el cambio de elevación y clima son los atractivos prácticos. Las paradas exactas dependen del tiempo, las condiciones de la carretera y las opciones de alojamiento en los días 1, 10 y 12 del viaje hacia el sur."
+    ],
+    "highlights": [
+      "Paisajes del lago Rift en la aproximación y el regreso.",
+      "Posibles paradas en la zona Ziway o Langano según la ruta",
+      "Aves y paisajes costeros cuando el tiempo lo permite.",
+      "Sujetalibros geográficos para la historia del sur",
+      "Flexible, no fijado en una lista de verificación"
+    ],
+    "thingsToDo": [
+      "Paradas panorámicas en Addis–Arba Minch o rutas de regreso",
+      "Paseos cortos junto al lago o miradores cuando el tiempo lo permita.",
+      "Alojamiento en una ubicación seleccionada del Valle del Rift en los días de regreso cuando esté previsto.",
+      "Continúe hasta Addis Ababa para finalizar el viaje o conectarse al aeropuerto"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 25,
+    "tourIds": []
+  },
+  {
+    "slug": "southern-coffee-country",
+    "destinationName": "País Cafetero del Sur (Yirgalem / Zonas Cafetaleras de la Sierra)",
+    "area": "southern",
+    "type": "rural",
+    "location": "Zonas cafetaleras del altiplano sur, incluido el corredor Yirgalem y zonas relacionadas Sidama/altiplano del sur",
+    "alsoKnownAs": [],
+    "heroTitle": "País Cafetero del Sur (Yirgalem / Zonas Cafetaleras de la Sierra)",
+    "heroAccent": "",
+    "overview": [
+      "El sur de Etiopía es un país cafetalero y también un país Omo. Una mañana o un día dedicado al cultivo, la cosecha, el procesamiento, la preparación tradicional y la cultura del café local, cuando esté disponible, está integrado en el viaje característico precisamente porque muchos itinerarios estándar Omo lo subestiman.",
+      "Se concertan visitas con productores o experiencias locales cuando la temporada y el acceso lo permiten. El momento de la cosecha afecta lo que ven los invitados; el procesamiento y la preparación estilo ceremonia aún pueden ser significativos fuera del pico de cosecha. Este capítulo cierra el arco sur con la agricultura de las tierras altas antes del regreso final del Rift/Addis."
+    ],
+    "highlights": [
+      "Interpretación sobre el cultivo y procesamiento del café, cuando esté disponible.",
+      "Preparación tradicional y cultura cafetera local.",
+      "Paisaje agrícola de tierras altas distinto de las tierras bajas pastorales Omo",
+      "Contrapeso intencional a los itinerarios sureños exclusivamente culturales",
+      "Actividad agrícola dependiente de la temporada; experiencias adaptadas en consecuencia"
+    ],
+    "thingsToDo": [
+      "Visite una zona cafetalera o una experiencia cafetera local cuando esté incluido.",
+      "Aprenda sobre cultivo, cosecha, procesamiento y preparación.",
+      "Degustación y conversación con anfitriones locales donde se organizaron.",
+      "Continúe por el Valle del Rift hacia Addis",
+      "Trate el café como un medio de vida y una cultura, no solo como una parada para comprar souvenirs."
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 26,
+    "tourIds": []
+  },
+  {
+    "slug": "bale-mountains-national-park",
+    "destinationName": "Bale Parque Nacional de las Montañas",
+    "area": "southern",
+    "type": "extension",
+    "location": "Tierras altas del sudeste de Etiopía; UNESCO Patrimonio de la Humanidad; Distinto del Sur Omo geográficamente pero ofrecido como extensión opcional después del viaje al sur.",
+    "alsoKnownAs": [],
+    "heroTitle": "Bale Parque Nacional de las Montañas",
+    "heroAccent": "",
+    "overview": [
+      "El Parque Nacional de las Montañas Bale es un paisaje UNESCO Patrimonio de la Humanidad de picos volcánicos, páramos afromontanos y bosques nubosos. Agrega un ecosistema completamente diferente después de los viajes de Omo y Rift: mesetas afroalpinas, hábitat de Ethiopian wolf en la meseta Sanetti (avistamientos no garantizados) y el bosque Harenna en las laderas del sur.",
+      "Ofrecido como una extensión opcional de 4 días después de The Southern Ethiopia Journey, Bale se adapta a los viajeros que desean vida silvestre y naturaleza de gran altitud después de días culturales en las tierras bajas. Las rutas y condiciones del parque varían; El senderismo y el acceso en vehículo están previstos según la temporada y la forma física."
+    ],
+    "highlights": [
+      "UNESCO parque de montaña con múltiples zonas ecológicas",
+      "Sanetti Meseta, Dinsho accesos y Harenna Bosque dentro de una extensión",
+      "Hábitat Ethiopian wolf (avistamientos no garantizados)",
+      "Fuerte contraste con los días de tierras bajas Omo y del lago Rift",
+      "En el contexto del parque existen rangos de caminata de 2 a 11 días; este producto utiliza un complemento enfocado de 4 días"
+    ],
+    "thingsToDo": [
+      "Viaja hacia Bale como día 1 de la extensión",
+      "Tiempo de vida silvestre y bosque alrededor Dinsho",
+      "Día de gran altitud en la meseta Sanetti",
+      "Harenna Bosque y regreso hacia Addis",
+      "Adapte la distancia recorrida al estado físico y al clima"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 27,
+    "tourIds": []
+  },
+  {
+    "slug": "dinsho",
+    "destinationName": "Dinsho (Bale)",
+    "area": "southern",
+    "type": "extension",
+    "location": "Bale Accesos norte/oeste del Parque Nacional de las Montañas; Área base común de vida silvestre y bosque.",
+    "alsoKnownAs": [],
+    "heroTitle": "Dinsho (Bale)",
+    "heroAccent": "",
+    "overview": [
+      "Dinsho es un área de actividad y acceso principal en el lado norte del Parque Nacional de las Montañas Bale. El día 2 de extensión generalmente se centra aquí: caminatas por el bosque, vegetación de montaña y observación de vida silvestre en hábitats conocidos. Son posibles el nyala de montaña y otras especies de las tierras altas; Los avistamientos nunca están garantizados.",
+      "Dinsho ofrece a los viajeros una introducción más suave a Bale antes del día de meseta Sanetti, más elevado y expuesto. El guiado sigue las reglas del parque; Los senderos y el acceso de vehículos dependen de las condiciones."
+    ],
+    "highlights": [
+      "Área clásica de introducción de vida silvestre y bosques Bale",
+      "Vegetación de montaña y hábitat de mamíferos de montaña (avistamientos no garantizados)",
+      "Punto de parada antes de la meseta Sanetti",
+      "Día de estimulación más tranquilo dentro de la extensión de 4 días"
+    ],
+    "thingsToDo": [
+      "Caminatas guiadas en claros y bosques de la zona Dinsho",
+      "Observación de vida silvestre con expectativas realistas.",
+      "Fotografía de luz de bosque y vegetación de montaña.",
+      "Pernoctación en la zona Bale según plan de ampliación",
+      "Prepárese para el día Sanetti superior que sigue"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 28,
+    "tourIds": []
+  },
+  {
+    "slug": "sanetti-plateau",
+    "destinationName": "Sanetti Meseta",
+    "area": "southern",
+    "type": "extension",
+    "location": "Bale Parque Nacional de las Montañas; alta meseta afroalpina",
+    "alsoKnownAs": [],
+    "heroTitle": "Sanetti Meseta",
+    "heroAccent": "",
+    "overview": [
+      "La meseta Sanetti es un paisaje afroalpino de gran altitud: páramos abiertos, formas de vegetación gigantes adaptadas a la elevación y hábitat conocido del Ethiopian wolf. Es una pieza central de la extensión opcional Bale: amplios horizontes, aire enrarecido y un carácter montañoso diferente del drama escarpado de Simien.",
+      "La observación de la vida silvestre es oportunista. El clima puede acercarse rápidamente en la altitud. Las distancias a pie y las secciones del vehículo se ajustan al estado físico y las condiciones del grupo. Los objetivos tipo cumbre no son el punto; la meseta en sí es la experiencia."
+    ],
+    "highlights": [
+      "Paisajes de la alta meseta afroalpina",
+      "Hábitat Ethiopian wolf (avistamientos no garantizados)",
+      "Fotografía de páramos abiertos y luz del gran cielo cuando el clima lo permite",
+      "Contraste distintivo del ecosistema después de los viajes de Omo y Rift",
+      "Se requiere conciencia de la altitud"
+    ],
+    "thingsToDo": [
+      "Día de meseta guiado en vehículo y caminatas cortas según lo permitan las condiciones.",
+      "Avistamiento de fauna sin garantías",
+      "Fotografía de paisaje",
+      "Respetar la altitud: ritmo lento, capas, hidratación.",
+      "Regrese a bajar durante la noche antes del regreso de Harenna / Addis"
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 29,
+    "tourIds": []
+  },
+  {
+    "slug": "harenna-forest",
+    "destinationName": "Harenna Bosque",
+    "area": "southern",
+    "type": "extension",
+    "location": "Ladera sur del Parque Nacional de las Montañas Bale; zona de bosque nuboso",
+    "alsoKnownAs": [],
+    "heroTitle": "Harenna Bosque",
+    "heroAccent": "",
+    "overview": [
+      "El bosque Harenna cubre gran parte del flanco sur de Bale: niebla, denso bosque afromontano y una fuerte caída ecológica desde la meseta Sanetti arriba. En la extensión de 4 días Bale, normalmente ancla el Día 4: tiempo de bosque y el comienzo del regreso hacia Addis Ababa.",
+      "El bosque ofrece diversidad de aves, plantas y una atmósfera de dosel cerrado después de días de meseta abierta y luz Omo. Los senderos y tramos de carretera dependen del clima; el barro y las nubes son normales. Como en otros lugares, los avistamientos de vida silvestre no están garantizados."
+    ],
+    "highlights": [
+      "Bosque nuboso y vegetación afromontana en la vertiente sur de Bale",
+      "Contraste ecológico con Sanetti Meseta y con Sur Omo",
+      "Aves y ambiente forestal (avistamientos no garantizados)",
+      "Cierre natural de la extensión Bale antes del retorno Addis"
+    ],
+    "thingsToDo": [
+      "Tiempo de bosque guiado en extensión Día 4",
+      "Caminatas cortas donde los senderos y el clima lo permitan.",
+      "Observación de aves y plantas.",
+      "Iniciar camino de retorno hacia Addis Ababa",
+      "Finalizar la extensión con traslado al aeropuerto o ciudad según lo acordado."
+    ],
+    "imageUrl": null,
+    "imageAlt": null,
+    "sourceReferences": [],
+    "isPublished": true,
+    "sortOrder": 30,
+    "tourIds": []
+  }
+]

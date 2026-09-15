@@ -112,6 +112,8 @@ const nextConfig: NextConfig = {
     ] as const;
 
     return [
+      { source: "/northern-ethiopia/:path*", destination: "/en/explore-ethiopia/:path*", permanent: true },
+      { source: "/:locale(en|es|de|fr)/northern-ethiopia/:path*", destination: "/:locale/explore-ethiopia/:path*", permanent: true },
       ...legacy.map((redirect) => ({
         source: redirect.source,
         destination: redirect.destination === "/" ? "/en" : `/en${redirect.destination}`,

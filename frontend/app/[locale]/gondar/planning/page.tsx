@@ -139,7 +139,7 @@ export default async function GondarPlanningPage({
               </Link>
             ) : null}
             {key === "northernExtensions" ? (
-              <Link className="text-link" href="/northern-ethiopia">
+              <Link className="text-link" href="/explore-ethiopia">
                 {t("linkNorthern")}
               </Link>
             ) : null}
