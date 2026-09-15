@@ -2,7 +2,6 @@
 
 import { useState, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { ArrowUpRight, Check } from "@/components/Icon";
 import { site } from "@/lib/site";
 
@@ -84,15 +83,6 @@ export function NewsletterForm() {
           {status === "sending" ? t("sending") : <>{t("subscribe")} <ArrowUpRight size={16} /></>}
         </button>
       </form>
-      <p className="newsletter-form__consent">
-        {t.rich("consent", {
-          privacy: (chunks) => (
-            <Link href="/privacy" className="underline underline-offset-2">
-              {chunks}
-            </Link>
-          ),
-        })}
-      </p>
       {status === "unavailable" && (
         <p className="newsletter-form__error" role="alert">
           {t.rich("unavailable", {
