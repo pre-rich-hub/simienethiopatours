@@ -151,3 +151,15 @@ The Debre Berhan Selassie photo shows interior religious murals, not church grou
 Actual Timkat, Genna, Meskel and running-action photos are still absent from the supplied batch. The festival and running journeys retain contextual images where no activity photo is available. Reuse between closely related journeys remains intentional; unique images should not imply stops outside an itinerary.
 
 The database handoff accepts each reassigned journey’s previous client image as well as its original image, so the teammate can apply this revision after the earlier batch. There are still 60 unique targets. No database updates were executed here.
+
+## Next photo priorities
+
+| Priority | Need |
+|---|---|
+| 1 | Festival action for Genna and Meskel (Timkat ceremony photo is already in use via `timket.jpg` override) |
+| 2 | Running action for Gondar Hidden Running (current asset is historic buildings) |
+| 3 | True Siha Gorge landscape if product wants place-accurate hero (current asset is ibex) |
+| 4 | Explore / Southern Ethiopia destinations — most expansion records still have `imageUrl: null` |
+| 5 | Re-upload `outhern-Ethiopia-Journey.jpg` with corrected public_id `Southern-Ethiopia-Journey.jpg` |
+
+Until the Ethiopia destination batch lands, Explore/Southern hubs correctly render text-first heroes with no OG image.

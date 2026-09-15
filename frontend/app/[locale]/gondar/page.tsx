@@ -1,5 +1,3 @@
-import { resolveMediaUrl } from "@/lib/media-url";
-import clientPhotos from "@/lib/client-photos.json";
 import { getDestinations, destinationToPlace } from "@/lib/catalogue";
 import { getLocale } from "next-intl/server";
 import Image from "@/components/Image";
@@ -8,17 +6,14 @@ import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { site } from "@/lib/site";
-import { localeFromParam, pageMetadata } from "@/lib/seo";
+import { messagePageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
+import { resolveMediaUrl } from "@/lib/media-url";
+import clientPhotos from "@/lib/client-photos.json";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  return pageMetadata({
-    locale: localeFromParam(locale),
-    title: "Gondar Destinations | Royal City & Heritage",
-    description: "Explore published Gondar city and countryside destinations.",
-    path: "/gondar",
-  });
+  return messagePageMetadata(locale, "gondar");
 }
 
 export default async function GondarPage() {

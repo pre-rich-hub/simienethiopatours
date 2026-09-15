@@ -6,7 +6,7 @@ import { PageShell } from "@/components/PageShell";
 import { InquiryForm } from "@/components/InquiryForm";
 import { site } from "@/lib/site";
 import { planningOptions } from "@/lib/experiences";
-import { messagePageMetadata, contactPageJsonLd, jsonLdScript } from "@/lib/seo";
+import { messagePageMetadata, contactPageJsonLd, howToJsonLd, jsonLdScript, localeFromParam } from "@/lib/seo";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -29,18 +29,39 @@ export default async function PlanPage({
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ experience?: string; journey?: string; message?: string; subject?: string }>;
 }) {
-  const { locale } = await params;
+  const { locale: localeParam } = await params;
+  const locale = localeFromParam(localeParam);
   const t = await getTranslations("plan");
   const tCommon = await getTranslations("common");
+  const tMeta = await getTranslations({ locale, namespace: "meta" });
   const query = await searchParams;
   const requested = query.experience || query.journey;
   const selected = planningOptions.find((option) => option.id === requested)?.id || "";
   const message = prefillMessage(query);
+  const planMeta = tMeta.raw("plan") as { title: string; description: string };
   return (
     <PageShell>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLdScript(contactPageJsonLd(locale as "en" | "es" | "de" | "fr")) }}
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript({
+            "@context": "https://schema.org",
+            "@graph": [
+              contactPageJsonLd(locale),
+              howToJsonLd({
+                name: planMeta.title,
+                description: planMeta.description,
+                path: "/plan",
+                locale,
+                steps: [
+                  { name: t("step1"), text: t("step1Body") },
+                  { name: t("step2"), text: t("step2Body") },
+                  { name: t("step3"), text: t("step3Body") },
+                ],
+              }),
+            ],
+          }),
+        }}
       />
       <section className="page-hero plan-hero">
         <div className="shell plan-hero__grid">

@@ -673,7 +673,7 @@
       "ogTitle": "Tu puerta local a las montañas Simien"
     },
     "about": {
-      "title": "Quiénes somos | La historia de Tevan",
+      "title": "Quiénes somos",
       "description": "Conoce a Tesema ‘Tevan’ Mulualem, el fundador y guía con base en Gondar detrás de Gondar Simien Tours. Conocimiento local, acompañamiento personal y preparación cuidadosa."
     },
     "plan": {
@@ -681,17 +681,21 @@
       "description": "Cuéntale a Tevan tu tiempo, tu comodidad al caminar y tus intereses para recibir un viaje a Gondar y Simien planificado en local."
     },
     "treks": {
-      "title": "Viajes | Trekkings en Simien, experiencias en Gondar y paquetes de fiesta",
+      "title": "Trekkings en Simien y experiencias en Gondar",
       "description": "Veintiocho paquetes de viaje — desde Simien en un día y el trekking clásico hasta Ras Dashen, experiencias en Gondar y viajes de fiesta — cada uno con su propia página."
     },
     "simien": {
-      "title": "Destinos de las montañas Simien | Lugares, campamentos y miradores",
+      "title": "Destinos de las montañas Simien",
       "description": "Dieciocho destinos de las montañas Simien — de Debark y Sankaber a Imet Gogo, Chenek, Ras Dashen y Adi Arkay — cada uno con su propia página."
+    },
+    "gondar": {
+      "title": "Destinos de Gondar",
+      "description": "Destinos de la ciudad y el campo de Gondar — patrimonio real, barrios vivos, las tierras altas de Kosoye y extensiones al norte — cada uno con su propia página."
     }
   },
   "journal": {
     "journal": "Diario",
-    "journalIntro": "Notas e historias del equipo local.",
+    "journalIntro": "Historias del equipo con base en Gondar — senderos de las montañas Simien, el Gondar real y las personas que dan forma a cada viaje.",
     "emptyJournal": "Las nuevas historias aparecerán aquí cuando se publiquen.",
     "categories": "Categorías",
     "readArticle": "Leer artículo",
@@ -699,7 +703,7 @@
     "updated": "Actualizado"
   },
   "gallery": {
-    "title": "Galería | Gondar y las montañas Simien",
+    "title": "Galería",
     "description": "Un recorrido visual por las montañas Simien y Gondar.",
     "imageAlt": "El paisaje estratificado de las montañas Simien",
     "eyebrow": "Gondar y las montañas Simien",
@@ -803,10 +807,20 @@
   "destination": {
     "about": "Acerca de",
     "highlights": "Destacados",
+    "highlightsTitle": "Lo que destaca,",
+    "highlightsAccent": "en este lugar.",
     "thingsToDo": "Qué hacer",
+    "thingsToDoTitle": "Cómo pasar el tiempo,",
+    "thingsToDoAccent": "cuando esté aquí.",
     "alsoKnownAs": "También conocido como: {names}",
     "relatedJourneysTag": "Viajes",
     "relatedJourneysTitle": "Rutas que visitan este lugar",
+    "planTag": "Planificar",
+    "planTitle": "Un viaje a su medida",
+    "planLead": "Ningún paquete publicado incluye aún {name}. Cuéntele a Tevan su tiempo e intereses: una propuesta escrita confirma lo posible.",
+    "callTitle": "Incluya {name} en su viaje.",
+    "callEyebrow": "Solo consulta · la propuesta escrita confirma",
+    "callLabel": "Empezar el planificador",
     "backSimien": "Todos los destinos de Simien",
     "backGondar": "Todos los destinos de Gondar",
     "backNorthern": "Todos los destinos de Explora Etiopía",

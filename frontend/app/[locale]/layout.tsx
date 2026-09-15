@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { DocumentLocale } from "@/components/DocumentLocale";
 import { FloatingContact } from "@/components/FloatingContact";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { jsonLdScript, organizationJsonLd } from "@/lib/seo";
+import { jsonLdScript, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
 
 export const revalidate = 60;
@@ -33,7 +33,15 @@ export default async function LocaleLayout({
       {children}
       <FloatingContact />
       <ScrollReveal />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd()) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript({
+            "@context": "https://schema.org",
+            "@graph": [organizationJsonLd(), websiteJsonLd()],
+          }),
+        }}
+      />
     </NextIntlClientProvider>
   );
 }

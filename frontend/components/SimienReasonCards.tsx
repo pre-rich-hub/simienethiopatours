@@ -4,15 +4,15 @@ import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { simienReasons } from "@/lib/simien-guide";
 import { cardBlurb } from "@/lib/card-blurb";
+import clientPhotos from "@/lib/client-photos.json";
 
-// Replace these six paths when the final photography is ready.
 const reasonPhotography = [
-  { src: "/images/imet-gogo.jpg", alt: "A trekker's view across the cliffs at Imet Gogo", place: "Imet Gogo" },
-  { src: "/images/gelada-troop.jpg", alt: "Geladas grazing together in the Simien highlands", place: "Simien highlands" },
-  { src: "/images/giant-lobelia.jpg", alt: "Giant lobelias beneath the open Simien sky", place: "Highland light" },
-  { src: "/images/chenek-camp.jpg", alt: "The high mountain country around Chenek", place: "Chenek" },
-  { src: "/images/road-to-simien.jpg", alt: "Everyday highland life on the road toward Simien", place: "The living highlands" },
-  { src: "/images/simien-panorama.jpg", alt: "A wide first view into the Simien Mountains", place: "A first encounter" },
+  { src: clientPhotos["imet-gogo"].url, alt: clientPhotos["imet-gogo"].alt.en, place: "Imet Gogo" },
+  { src: clientPhotos["gelada-country"].url, alt: clientPhotos["gelada-country"].alt.en, place: "Simien highlands" },
+  { src: clientPhotos.chenek.url, alt: clientPhotos.chenek.alt.en, place: "Chenek" },
+  { src: clientPhotos.chenek.url, alt: clientPhotos.chenek.alt.en, place: "Chenek" },
+  { src: clientPhotos.debark.url, alt: clientPhotos.debark.alt.en, place: "The living highlands" },
+  { src: clientPhotos.simien.url, alt: clientPhotos.simien.alt.en, place: "A first encounter" },
 ] as const;
 
 export async function SimienReasonCards() {

@@ -2,7 +2,8 @@ const base = (process.env.SEO_BASE_URL || "http://127.0.0.1:3100").replace(/\/$/
 
 /** status, mustInclude (all), mustExclude (any match fails), optional title/description checks */
 const routes = [
-  { path: "/robots.txt", status: 200, mustInclude: ["Sitemap:", "Disallow: /admin"], mustExclude: [] },
+  { path: "/robots.txt", status: 200, mustInclude: ["Sitemap:", "Disallow: /admin", "User-agent: GPTBot", "User-agent: ClaudeBot"], mustExclude: [] },
+  { path: "/llms.txt", status: 200, mustInclude: ["# Gondar Simien Tours", "## Main pages", "/en/plan"], mustExclude: [] },
   { path: "/sitemap.xml", status: 200, mustInclude: ["<urlset"], mustExclude: ["/admin"] },
   { path: "/en", status: 200, requireMeta: true },
   { path: "/en/treks", status: 200, requireMeta: true },

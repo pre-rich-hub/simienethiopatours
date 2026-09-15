@@ -9,6 +9,7 @@ import type { JourneyPackage } from "@/lib/journey-packages";
 import { fetchCatalogue, CatalogueFetchError } from "@/lib/catalogue-fetch";
 import { selectLocale } from "@/lib/catalogue-locale";
 import { resolveMediaUrl } from "@/lib/media-url";
+import { enrichTourRecord } from "@/lib/tour-enrichment";
 export { resolveMediaUrl };
 export type { PublicCatalogue, PublicTour, PublicDestination, PublicPost };
 export { selectLocale };
@@ -18,6 +19,7 @@ export { selectLocale };
 // also covers an older local/exported catalogue that still has null or stale media.
 const journeyImageOverrides: Record<string, { url: string; alt: string }> = {
   "southern-ethiopia-journey": {
+    // Cloudinary public_id still has the missing leading "S"; rename on re-upload.
     url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465911/outhern-Ethiopia-Journey.jpg",
     alt: "Southern Ethiopia landscapes and road journey",
   },
@@ -73,14 +75,24 @@ const cachedCatalogue = unstable_cache(async (): Promise<CatalogueLoad> => {
     }
     return { ok: false, kind: "network", allowFallback: true };
   }
-}, ["public-catalogue-v1"], { revalidate: 60, tags: ["catalogue"] });
+}, ["public-catalogue-v2"], { revalidate: 60, tags: ["catalogue"] });
 
 export const getCatalogue = cache(async (): Promise<PublicCatalogue> => {
   const result = await cachedCatalogue();
-  if (result.ok) return result.data;
+  const fallback = () => {
+    console.warn(JSON.stringify({ event: "catalogue_fallback", reason: result.ok ? "missing_explore" : result.kind, version: snapshot.version }));
+    return catalogueFromSnapshot(snapshot, process.env.NODE_ENV === "production");
+  };
+
+  if (result.ok) {
+    const hasExploreHub = result.data.destinations.some(
+      (row) => row.area === "explore" || row.area === "southern",
+    );
+    if (result.data.destinations.length > 0 && hasExploreHub) return result.data;
+    return fallback();
+  }
   if (!result.allowFallback) throw new CatalogueFetchError(result.kind, false);
-  console.warn(JSON.stringify({ event: "catalogue_fallback", reason: result.kind, version: snapshot.version }));
-  return catalogueFromSnapshot(snapshot, process.env.NODE_ENV === "production");
+  return fallback();
 });
 export function requireContentLocale<T extends { locale: string; path: string }>(record: T, locale: string): T {
   if (record.locale !== locale) redirect(`/${record.locale}${record.path}`);
@@ -111,16 +123,17 @@ export async function getPostForRoute(slug: string, locale = "en") {
     ?? catalogue.posts.find(row => row.slug === slug && row.locale === "en") ?? null;
 }
 export function tourToJourney(tour: PublicTour): JourneyPackage & { locale: PublicTour["locale"]; summary: string; fit: string; preparation: string[]; facts: PublicTour["facts"] } {
-  const media = tourMedia(tour);
+  const enriched = enrichTourRecord(tour);
+  const media = tourMedia(enriched);
   return {
-    slug: tour.slug, name: tour.tourName, duration: tour.duration ?? "", route: tour.route.join(" → "),
-    difficulty: tour.difficulty ?? "", heroTitle: tour.heroTitle ?? tour.tourName, heroAccent: tour.heroAccent ?? "",
-    overview: [tour.overview, ...tour.introduction].filter((v): v is string => Boolean(v)),
-    highlights: tour.highlights.map(h => h.body), itineraryMode: "days", days: tour.itinerary,
-    itineraryIntro: tour.itineraryIntro ?? undefined, itineraryNotes: tour.itineraryNotes,
-    included: tour.included, excluded: tour.excluded, includedNote: tour.notice ?? undefined,
-    image: media.image, imageAlt: media.imageAlt, locale: tour.locale,
-    summary: tour.summary ?? tour.overview ?? "", fit: tour.fit ?? "", preparation: tour.preparation, facts: tour.facts,
+    slug: enriched.slug, name: enriched.tourName, duration: enriched.duration ?? "", route: enriched.route.join(" → "),
+    difficulty: enriched.difficulty ?? "", heroTitle: enriched.heroTitle ?? enriched.tourName, heroAccent: enriched.heroAccent ?? "",
+    overview: [enriched.overview, ...enriched.introduction].filter((v): v is string => Boolean(v)),
+    highlights: enriched.highlights.map(h => h.body), itineraryMode: "days", days: enriched.itinerary,
+    itineraryIntro: enriched.itineraryIntro ?? undefined, itineraryNotes: enriched.itineraryNotes,
+    included: enriched.included, excluded: enriched.excluded, includedNote: enriched.notice ?? undefined,
+    image: media.image, imageAlt: media.imageAlt, locale: enriched.locale,
+    summary: enriched.summary ?? enriched.overview ?? "", fit: enriched.fit ?? "", preparation: enriched.preparation, facts: enriched.facts,
   };
 }
 export function destinationToPlace(row: PublicDestination) {
