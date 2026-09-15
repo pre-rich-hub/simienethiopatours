@@ -19,19 +19,19 @@ Thirty-six supplied photos cover all 32 destinations and all 28 tours. All 19 Si
 | tour | `simien-day-trip` | `Sankaber.jpg` |
 | tour | `simien-introduction` | `Sankaber.jpg` |
 | tour | `3-day-simien-trek` | `imet-gogo.png` |
-| tour | `4-day-simien-classic` | `imet-gogo.png` |
-| tour | `5-day-gondar-simien` | `imet-gogo.png` |
+| tour | `4-day-simien-classic` | `cheenk-camp.jpg` |
+| tour | `5-day-gondar-simien` | `Inatye.png` |
 | tour | `gondar-heritage-simien` | `woleka-beta-israel.png` |
-| tour | `10-day-simien-ras-dashen` | `ras-dashen.png` |
-| tour | `simien-photography-day` | `simien-mountains.jpg` |
-| tour | `wildlife-landscape-photography` | `imet-gogo.png` |
-| tour | `simien-photography-expedition` | `imet-gogo.png` |
+| tour | `10-day-simien-ras-dashen` | `Sona.png` |
+| tour | `simien-photography-day` | `buhit-ras.jpg` |
+| tour | `wildlife-landscape-photography` | `Gelada-Country.png` |
+| tour | `simien-photography-expedition` | `Jinbar_Waterfall.jpg` |
 | tour | `royal-gondar` | `fasilides_-bath-fasil_s-pool.jpg` |
 | tour | `gondar-photography-walk` | `fasil-ghebbi.jpg` |
 | tour | `gondar-history-culture` | `bebre-berhan-selassie.jpg` |
 | tour | `gondar-kosoye` | `kosoye-mountain.jpg` |
-| tour | `timkat-simien` | `fasil-ghebbi.jpg` |
-| tour | `genna-simien` | `fasil-ghebbi.jpg` |
+| tour | `timkat-simien` | `fasilides_-bath-fasil_s-pool.jpg` |
+| tour | `genna-simien` | `bebre-berhan-selassie.jpg` |
 | tour | `meskel-simien` | `Guche-camp-simen.jpg` |
 | tour | `mountains-sacred-stone` | `lalibela.jpg` |
 | destination | `lake-tana` | `bahir-dar.jpg` |
@@ -58,7 +58,7 @@ Thirty-six supplied photos cover all 32 destinations and all 28 tours. All 19 Si
 | destination | `ambaras` | `Ambaras.png` |
 | destination | `imet-gogo` | `imet-gogo.png` |
 | tour | `ras-dashen-challenge` | `ras-dashen.png` |
-| tour | `ras-dashen-expedition` | `ras-dashen.png` |
+| tour | `ras-dashen-expedition` | `Ambiko.png` |
 | tour | `simien-ras-dashen-8-day` | `Bwahit.png` |
 | tour | `timkat-ras-dashen` | `ras-dashen.png` |
 | tour | `simien-wildlife-journey` | `siha-gorge.png` |
@@ -129,3 +129,25 @@ Duplicate entries from the earlier Gondar handoff were consolidated into one fin
 The final four supplied photos replace Gelada Country, Gondar Food & Coffee, Gondar Market & Local Life, and Gondar Hidden Running Experience. All four photos were fetched and visually inspected. The running photo depicts historic buildings and ruins, so its alt text describes those rather than runners. Existing Cloudinary resizing and Next.js image optimization apply to these URLs as well.
 
 All 28 journey images now use Cloudinary in the inventory and four-language catalogue. The backend handoff contains 60 unique records (32 destinations and 28 tours); it is prepared for the teammate and has not been applied to their database.
+
+## Journey photo review — 15 September 2026
+
+Nine journey photos were reassigned after reviewing all 28 itineraries and visually inspecting the candidate photos. The journey list now uses 23 distinct photos, with no photo used by more than two journeys. The current mappings in the table above supersede the earlier batch descriptions.
+
+| Journey | New photo | Matching reason |
+|---|---|---|
+| 4-Day Simien Classic | Chenek | Camp life at the trek’s final overnight stop; distinguishes it from the 3-day trek, which ends before Chenek. |
+| 5-Day Gondar & Simien | Inatye | The itinerary explicitly crosses Inatye on day 4. |
+| Ras Dashen Expedition | Ambiko | The slower expedition includes two nights at the Ambiko summit base. |
+| 10-Day Simien Expedition | Sona | Shows the eastern crossing that distinguishes this route from shorter summit treks. |
+| Simien Photography Day | Buyit Ras | Western escarpment scenery and a hiker suit the flexible viewpoint day; this is illustrative, not a promised stop. |
+| Wildlife & Landscape Photography | Gelada Country | Shows a wildlife subject against the highland landscape. |
+| Simien Photography Expedition | Jinbar Waterfall | A named stop on the multi-day photography itinerary. |
+| Timkat & Simien | Fasilides’ Bath | The itinerary identifies Fasil’s Pool as a ceremony location; the photo shows the site, not the ceremony. |
+| Genna & Simien | Debre Berhan Selassie | Gondar church imagery suits the cultural journey; this is illustrative, not confirmation of a particular service venue. |
+
+The Debre Berhan Selassie photo shows interior religious murals, not church grounds. Its alt text was corrected in all four languages across the manifest, destination and affected journeys.
+
+Actual Timkat, Genna, Meskel and running-action photos are still absent from the supplied batch. The festival and running journeys retain contextual images where no activity photo is available. Reuse between closely related journeys remains intentional; unique images should not imply stops outside an itinerary.
+
+The database handoff accepts each reassigned journey’s previous client image as well as its original image, so the teammate can apply this revision after the earlier batch. There are still 60 unique targets. No database updates were executed here.

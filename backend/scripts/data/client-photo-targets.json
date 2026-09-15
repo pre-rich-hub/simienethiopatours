@@ -86,19 +86,21 @@
   {
     "entity": "tour",
     "slug": "4-day-simien-classic",
-    "photo": "imet-gogo",
+    "photo": "chenek",
     "previousImage": "/images/imet-gogo.jpg",
     "previousImages": [
-      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg"
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg",
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png"
     ]
   },
   {
     "entity": "tour",
     "slug": "5-day-gondar-simien",
-    "photo": "imet-gogo",
+    "photo": "inatye",
     "previousImage": "/images/fasil-ghebbi.jpg",
     "previousImages": [
-      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png"
     ]
   },
   {
@@ -113,34 +115,40 @@
   {
     "entity": "tour",
     "slug": "10-day-simien-ras-dashen",
-    "photo": "ras-dashen",
+    "photo": "sona",
     "previousImage": "/images/simien-panorama.jpg",
     "previousImages": [
-      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg"
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg",
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png"
     ]
   },
   {
     "entity": "tour",
     "slug": "simien-photography-day",
-    "photo": "simien",
-    "previousImage": "/images/simien-panorama.jpg"
+    "photo": "buyit-ras",
+    "previousImage": "/images/simien-panorama.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386859/simien-mountains.jpg"
+    ]
   },
   {
     "entity": "tour",
     "slug": "wildlife-landscape-photography",
-    "photo": "imet-gogo",
+    "photo": "gelada-country",
     "previousImage": "/images/imet-gogo.jpg",
     "previousImages": [
-      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg"
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg",
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png"
     ]
   },
   {
     "entity": "tour",
     "slug": "simien-photography-expedition",
-    "photo": "imet-gogo",
+    "photo": "jinbar",
     "previousImage": "/images/chenek-camp.jpg",
     "previousImages": [
-      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg"
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg",
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png"
     ]
   },
   {
@@ -176,14 +184,20 @@
   {
     "entity": "tour",
     "slug": "timkat-simien",
-    "photo": "fasil",
-    "previousImage": "/images/fasil-ghebbi.jpg"
+    "photo": "fasilides-bath",
+    "previousImage": "/images/fasil-ghebbi.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+    ]
   },
   {
     "entity": "tour",
     "slug": "genna-simien",
-    "photo": "fasil",
-    "previousImage": "/images/fasil-ghebbi.jpg"
+    "photo": "debre-berhan-selassie",
+    "previousImage": "/images/fasil-ghebbi.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+    ]
   },
   {
     "entity": "tour",
@@ -347,8 +361,11 @@
   {
     "entity": "tour",
     "slug": "ras-dashen-expedition",
-    "photo": "ras-dashen",
-    "previousImage": "/images/simien-panorama.jpg"
+    "photo": "ambiko",
+    "previousImage": "/images/simien-panorama.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png"
+    ]
   },
   {
     "entity": "tour",
