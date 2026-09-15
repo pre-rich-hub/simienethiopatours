@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/PageShell";
 import { localeFromParam, pageMetadata } from "@/lib/seo";
 import { photoCredits, verifiedPhotoCreditCount } from "@/lib/photo-credits";
+import { site } from "@/lib/site";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -32,7 +33,7 @@ export default function PhotoCreditsPage() {
             <p className="eyebrow eyebrow--copper">Launch check · {verifiedPhotoCreditCount}/{photoCredits.length} fully verified</p>
             <h2 id="credits-status-heading">Attribution is complete for every shipped photograph.</h2>
             <p>Scenic files are Wikimedia Commons originals with exact File pages, authors and licenses. Operator portraits are supplied by Simien Ethio Tours for site use. Required attribution strings below must accompany any reuse of a photograph.</p>
-            <p>If you own or supplied an image and need a correction, contact <a href="mailto:info@simienethiotours.com">info@simienethiotours.com</a>.</p>
+            <p>If you own or supplied an image and need a correction, contact <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
           </div>
 
           <div className="credits-records" aria-label="Photo credit records">

@@ -5,7 +5,7 @@ export const site = {
   legalOperator: "Simien Ethio Tours",
   phoneDisplay: "+251 956 61 6969",
   phone: "+251956616969",
-  email: "info@simienethiotours.com",
+  email: "info@gondersimientours.com",
   address: "Fasil Castle Street, Gondar, Ethiopia",
   whatsapp: "https://wa.me/251956616969",
   tripadvisor:

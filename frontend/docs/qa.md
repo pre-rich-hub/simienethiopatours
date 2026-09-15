@@ -27,7 +27,7 @@ Checked against `lib/site.ts` (2026-09-13):
 | Link | Status |
 | --- | --- |
 | Phone `tel:+251956616969` | Verified constant |
-| Email `mailto:info@simienethiotours.com` | Verified constant |
+| Email `mailto:info@gondersimientours.com` | Verified constant |
 | WhatsApp `https://wa.me/251956616969` | Verified constant |
 | TripAdvisor | Verified Attraction_Review URL |
 | Operator site `https://simienethiotours.com/` | Verified constant |
