@@ -76,10 +76,10 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
       eyebrow: e("destinations"), heading: e("explore"), description: e("exploreLead"),
       exploreHref: "/explore-ethiopia", exploreLabel: e("explore"), extraLinks: [],
       cards: [
-        { slug: "historic", href: "/explore-ethiopia#historic", title: e("historic"), summary: e("historicLead") },
-        { slug: "extensions", href: "/explore-ethiopia#extensions", title: e("extensions"), summary: e("extensionsLead") },
-        { slug: "southern", href: "/southern-ethiopia", title: e("southern"), summary: e("southernLead") },
-      ].map(card => ({...card, image: "", tag: e("destinations"), style: ""})),
+        { slug: "historic", href: "/explore-ethiopia#historic", title: e("historic"), summary: e("historicLead"), image: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465910/Northern-Ethiopia.jpg", imageAlt: "Northern Ethiopia highland and historic landscapes" },
+        { slug: "extensions", href: "/explore-ethiopia#extensions", title: e("extensions"), summary: e("extensionsLead"), image: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465909/Gheralta.jpg", imageAlt: "Gheralta sandstone cliffs and rock churches in Tigray" },
+        { slug: "southern", href: "/southern-ethiopia", title: e("southern"), summary: e("southernLead"), image: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465911/outhern-Ethiopia-Journey.jpg", imageAlt: "Southern Ethiopia landscapes and road journey" },
+      ].map(card => ({...card, tag: e("destinations"), style: ""})),
     },
     "/gondar": {
       id: "gondar-menu",
@@ -162,14 +162,15 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
           </div>
           <button
             ref={menuButtonRef}
-            className="hidden size-11 border-0 bg-transparent p-2.5 text-inherit max-[1100px]:grid max-[1100px]:place-items-center"
+            className="mobile-menu-trigger hidden max-[1100px]:grid max-[1100px]:place-items-center"
             onClick={() => setOpen(true)}
             aria-label={tCommon("openMenu")}
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-haspopup="dialog"
+            data-open={open || undefined}
           >
-            <Menu />
+            <Menu size={19} />
           </button>
         </div>
       </header>
@@ -181,8 +182,8 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
         onCancel={(event) => { event.preventDefault(); setOpen(false); }}
       >
         <div className="mobile-menu__top">
-          <BrandMark label={tCommon("homeAria")} />
-          <button className="grid size-11 place-items-center border-0 bg-transparent p-2.5 text-ink" onClick={() => setOpen(false)} aria-label={tCommon("closeMenu")} autoFocus><X /></button>
+          <BrandMark onDark label={tCommon("homeAria")} />
+          <button className="mobile-menu__close" onClick={() => setOpen(false)} aria-label={tCommon("closeMenu")} autoFocus><X size={17} /></button>
         </div>
         <nav aria-label={tCommon("mobileNav")}>
           {links.map((link, index) => (
@@ -201,7 +202,7 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
         <div className="mobile-menu__contact">
           <LanguageSwitcher mobile />
           <p>{t("mobileLead")}</p>
-          <Link className={buttonVariants({ variant: "ctaDark", size: "cta" })} href="/plan" onClick={() => setOpen(false)}>{tCta("planYourJourney")}</Link>
+          <Link className={buttonVariants({ variant: "ctaCopper", size: "cta" })} href="/plan" onClick={() => setOpen(false)}>{tCta("planYourJourney")}</Link>
           <a className="text-link" href={site.whatsapp} target="_blank" rel="noreferrer">{tCta("whatsappWithPhone", { phone: site.phoneDisplay })}<ArrowUpRight /></a>
         </div>
       </dialog>

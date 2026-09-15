@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Image from "@/components/Image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { CheckCircle2 } from "@/components/Icon";
+import { CheckCircle2, ShieldCheck, ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, PageLinks, PlanningCall, SectionIntro, StorySection } from "@/components/Editorial";
 import { site, sourceLinks } from "@/lib/site";
@@ -36,7 +36,7 @@ export default async function AboutPage() {
       { title: t("honest"), body: t("honestBody") },
       { title: t("respect"), body: t("respectBody") },
     ]} /></div></section>
-    <section className="section section--dark credentials-section"><div className="shell"><p className="eyebrow eyebrow--copper">{t("verified")}</p><div className="credentials-grid"><div><CheckCircle2 /><span>{t("role")}</span><strong>Tesema “Tevan” Mulualem</strong></div><div><CheckCircle2 /><span>{t("qualification")}</span><strong>{t("qualificationValue")}</strong></div><div><CheckCircle2 /><span>{t("operator")}</span><strong>Simien Ethio Tours</strong></div><div><CheckCircle2 /><span>{t("based")}</span><strong>{t("basedValue")}</strong></div></div><p className="credential-source">{t.rich("credentialSource", { site: (chunks) => <a href={sourceLinks.operatorAbout} target="_blank" rel="noreferrer">{chunks}</a> })}</p></div></section>
+    <section className="section section--dark credentials-section"><div className="shell"><p className="eyebrow eyebrow--copper">{t("verified")}</p><div className="credentials-grid"><div><CheckCircle2 /><span>{t("role")}</span><strong>Tesema “Tevan” Mulualem</strong></div><div><CheckCircle2 /><span>{t("qualification")}</span><strong>{t("qualificationValue")}</strong></div><div><CheckCircle2 /><span>{t("operator")}</span><strong>Simien Ethio Tours</strong></div><div><CheckCircle2 /><span>{t("based")}</span><strong>{t("basedValue")}</strong></div></div><p className="credential-source"><ShieldCheck size={16} />{t.rich("credentialSource", { site: (chunks) => <a className="credential-source__link" href={sourceLinks.operatorAbout} target="_blank" rel="noreferrer">{chunks}<ArrowUpRight size={12} /></a> })}</p></div></section>
     <section className="section tevan-local" id="local"><div className="shell tevan-local__grid"><div><p className="eyebrow eyebrow--copper">{t("localTag")}</p><h2 className="section-title">{t.rich("localTitle", em)}</h2></div><div><p className="lead">{t("localLead")}</p><div className="prose"><p>{t("localBody")}</p></div><div className="local-chain"><span>{t("chainTraveler")}</span><i>→</i><span>{t("chainTeam")}</span><i>→</i><span>{t("chainBusiness")}</span><i>→</i><span>{t("chainFuture")}</span></div></div></div></section>
     <StorySection id="equipment" tag={t("equipmentTag")} title={t("equipmentTitle")} accent={t("equipmentAccent")} paper paragraphs={t.raw("equipment")}><Link className="text-link" href="/plan">{t("askPreparation")}</Link></StorySection>
     <section className="section"><div className="shell founder-note"><p className="eyebrow eyebrow--copper">{t("noteTag")}</p><blockquote>{t("noteQuote")}</blockquote><p>{t("noteClose")}</p><span>{t("noteSignoff")}</span></div></section>
