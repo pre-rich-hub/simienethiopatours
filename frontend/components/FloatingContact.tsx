@@ -17,7 +17,7 @@ function WhatsappIcon() {
   </svg>;
 }
 
-const fabClass = "grid size-[58px] place-items-center rounded-full border-0 text-white shadow-[0_4px_12px_rgba(23,25,22,.08),0_18px_40px_rgba(23,25,22,.16)] transition-transform hover:-translate-y-[3px] hover:scale-[1.045] hover:shadow-[0_6px_16px_rgba(23,25,22,.1),0_26px_52px_rgba(23,25,22,.2)] max-[720px]:size-[52px]";
+const fabClass = "grid size-[58px] place-items-center rounded-full border-2 border-[rgba(250,248,241,.85)] text-white shadow-[0_4px_12px_rgba(23,25,22,.18),0_18px_40px_rgba(23,25,22,.28)] transition-transform hover:-translate-y-[3px] hover:scale-[1.045] hover:shadow-[0_6px_16px_rgba(23,25,22,.22),0_26px_52px_rgba(23,25,22,.34)] max-[720px]:size-[52px]";
 
 export function FloatingContact() {
   const t = useTranslations("cta");
