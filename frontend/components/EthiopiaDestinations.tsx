@@ -15,12 +15,16 @@ const areaPath = (area: Area) => area === 'southern' ? '/southern-ethiopia' : '/
 
 async function DestinationCards({ places }: { places: PublicDestination[] }) {
   const t = await getTranslations('ethiopia');
+  const tCta = await getTranslations('cta');
   return <div className="ethiopia-destination-grid">{places.map(place => <Link key={place.slug} href={place.path} locale={place.locale} className="ethiopia-destination-card">
     {place.imageUrl && <div className="ethiopia-destination-card__photo"><Image src={resolveMediaUrl(place.imageUrl)} alt={place.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" /></div>}
     <div className="ethiopia-destination-card__body">
       {place.type === 'extension' && <p className="eyebrow eyebrow--copper">{t('extension')}</p>}
       <h3>{place.name}</h3><p className="ethiopia-destination-card__location">{place.location}</p>
-      <p>{place.overview[0]}</p><span className="text-link">{t('discover', { name: place.name })} <ArrowUpRight size={16} /></span>
+      <p>{place.overview[0]}</p>
+      <div className="ethiopia-destination-card__footer">
+        <span className="simien-photo-card__explore">{tCta('exploreMore')} <ArrowUpRight size={16} /></span>
+      </div>
     </div>
   </Link>)}</div>;
 }
