@@ -47,11 +47,7 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
       description: t("simienMenu.description"),
       exploreHref: "/simien-mountains",
       exploreLabel: t("simienMenu.explore"),
-      extraLinks: [
-        { href: "/treks", label: t("simienMenu.chooseTrek") },
-        { href: "/plan", label: t("simienMenu.planNights") },
-        { href: "/gondar", label: t("simienMenu.royalCity") },
-      ],
+      extraLinks: [],
       cards: simienMenuCards,
     },
     "/treks": {
