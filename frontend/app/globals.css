@@ -95,7 +95,7 @@ p { text-wrap: pretty; }
 .eyebrow--copper { color: var(--copper-ink); }
 .section--dark .eyebrow--copper { color: var(--gold); }
 .eyebrow--muted { color: var(--stone); }
-.display, h1, h2, h3 { font-family: var(--serif); font-weight: 500; }
+.display, h1, h2, h3 { font-family: var(--serif); font-weight: 500; font-variant-numeric: lining-nums; }
 .display { margin: 0; font-size: clamp(4rem, 7.2vw, 7.4rem); letter-spacing: -.045em; line-height: .94; }
 .section-title { margin: 0; max-width: 900px; font-size: clamp(3rem, 5vw, 5.35rem); letter-spacing: -.04em; line-height: .98; text-wrap: balance; }
 .section-title em { font-weight: 400; }
