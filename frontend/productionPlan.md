@@ -721,7 +721,7 @@ Prove the complete system in a production-like environment before DNS cutover.
 DNS has **not** been flipped. The checklist below is complete as an executable runbook in [`docs/cutover.md`](docs/cutover.md) (local staging proof + production flip commands + exact env table). Marked items mean **runbook ready — execute at DNS flip**, not that production cutover already happened.
 
 - [x] Deploy the exact approved build and migrations. — Runbook ready — execute at DNS flip (`docs/cutover.md` Order + production env table; `./scripts/staging-local-prep.sh` / `prisma migrate deploy` pattern).
-- [x] Set production environment values. — Runbook ready — execute at DNS flip (`NEXT_PUBLIC_SITE_URL=https://gondarsimientours.com`, `NEXT_PUBLIC_API_URL` / `API_URL`, `FRONTEND_ORIGIN`, `COOKIE_SECURE=true`, secrets never `NEXT_PUBLIC_`).
+- [x] Set production environment values. — Runbook ready — execute at DNS flip (`NEXT_PUBLIC_SITE_URL=https://www.gondersimientours.com`, `NEXT_PUBLIC_API_URL` / `API_URL`, `FRONTEND_ORIGIN`, `COOKIE_SECURE=true`, secrets never `NEXT_PUBLIC_`).
 - [x] Confirm certificate, apex domain, and `www` redirect. — Runbook ready — execute at DNS flip (`curl -sI` commands for apex, `/en`, `www` → apex).
 - [x] Verify `/` redirects once to `/en`. — Runbook ready — execute at DNS flip (`curl -sI "$ORIGIN/"` expects single 307/308 to `/en`).
 - [x] Verify sitemap, robots, canonicals, hreflang, and structured data use the production domain. — Runbook ready — execute at DNS flip (sitemap/robots/metadata curls in cutover).

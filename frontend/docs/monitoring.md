@@ -26,8 +26,8 @@ Two independent checks. The public site is built to render if the CMS API is dow
 
 | Check | URL | Expect |
 | --- | --- | --- |
-| Frontend (user-facing) | `https://gondarsimientours.com/` | 307 → `/en`, then 200 |
-| Frontend (cheap) | `https://gondarsimientours.com/health` | 200 `{ "ok": true, "service": "frontend" }` |
+| Frontend (user-facing) | `https://www.gondersimientours.com/` | 307 → `/en`, then 200 |
+| Frontend (cheap) | `https://www.gondersimientours.com/health` | 200 `{ "ok": true, "service": "frontend" }` |
 | Backend | `{NEXT_PUBLIC_API_URL}/health` | 200 `{ "status": "ok" }` |
 
 Staging uses the staging origins from ops. Local: `http://localhost:3000/health` and `http://localhost:5000/health`.

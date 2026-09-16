@@ -2,7 +2,7 @@
 
 How to put **Gondar Simien Tours** on the live domain and prove it. Env values: [`environments.md`](environments.md). Full path list: [`qa.md`](qa.md). Performance gates: [`performance.md`](performance.md). Logs and uptime: [`monitoring.md`](monitoring.md).
 
-Do not invent staging or API hostnames. Ops fills those in. Canonical production origin is **`https://gondarsimientours.com`** (no trailing slash, no `www`).
+Do not invent staging or API hostnames. Ops fills those in. Canonical production origin is **`https://www.gondersimientours.com`** (no trailing slash; match the live visitor origin).
 
 This file is the runbook. It is not a completed production deploy. DNS has **not** been flipped; items below marked “runbook ready” are executable at cutover time only.
 
@@ -12,7 +12,7 @@ This file is the runbook. It is not a completed production deploy. DNS has **not
 2. Deploy the frontend to **staging** (or a Vercel Preview that uses the staging env). Run [`qa.md`](qa.md). Staging sign-off is the P6 gate.
 3. Deploy the frontend to **production** with the production env. Do not flip DNS until that build is green.
 4. Point DNS at the production host.
-5. Run [Post-deploy](#post-deploy) on `https://gondarsimientours.com`.
+5. Run [Post-deploy](#post-deploy) on `https://www.gondersimientours.com`.
 6. Keep the previous production deployment available for [Rollback](#rollback).
 
 Public routes are `/{locale}/…`. `/` must 307 once to `/en`. Admin stays at `/admin` with no locale prefix.
@@ -32,7 +32,7 @@ Another Node host is fine if ops prefers it: Node 20+, same Root Directory, `npm
 
 `NEXT_PUBLIC_*` are baked in at **build**. Change them, then rebuild / redeploy.
 
-API and site must be **same-site** for admin cookies (`SameSite=Lax`). `https://gondarsimientours.com` → `https://api.gondarsimientours.com` is the designed shape. A `*.vercel.app` frontend talking to an unrelated API host will not send the session cookie. Details: [`environments.md`](environments.md#cookie-auth-designed-model).
+API and site must be **same-site** for admin cookies (`SameSite=Lax`). `https://www.gondersimientours.com` → `https://api.gondersimientours.com` is the designed shape. A `*.vercel.app` frontend talking to an unrelated API host will not send the session cookie. Details: [`environments.md`](environments.md#cookie-auth-designed-model).
 
 ## Local staging proof (2026-09-13)
 
@@ -83,10 +83,10 @@ Use exact production origins (no trailing slash). Build after setting `NEXT_PUBL
 
 | Variable | Production value |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | `https://gondarsimientours.com` |
-| `NEXT_PUBLIC_API_URL` | `https://api.gondarsimientours.com` (or the ops-assigned same-site API origin) |
+| `NEXT_PUBLIC_SITE_URL` | `https://www.gondersimientours.com` |
+| `NEXT_PUBLIC_API_URL` | `https://api.gondersimientours.com` (or the ops-assigned same-site API origin) |
 | `API_URL` | Same as `NEXT_PUBLIC_API_URL` (server-side CMS/inquiry) |
-| Backend `FRONTEND_ORIGIN` | `https://gondarsimientours.com` |
+| Backend `FRONTEND_ORIGIN` | `https://www.gondersimientours.com` |
 | Backend `COOKIE_SECURE` | `true` |
 | Backend `DATABASE_URL` | Production Postgres (ops) |
 | Backend `JWT_SECRET` | Long random secret (ops; never `NEXT_PUBLIC_`) |
@@ -104,19 +104,19 @@ Attach the domain in the host dashboard, then at the registrar:
 | `@` (apex) | as the host instructs (A / ALIAS / ANAME / CNAME flattening) | Production frontend |
 | `www` | CNAME | Apex, or the host’s `www` target |
 
-Redirect **`www` → `https://gondarsimientours.com`** (301 or 308). Do not leave both as indexable duplicates.
+Redirect apex **`https://gondersimientours.com` → `https://www.gondersimientours.com`** (301 or 308). Do not leave both as indexable duplicates.
 
-API DNS is the backend owner’s. It should be a subdomain of `gondarsimientours.com` so cookies work.
+API DNS is the backend owner’s. It should be a subdomain of `gondersimientours.com` so cookies work.
 
-Wait until the certificate is valid and `https://gondarsimientours.com/en` returns 200 before calling DNS done.
+Wait until the certificate is valid and `https://www.gondersimientours.com/en` returns 200 before calling DNS done.
 
 ## Production flip commands
 
 Execute **after** the approved production build is deployed and DNS points at it. Substitute nothing invented — these use the canonical origin.
 
 ```bash
-ORIGIN=https://gondarsimientours.com
-API=https://api.gondarsimientours.com   # must match NEXT_PUBLIC_API_URL / same-site model
+ORIGIN=https://www.gondersimientours.com
+API=https://api.gondersimientours.com   # must match NEXT_PUBLIC_API_URL / same-site model
 
 # 1. Certificate + locale redirect
 curl -sI "$ORIGIN/" | head
@@ -125,8 +125,8 @@ curl -sI "$ORIGIN/en" | head
 # Expect: HTTP/2 200 and a valid certificate (no browser warning)
 
 # 2. www → apex
-curl -sI "https://www.gondarsimientours.com/" | head
-# Expect: 301/308 to https://gondarsimientours.com/…
+curl -sI "https://gondersimientours.com/" | head
+# Expect: 301/308 to https://www.gondersimientours.com/…
 
 # 3. Sitemap and robots
 curl -sI "$ORIGIN/sitemap.xml" | head
@@ -134,7 +134,7 @@ curl -s "$ORIGIN/robots.txt"
 # Expect: 200; Disallow: /admin/ and /api/; Sitemap: $ORIGIN/sitemap.xml
 
 # 4. Canonical / hreflang / structured data spot-check
-curl -sL "$ORIGIN/en" | tr '"' '\n' | grep -E 'canonical|og:url|og:image|gondarsimientours|TouristTrip|TravelAgency' | head
+curl -sL "$ORIGIN/en" | tr '"' '\n' | grep -E 'canonical|og:url|og:image|gondersimientours|TouristTrip|TravelAgency' | head
 
 # 5. Health
 curl -s "$ORIGIN/health"
@@ -155,7 +155,7 @@ curl -s -X POST "$API/api/v1/subscribers" \
 
 **Index notice:** Google retired `google.com/ping?sitemap=`. After the live sitemap is correct:
 
-1. Google Search Console → add `https://gondarsimientours.com` → Sitemaps → submit `https://gondarsimientours.com/sitemap.xml`
+1. Google Search Console → add `https://www.gondersimientours.com` → Sitemaps → submit `https://www.gondersimientours.com/sitemap.xml`
 2. Bing Webmaster Tools → submit the same URL
 
 Do not ping a staging sitemap as if it were production.
@@ -172,7 +172,7 @@ See [Production flip commands](#production-flip-commands) steps 3–4.
 
 Open `/en`, `/en/treks/4-day-simien-classic`, `/en/plan`. Confirm:
 
-- `<link rel="canonical">` and `og:url` use `https://gondarsimientours.com/…`
+- `<link rel="canonical">` and `og:url` use `https://www.gondersimientours.com/…`
 - `og:image` is on that origin (default Imet Gogo)
 - `html[lang]` matches the path (`en` / `es` / `de` / `fr`)
 - JSON-LD Organization / trip data does not invent prices or review counts
@@ -201,8 +201,8 @@ Start the clock after DNS is live and post-deploy checks pass.
 
 ```bash
 # Repeat periodically for 48h (or wire hosting uptime to these URLs)
-ORIGIN=https://gondarsimientours.com
-API=https://api.gondarsimientours.com
+ORIGIN=https://www.gondersimientours.com
+API=https://api.gondersimientours.com
 curl -sI "$ORIGIN/en" | head -1
 curl -s "$ORIGIN/health"
 curl -s "$API/health"
@@ -254,8 +254,8 @@ Commands run against `http://127.0.0.1:3000`. This does **not** replace a produc
 | Check | Result |
 | --- | --- |
 | `GET /sitemap.xml` | 200; 272 unique locale URLs; no `/admin`, `/privacy`, `/terms` |
-| `GET /robots.txt` | 200; disallows `/admin/` and `/api/`; `Sitemap: https://gondarsimientours.com/sitemap.xml` |
-| `GET /en` metadata | 200; `html[lang]=en`. This local process minted production canonicals / `og:url` / `og:image` (`https://gondarsimientours.com/…`) — set `NEXT_PUBLIC_SITE_URL` to the real origin before a hosted build |
+| `GET /robots.txt` | 200; disallows `/admin/` and `/api/`; `Sitemap: https://www.gondersimientours.com/sitemap.xml` |
+| `GET /en` metadata | 200; `html[lang]=en`. This local process minted production canonicals / `og:url` / `og:image` (`https://www.gondersimientours.com/…`) — set `NEXT_PUBLIC_SITE_URL` to the real origin before a hosted build |
 | `POST /api/inquiry` | 200 `{ "delivery": "email" }` (contacts API down — expected locally) |
 | `/admin/login` | 200; form renders. Session not exercised (API down) |
 | DNS / Search Console | Not this pass — no production host attached |

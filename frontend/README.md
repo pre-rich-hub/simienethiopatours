@@ -158,7 +158,7 @@ Full local / staging / production matrix: [`docs/environments.md`](docs/environm
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin (local: `http://localhost:3000`; production: `https://gondarsimientours.com`) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin (local: `http://localhost:3000`; production: `https://www.gondersimientours.com`) |
 | `NEXT_PUBLIC_API_URL` | Express backend origin (default `http://localhost:5000`) |
 | `API_URL` | Optional server-only SSR override for the API |
 | `CONTACT_WEBHOOK_URL` | Optional server-only JSON webhook if the contacts API is down |
@@ -181,7 +181,7 @@ For CMS, admin, and AI chat against live data, run the backend in [`../backend`]
 
 ### Deploy
 
-Host the **`frontend`** directory (Vercel or another Node 20+ host). Production canonical is `https://gondarsimientours.com`. Env, DNS, sitemap submit, admin + inquiry checks, and rollback: [`docs/cutover.md`](docs/cutover.md).
+Host the **`frontend`** directory (Vercel or another Node 20+ host). Production canonical is `https://www.gondersimientours.com`. Env, DNS, sitemap submit, admin + inquiry checks, and rollback: [`docs/cutover.md`](docs/cutover.md).
 
 ---
 

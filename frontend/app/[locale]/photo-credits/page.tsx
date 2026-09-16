@@ -36,7 +36,7 @@ export default function PhotoCreditsPage() {
             <p>If you own or supplied an image and need a correction, contact <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
           </div>
 
-          <div className="credits-records" aria-label="Photo credit records">
+          <div className="credits-records" role="region" aria-label="Photo credit records">
             {photoCredits.map((photo, index) => (
               <article className="credits-record" key={photo.file}>
                 <div className="credits-record__image">

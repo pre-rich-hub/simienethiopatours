@@ -20,7 +20,7 @@ Defaults: `postgresql://gst:gst@127.0.0.1:5432/gondar_simien_tours` in container
 
 | Variable | Local | Staging | Production | Notes |
 | --- | --- | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` | `https://<staging-host>` (no trailing slash) | `https://gondarsimientours.com` | Canonical, sitemap, Open Graph, JSON-LD, hreflang. Must match the origin visitors use. |
+| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` | `https://<staging-host>` (no trailing slash) | `https://www.gondersimientours.com` | Canonical, sitemap, Open Graph, JSON-LD, hreflang. Must match the origin visitors use. |
 | `NEXT_PUBLIC_API_URL` | `http://localhost:5000` | `https://<staging-api-host>` | `https://<production-api-host>` | Express origin only (no `/api` suffix). Used by admin, CMS, chat, newsletter, inquiry, and `next.config` image `remotePatterns` for `/assets/**`. |
 | `API_URL` | unset (falls back to `NEXT_PUBLIC_API_URL`) | optional | optional | Server-only override for SSR/`lib/cms.ts` / `lib/api/client.ts` if the app server should reach the API on an internal URL. |
 | `CONTACT_WEBHOOK_URL` | unset | optional | optional | Server-only. Inquiry route POSTs JSON here **only if** `POST {API}/api/v1/contacts` fails. Never prefix `NEXT_PUBLIC_`. |
@@ -52,7 +52,7 @@ NEXT_PUBLIC_API_URL=https://<staging-api-host>
 ### Production (host dashboard)
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://gondarsimientours.com
+NEXT_PUBLIC_SITE_URL=https://www.gondersimientours.com
 NEXT_PUBLIC_API_URL=https://<production-api-host>
 # CONTACT_WEBHOOK_URL=
 # ERROR_WEBHOOK_URL=
@@ -91,7 +91,7 @@ Backend cookie flags ([`backend/src/middleware/auth.middleware.ts`](../../backen
 | `secure` | `COOKIE_SECURE` or production | Required on HTTPS |
 | `path` | `/` | Whole API origin |
 
-**Same-site, different origin is supported.** `http://localhost:3000` → `http://localhost:5000` works (same host, different ports). `https://gondarsimientours.com` → `https://api.gondarsimientours.com` works (same eTLD+1). CORS `credentials: true` plus `FRONTEND_ORIGIN` (comma-separated allowlist) lets that credentialed `fetch` through.
+**Same-site, different origin is supported.** `http://localhost:3000` → `http://localhost:5000` works (same host, different ports). `https://www.gondersimientours.com` → `https://api.gondersimientours.com` works (same eTLD+1). CORS `credentials: true` plus `FRONTEND_ORIGIN` (comma-separated allowlist) lets that credentialed `fetch` through.
 
 **Unrelated hosts are not supported** with `SameSite=Lax` (for example a `*.vercel.app` site talking to a `*.railway.app` API). The browser will store the cookie on the API host and then omit it on `fetch`. Do not “fix” that on the frontend. Either put the API on a subdomain of the site, or the backend owner must change the cookie to `SameSite=None; Secure`.
 
@@ -119,7 +119,7 @@ Do not rename `CONTACT_WEBHOOK_URL`, `ERROR_WEBHOOK_URL`, or `API_URL` to `NEXT_
 - [ ] `CONTACT_WEBHOOK_URL` is empty or a real HTTPS endpoint — never a placeholder
 - [ ] `ERROR_WEBHOOK_URL` is empty or a real HTTPS endpoint — never a placeholder
 - [ ] Backend `FRONTEND_ORIGIN` includes that same site origin
-- [ ] API host is same-site with the frontend (localhost ports, or a subdomain of `gondarsimientours.com`)
+- [ ] API host is same-site with the frontend (localhost ports, or a subdomain of `gondersimientours.com`)
 - [ ] `COOKIE_SECURE=true` on HTTPS staging and production
 - [ ] No secrets in frontend env except unused empty optionals — never `NEXT_PUBLIC_` on webhooks or keys
 - [ ] Draft CSP in `next.config.ts` still allows the API origin used by chat/CMS/admin; tighten before go-live

@@ -153,6 +153,7 @@ export function NavMegaMenu({ id, label, matchPath, eyebrow, heading, descriptio
       <div
         className="journey-menu"
         id={menuId}
+        role="region"
         aria-label={t("exploreNamed", { name: label })}
         aria-hidden={!expanded}
         inert={!expanded}

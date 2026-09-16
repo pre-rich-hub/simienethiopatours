@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight } from "@/components/Icon";
 import { reviewSources, type ReviewSource, type TravelerReview } from "@/lib/reviews";
 
 function Rating({ source, badge = false }: { source: ReviewSource; badge?: boolean }) {
-  return <span className={`review-rating review-rating--${source.toLowerCase()}`} aria-label="5 out of 5">
+  return <span className={`review-rating review-rating--${source.toLowerCase()}`} role="img" aria-label="5 out of 5">
     {Array.from({ length: 5 }, (_, index) => <i key={index} aria-hidden="true">{source === "Google" ? "★" : ""}</i>)}
     {badge && <span className="review-check" aria-hidden="true">✓</span>}
   </span>;
@@ -32,9 +32,9 @@ function GoogleIcon() {
 }
 
 function SourceMark({ source }: { source: ReviewSource }) {
-  return <span className={`review-source-mark review-source-mark--${source.toLowerCase()}`} aria-label={source}>
+  return <span className={`review-source-mark review-source-mark--${source.toLowerCase()}`} role="img" aria-label={source}>
     {source === "Tripadvisor"
-      ? <><TripadvisorIcon /><span className="review-source-label">Tripadvisor</span></>
+      ? <><TripadvisorIcon /><span className="review-source-label" aria-hidden="true">Tripadvisor</span></>
       : <><GoogleIcon /><span className="review-source-label google-wordmark" aria-hidden="true"><i>G</i><i>o</i><i>o</i><i>g</i><i>l</i><i>e</i></span></>}
   </span>;
 }

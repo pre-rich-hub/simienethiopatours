@@ -186,7 +186,7 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
             <Fragment key={link.href}><Link href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
               <span>0{index + 1}</span>{t(link.key)}<ArrowUpRight />
             </Link>
-            {link.href === "/explore-ethiopia" && (<div className="ethiopia-mobile-groups" aria-label={e("groups")}>
+            {link.href === "/explore-ethiopia" && (<div className="ethiopia-mobile-groups" role="group" aria-label={e("groups")}>
             <Link href="/explore-ethiopia#historic" onClick={() => setOpen(false)}>{e("historic")}</Link>
             <Link href="/explore-ethiopia#extensions" onClick={() => setOpen(false)}>{e("extensions")}</Link>
             <Link href="/southern-ethiopia" onClick={() => setOpen(false)}>{e("southern")}</Link>

@@ -16,7 +16,7 @@ import { site, verifiedSocialLinks } from "@/lib/site";
 import clientPhotos from "@/lib/client-photos.json";
 
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://gondarsimientours.com"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.gondersimientours.com"
 ).replace(/\/$/, "");
 
 export const nap = {

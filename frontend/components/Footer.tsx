@@ -49,7 +49,7 @@ export async function Footer() {
           <p className="my-7 max-w-[360px] font-serif text-[22px] leading-[1.4]">{t("tagline")}</p>
           <Link className="text-link text-link--light" href="/plan">{tCta("planWithTevan")} <ArrowUpRight /></Link>
           {socials.length > 0 && (
-            <div className="mt-[30px] flex gap-3.5" aria-label={tCommon("followUs")}>
+            <div className="mt-[30px] flex gap-3.5" role="group" aria-label={tCommon("followUs")}>
               {socials.map(({ network, href }) => {
                 const { label, Icon } = socialBadges[network];
                 return (
