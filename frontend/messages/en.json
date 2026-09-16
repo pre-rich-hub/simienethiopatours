@@ -577,7 +577,11 @@
     "about": "About {name}",
     "planningGuide": "Planning guides",
     "planningGuideBody": "Before you choose a length, read practical notes on Simien routes and Gondar city time.",
-    "planningGuideLink": "Open the Simien planning guide"
+    "planningGuideLink": "Open the Simien planning guide",
+    "searchAria": "Search by name",
+    "searchPlaceholder": "Search by name…",
+    "countSearch": " matching “{query}”",
+    "countNone": "Nothing matches your search."
   },
   "simien": {
     "crumb": "Simien Mountains",
@@ -988,5 +992,27 @@
     "planTitle": "A journey shaped around you",
     "planLead": "Talk with our local team about including {name} in a private itinerary. Routing, access and activities are confirmed for your dates.",
     "back": "All {region} destinations"
+  },
+  "destinationsFilter": {
+    "filterAria": "Filter destinations by type",
+    "types": {
+      "All": "All places",
+      "camp": "Camps",
+      "gateway": "Gateways",
+      "viewpoint": "Viewpoints",
+      "corridor": "Corridors",
+      "park": "Park",
+      "waterfall": "Waterfalls",
+      "heritage": "Heritage",
+      "rural": "Rural"
+    },
+    "countOne": "{count} place",
+    "countMany": "{count} places",
+    "countFiltered": " · {category}",
+    "countAll": " to explore",
+    "searchAria": "Search by name",
+    "searchPlaceholder": "Search by name…",
+    "countSearch": " matching “{query}”",
+    "countNone": "Nothing matches your search."
   }
 }

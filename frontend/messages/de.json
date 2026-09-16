@@ -577,7 +577,11 @@
     "about": "Über {name}",
     "planningGuide": "Planungsleitfäden",
     "planningGuideBody": "Bevor Sie eine Länge wählen, lesen Sie praktische Hinweise zu Simien-Routen und Gondar-Stadtzeit.",
-    "planningGuideLink": "Simien-Planungsleitfaden öffnen"
+    "planningGuideLink": "Simien-Planungsleitfaden öffnen",
+    "searchAria": "Nach Namen suchen",
+    "searchPlaceholder": "Nach Namen suchen…",
+    "countSearch": " passend zu „{query}“",
+    "countNone": "Keine Treffer für Ihre Suche."
   },
   "simien": {
     "crumb": "Simien-Gebirge",
@@ -988,5 +992,27 @@
     "planTitle": "Eine Reise nach Ihren Wünschen",
     "planLead": "Sprechen Sie mit unserem Team vor Ort darüber, wie sich {name} in eine individuelle Reise einbinden lässt. Route, Zugang und Aktivitäten werden für Ihre Reisedaten bestätigt.",
     "back": "Alle Reiseziele: {region}"
+  },
+  "destinationsFilter": {
+    "filterAria": "Ziele nach Typ filtern",
+    "types": {
+      "All": "Alle Orte",
+      "camp": "Camps",
+      "gateway": "Zugänge",
+      "viewpoint": "Aussichtspunkte",
+      "corridor": "Korridore",
+      "park": "Park",
+      "waterfall": "Wasserfälle",
+      "heritage": "Kulturerbe",
+      "rural": "Ländlich"
+    },
+    "countOne": "{count} Ort",
+    "countMany": "{count} Orte",
+    "countFiltered": " · {category}",
+    "countAll": " zu entdecken",
+    "searchAria": "Nach Namen suchen",
+    "searchPlaceholder": "Nach Namen suchen…",
+    "countSearch": " passend zu „{query}“",
+    "countNone": "Keine Treffer für Ihre Suche."
   }
 }

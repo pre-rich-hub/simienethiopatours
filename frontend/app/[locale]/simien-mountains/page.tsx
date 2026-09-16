@@ -6,9 +6,9 @@ import type { ReactNode } from "react";
 import Image from "@/components/Image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
+import { DestinationsFilter } from "@/components/DestinationsFilter";
 import { site } from "@/lib/site";
 import { messagePageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -24,7 +24,6 @@ export default async function SimienPage() {
   const places = (await getDestinations(await getLocale(), "simien")).map(destinationToPlace);
   const t = await getTranslations("simien");
   const tCommon = await getTranslations("common");
-  const tCta = await getTranslations("cta");
 
   return (
     <PageShell lightHeader={false}>
@@ -52,29 +51,7 @@ export default async function SimienPage() {
 
       <section className="section" id="destinations">
         <div className="shell">
-          <div className="simien-photo-grid simien-photo-grid--3">
-            {places.map((place) => (
-              <Link className="simien-photo-card dest-card" href={place.path} locale={place.locale} key={place.slug}>
-                <div className="simien-photo-card__image">
-                  {place.image && <Image src={place.image} alt={place.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />}
-                  <span className="simien-photo-card__shade" />
-                  <div className="simien-photo-card__overlay">
-                    <p className="simien-photo-card__eyebrow">{place.location.split(";")[0]}</p>
-                    <h2>{place.name}</h2>
-                  </div>
-                </div>
-                <div className="simien-photo-card__body">
-                  <p>{place.overview[0] ?? ""}</p>
-                  <div className="simien-photo-card__footer">
-                    <span className="simien-photo-card__explore">
-                      {tCta("exploreMore")}
-                      <ArrowUpRight />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <DestinationsFilter places={places} />
         </div>
       </section>
     </PageShell>

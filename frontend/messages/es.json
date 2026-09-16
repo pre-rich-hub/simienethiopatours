@@ -577,7 +577,11 @@
     "about": "Sobre {name}",
     "planningGuide": "Guías de planificación",
     "planningGuideBody": "Antes de elegir la duración, lea notas prácticas sobre rutas del Simien y el tiempo en Gondar.",
-    "planningGuideLink": "Abrir la guía del Simien"
+    "planningGuideLink": "Abrir la guía del Simien",
+    "searchAria": "Buscar por nombre",
+    "searchPlaceholder": "Buscar por nombre…",
+    "countSearch": " que coinciden con “{query}”",
+    "countNone": "No hay resultados para tu búsqueda."
   },
   "simien": {
     "crumb": "Montañas Simien",
@@ -988,5 +992,27 @@
     "planTitle": "Un viaje a tu medida",
     "planLead": "Habla con nuestro equipo local sobre cómo incluir {name} en un itinerario privado. La ruta, el acceso y las actividades se confirman para tus fechas.",
     "back": "Todos los destinos de {region}"
+  },
+  "destinationsFilter": {
+    "filterAria": "Filtrar destinos por tipo",
+    "types": {
+      "All": "Todos los lugares",
+      "camp": "Campamentos",
+      "gateway": "Accesos",
+      "viewpoint": "Miradores",
+      "corridor": "Corredores",
+      "park": "Parque",
+      "waterfall": "Cascadas",
+      "heritage": "Patrimonio",
+      "rural": "Rural"
+    },
+    "countOne": "{count} lugar",
+    "countMany": "{count} lugares",
+    "countFiltered": " · {category}",
+    "countAll": " para explorar",
+    "searchAria": "Buscar por nombre",
+    "searchPlaceholder": "Buscar por nombre…",
+    "countSearch": " que coinciden con “{query}”",
+    "countNone": "No hay resultados para tu búsqueda."
   }
 }

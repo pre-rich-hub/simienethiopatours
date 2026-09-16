@@ -577,7 +577,11 @@
     "about": "À propos de {name}",
     "planningGuide": "Guides de planification",
     "planningGuideBody": "Avant de choisir une durée, lisez des notes pratiques sur les itinéraires du Simien et le temps à Gondar.",
-    "planningGuideLink": "Ouvrir le guide du Simien"
+    "planningGuideLink": "Ouvrir le guide du Simien",
+    "searchAria": "Rechercher par nom",
+    "searchPlaceholder": "Rechercher par nom…",
+    "countSearch": " correspondant à « {query} »",
+    "countNone": "Aucun résultat pour votre recherche."
   },
   "simien": {
     "crumb": "Montagnes du Simien",
@@ -988,5 +992,27 @@
     "planTitle": "Un voyage à votre mesure",
     "planLead": "Échangez avec notre équipe locale pour inclure {name} dans un itinéraire privé. Le parcours, les accès et les activités sont confirmés pour vos dates.",
     "back": "Toutes les destinations : {region}"
+  },
+  "destinationsFilter": {
+    "filterAria": "Filtrer les destinations par type",
+    "types": {
+      "All": "Tous les lieux",
+      "camp": "Camps",
+      "gateway": "Accès",
+      "viewpoint": "Points de vue",
+      "corridor": "Corridors",
+      "park": "Parc",
+      "waterfall": "Cascades",
+      "heritage": "Patrimoine",
+      "rural": "Rural"
+    },
+    "countOne": "{count} lieu",
+    "countMany": "{count} lieux",
+    "countFiltered": " · {category}",
+    "countAll": " à explorer",
+    "searchAria": "Rechercher par nom",
+    "searchPlaceholder": "Rechercher par nom…",
+    "countSearch": " correspondant à « {query} »",
+    "countNone": "Aucun résultat pour votre recherche."
   }
 }

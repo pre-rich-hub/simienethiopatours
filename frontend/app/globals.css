@@ -874,9 +874,18 @@ p { text-wrap: pretty; }
 .journeys-filter .content-filters button { min-height: 40px; padding: 8px 15px; border: 0; color: var(--stone); font-size: 10px; font-weight: 600; letter-spacing: .035em; transition: color .28s var(--ease-soft), background-color .28s var(--ease-soft), box-shadow .28s var(--ease-soft); }
 .journeys-filter .content-filters button[aria-pressed="true"] { background: var(--highland); color: white; box-shadow: 0 7px 18px rgba(24,40,32,.16); }
 .journeys-filter .filter-count { margin: 22px 0 0; color: var(--copper-ink); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.journeys-filter__controls { display: flex; flex-direction: column; gap: 14px; }
+.content-filters__search { display: flex; align-items: center; gap: 10px; width: fit-content; max-width: 100%; padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; background: #fff; transition: border-color .3s var(--ease-soft), box-shadow .3s var(--ease-soft); }
+.content-filters__search svg { flex: 0 0 auto; color: var(--stone); }
+.content-filters__search input { min-width: 0; width: 220px; max-width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 13px; }
+.content-filters__search input::placeholder { color: var(--stone-light); }
+.content-filters__search input::-webkit-search-cancel-button { cursor: pointer; }
+.content-filters__search:focus-within { border-color: var(--copper); box-shadow: 0 0 0 3px rgba(179,119,67,.14); }
 @media (max-width: 720px) {
   .journeys-filter .content-filters { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
   .journeys-filter .content-filters button { flex: 0 0 auto; }
+  .content-filters__search { width: 100%; }
+  .content-filters__search input { width: 100%; }
 }
 .gondar-experience-selector .content-grid { gap: 24px; }
 .gondar-experience-selector .content-card { min-height: 0; position: relative; overflow: hidden; padding: 40px; border: 1px solid rgba(23,25,22,.12); background: linear-gradient(145deg, #fffdf8 0%, #f6f1e6 100%); box-shadow: 0 14px 34px rgba(23,25,22,.065); transition: transform .45s var(--ease), border-color .35s ease, box-shadow .45s var(--ease); }
