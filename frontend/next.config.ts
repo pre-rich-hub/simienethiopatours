@@ -57,7 +57,7 @@ const nextConfig: NextConfig = {
    * Draft CSP for production hardening (P11-T2).
    * Allows same-origin assets, the configured API origin (chat/CMS/admin fetch +
    * /assets images), and Google Fonts if ever reintroduced. Tighten further
-   * before go-live once video/webhook hosts are known.
+   * before go-live once webhook hosts are known.
    */
   async headers() {
     const api = apiOrigin();
@@ -66,6 +66,7 @@ const nextConfig: NextConfig = {
       `script-src 'self' 'unsafe-inline' 'unsafe-eval'`,
       `style-src 'self' 'unsafe-inline'`,
       `img-src 'self' data: blob: ${api} https://res.cloudinary.com/ps4gvvqu/`,
+      `media-src 'self' https://res.cloudinary.com/ps4gvvqu/`,
       `font-src 'self' data:`,
       `connect-src 'self' ${api}`,
       "frame-ancestors 'none'",

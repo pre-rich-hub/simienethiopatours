@@ -24,7 +24,7 @@ const journeyImageOverrides: Record<string, { url: string; alt: string }> = {
     alt: "Southern Ethiopia landscapes and road journey",
   },
   "bale-mountains-extension": {
-    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386863/bale-mountains-national-park.jpg",
+    url: "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569926/bale-mountains-national-park.jpg",
     alt: "Bale Mountains National Park landscape",
   },
   "northern-ethiopia-long-way-north": {

@@ -81,7 +81,7 @@ export const journeyPackages: JourneyPackage[] = [
       "Personal trekking equipment; personal snacks and drinks; alcohol; tips; personal purchases",
       "Optional activities; any service not specifically listed in the quotation"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569941/Sankaber.jpg",
     "imageAlt": "Layered cliffs and green valleys near Sankaber in the Simien Mountains",
     "segments": [
       {
@@ -203,7 +203,7 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks/extra drinks; laundry; SIM/data/roaming; tips; personal expenses",
       "Medical treatment/evacuation; optional activities"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569941/Sankaber.jpg",
     "imageAlt": "Layered cliffs and green valleys near Sankaber in the Simien Mountains",
     "days": [
       {
@@ -257,7 +257,7 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks and extra drinks; laundry; communications costs; tips; personal purchases",
       "Medical/evacuation costs; optional activities"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789575650/imet-gogo_1.png",
     "imageAlt": "Cliffs and deep valleys seen from Imet Gogo",
     "days": [
       {
@@ -317,7 +317,7 @@ export const journeyPackages: JourneyPackage[] = [
       "Alcohol; personal snacks/extra drinks; laundry; SIM/data/roaming; tips; personal shopping",
       "Medical treatment; emergency evacuation; optional activities"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569908/cheenk-camp.jpg",
     "imageAlt": "Travellers sharing an outdoor meal at Chenek camp",
     "days": [
       {
@@ -998,7 +998,7 @@ export const journeyPackages: JourneyPackage[] = [
       "International and domestic flights; visa; travel insurance",
       "Personal expenses; alcohol; tips; optional activities"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386873/buhit-ras.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569929/buhit-ras.jpg",
     "imageAlt": "A hiker overlooking the mountains at Buyit Ras",
     "segments": [
       {
@@ -1114,7 +1114,7 @@ export const journeyPackages: JourneyPackage[] = [
       "Professional photographer unless booked; camera equipment; drone services",
       "Flights; visa; insurance; personal expenses; alcohol; tips; optional activities"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386844/Jinbar_Waterfall.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569909/Jinbar_Waterfall.jpg",
     "imageAlt": "Two visitors at the Jinbar Waterfall viewpoint",
     "itineraryIntro": "Sample 5-day outline",
     "itineraryNotes": [
@@ -1349,7 +1349,7 @@ export const journeyPackages: JourneyPackage[] = [
       "Meals and drinks unless listed; tips; personal shopping",
       "Flights; visa; insurance"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569910/fasil-ghebbi.jpg",
     "imageAlt": "Stone castle and towers at Fasil Ghebbi in Gondar",
     "segments": [
       {
@@ -1494,7 +1494,7 @@ export const journeyPackages: JourneyPackage[] = [
     "excluded": [
       "Personal expenses; alcoholic drinks; tips; personal purchases; activities not listed above"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386874/kosoye-mountain.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569935/kosoye-mountain.jpg",
     "imageAlt": "A visitor pointing across the green Kosoye Mountains",
     "itineraryNotes": [
       "Full-day versions add longer walking, additional village time and a more leisurely meal."
@@ -1883,7 +1883,7 @@ export const journeyPackages: JourneyPackage[] = [
       "Flights; visa; insurance; personal expenses; alcohol; tips",
       "Optional activities; services not listed in the quotation"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569908/Guche-camp-simen.jpg",
     "imageAlt": "A tent beside a shelter and giant lobelias at Geech camp",
     "itineraryIntro": "Sample 6-day outline",
     "days": [

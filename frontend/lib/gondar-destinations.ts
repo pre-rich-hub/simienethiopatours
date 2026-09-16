@@ -78,7 +78,7 @@ export const gondarPlaces: GondarPlace[] = [
       "Photography of courtyards, walls and towers",
       "Combine with churches and Fasilides’ Bath on city itineraries"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569910/fasil-ghebbi.jpg",
     "imageAlt": "Stone castle and towers at Fasil Ghebbi in Gondar"
   },
   {
@@ -156,7 +156,7 @@ export const gondarPlaces: GondarPlace[] = [
       "Photography of ruins and highland city views",
       "Combine with Fasil Ghebbi and Debre Berhan Selassie"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/kuskuam-church.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569939/kuskuam-church.jpg",
     "imageAlt": "Visitors standing beside the stone ruins at Kuskuam"
   },
   {
@@ -204,7 +204,7 @@ export const gondarPlaces: GondarPlace[] = [
       "Cultural interaction and photography",
       "Combine with Gondar heritage before or after Simien journeys"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386874/kosoye-mountain.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569935/kosoye-mountain.jpg",
     "imageAlt": "A visitor pointing across the green Kosoye Mountains"
   },
   {
@@ -252,7 +252,7 @@ export const gondarPlaces: GondarPlace[] = [
       "Optional Blue Nile Falls visit when season and conditions allow",
       "Combine with Gondar heritage and Simien trekking"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386854/bahir-dar.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569906/bahir-dar.jpg",
     "imageAlt": "A pelican floating on the water at Bahir Dar"
   },
   {

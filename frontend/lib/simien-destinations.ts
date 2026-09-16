@@ -50,7 +50,7 @@ export const simienPlaces: SimienPlace[] = [
       "Mountain camping at established trek camps",
       "Ras Dashen summit expeditions (demanding; summit success not guaranteed)"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386859/simien-mountains.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569915/simien-mountains.jpg",
     "imageAlt": "A waterfall descending between green cliffs in the Simien Mountains"
   },
   {
@@ -97,7 +97,7 @@ export const simienPlaces: SimienPlace[] = [
       "Wildlife watching and photography along the approach",
       "Acclimatisation walking before the first overnight camp"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386873/buhit-ras.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569929/buhit-ras.jpg",
     "imageAlt": "A hiker overlooking the mountains at Buyit Ras"
   },
   {
@@ -121,7 +121,7 @@ export const simienPlaces: SimienPlace[] = [
       "Overnight camping at Sankaber Camp",
       "Photography of cliffs, valleys and highland light"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569941/Sankaber.jpg",
     "imageAlt": "Layered cliffs and green valleys near Sankaber in the Simien Mountains"
   },
   {
@@ -146,7 +146,7 @@ export const simienPlaces: SimienPlace[] = [
       "Optional sunset viewpoint walk when conditions allow",
       "Rest and acclimatisation before higher viewpoint days"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386842/Guche-camp-simen.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569908/Guche-camp-simen.jpg",
     "imageAlt": "A tent beside a shelter and giant lobelias at Geech camp"
   },
   {
@@ -174,7 +174,7 @@ export const simienPlaces: SimienPlace[] = [
       "Photography of the waterfall and gorge",
       "Short guided approach walks to safe viewing positions"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386844/Jinbar_Waterfall.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569909/Jinbar_Waterfall.jpg",
     "imageAlt": "Two visitors at the Jinbar Waterfall viewpoint"
   },
   {
@@ -198,7 +198,7 @@ export const simienPlaces: SimienPlace[] = [
       "Wildlife watching around cliffs when present",
       "Rest and interpretation with your guide at the viewpoint"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397557/imet-gogo.png",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789575650/imet-gogo_1.png",
     "imageAlt": "Cliffs and deep valleys seen from Imet Gogo"
   },
   {
@@ -248,7 +248,7 @@ export const simienPlaces: SimienPlace[] = [
       "Optional morning hikes toward the Bwahit area (fitness, weather and time permitting)",
       "Rest day or staging before Ambiko on summit itineraries"
     ],
-    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386843/cheenk-camp.jpg",
+    "image": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569908/cheenk-camp.jpg",
     "imageAlt": "Travellers sharing an outdoor meal at Chenek camp"
   },
   {

@@ -72,7 +72,7 @@ Thirty-six supplied photos cover all 32 destinations and all 28 tours. All 19 Si
 - The client confirmed `xum.png` means Axum and the Bahir Dar photo belongs to Lake Tana / Bahir Dar. `yemrehanna-kistos.png` maps to `yemrehanna-kristos`.
 - Mountains & Sacred Stone visits Lalibela and optionally Yemrehanna Kristos; it now uses Lalibela as its main image. Other journeys that do not visit these destinations retain their images.
 - `Sankaber.jpg` is the wide landscape used for mountain banners. `simien-mountains.jpg` shows a waterfall. Alt text describes the actual photos in all four locales.
-- Only Bale Mountains remains unused: no matching destination or tour exists. Its supplied watermarked URL is https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386863/bale-mountains-national-park.jpg
+- Only Bale Mountains remains unused: no matching destination or tour exists. Its supplied watermarked URL is https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569926/bale-mountains-national-park.jpg
 - No new content entries were created. Other photos await later client batches.
 
 ## Backend teammate handoff

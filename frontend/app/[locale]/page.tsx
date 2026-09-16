@@ -1,5 +1,3 @@
-import { resolveMediaUrl } from "@/lib/media-url";
-import clientPhotos from "@/lib/client-photos.json";
 import { Suspense, type ReactNode } from "react";
 import Image from "@/components/Image";
 import { getTranslations } from "next-intl/server";
@@ -9,12 +7,14 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
+import { HomeHeroMedia } from "@/components/HomeHeroMedia";
 import { ReviewsShowcase } from "@/components/ReviewsShowcase";
 import { DurationSelector } from "@/components/DurationSelector";
 import { site, sourceLinks } from "@/lib/site";
 import { getHomeCatalogue } from "@/lib/home-catalogue";
 import { getLocale } from "next-intl/server";
 import { cms } from "@/lib/cms";
+import { resolveMediaUrl } from "@/lib/media-url";
 import { buttonVariants } from "@/components/ui/button";
 import { messagePageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -43,10 +43,7 @@ export default async function Home() {
       <Header />
       <main id="main-content" tabIndex={-1}>
         <section className="hero">
-          <div className="hero__media">
-            <Image src={resolveMediaUrl(clientPhotos.sankaber.url)} alt={t("heroAlt")} fill priority fetchPriority="high" loading="eager" sizes="100vw" />
-            <div className="hero__veil" /><div className="hero__grain" />
-          </div>
+          <HomeHeroMedia alt={t("heroAlt")} />
           <div className="hero__content">
             <h1 className="display">{t.rich("heroTitle", em)}</h1>
             <p className="hero__lead">{t("heroLead")}</p>
@@ -198,7 +195,7 @@ export default async function Home() {
 
         <section className="section section--paper"><div className="shell"><SectionIntro tag={t("beyondTag")} title={t("beyondTitle")} accent={t("beyondAccent")} /><ExperiencePhotoCards items={home.beyond} /></div></section>
         <section className="final-call">
-          <Image src={resolveMediaUrl(clientPhotos.sankaber.url)} alt={t("finalAlt")} fill sizes="100vw" />
+          <Image src={resolveMediaUrl("https://res.cloudinary.com/ps4gvvqu/image/upload/v1789571200/buhit-ras.jpg")} alt={t("finalAlt")} fill sizes="100vw" />
           <div className="final-call__veil" />
           <div className="final-call__content shell">
             <p className="eyebrow">{t("finalEyebrow")}</p>

@@ -13,9 +13,9 @@ describe("mixed image storage", () => {
   });
 
   it("caps client originals without changing the asset identity or repeatedly transforming", () => {
-    const original = "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386871/Sankaber.jpg";
+    const original = "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789569941/Sankaber.jpg";
     const display = resolveMediaUrl(original);
-    expect(display).toBe("https://res.cloudinary.com/ps4gvvqu/image/upload/c_limit,w_2048/q_auto/v1789386871/Sankaber.jpg");
+    expect(display).toBe("https://res.cloudinary.com/ps4gvvqu/image/upload/c_limit,w_2048/q_auto/v1789569941/Sankaber.jpg");
     expect(resolveMediaUrl(display)).toBe(display);
   });
 
