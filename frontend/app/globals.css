@@ -296,7 +296,7 @@ p { text-wrap: pretty; }
   .site-header .brand-mark__image, .mobile-menu .brand-mark__image { width: 52px; }
   .hero { min-height: max(740px, 100svh); }
   .hero__media img,
-  .hero__video { object-position: 58% center; }
+  .hero__video { object-position: center center; }
   .hero__veil { background: linear-gradient(0deg, rgba(13,21,17,.91) 0%, rgba(13,21,17,.44) 68%, rgba(13,21,17,.2)); }
   .hero__content { padding: 140px 0 50px; }
   .hero__content .display { font-size: clamp(3.65rem, 17vw, 5rem); }

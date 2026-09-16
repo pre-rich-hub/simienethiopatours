@@ -8,8 +8,12 @@ import { resolveMediaUrl } from "@/lib/media-url";
 const POSTER = clientPhotos["fasilides-bath"].url;
 const VIDEO_ID = "v1789568392/homev";
 
-function heroVideoSrc(maxWidth: number) {
-  return `https://res.cloudinary.com/ps4gvvqu/video/upload/q_auto:eco,c_limit,w_${maxWidth},f_mp4,vc_auto/${VIDEO_ID}.mp4`;
+/** Desktop keeps the wide master; mobile gets a 9:16 center crop so cover framing stays useful. */
+function heroVideoSrc(mobile: boolean) {
+  const transform = mobile
+    ? "q_auto:eco,c_fill,g_center,w_720,h_1280,f_mp4,vc_auto"
+    : "q_auto:eco,c_limit,w_1920,f_mp4,vc_auto";
+  return `https://res.cloudinary.com/ps4gvvqu/video/upload/${transform}/${VIDEO_ID}.mp4`;
 }
 
 export function HomeHeroMedia({ alt }: { alt: string }) {
@@ -28,8 +32,8 @@ export function HomeHeroMedia({ alt }: { alt: string }) {
 
     if (motion.matches || slow) return;
 
-    const maxWidth = window.matchMedia("(max-width: 720px)").matches ? 1280 : 1920;
-    setVideoSrc(heroVideoSrc(maxWidth));
+    const mobile = window.matchMedia("(max-width: 720px)").matches;
+    setVideoSrc(heroVideoSrc(mobile));
   }, []);
 
   useEffect(() => {
