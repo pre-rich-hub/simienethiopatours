@@ -4,7 +4,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowUpRight, X } from "@/components/Icon";
+import { X } from "@/components/Icon";
 import { site } from "@/lib/site";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
@@ -438,24 +438,6 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
           {streaming ? t("sending") : t("send")}
         </button>
       </form>
-
-      <footer className="assistant-chat__footer">
-        <p className="assistant-chat__grounded">{t("groundedNote")}</p>
-        <div className="assistant-chat__footer-links">
-          <span>{t("preferPerson")}</span>
-          <a href={site.whatsapp} target="_blank" rel="noreferrer" onClick={onClose}>
-            <span>{tCta("whatsapp")}</span><ArrowUpRight size={12} />
-          </a>
-          <span aria-hidden="true">·</span>
-          <a href={`mailto:${site.email}`} onClick={onClose}>
-            <span>{t("email")}</span><ArrowUpRight size={12} />
-          </a>
-          <span aria-hidden="true">·</span>
-          <Link href="/plan" onClick={onClose}>
-            <span>{tCta("planYourJourney")}</span><ArrowUpRight size={12} />
-          </Link>
-        </div>
-      </footer>
     </div>
   );
 }

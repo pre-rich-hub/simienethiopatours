@@ -1594,12 +1594,6 @@ a.assistant-chat__chip { display: inline-block; }
 .assistant-chat__send { flex: 0 0 auto; padding: 0 16px; border: 0; border-radius: 3px; background: var(--teal); color: white; font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; cursor: pointer; transition: background-color .3s var(--ease-soft), opacity .3s var(--ease-soft); }
 .assistant-chat__send:hover:not(:disabled) { background: var(--highland); }
 .assistant-chat__send:disabled { opacity: .55; cursor: not-allowed; }
-.assistant-chat__footer { display: flex; flex-direction: column; gap: 6px; padding: 9px 16px 12px; border-top: 1px solid var(--line); color: var(--stone); font-size: 10.5px; }
-.assistant-chat__grounded { margin: 0; line-height: 1.45; }
-.assistant-chat__footer-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
-.assistant-chat__footer a { display: inline-flex; align-items: center; gap: 3px; border-bottom: 1px solid currentColor; padding-bottom: 1px; color: var(--ink); }
-.assistant-chat__footer a:hover { color: var(--copper); }
-.assistant-chat__footer svg { width: 12px; height: 12px; }
 @media (max-width: 720px) {
   .floating-contact__panel.assistant-chat {
     position: fixed;
