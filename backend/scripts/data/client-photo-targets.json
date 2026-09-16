@@ -184,10 +184,12 @@
   {
     "entity": "tour",
     "slug": "timkat-simien",
-    "photo": "fasilides-bath",
+    "photo": "timket",
     "previousImage": "/images/fasil-ghebbi.jpg",
     "previousImages": [
-      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg"
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789386847/fasil-ghebbi.jpg",
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789392032/fasilides_-bath-fasil_s-pool.jpg",
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465909/timket.jpg"
     ]
   },
   {
@@ -376,8 +378,12 @@
   {
     "entity": "tour",
     "slug": "timkat-ras-dashen",
-    "photo": "ras-dashen",
-    "previousImage": "/images/giant-lobelia.jpg"
+    "photo": "timket",
+    "previousImage": "/images/giant-lobelia.jpg",
+    "previousImages": [
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789397607/ras-dashen.png",
+      "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789465909/timket.jpg"
+    ]
   },
   {
     "entity": "tour",
