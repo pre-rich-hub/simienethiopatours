@@ -144,7 +144,7 @@ export async function Footer() {
       </div>
       <div className="shell grid min-h-[72px] grid-cols-[1fr_auto_1fr] items-center gap-4 border-t border-white/12 text-[9px] tracking-[0.05em] max-[720px]:grid-cols-1 max-[720px]:justify-items-start max-[720px]:gap-3 max-[720px]:py-[22px] max-[720px]:text-[11px]">
         <p>{t("copyright", { year: new Date().getFullYear(), operator: site.legalOperator })}</p>
-        <a className="justify-self-center text-[13px] transition-colors hover:text-white" href="https://melba.et" target="_blank" rel="noreferrer">Built by Melba Technology</a>
+        <a className="justify-self-center text-[13px] font-bold text-copper! transition-colors hover:text-white!" href="https://melba.et" target="_blank" rel="noreferrer">Built by Melba Technology</a>
         <div className="flex justify-self-end gap-6"><Link href="/journal">{tNav("journal")}</Link><Link href="/privacy">{t("privacy")}</Link><Link href="/terms">{t("terms")}</Link></div>
       </div>
     </footer>
