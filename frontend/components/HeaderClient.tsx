@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { Menu, X, ArrowUpRight } from "@/components/Icon";
-import { useEffect, useRef, useState, Fragment, type ComponentProps, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { BrandMark } from "./BrandMark";
 import { NavMegaMenu } from "./NavMegaMenu";
@@ -175,15 +175,9 @@ export function HeaderClient({ light = false, simienMenuCards, gondarMenuCards, 
         </div>
         <nav aria-label={tCommon("mobileNav")}>
           {links.map((link, index) => (
-            <Fragment key={link.href}><Link href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
               <span>0{index + 1}</span>{t(link.key)}<ArrowUpRight />
             </Link>
-            {link.href === "/explore-ethiopia" && (<div className="ethiopia-mobile-groups" role="group" aria-label={e("groups")}>
-            <Link href="/explore-ethiopia#historic" onClick={() => setOpen(false)}>{e("historic")}</Link>
-            <Link href="/explore-ethiopia#extensions" onClick={() => setOpen(false)}>{e("extensions")}</Link>
-            <Link href="/southern-ethiopia" onClick={() => setOpen(false)}>{e("southern")}</Link>
-          </div>)}
-            </Fragment>
           ))}
 
         </nav>
