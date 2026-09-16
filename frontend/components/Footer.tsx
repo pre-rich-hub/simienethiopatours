@@ -91,7 +91,7 @@ export async function Footer() {
         </div>
       </div>
       <div className="shell">
-        <div className="flex flex-wrap items-center gap-x-16 gap-y-3 pt-0 pb-5 max-[720px]:flex-col max-[720px]:items-start max-[720px]:gap-y-4 max-[720px]:pt-0 max-[720px]:pb-5">
+        <div className="flex flex-wrap items-center justify-end gap-x-16 gap-y-3 pt-0 pb-5 max-[720px]:flex-col max-[720px]:items-start max-[720px]:justify-start max-[720px]:gap-y-4 max-[720px]:pt-0 max-[720px]:pb-5">
           <div className="w-fit shrink-0 max-[720px]:w-full">
             <h3 className="m-0 font-sans text-[15px] font-semibold tracking-[0.02em] text-white">{t("trustedTitle")}</h3>
             <p className="m-0 mt-1.5 text-[14px] leading-[1.5] whitespace-nowrap text-[rgba(250,248,241,.6)] max-[720px]:whitespace-normal">{t("trustedSubtitle")}</p>
@@ -113,7 +113,7 @@ export async function Footer() {
             ))}
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-x-16 gap-y-3 py-5 max-[720px]:flex-col max-[720px]:items-start max-[720px]:gap-y-4 max-[720px]:py-5">
+        <div className="flex flex-wrap items-center justify-end gap-x-16 gap-y-3 py-5 max-[720px]:flex-col max-[720px]:items-start max-[720px]:justify-start max-[720px]:gap-y-4 max-[720px]:py-5">
           <div className="w-fit shrink-0 max-[720px]:w-full">
             <h3 className="m-0 font-sans text-[15px] font-semibold tracking-[0.02em] text-white">{t("acceptTitle")}</h3>
             <p className="m-0 mt-1.5 text-[14px] leading-[1.5] whitespace-nowrap text-[rgba(250,248,241,.6)] max-[720px]:whitespace-normal">{t("acceptSubtitle")}</p>
