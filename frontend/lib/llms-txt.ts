@@ -1,6 +1,11 @@
 /**
- * Curated /llms.txt map for AI agents. Not an access-control file —
+ * Curated llms.txt map for AI agents. Not an access-control file —
  * crawl policy lives in robots.ts. Absolute URLs only; no invented facts.
+ *
+ * Production serves the static copy at `public/llms.txt` (CDN-fast for the
+ * Lighthouse agentic fetch budget). Keep that file in sync when hub links
+ * or NAP copy change: regenerate with SITE_URL=https://www.gondersimientours.com
+ * and write `llmsTxtMarkdown()` to `public/llms.txt`.
  */
 
 import { absoluteUrl, localePath, nap, SITE_URL } from "@/lib/seo";
