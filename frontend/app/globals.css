@@ -407,8 +407,11 @@ p { text-wrap: pretty; }
 .journey-tile__overlay span { font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
 .journey-tile__overlay h3 { margin: 5px 0 12px; font-size: clamp(35px, 4vw, 54px); line-height: .95; }
 .journey-tile__overlay p { max-width: 480px; margin: 0 0 18px; color: rgba(255,255,255,.76); font-size: 12px; line-height: 1.7; }
-.journey-tile__overlay b { display: inline-flex; align-items: center; gap: 9px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
-.journey-tile__overlay b svg { width: 13px; }
+.journey-tile__overlay b { display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding: 12px 22px; border-radius: 999px; background: var(--gold); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; box-shadow: 0 8px 22px rgba(0,0,0,.2); transition: background-color .3s var(--ease-soft), transform .3s var(--ease), box-shadow .3s var(--ease); }
+.journey-tile__overlay b svg { width: 15px; height: 15px; }
+@media (hover: hover) and (pointer: fine) {
+  .journey-tile:hover .journey-tile__overlay b { background: #edcda3; box-shadow: 0 12px 28px rgba(0,0,0,.26); }
+}
 .trail-proof__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10vw; align-items: center; }
 .trail-proof__copy .lead { margin: 32px 0; }
 .route-card { padding: 34px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.035); }
