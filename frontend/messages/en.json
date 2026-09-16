@@ -115,12 +115,6 @@
   "inquiry": {
     "experience": "Which experience interests you?",
     "experienceExplore": "I’m exploring — help me choose",
-    "stepTripLabel": "Your trip",
-    "stepDetailsLabel": "Travel details",
-    "stepMessageLabel": "Your message",
-    "stepOf": "Step {current} of {total}",
-    "continueButton": "Continue",
-    "backButton": "Back",
     "name": "Your name",
     "namePlaceholder": "How should we address you?",
     "email": "Email address",
