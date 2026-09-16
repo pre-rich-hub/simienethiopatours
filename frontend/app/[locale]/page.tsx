@@ -105,7 +105,7 @@ export default async function Home() {
             })}
           </div>
           <div className="discover-section__cta">
-            <Link className={buttonVariants({ variant: "ctaGold", size: "cta" })} href="/simien-mountains">{t("exploreMore")} <ArrowRight size={16} /></Link>
+            <Link className={`${buttonVariants({ variant: "ctaGold", size: "cta" })} max-[720px]:w-auto!`} href="/simien-mountains">{t("exploreMore")} <ArrowRight size={16} /></Link>
           </div>
         </section>
 
