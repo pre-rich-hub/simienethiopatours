@@ -122,7 +122,7 @@ export async function getPostForRoute(slug: string, locale = "en") {
   return catalogue.posts.find(row => row.slug === slug && row.locale === locale)
     ?? catalogue.posts.find(row => row.slug === slug && row.locale === "en") ?? null;
 }
-export function tourToJourney(tour: PublicTour): JourneyPackage & { locale: PublicTour["locale"]; summary: string; fit: string; preparation: string[]; facts: PublicTour["facts"] } {
+export function tourToJourney(tour: PublicTour): JourneyPackage & { locale: PublicTour["locale"]; summary: string; fit: string; preparation: string[]; facts: PublicTour["facts"]; journeyType: PublicTour["journeyType"] } {
   const enriched = enrichTourRecord(tour);
   const media = tourMedia(enriched);
   return {
@@ -134,6 +134,7 @@ export function tourToJourney(tour: PublicTour): JourneyPackage & { locale: Publ
     included: enriched.included, excluded: enriched.excluded, includedNote: enriched.notice ?? undefined,
     image: media.image, imageAlt: media.imageAlt, locale: enriched.locale,
     summary: enriched.summary ?? enriched.overview ?? "", fit: enriched.fit ?? "", preparation: enriched.preparation, facts: enriched.facts,
+    journeyType: enriched.journeyType,
   };
 }
 export function destinationToPlace(row: PublicDestination) {

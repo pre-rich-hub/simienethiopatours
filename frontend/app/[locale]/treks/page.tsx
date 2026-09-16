@@ -5,7 +5,7 @@ import Image from "@/components/Image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
-import { JourneyPhotoCards } from "@/components/JourneyPhotoCards";
+import { JourneysFilter } from "@/components/JourneysFilter";
 import { PageShell } from "@/components/PageShell";
 import { getTours, tourToJourney } from "@/lib/catalogue";
 import { getLocale } from "next-intl/server";
@@ -51,7 +51,7 @@ export default async function TreksPage() {
 
       <section className="section" id="journeys">
         <div className="shell">
-          <JourneyPhotoCards journeys={journeyPackages} />
+          <JourneysFilter journeys={journeyPackages} />
         </div>
       </section>
     </PageShell>

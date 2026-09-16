@@ -870,6 +870,14 @@ p { text-wrap: pretty; }
 .gondar-experience-selector .content-filters button { min-height: 40px; padding: 8px 15px; border: 0; color: var(--stone); font-size: 10px; font-weight: 600; letter-spacing: .035em; transition: color .28s var(--ease-soft), background-color .28s var(--ease-soft), box-shadow .28s var(--ease-soft); }
 .gondar-experience-selector .content-filters button[aria-pressed="true"] { background: var(--highland); color: white; box-shadow: 0 7px 18px rgba(24,40,32,.16); }
 .gondar-experience-selector .filter-count { margin: 24px 0 18px; color: var(--copper-ink); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.journeys-filter .content-filters { gap: 8px 12px; margin-top: 4px; padding: 9px; border: 1px solid var(--line); background: rgba(250,248,241,.6); }
+.journeys-filter .content-filters button { min-height: 40px; padding: 8px 15px; border: 0; color: var(--stone); font-size: 10px; font-weight: 600; letter-spacing: .035em; transition: color .28s var(--ease-soft), background-color .28s var(--ease-soft), box-shadow .28s var(--ease-soft); }
+.journeys-filter .content-filters button[aria-pressed="true"] { background: var(--highland); color: white; box-shadow: 0 7px 18px rgba(24,40,32,.16); }
+.journeys-filter .filter-count { margin: 22px 0 0; color: var(--copper-ink); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+@media (max-width: 720px) {
+  .journeys-filter .content-filters { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .journeys-filter .content-filters button { flex: 0 0 auto; }
+}
 .gondar-experience-selector .content-grid { gap: 24px; }
 .gondar-experience-selector .content-card { min-height: 0; position: relative; overflow: hidden; padding: 40px; border: 1px solid rgba(23,25,22,.12); background: linear-gradient(145deg, #fffdf8 0%, #f6f1e6 100%); box-shadow: 0 14px 34px rgba(23,25,22,.065); transition: transform .45s var(--ease), border-color .35s ease, box-shadow .45s var(--ease); }
 .gondar-experience-selector .content-card::before { content: ""; position: absolute; top: 0; right: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--copper), #d2a16e); transform: scaleX(.2); transform-origin: left; transition: transform .5s var(--ease); }
