@@ -59,7 +59,7 @@ export default async function GondarPage() {
                   <p>{place.overview[0] ?? ""}</p>
                   <div className="simien-photo-card__footer">
                     <span className="simien-photo-card__explore">
-                      About {place.name}
+                      Explore more
                       <ArrowUpRight />
                     </span>
                   </div>

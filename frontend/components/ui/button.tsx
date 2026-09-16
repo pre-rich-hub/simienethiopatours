@@ -21,6 +21,7 @@ const buttonVariants = cva(
         ctaCopper: "cta-btn rounded-[3px] bg-copper text-white! font-semibold tracking-[0.1em] uppercase hover:bg-[#9b6439] hover:-translate-y-0.5 hover:shadow-[0_7px_20px_rgba(23,25,22,.12)] hover:[&_svg:not(.spin)]:translate-x-[3px] active:translate-y-0 [&_svg]:transition-transform",
         ctaDark: "cta-btn rounded-[3px] bg-ink text-white! font-semibold tracking-[0.1em] uppercase hover:bg-ink-soft hover:-translate-y-0.5 hover:[&_svg:not(.spin)]:translate-x-[3px] active:translate-y-0 [&_svg]:transition-transform",
         ctaOutline: "cta-btn rounded-[3px] border-white/55 bg-transparent text-white! font-semibold tracking-[0.1em] uppercase hover:border-ivory hover:bg-ivory hover:text-ink! hover:-translate-y-0.5 hover:[&_svg:not(.spin)]:translate-x-[3px] active:translate-y-0 [&_svg]:transition-transform",
+        ctaGold: "cta-btn rounded-full bg-gold text-ink! font-bold tracking-[0.1em] uppercase shadow-[0_10px_28px_rgba(23,25,22,.18)] hover:bg-[#edcda3] hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(23,25,22,.24)] hover:[&_svg:not(.spin)]:translate-x-[3px] active:translate-y-0 [&_svg]:transition-transform",
       },
       size: {
         default:

@@ -1,10 +1,24 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight, Mail, Phone } from "@/components/Icon";
+import Image from "@/components/Image";
 import { BrandMark } from "./BrandMark";
 import { NewsletterForm } from "./NewsletterForm";
 import { FacebookBadge, InstagramBadge, TiktokBadge, XBadge, YoutubeBadge } from "./SocialBadges";
 import { site, verifiedSocialLinks, type SocialNetwork } from "@/lib/site";
+
+const trustedPlatforms = [
+  { name: "Viator", src: "/images/partners/viator.png", width: 340, height: 145 },
+  { name: "Tripadvisor", src: "/images/partners/tripadvisor.png", width: 428, height: 397 },
+  { name: "SafariBookings", src: "/images/partners/safaribookings.png", width: 440, height: 170 },
+  { name: "GetYourGuide", src: "/images/partners/getyourguide.png", width: 170, height: 152 },
+];
+
+const paymentMethods = [
+  { name: "Visa", src: "/images/payments/visa.png", width: 614, height: 242 },
+  { name: "Mastercard", src: "/images/payments/mastercard.png", width: 270, height: 190 },
+  { name: "PayPal", src: "/images/payments/paypal.png", width: 270, height: 190 },
+];
 
 const socialBadges: Record<SocialNetwork, { label: string; Icon: typeof InstagramBadge }> = {
   instagram: { label: "Instagram", Icon: InstagramBadge },
@@ -29,7 +43,7 @@ export async function Footer() {
 
   return (
     <footer className="footer bg-ink text-[rgba(250,248,241,.75)]">
-      <div className="shell grid grid-cols-[2fr_repeat(3,1fr)] gap-16 py-[90px] pb-[78px] max-[1100px]:grid-cols-[1.5fr_repeat(2,1fr)] max-[720px]:grid-cols-2 max-[720px]:gap-x-6 max-[720px]:gap-y-[46px] max-[720px]:py-[68px] max-[720px]:pb-[58px]">
+      <div className="shell grid grid-cols-[2fr_repeat(3,1fr)] gap-16 pt-[90px] pb-2 max-[1100px]:grid-cols-[1.5fr_repeat(2,1fr)] max-[720px]:grid-cols-2 max-[720px]:gap-x-6 max-[720px]:gap-y-[46px] max-[720px]:pt-[68px] max-[720px]:pb-2">
         <div className="max-[720px]:col-span-full">
           <BrandMark onDark label={tCommon("homeAria")} />
           <p className="my-7 max-w-[360px] font-serif text-[22px] leading-[1.4]">{t("tagline")}</p>
@@ -74,6 +88,52 @@ export async function Footer() {
           <a className="inline-flex items-center gap-1.5" href={`tel:${site.phone}`}><Phone className="size-[18px]" />{site.phoneDisplay}</a>
           <a className="inline-flex items-center gap-1.5" href={`mailto:${site.email}`}><Mail className="size-[18px]" />{site.email}</a>
           <a className="inline-flex items-center gap-1.5" href={site.whatsapp} target="_blank" rel="noreferrer">{tCta("whatsappUs")} <ArrowUpRight size={18} /></a>
+        </div>
+      </div>
+      <div className="shell">
+        <div className="flex flex-wrap items-center justify-end gap-x-16 gap-y-3 pt-0 pb-5 max-[720px]:flex-col max-[720px]:items-start max-[720px]:justify-start max-[720px]:gap-y-4 max-[720px]:pt-0 max-[720px]:pb-5">
+          <div className="w-fit shrink-0 max-[720px]:w-full">
+            <h3 className="m-0 font-sans text-[15px] font-semibold tracking-[0.02em] text-white">{t("trustedTitle")}</h3>
+            <p className="m-0 mt-1.5 text-[14px] leading-[1.5] whitespace-nowrap text-[rgba(250,248,241,.6)] max-[720px]:whitespace-normal">{t("trustedSubtitle")}</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            {trustedPlatforms.map((platform) => (
+              <span
+                key={platform.name}
+                className="flex h-[52px] w-[110px] items-center justify-center rounded-xl bg-[#faf8f1] px-4 py-2.5 shadow-[0_6px_18px_rgba(0,0,0,.18)] transition-transform duration-300 hover:-translate-y-[3px]"
+              >
+                <Image
+                  src={platform.src}
+                  alt={platform.name}
+                  width={platform.width}
+                  height={platform.height}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center justify-end gap-x-16 gap-y-3 py-5 max-[720px]:flex-col max-[720px]:items-start max-[720px]:justify-start max-[720px]:gap-y-4 max-[720px]:py-5">
+          <div className="w-fit shrink-0 max-[720px]:w-full">
+            <h3 className="m-0 font-sans text-[15px] font-semibold tracking-[0.02em] text-white">{t("acceptTitle")}</h3>
+            <p className="m-0 mt-1.5 text-[14px] leading-[1.5] whitespace-nowrap text-[rgba(250,248,241,.6)] max-[720px]:whitespace-normal">{t("acceptSubtitle")}</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            {paymentMethods.map((method) => (
+              <span
+                key={method.name}
+                className="flex h-[52px] w-[110px] items-center justify-center rounded-xl bg-[#faf8f1] px-4 py-2.5 shadow-[0_6px_18px_rgba(0,0,0,.18)] transition-transform duration-300 hover:-translate-y-[3px]"
+              >
+                <Image
+                  src={method.src}
+                  alt={method.name}
+                  width={method.width}
+                  height={method.height}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+            ))}
+          </div>
         </div>
       </div>
       <div className="shell flex items-center justify-between gap-10 py-[72px] text-left max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-[26px] max-[720px]:gap-6 max-[720px]:pt-[60px] max-[720px]:pb-[54px]">

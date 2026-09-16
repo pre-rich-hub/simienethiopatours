@@ -59,7 +59,7 @@ export async function SimienPhotoCards({ items, photoSet, columns = 3 }: { items
         <div className="simien-photo-card__body">
           <p>{item.body}</p>
           {item.href && <div className="simien-photo-card__footer">
-            <Link className="simien-photo-card__explore" href={item.href}>{item.linkLabel || t("exploreExperience")}<ArrowUpRight /></Link>
+            <Link className="simien-photo-card__explore" href={item.href}>{item.linkLabel || t("exploreMore")}<ArrowUpRight /></Link>
           </div>}
         </div>
       </article>;

@@ -34,7 +34,7 @@ export async function ExperiencePhotoCards({ items, compact = false }: { items: 
         <p className="eyebrow eyebrow--copper">{item.tag || "Personally arranged"}</p>
         <h3>{item.title}</h3>
         <p>{cardBlurb(item.body, 140)}</p>
-        {item.href && <Link href={item.href} locale={item.locale} className="text-link">{item.linkLabel || t("exploreExperience")}<ArrowUpRight /></Link>}
+        {item.href && <Link href={item.href} locale={item.locale} className="experience-photo-card__explore">{item.linkLabel || t("exploreMore")}<ArrowUpRight /></Link>}
       </div>
     </article>)}
   </div>;

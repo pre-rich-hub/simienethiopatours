@@ -7,7 +7,7 @@ import type { JourneyPackage } from "@/lib/journey-packages";
 import { cardBlurb } from "@/lib/card-blurb";
 
 export async function JourneyPhotoCards({ journeys }: { journeys: readonly (JourneyPackage & { summary?: string; locale?: "en" | "es" | "de" | "fr" })[] }) {
-  const t = await getTranslations("treks");
+  const t = await getTranslations("cta");
   const columns = journeys.length <= 2 ? 2 : 3;
 
   return (
@@ -31,7 +31,7 @@ export async function JourneyPhotoCards({ journeys }: { journeys: readonly (Jour
             <p>{cardBlurb(journey.summary ?? journey.overview[0] ?? "", 140)}</p>
             <div className="simien-photo-card__footer">
               <span className="simien-photo-card__explore">
-                {t("about", { name: journey.name })}
+                {t("exploreMore")}
                 <ArrowUpRight />
               </span>
             </div>

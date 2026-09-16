@@ -24,6 +24,7 @@ export default async function SimienPage() {
   const places = (await getDestinations(await getLocale(), "simien")).map(destinationToPlace);
   const t = await getTranslations("simien");
   const tCommon = await getTranslations("common");
+  const tCta = await getTranslations("cta");
 
   return (
     <PageShell lightHeader={false}>
@@ -66,7 +67,7 @@ export default async function SimienPage() {
                   <p>{place.overview[0] ?? ""}</p>
                   <div className="simien-photo-card__footer">
                     <span className="simien-photo-card__explore">
-                      {t("about", { name: place.name })}
+                      {tCta("exploreMore")}
                       <ArrowUpRight />
                     </span>
                   </div>

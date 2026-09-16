@@ -4,7 +4,7 @@ import { Suspense, type ReactNode } from "react";
 import Image from "@/components/Image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { ArrowUpRight, CheckCircle2, Compass, Map, Mountain, Route, TentTree } from "@/components/Icon";
+import { ArrowRight, ArrowUpRight, CheckCircle2, Compass, Map, Mountain, Route, TentTree } from "@/components/Icon";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
@@ -106,6 +106,9 @@ export default async function Home() {
               </Link>
               );
             })}
+          </div>
+          <div className="discover-section__cta">
+            <Link className={buttonVariants({ variant: "ctaGold", size: "cta" })} href="/simien-mountains">{t("exploreMore")} <ArrowRight size={16} /></Link>
           </div>
         </section>
 

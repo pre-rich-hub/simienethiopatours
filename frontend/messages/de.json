@@ -70,6 +70,7 @@
     "openAiChat": "KI-Chat öffnen",
     "closeAiChat": "KI-Chat schließen",
     "exploreExperience": "Erfahrung erkunden",
+    "exploreMore": "Mehr erkunden",
     "exploreJourney": "Reise erkunden",
     "viewAllJourneys": "Alle Reisen ansehen",
     "personallyPlanned": "Persönlich in Gondar geplant"
@@ -87,6 +88,10 @@
     "tevanLocal": "Tevan Local",
     "operatingCompany": "Betriebsunternehmen",
     "office": "Büro in Gondar",
+    "trustedTitle": "Vertrauenswürdige Reiseplattformen",
+    "trustedSubtitle": "Finden Sie uns dort, wo anspruchsvolle Reisende planen.",
+    "acceptTitle": "Wir akzeptieren",
+    "acceptSubtitle": "Sichere Zahlungsabwicklung.",
     "subscribeTitle": "Abonnieren Sie unseren Newsletter für ausgewählte Reisegeschichten",
     "copyright": "© {year} Gondar Simien Tours. Betrieben von {operator}.",
     "privacy": "Datenschutz",
