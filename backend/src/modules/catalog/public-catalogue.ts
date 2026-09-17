@@ -1,4 +1,4 @@
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { prisma } from "../../config/database.js";
 import { serializeDetail } from "./tour.serializers.js";
 import { serializeDestination } from "./destination.serializers.js";
@@ -9,9 +9,23 @@ import { publicCatalogueSchema, publicPostSchema } from "./public-catalogue.sche
 export const publishedCatalogueWhere = { isPublished: true, editorialStatus: "published" } as const;
 export const publishedBlogWhere = { isPublished: true, publishedAt: { not: null } } as const;
 
+/** Prisma P2028 class: the interactive transaction expired (e.g. cold-start pool warmup). */
+function isExpiredTransactionError(err: unknown): boolean {
+  if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2028") return true;
+  const message = err instanceof Error ? err.message : String(err);
+  return message.includes("Transaction already closed") || message.includes("Transaction API error");
+}
+
 /** Only public fields cross this boundary. English always comes from current CMS fields. */
 export async function buildPublicCatalogue(client: typeof prisma = prisma) {
-  return client.$transaction(tx => readPublicCatalogue(tx), { isolationLevel: "RepeatableRead" });
+  const run = () => client.$transaction(tx => readPublicCatalogue(tx), { isolationLevel: "RepeatableRead", timeout: 20000 });
+  try {
+    return await run();
+  } catch (err) {
+    // Retry once for the expired-transaction class only; data/model errors rethrow untouched.
+    if (!isExpiredTransactionError(err)) throw err;
+    return run();
+  }
 }
 
 async function readPublicCatalogue(client: Prisma.TransactionClient) {
