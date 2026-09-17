@@ -10,6 +10,7 @@ export const site = {
   whatsapp: "https://wa.me/251956616969",
   tripadvisor:
     "https://www.tripadvisor.com/Attraction_Review-g317059-d32805557-Reviews-Tesema_Travels-Gonder_Amhara_Region.html",
+  googleReview: "https://g.page/r/CR_0RgIfgR4ZEBM/review",
   operatorSite: "https://simienethiotours.com/",
   brand: {
     /** Circular seal used in chrome, favicon, and Organization JSON-LD. Swap to SVG when a vector export arrives. */

@@ -1467,6 +1467,12 @@ a.dest-card { color: inherit; text-decoration: none; }
 .review-source-summary > span:not(.review-rating):not(.review-source-mark) { color: var(--stone); }
 .review-source-summary > span strong { color: var(--ink); }
 .review-source-mark--google b { border: 1px solid rgba(179,119,67,.35); background: transparent; }
+.review-source-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(23,25,22,.12); color: var(--copper-ink); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; transition: color .25s var(--ease-soft); }
+.review-source-link svg { transition: transform .3s var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  .review-source-link:hover { color: var(--copper); }
+  .review-source-link:hover svg { transform: translate(2px, -2px); }
+}
 .review-rail-wrap { position: relative; min-width: 0; }
 .review-card-rail { min-width: 0; display: flex; gap: 30px; overflow-x: auto; padding: 4px 50px; scroll-snap-type: x proximity; scroll-padding-inline: 50px; scrollbar-width: none; -ms-overflow-style: none; }
 .review-card-rail::-webkit-scrollbar { display: none; }
@@ -1486,6 +1492,7 @@ a.dest-card { color: inherit; text-decoration: none; }
   .review-source-summary > .review-rating { justify-self: end; }
   .review-source-summary > span:not(.review-rating):not(.review-source-mark) { margin: 0; }
   .review-source-summary > .review-source-mark { justify-self: end; }
+  .review-source-summary > .review-source-link { grid-column: 1 / -1; margin-top: 4px; padding-top: 14px; }
   .review-card-rail { width: calc(100vw - 20px); margin-right: calc((100vw - var(--shell)) / -2); padding: 4px 20px 4px 0; scroll-padding-inline: 0 20px; }
   .traveler-review-card { min-width: min(220px, 78vw); min-height: 0; flex-basis: min(220px, 78vw); padding: 0; }
 }

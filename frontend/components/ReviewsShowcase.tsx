@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight } from "@/components/Icon";
+import { useTranslations } from "next-intl";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/Icon";
 import { reviewSources, type ReviewSource, type TravelerReview } from "@/lib/reviews";
+import { site } from "@/lib/site";
+
+const reviewSourceLinks: Record<ReviewSource, string> = {
+  Google: site.googleReview,
+  Tripadvisor: site.tripadvisor,
+};
 
 function Rating({ source, badge = false }: { source: ReviewSource; badge?: boolean }) {
   return <span className={`review-rating review-rating--${source.toLowerCase()}`} role="img" aria-label="5 out of 5">
@@ -94,6 +101,7 @@ function ReviewRail({ reviews }: { reviews: readonly TravelerReview[] }) {
 }
 
 export function ReviewsShowcase({ reviews }: { reviews: readonly TravelerReview[] }) {
+  const t = useTranslations("home");
   return <div className="reviews-showcase">
     {reviewSources.map((summary) => {
       const sourceReviews = reviews.filter((review) => review.source === summary.source);
@@ -103,6 +111,9 @@ export function ReviewsShowcase({ reviews }: { reviews: readonly TravelerReview[
           <Rating source={summary.source} />
           <span>Based on <strong>{summary.total} reviews</strong></span>
           <SourceMark source={summary.source} />
+          <a className="review-source-link" href={reviewSourceLinks[summary.source]} target="_blank" rel="noreferrer">
+            {t("writeReview")} <ArrowUpRight size={14} />
+          </a>
         </div>
         <ReviewRail reviews={sourceReviews} />
       </section>;
