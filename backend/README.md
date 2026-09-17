@@ -1,6 +1,8 @@
 # Client Backend Template
 
-Express + TypeScript + Prisma backend template for client projects. Includes a complete AI assistant module with streaming, session management, and usage limits.
+Express + TypeScript + Prisma backend template for client projects. Includes a
+complete AI assistant module with streaming, session management, and usage
+limits.
 
 ## Stack
 
@@ -9,7 +11,8 @@ Express + TypeScript + Prisma backend template for client projects. Includes a c
 - Prisma + PostgreSQL (Neon)
 - Zod validation
 - Pino logging
-- AI providers: OpenAI, Gemini (add Anthropic/Grok by implementing `ChatProvider`)
+- AI providers: OpenAI, Gemini (add Anthropic/Grok by implementing
+  `ChatProvider`)
 
 ## Quick Start
 
@@ -59,16 +62,16 @@ prisma/
 
 ### 1. Prisma schema
 
-The schema has travel-domain models (Tour, Destination, Booking) plus the generic
-admin/contact/blog/assistant models. Update the catalog models to match the client's
-business. Keep the `ChatSession`, `ChatMessage`, `ChatDailyUsage` models — the
-assistant depends on them.
+The schema has travel-domain models (Tour, Destination, Booking) plus the
+generic admin/contact/blog/assistant models. Update the catalog models to match
+the client's business. Keep the `ChatSession`, `ChatMessage`, `ChatDailyUsage`
+models — the assistant depends on them.
 
 ### 2. AI assistant context
 
-Edit `src/modules/assistant/context-builder.ts`. This is the only file that knows
-about your domain. Change the Prisma queries and field mappings to pull whatever
-data grounds the assistant (tours, products, services, FAQs).
+Edit `src/modules/assistant/context-builder.ts`. This is the only file that
+knows about your domain. Change the Prisma queries and field mappings to pull
+whatever data grounds the assistant (tours, products, services, FAQs).
 
 ### 3. System prompt
 
@@ -110,17 +113,17 @@ All configurable in `.env`.
 
 Public-form and assistant data use the privacy defaults below:
 
-| Data | Default | Configuration |
-| --- | --- | --- |
-| Contact inquiries | 730 days from submission | `CONTACT_RETENTION_DAYS` |
+| Data                                        | Default                                    | Configuration              |
+| ------------------------------------------- | ------------------------------------------ | -------------------------- |
+| Contact inquiries                           | 730 days from submission                   | `CONTACT_RETENTION_DAYS`   |
 | Assistant sessions, messages, and hashed IP | 30 days after the session was last updated | `ASSISTANT_RETENTION_DAYS` |
-| Newsletter subscribers | Until withdrawal or admin deletion | Not automatically purged |
+| Newsletter subscribers                      | Until withdrawal or admin deletion         | Not automatically purged   |
 
-Long-running servers run retention cleanup at startup and every 24 hours.
-Public contact, newsletter, and assistant requests also trigger a throttled
-cleanup attempt for serverless deployments. Schedule `npm run data:purge` daily as
-an independent production safeguard. The command logs deletion counts only and
-does not print personal data.
+Long-running servers run retention cleanup at startup and every 24 hours. Public
+contact, newsletter, and assistant requests also trigger a throttled cleanup
+attempt for serverless deployments. Schedule `npm run data:purge` daily as an
+independent production safeguard. The command logs deletion counts only and does
+not print personal data.
 
 ## Public editorial audit
 
@@ -132,13 +135,13 @@ package-mapping notes, and other wording that must not appear in public HTML.
 
 Set `ASSISTANT_PROVIDER=gemini` or `openai`, plus the matching API key.
 
-| Provider | SDK | Free tier |
-|----------|-----|-----------|
-| Gemini | `@google/genai` | 15 RPM, 1M tokens/month |
-| OpenAI | `openai` | $5 credit new accounts |
+| Provider | SDK             | Free tier               |
+| -------- | --------------- | ----------------------- |
+| Gemini   | `@google/genai` | 15 RPM, 1M tokens/month |
+| OpenAI   | `openai`        | $5 credit new accounts  |
 
-To add a new provider, implement `ChatProvider` in `provider.client.ts` and add a
-case in `createProvider()`.
+To add a new provider, implement `ChatProvider` in `provider.client.ts` and add
+a case in `createProvider()`.
 
 ## Conventions
 
@@ -150,4 +153,12 @@ case in `createProvider()`.
 
 ## Phase 4 public catalogue
 
-`GET /api/v1/catalogue` is the shared, publication-filtered tour/destination/journal contract. Admin mutations invalidate frontend/assistant caches. Journal rows start as drafts and require author, description, content and image alt text when publishing an image. Apply migration `20260913090000_public_catalogue_journal`, configure `CATALOGUE_REVALIDATE_URL` and `CATALOGUE_REVALIDATE_SECRET`, and export approved content with `npm run content:export`. See [the CMS cutover runbook](../frontend/docs/p4-cms-cutover.md). No production seed, migration or publication is implied by local verification.
+`GET /api/v1/catalogue` is the shared, publication-filtered
+tour/destination/journal contract. Admin mutations invalidate frontend/assistant
+caches. Journal rows start as drafts and require author, description, content
+and image alt text when publishing an image. Apply migration
+`20260913090000_public_catalogue_journal`, configure `CATALOGUE_REVALIDATE_URL`
+and `CATALOGUE_REVALIDATE_SECRET`, and export approved content with
+`npm run content:export`. See
+[the CMS cutover runbook](../frontend/docs/p4-cms-cutover.md). No production
+seed, migration or publication is implied by local verification.
