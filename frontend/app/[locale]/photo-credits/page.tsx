@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return pageMetadata({
     locale: localeFromParam(locale),
     title: "Photo credits",
-    description: "Source, authorship, licensing and attribution records for photographs used by Gondar Simien Tours.",
+    description: "Source, authorship, licensing and attribution records for photographs used by Gonder Simien Tours.",
     path: "/photo-credits",
   });
 }

@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return pageMetadata({
     locale: localeFromParam(locale),
     title: "Website Terms",
-    description: "Planning information, wildlife, safety, images, and booking terms for the Gondar Simien Tours website.",
+    description: "Planning information, wildlife, safety, images, and booking terms for the Gonder Simien Tours website.",
     path: "/terms",
     index: false,
   });

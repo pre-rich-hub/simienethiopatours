@@ -2,7 +2,7 @@
   "common": {
     "skipToContent": "Aller au contenu",
     "home": "Accueil",
-    "homeAria": "Accueil de Gondar Simien Tours",
+    "homeAria": "Accueil de Gonder Simien Tours",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
     "primaryNav": "Navigation principale",
@@ -93,7 +93,7 @@
     "acceptTitle": "Nous acceptons",
     "acceptSubtitle": "Méthodes de paiement sécurisées.",
     "subscribeTitle": "Abonnez-vous à notre lettre pour des récits de voyage choisis",
-    "copyright": "© {year} Gondar Simien Tours. Exploité par {operator}.",
+    "copyright": "© {year} Gonder Simien Tours. Exploité par {operator}.",
     "privacy": "Confidentialité",
     "terms": "Conditions"
   },
@@ -390,7 +390,7 @@
     "reviewsLoading": "Chargement des avis de voyageurs…",
     "tevanTag": "Les montagnes que j’appelle chez moi",
     "tevanQuote": "Connaître un lieu, ce n’est pas simplement en connaître le chemin.",
-    "tevanBody": "Je m’appelle Tesema \"Tevan\" Mulualem. J’ai créé Gondar Simien Tours autour d’une idée simple : aider les gens à vivre le lieu que je connais — pas seulement à le visiter. Cela signifie des itinéraires honnêtes, une vraie préparation et de la place pour les moments qu’aucun programme ne peut planifier.",
+    "tevanBody": "Je m’appelle Tesema \"Tevan\" Mulualem. J’ai créé Gonder Simien Tours autour d’une idée simple : aider les gens à vivre le lieu que je connais — pas seulement à le visiter. Cela signifie des itinéraires honnêtes, une vraie préparation et de la place pour les moments qu’aucun programme ne peut planifier.",
     "tevanCaption": "Tevan · Fondateur et guide local",
     "tevanAlt": "Tesema 'Tevan' Mulualem sur un sentier des montagnes du Simien",
     "readStory": "Lire l’histoire de Tevan",
@@ -469,7 +469,7 @@
     "storyAccent": "ne deviennent un circuit.",
     "story": [
       "Il y a une route qui quitte Gondar et dont je ne me lasse jamais. La ville disparaît peu à peu derrière vous. Les maisons se raréfient, le paysage s’ouvre, l’air change et la route gravit. Puis les montagnes du Simien commencent à apparaître. Chaque fois que je les vois, je me souviens pourquoi j’ai choisi ce métier.",
-      "Je m’appelle Tesema ‘Tevan’ Mulualem. Je suis un guide local de Gondar, en Éthiopie, et j’ai créé Gondar Simien Tours autour du lieu que je connais comme chez moi.",
+      "Je m’appelle Tesema ‘Tevan’ Mulualem. Je suis un guide local de Gondar, en Éthiopie, et j’ai créé Gonder Simien Tours autour du lieu que je connais comme chez moi.",
       "Avant que les montagnes ne soient une destination sur un itinéraire, elles faisaient simplement partie de la vie. J’ai appris comment un sentier familier change avec la saison, comment les nuages transforment une vallée en quelques minutes, et comment la faune suit son propre horaire. Connaître un lieu, ce n’est pas simplement en connaître le chemin."
     ],
     "guidingTag": "Puis j’ai commencé à guider",
@@ -683,13 +683,13 @@
   },
   "meta": {
     "home": {
-      "title": "Gondar Simien Tours | Votre porte d’entrée locale vers les montagnes du Simien",
+      "title": "Gonder Simien Tours | Votre porte d’entrée locale vers les montagnes du Simien",
       "description": "Trekkings privés guidés localement dans les montagnes du Simien et voyages à Gondar, planifiés personnellement par Tesema ‘Tevan’ Mulualem et une équipe basée à Gondar.",
       "ogTitle": "Votre porte d’entrée locale vers les montagnes du Simien"
     },
     "about": {
       "title": "À propos",
-      "description": "Rencontrez Tesema ‘Tevan’ Mulualem, le fondateur et guide basé à Gondar derrière Gondar Simien Tours. Savoir local, accompagnement personnel et préparation soignée."
+      "description": "Rencontrez Tesema ‘Tevan’ Mulualem, le fondateur et guide basé à Gondar derrière Gonder Simien Tours. Savoir local, accompagnement personnel et préparation soignée."
     },
     "plan": {
       "title": "Planifier votre voyage dans le Simien",

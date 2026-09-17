@@ -1,7 +1,7 @@
 import { getJourneyPackage } from "@/lib/journey-packages";
 
 export const site = {
-  name: "Gondar Simien Tours",
+  name: "Gonder Simien Tours",
   legalOperator: "Simien Ethio Tours",
   phoneDisplay: "+251 956 61 6969",
   phone: "+251956616969",

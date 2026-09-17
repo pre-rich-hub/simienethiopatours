@@ -4,7 +4,7 @@
  * and NEXT_PUBLIC_SITE_URL. Do not invent ratings, prices, or extra claims here.
  *
  * Inner-page `title` is the document title *segment*. Root layout applies
- * `template: "%s | Gondar Simien Tours"`, so do not append the brand yourself.
+ * `template: "%s | Gonder Simien Tours"`, so do not append the brand yourself.
  * Home uses `titleAbsolute` to keep `Brand | tagline`.
  */
 

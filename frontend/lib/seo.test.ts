@@ -27,13 +27,13 @@ describe("pageMetadata titles", () => {
 
   it("uses absolute titles only when titleAbsolute is set (home)", () => {
     const meta = pageMetadata({
-      title: "Gondar Simien Tours | Your Local Gateway to the Simien Mountains",
+      title: "Gonder Simien Tours | Your Local Gateway to the Simien Mountains",
       description: "Private guided journeys.",
       path: "/",
       titleAbsolute: true,
     });
     expect(meta.title).toEqual({
-      absolute: "Gondar Simien Tours | Your Local Gateway to the Simien Mountains",
+      absolute: "Gonder Simien Tours | Your Local Gateway to the Simien Mountains",
     });
   });
 
@@ -131,7 +131,7 @@ describe("faqPageJsonLd", () => {
   it("emits FAQPage entities from visible Q&A without inventing ratings or prices", () => {
     const json = faqPageJsonLd([
       {
-        question: "Who operates Gondar Simien Tours?",
+        question: "Who operates Gonder Simien Tours?",
         answer: "Journeys are operated by Simien Ethio Tours, based in Gondar.",
       },
       {
@@ -144,7 +144,7 @@ describe("faqPageJsonLd", () => {
     expect(json.mainEntity).toHaveLength(2);
     expect(json.mainEntity[0]).toMatchObject({
       "@type": "Question",
-      name: "Who operates Gondar Simien Tours?",
+      name: "Who operates Gonder Simien Tours?",
       acceptedAnswer: {
         "@type": "Answer",
         text: "Journeys are operated by Simien Ethio Tours, based in Gondar.",
