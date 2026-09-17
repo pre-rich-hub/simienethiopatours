@@ -30,8 +30,15 @@ export interface ChatProvider {
 export class OpenAIProvider implements ChatProvider {
   private client: OpenAI | undefined;
 
+  constructor(private opts: { apiKey?: string; baseURL?: string } = {}) {}
+
   private getClient(): OpenAI {
-    if (!this.client) this.client = new OpenAI({ apiKey: env.OPENAI_API_KEY });
+    if (!this.client) {
+      this.client = new OpenAI({
+        apiKey: this.opts.apiKey ?? env.OPENAI_API_KEY,
+        baseURL: this.opts.baseURL || undefined,
+      });
+    }
     return this.client;
   }
 
@@ -91,7 +98,9 @@ export class GeminiProvider implements ChatProvider {
 export function createProvider(): ChatProvider {
   switch (env.ASSISTANT_PROVIDER) {
     case "openai":
-      return new OpenAIProvider();
+      return new OpenAIProvider({ apiKey: env.OPENAI_API_KEY, baseURL: env.OPENAI_BASE_URL || undefined });
+    case "groq":
+      return new OpenAIProvider({ apiKey: env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
     case "gemini":
       return new GeminiProvider();
     default:

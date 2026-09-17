@@ -47,9 +47,11 @@ const envSchema = z.object({
 
   // AI assistant
   ASSISTANT_ENABLED: z.preprocess(envBoolean, z.boolean()).default(false),
-  ASSISTANT_PROVIDER: z.enum(["openai", "gemini"]).default("gemini"),
+  ASSISTANT_PROVIDER: z.enum(["openai", "gemini", "groq"]).default("gemini"),
   OPENAI_API_KEY: z.string().optional().default(""),
+  OPENAI_BASE_URL: z.string().optional().default(""),
   GEMINI_API_KEY: z.string().optional().default(""),
+  GROQ_API_KEY: z.string().optional().default(""),
   ASSISTANT_MODEL: z.string().default("gemini-3.6-flash"),
   ASSISTANT_MAX_MESSAGES: z.coerce.number().int().positive().default(30),
   ASSISTANT_MAX_OUTPUT_TOKENS: z.coerce.number().int().positive().default(1000),
@@ -98,6 +100,10 @@ if (parsed.ASSISTANT_ENABLED) {
   }
   if (parsed.ASSISTANT_PROVIDER === "gemini" && !parsed.GEMINI_API_KEY) {
     console.warn("[env] ASSISTANT_ENABLED is true but GEMINI_API_KEY is not configured. The assistant is disabled until a key is set.");
+    parsed.ASSISTANT_ENABLED = false;
+  }
+  if (parsed.ASSISTANT_PROVIDER === "groq" && !parsed.GROQ_API_KEY) {
+    console.warn("[env] ASSISTANT_ENABLED is true but GROQ_API_KEY is not configured. The assistant is disabled until a key is set.");
     parsed.ASSISTANT_ENABLED = false;
   }
 }

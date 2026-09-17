@@ -30,10 +30,6 @@ function estimateTokens(text: string): number {
   return Math.max(1, Math.ceil(text.length / 4));
 }
 
-function safe(rows: unknown): CatalogRow[] {
-  return Array.isArray(rows) ? (rows as CatalogRow[]) : [];
-}
-
 function parseArray(value: unknown): unknown[] {
   if (Array.isArray(value)) return value;
   if (typeof value !== "string" || !value) return [];
@@ -58,6 +54,15 @@ function formatBullets(items: unknown[]): string {
     })
     .filter(Boolean)
     .join("\n");
+}
+
+/**
+ * Field-level text cap used by compact destination rendering. This is the one
+ * deliberate cut the builder makes: sections and tours are never sliced.
+ */
+function capText(text: string, max = 140): string {
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trimEnd()}…`;
 }
 
 /**
@@ -125,6 +130,21 @@ function formatItinerary(raw: unknown): string {
     .join("\n\n");
 }
 
+// Compact itinerary: one line per day, dayLabel or day title only. No
+// paragraphs, stages, notes or overnight prose (used when the context must
+// shrink to fit a smaller model budget).
+function formatItineraryCompact(raw: unknown): string {
+  const days = parseArray(raw);
+  return days
+    .map((day, index) => {
+      const entry = day as Record<string, unknown>;
+      const label = asString(entry.dayLabel) ?? String(index + 1);
+      const title = asString(entry.title) ?? `Day ${label}`;
+      return `Day ${label}: ${title}`;
+    })
+    .join("\n");
+}
+
 // ---------------------------------------------------------------------------
 // CatalogContextBuilder
 //
@@ -142,32 +162,101 @@ export class CatalogContextBuilder implements ContextBuilder {
     const destinations = pickLocaleRows(catalogue.destinations, locale);
     const posts = pickLocaleRows(catalogue.posts, locale);
 
-    const sections: string[] = [
-      `## Tour packages (locale: ${locale})`,
-      ...safe(tours).map((tour) => this.formatTour(tour)),
-      "## Destinations",
-      ...safe(destinations).map((dest) =>
-        this.formatEntry(dest, ["name", "location", "overview", "highlights", "thingsToDo", "tourSlugs"]),
-      ),
-      "## Travel journal",
-      ...safe(posts).map((post) =>
-        this.formatEntry(post, ["blogTitle", "description", "content"]),
-      ),
-    ];
+    const budget = env.ASSISTANT_MAX_CONTEXT_CHARS;
 
-    const joined = sections.join("\n\n");
-    const truncated = joined.length > env.ASSISTANT_MAX_CONTEXT_CHARS;
-    const trimmed = truncated
-      ? joined.slice(0, env.ASSISTANT_MAX_CONTEXT_CHARS)
-      : joined;
+    // (a) Full render. Same output as before whenever it fits the budget.
+    const full = this.buildSections({ locale, tours, destinations, posts, tourMode: "full", destMode: "full" });
+    let joined = this.joinSections(full);
+    if (joined.length <= budget) return this.toContext(full, false, locale);
 
+    // (b) Tours compact, destinations and journal full. Tours are never dropped.
+    const compactTours = this.buildSections({ locale, tours, destinations, posts, tourMode: "compact", destMode: "full" });
+    joined = this.joinSections(compactTours);
+    if (joined.length <= budget) return this.toContext(compactTours, true, locale);
+
+    // (c) Destinations compact too.
+    const compactDests = this.buildSections({ locale, tours, destinations, posts, tourMode: "compact", destMode: "compact" });
+    joined = this.joinSections(compactDests);
+    if (joined.length <= budget) return this.toContext(compactDests, true, locale);
+
+    // (d) Still over budget: drop journal post sections from the end one at a
+    // time, then destination sections from the end one at a time, until the
+    // joined context fits. Never slice a string mid-section and never drop a tour.
+    for (let keepPosts = posts.length - 1; keepPosts >= 0; keepPosts--) {
+      const candidate = this.buildSections({
+        locale,
+        tours,
+        destinations,
+        posts: posts.slice(0, keepPosts),
+        tourMode: "compact",
+        destMode: "compact",
+      });
+      joined = this.joinSections(candidate);
+      if (joined.length <= budget) return this.toContext(candidate, true, locale);
+    }
+    for (let keepDests = destinations.length - 1; keepDests >= 0; keepDests--) {
+      const candidate = this.buildSections({
+        locale,
+        tours,
+        destinations: destinations.slice(0, keepDests),
+        posts: [],
+        tourMode: "compact",
+        destMode: "compact",
+      });
+      joined = this.joinSections(candidate);
+      if (joined.length <= budget) return this.toContext(candidate, true, locale);
+    }
+
+    // Unreachable in practice: the last loop iteration is the minimum context
+    // (tours header + all compact tours). Keep it as a hard fallback.
+    const minimal = this.buildSections({ locale, tours, destinations: [], posts: [], tourMode: "compact", destMode: "compact" });
+    return this.toContext(minimal, true, locale);
+  }
+
+  private joinSections(sections: string[]): string {
+    return sections.join("\n\n");
+  }
+
+  private toContext(sections: string[], truncated: boolean, locale: AssistantLocale): CatalogContext {
+    const joined = this.joinSections(sections);
     return {
-      sections: [trimmed],
-      tokenEstimate: estimateTokens(trimmed),
+      sections: [joined],
+      tokenEstimate: estimateTokens(joined),
       builtAt: new Date(),
       truncated,
       locale,
     };
+  }
+
+  private buildSections(params: {
+    locale: AssistantLocale;
+    tours: CatalogRow[];
+    destinations: CatalogRow[];
+    posts: CatalogRow[];
+    tourMode: "full" | "compact";
+    destMode: "full" | "compact";
+  }): string[] {
+    const sections: string[] = [`## Tour packages (locale: ${params.locale})`];
+    for (const tour of params.tours) {
+      sections.push(params.tourMode === "full" ? this.formatTour(tour) : this.formatTourCompact(tour));
+    }
+    if (params.destinations.length > 0) {
+      sections.push("## Destinations");
+      for (const dest of params.destinations) {
+        sections.push(
+          params.destMode === "full"
+            ? this.formatEntry(dest, ["name", "location", "overview", "highlights", "thingsToDo", "tourSlugs"])
+            : this.formatDestinationCompact(dest),
+        );
+      }
+    }
+    if (params.posts.length > 0) {
+      sections.push("## Travel journal");
+      for (const post of params.posts) {
+        sections.push(this.formatEntry(post, ["blogTitle", "description", "content"]));
+      }
+    }
+    return sections;
   }
 
   private formatEntry(row: CatalogRow, fields: string[]): string {
@@ -257,6 +346,96 @@ export class CatalogContextBuilder implements ContextBuilder {
 
     const itinerary = formatItinerary(row.itinerary);
     if (itinerary) lines.push(`itinerary:\n${itinerary}`);
+
+    return lines.join("\n");
+  }
+
+  // Compact tour renderer: keeps the answer-critical fields (identity, duration,
+  // fit, route, facts, highlights, day-by-day itinerary) and drops the editorial
+  // prose (overview/introduction/preparation/included/excluded and itinerary
+  // paragraphs, stages, notes, overnight).
+  private formatTourCompact(row: CatalogRow): string {
+    const lines: string[] = [];
+    const push = (label: string, value: unknown): void => {
+      const text = asString(value);
+      if (text) lines.push(`${label}: ${text}`);
+    };
+
+    push("slug", row.slug);
+    push("tourName", row.tourName);
+    push("duration", row.duration);
+    push("style", row.style);
+    push("difficulty", row.difficulty);
+    push("fit", row.fit);
+    push("inquiry", row.inquiry);
+    push("notice", row.notice);
+
+    const route = parseArray(row.route);
+    if (route.length > 0) {
+      const stops = route.map((stop) => String(stop)).filter(Boolean);
+      if (stops.length > 0) lines.push(`route: ${stops.join(" → ")}`);
+    }
+
+    const facts = parseArray(row.facts);
+    if (facts.length > 0) {
+      lines.push(
+        "facts:\n" +
+          facts
+            .map((fact) => {
+              const item = fact as Record<string, unknown>;
+              return `- ${asString(item.label) ?? "?"}: ${asString(item.value) ?? ""}`;
+            })
+            .join("\n"),
+      );
+    }
+
+    const highlights = parseArray(row.highlights);
+    if (highlights.length > 0) {
+      lines.push(
+        "highlights:\n" +
+          highlights
+            .map((highlight) => {
+              const item = highlight as Record<string, unknown>;
+              return `- ${asString(item.title) ?? ""}: ${asString(item.body) ?? ""}`;
+            })
+            .join("\n"),
+      );
+    }
+
+    const itinerary = formatItineraryCompact(row.itinerary);
+    if (itinerary) lines.push(`itinerary:\n${itinerary}`);
+
+    return lines.join("\n");
+  }
+
+  // Compact destination renderer: identity and linked tours always; overview
+  // and highlights are capped at ~140 chars when longer.
+  private formatDestinationCompact(row: CatalogRow): string {
+    const lines: string[] = [];
+    const push = (label: string, value: unknown): void => {
+      const text = asString(value);
+      if (text) lines.push(`${label}: ${text}`);
+    };
+    const pushCapped = (label: string, raw: unknown): void => {
+      if (Array.isArray(raw)) {
+        const bullets = formatBullets(raw);
+        if (bullets) lines.push(`${label}: ${capText(bullets)}`);
+        return;
+      }
+      const text = asString(raw);
+      if (text) lines.push(`${label}: ${capText(text)}`);
+    };
+
+    push("name", row.name);
+    push("location", row.location);
+    pushCapped("overview", row.overview);
+    pushCapped("highlights", row.highlights);
+
+    const tourSlugs = parseArray(row.tourSlugs);
+    if (tourSlugs.length > 0) {
+      const bullets = formatBullets(tourSlugs);
+      if (bullets) lines.push(`tourSlugs:\n${bullets}`);
+    }
 
     return lines.join("\n");
   }
