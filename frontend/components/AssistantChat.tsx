@@ -1,6 +1,5 @@
 "use client";
 
-import { Link, useRouter } from "@/i18n/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { useTranslations } from "next-intl";
@@ -100,44 +99,6 @@ function ErrorLinks({
     <div className="assistant-chat__error-links">
       <a href={site.whatsapp} target="_blank" rel="noreferrer">{whatsapp}</a>
       <a href={`mailto:${site.email}`}>{email}</a>
-    </div>
-  );
-}
-
-const PLAN_HANDOFFS = [
-  { journey: "simien-classic", labelKey: "planChipDays3", messageKey: "planMessageDays3" },
-  { journey: "simien-essential", labelKey: "planChipDays4", messageKey: "planMessageDays4" },
-  { journey: "ras-dashen", labelKey: "planChipSummit", messageKey: "planMessageSummit" },
-  { journey: "custom", labelKey: "planChipCustom", messageKey: "planMessageCustom" },
-] as const;
-
-function PlanHandoffs({ onClose }: { onClose: () => void }) {
-  const t = useTranslations("chat");
-  const router = useRouter();
-  return (
-    <div className="assistant-chat__handoffs" role="group" aria-label={t("planHandoffs")}>
-      <p className="assistant-chat__handoffs-label">{t("planHandoffs")}</p>
-      <div className="assistant-chat__chips">
-        {PLAN_HANDOFFS.map((chip) => {
-          const message = t(chip.messageKey);
-          const href = { pathname: "/plan", query: { journey: chip.journey, message } } as const;
-          return (
-            <Link
-              key={chip.journey}
-              href={href}
-              className="assistant-chat__chip"
-              onClick={(event) => {
-                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-                event.preventDefault();
-                router.push(href);
-                onClose();
-              }}
-            >
-              {t(chip.labelKey)}
-            </Link>
-          );
-        })}
-      </div>
     </div>
   );
 }
@@ -375,7 +336,6 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
                 </button>
               ))}
             </div>
-            <PlanHandoffs onClose={onClose} />
           </>
         ) : (
           messages.map((message, index) => {
@@ -413,7 +373,6 @@ export function AssistantChat({ open, onClose }: { open: boolean; onClose: () =>
             );
           })
         )}
-        {messages.length > 0 ? <PlanHandoffs onClose={onClose} /> : null}
       </div>
 
       <div className="assistant-chat__toolbar">
