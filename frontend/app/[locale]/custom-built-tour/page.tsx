@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageShell } from "@/components/PageShell";
+import Image from "@/components/Image";
+import { ArrowUpRight } from "@/components/Icon";
 import { FeatureGrid, SectionIntro, PlanningCall } from "@/components/Editorial";
 import { messagePageMetadata, howToJsonLd, jsonLdScript, localeFromParam } from "@/lib/seo";
 import clientPhotos from "@/lib/client-photos.json";
@@ -89,8 +91,8 @@ export default async function CustomTourPage({ params }: { params: Promise<{ loc
         <div className="shell">
           <SectionIntro tag={t("examplesTag")} title={t("examplesTitle")} accent={t("examplesAccent")} />
           <p className="lead">{t("examplesLead")}</p>
-          <FeatureGrid
-            items={[
+          <div className="ethiopia-destination-grid">
+            {[
               {
                 tag: t("example1Tag"), title: t("example1Title"), body: t("example1Body"), href: "/gondar", linkLabel: t("example1Link"),
                 image: clientPhotos["gondar-market-local-life"].url, imageAlt: clientPhotos["gondar-market-local-life"].alt[locale],
@@ -103,8 +105,22 @@ export default async function CustomTourPage({ params }: { params: Promise<{ loc
                 tag: t("example3Tag"), title: t("example3Title"), body: t("example3Body"), href: "/treks/southern-ethiopia-journey", linkLabel: t("example3Link"),
                 image: clientPhotos.axum.url, imageAlt: clientPhotos.axum.alt[locale],
               },
-            ]}
-          />
+            ].map((item) => (
+              <Link key={item.href} href={item.href} className="ethiopia-destination-card">
+                <div className="ethiopia-destination-card__photo">
+                  <Image src={item.image} alt={item.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                </div>
+                <div className="ethiopia-destination-card__body">
+                  <p className="eyebrow eyebrow--copper">{item.tag}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                  <div className="ethiopia-destination-card__footer">
+                    <span className="simien-photo-card__explore">{item.linkLabel} <ArrowUpRight size={16} /></span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
