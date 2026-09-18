@@ -57,6 +57,7 @@ const META_PATHS = {
   treks: "/treks",
   simien: "/simien-mountains",
   gondar: "/gondar",
+  customTour: "/custom-built-tour",
 } as const;
 
 export type MetaPage = keyof typeof META_PATHS;
@@ -201,6 +202,14 @@ function hubOgImage(page: MetaPage, locale: AppLocale): OgImage {
       alt: "Tesema ‘Tevan’ Mulualem, Gondar-based founder and guide",
       width: 1200,
       height: 1600,
+    };
+  }
+  if (page === "customTour") {
+    return {
+      url: clientPhotos.kosoye.url,
+      alt: clientPhotos.kosoye.alt[locale],
+      width: 1600,
+      height: 1200,
     };
   }
   return {

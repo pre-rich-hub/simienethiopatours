@@ -39,6 +39,7 @@ export const planningOptions = [
   { id: "accommodation", label: "Gondar & Simien accommodation" },
   { id: "travel-services", label: "Transport, guiding & travel services" },
   { id: "custom", label: "Custom northern Ethiopia journey" },
+  { id: "custom-built-tour", label: "Custom-built Ethiopia journey" },
   { id: "southern-ethiopia-journey", label: "The Southern Ethiopia Journey — 12 days" },
   { id: "bale-mountains-extension", label: "Bale Mountains Extension — 4 days" },
   { id: "northern-ethiopia-long-way-north", label: "Northern Ethiopia — The Long Way North" },

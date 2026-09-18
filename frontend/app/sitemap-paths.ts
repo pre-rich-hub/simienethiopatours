@@ -9,6 +9,7 @@ export const INDEX_PATHS = [
   "/explore-ethiopia",
   "/southern-ethiopia",
   "/about",
+  "/custom-built-tour",
   "/gallery",
   "/photo-credits",
   "/plan",

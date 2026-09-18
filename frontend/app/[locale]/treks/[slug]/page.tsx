@@ -5,10 +5,11 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight } from "@/components/Icon";
 import { PageShell } from "@/components/PageShell";
 import { AtAGlance, BookingCard, EditorialHero, Itinerary, SectionIntro, StorySection, PlanningCall, FeatureGrid } from "@/components/Editorial";
-import { getTourForRoute, getTours, getDestinations, requireContentLocale, tourToJourney, tourMedia } from "@/lib/catalogue";
+import { getTourForRoute, getTours, getDestinations, requireContentLocale, tourToJourney, tourMedia, resolveMediaUrl } from "@/lib/catalogue";
 import { enrichTourRecord } from "@/lib/tour-enrichment";
 import { catalogueMetadata } from "@/lib/catalogue-seo";
 import { breadcrumbJsonLd, jsonLdScript, localeFromParam, tourJsonLd } from "@/lib/seo";
+import clientPhotos from "@/lib/client-photos.json";
 const journeyPackagePath = (slug: string) => `/treks/${slug}`;
 export const dynamicParams = true;
 
@@ -40,10 +41,21 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
   const destinations = allDestinations.filter(p => p.tourSlugs.includes(slug));
   const allTours = await getTours(locale);
   const tourMediaBySlug = new Map(allTours.map(row => [row.slug, tourMedia(row)]));
+  const destinationMediaByPath = new Map(
+    allDestinations.map(row => [row.path, { image: resolveMediaUrl(row.imageUrl), imageAlt: row.imageAlt }]),
+  );
+  // Hub pages (Gondar, Simien Mountains) aren't destination records, so they fall outside destinationMediaByPath;
+  // use the same representative photos already treated as canonical for each hub (see hubOgImage in lib/seo.ts).
+  const hubMediaByPath = new Map([
+    ["/gondar", { image: clientPhotos.fasil.url, imageAlt: clientPhotos.fasil.alt[locale] }],
+    ["/simien-mountains", { image: clientPhotos.sankaber.url, imageAlt: clientPhotos.sankaber.alt[locale] }],
+  ]);
   const publishedPaths = new Set([...allTours.map(t => t.path), ...allDestinations.map(p => p.path), "/plan", "/treks", "/gondar", "/simien-mountains", "/explore-ethiopia", "/southern-ethiopia", "/about", "/gallery", "/journal"]);
   const related = record.related.map(item => {
     const relatedSlug = item.href?.match(/^\/treks\/([a-z0-9-]+)$/)?.[1];
-    const media = relatedSlug ? tourMediaBySlug.get(relatedSlug) : undefined;
+    const media = (relatedSlug ? tourMediaBySlug.get(relatedSlug) : undefined)
+      ?? (item.href ? destinationMediaByPath.get(item.href) : undefined)
+      ?? (item.href ? hubMediaByPath.get(item.href) : undefined);
     return {
       ...item,
       href: item.href && (/^https?:\/\//.test(item.href) || publishedPaths.has(item.href)) ? item.href : undefined,

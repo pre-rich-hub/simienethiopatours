@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FeatureGrid, SectionIntro } from "@/components/Editorial";
 import { ExperiencePhotoCards } from "@/components/ExperiencePhotoCards";
+import { CustomTourCard } from "@/components/CustomTourCard";
 import { HomeHeroMedia } from "@/components/HomeHeroMedia";
 import { ReviewsShowcase } from "@/components/ReviewsShowcase";
 import { DurationSelector } from "@/components/DurationSelector";
@@ -135,6 +136,9 @@ export default async function Home() {
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="shell">
+            <CustomTourCard />
           </div>
         </section>
 
