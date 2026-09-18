@@ -331,5 +331,221 @@
       "de": "Injera mit verschiedenen äthiopischen Gerichten",
       "fr": "Injera servie avec une variété de plats éthiopiens"
     }
+  },
+  "gheralta": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789747026/tigrayRock.png",
+    "alt": {
+      "en": "Sandstone cliffs and rock formations in the Gheralta mountains of Tigray",
+      "es": "Acantilados de arenisca y formaciones rocosas en las montañas Gheralta de Tigray",
+      "de": "Sandsteinklippen und Felsformationen im Gheralta-Gebirge in Tigray",
+      "fr": "Falaises de grès et formations rocheuses dans les montagnes du Gheralta au Tigré"
+    }
+  },
+  "danakil": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789747023/danakil.png",
+    "alt": {
+      "en": "Desert and volcanic landscape in the Danakil Depression",
+      "es": "Paisaje desértico y volcánico en la Depresión de Danakil",
+      "de": "Wüsten- und Vulkanlandschaft in der Danakil-Senke",
+      "fr": "Paysage désertique et volcanique dans la dépression du Danakil"
+    }
+  },
+  "kidis-yared": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789747021/kidisYared.png",
+    "alt": {
+      "en": "Highland peaks around Kidis Yared in the Simien Mountains",
+      "es": "Picos de altiplano alrededor de Kidis Yared en las montañas Simien",
+      "de": "Hochlandgipfel um Kidis Yared im Simien-Gebirge",
+      "fr": "Sommets d’altitude autour de Kidis Yared dans les montagnes du Simien"
+    }
+  },
+  "arba-minch": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748357/arbaMinch.png",
+    "alt": {
+      "en": "Lakes and highland ridges near Arba Minch in southern Ethiopia",
+      "es": "Lagos y crestas de altiplano cerca de Arba Minch en el sur de Etiopía",
+      "de": "Seen und Hochlandkämme bei Arba Minch in Südäthiopien",
+      "fr": "Lacs et crêtes d’altitude près d’Arba Minch dans le sud de l’Éthiopie"
+    }
+  },
+  "lake-chamo": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748360/lakeChamo.png",
+    "alt": {
+      "en": "Open water and shoreline on Lake Chamo",
+      "es": "Aguas abiertas y orilla en el lago Chamo",
+      "de": "Offenes Wasser und Ufer am Chamo-See",
+      "fr": "Étendue d’eau et rivage sur le lac Chamo"
+    }
+  },
+  "konso": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748362/konso.png",
+    "alt": {
+      "en": "Terraced hillsides and cultural landscape around Konso",
+      "es": "Laderas aterrazadas y paisaje cultural alrededor de Konso",
+      "de": "Terrassierte Hänge und Kulturlandschaft bei Konso",
+      "fr": "Versants en terrasses et paysage culturel autour de Konso"
+    }
+  },
+  "dorze": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748368/dorze.png",
+    "alt": {
+      "en": "Dorze highland village and bamboo landscape in the Guge Mountains",
+      "es": "Aldea de altiplano Dorze y paisaje de bambú en las montañas Guge",
+      "de": "Dorze-Hochlanddorf und Bambuslandschaft im Guge-Gebirge",
+      "fr": "Village d’altitude Dorze et paysage de bambou dans les montagnes Guge"
+    }
+  },
+  "jinka": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748390/jinka.png",
+    "alt": {
+      "en": "Town and surrounding hills around Jinka in the Omo Valley",
+      "es": "Pueblo y colinas alrededor de Jinka en el valle del Omo",
+      "de": "Ort und umliegende Hügel bei Jinka im Omo-Tal",
+      "fr": "Ville et collines autour de Jinka dans la vallée de l’Omo"
+    }
+  },
+  "turmi": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748412/turmi.png",
+    "alt": {
+      "en": "Dry woodland and settlement landscape near Turmi",
+      "es": "Bosque seco y asentamiento cerca de Turmi",
+      "de": "Trockenes Waldland und Siedlungslandschaft bei Turmi",
+      "fr": "Forêt sèche et paysage d’habitat près de Turmi"
+    }
+  },
+  "mago": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748414/mago.png",
+    "alt": {
+      "en": "Savanna and bush landscape in Mago National Park",
+      "es": "Sabana y matorral en el Parque Nacional de Mago",
+      "de": "Savannen- und Buschlandschaft im Mago-Nationalpark",
+      "fr": "Paysage de savane et de brousse dans le parc national de Mago"
+    }
+  },
+  "key-afer": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748421/keyafer.png",
+    "alt": {
+      "en": "Market-day gathering and highland road near Key Afer",
+      "es": "Reunión de día de mercado y camino de altiplano cerca de Key Afer",
+      "de": "Markttag und Hochlandstraße bei Key Afer",
+      "fr": "Rassemblement de jour de marché et route d’altitude près de Key Afer"
+    }
+  },
+  "mursi": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789748428/mursi.png",
+    "alt": {
+      "en": "Open grassland and village context in the Mursi area",
+      "es": "Pradera abierta y contexto de aldea en la zona Mursi",
+      "de": "Offenes Grasland und Dorfumfeld im Mursi-Gebiet",
+      "fr": "Prairie ouverte et contexte de village dans la région Mursi"
+    }
+  },
+  "hamer": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789756502/hamer.png",
+    "alt": {
+      "en": "Dry grassland and homestead landscape in Hamer country",
+      "es": "Pradera seca y paisaje de viviendas en la región Hamer",
+      "de": "Trockenes Grasland und Gehöftlandschaft im Hamer-Gebiet",
+      "fr": "Prairie sèche et habitat dans le pays Hamer"
+    }
+  },
+  "dassanech": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789756513/dassanech.png",
+    "alt": {
+      "en": "Riverine flats and settlement context in Dassanech country",
+      "es": "Llanuras fluviales y asentamiento en la región Dassanech",
+      "de": "Flussnahe Ebenen und Siedlungslandschaft im Dassanech-Gebiet",
+      "fr": "Plaines riveraines et habitat dans le pays Dassanech"
+    }
+  },
+  "karo": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789756555/karo.png",
+    "alt": {
+      "en": "Omo River cliffs and village setting in Karo country",
+      "es": "Acantilados del río Omo y aldea en la región Karo",
+      "de": "Omo-Flussklippen und Dorfumfeld im Karo-Gebiet",
+      "fr": "Falaises de l’Omo et village dans le pays Karo"
+    }
+  },
+  "omorate": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789756566/omorate.png",
+    "alt": {
+      "en": "Town and river approach near Omorate on the lower Omo",
+      "es": "Pueblo y acceso fluvial cerca de Omorate en el bajo Omo",
+      "de": "Ort und Flusszugang bei Omorate am unteren Omo",
+      "fr": "Ville et approche fluviale près d’Omorate sur le bas Omo"
+    }
+  },
+  "omo-river": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789756576/omoriver.png",
+    "alt": {
+      "en": "Wide river corridor and banks along the Omo River",
+      "es": "Amplio corredor fluvial y orillas a lo largo del río Omo",
+      "de": "Weiter Flusskorridor und Ufer entlang des Omo",
+      "fr": "Large corridor fluvial et berges le long de l’Omo"
+    }
+  },
+  "rift-valley": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789756584/riftvalley.png",
+    "alt": {
+      "en": "Rift Valley lake shore and highland rim landscape",
+      "es": "Orilla de un lago del Rift Valley y paisaje de borde de altiplano",
+      "de": "Rift-Valley-Seeufer und Hochlandrand",
+      "fr": "Rivage d’un lac de la vallée du Rift et rebord d’altitude"
+    }
+  },
+  "yirgalem": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789756615/yirgalem.png",
+    "alt": {
+      "en": "Green highland countryside around Yirgalem",
+      "es": "Campo verde de altiplano alrededor de Yirgalem",
+      "de": "Grünes Hochland um Yirgalem",
+      "fr": "Campagne verdoyante d’altitude autour de Yirgalem"
+    }
+  },
+  "southern-coffee": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789756618/southerncoffee.png",
+    "alt": {
+      "en": "Coffee trees and shaded highland farms in southern coffee country",
+      "es": "Cafetos y fincas de altiplano en sombras en la zona cafetera del sur",
+      "de": "Kaffeebäume und schattige Hochlandfarmen im südlichen Kaffeeland",
+      "fr": "Caféiers et fermes d’altitude ombragées dans le pays du café du sud"
+    }
+  },
+  "sanetti": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789757807/sanetti.png",
+    "alt": {
+      "en": "Open alpine plateau landscape on the Sanetti Plateau",
+      "es": "Paisaje abierto de meseta alpina en la meseta de Sanetti",
+      "de": "Offene alpine Hochebene auf dem Sanetti-Plateau",
+      "fr": "Plateau alpin ouvert sur le plateau de Sanetti"
+    }
+  },
+  "dinsho": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789757813/dinsho.png",
+    "alt": {
+      "en": "Highland forest and park gateway landscape around Dinsho",
+      "es": "Bosque de altiplano y paisaje de acceso al parque alrededor de Dinsho",
+      "de": "Hochlandwald und Parkzugangslandschaft bei Dinsho",
+      "fr": "Forêt d’altitude et paysage d’entrée de parc autour de Dinsho"
+    }
+  },
+  "bale": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789757818/bale.png",
+    "alt": {
+      "en": "Mountain ridges and highland horizon in Bale Mountains National Park",
+      "es": "Crestas montañosas y horizonte de altiplano en el Parque Nacional de las Montañas Bale",
+      "de": "Gebirgskämme und Hochlandhorizont im Bale-Mountains-Nationalpark",
+      "fr": "Crêtes montagneuses et horizon d’altitude dans le parc national des montagnes du Bale"
+    }
+  },
+  "harenna": {
+    "url": "https://res.cloudinary.com/ps4gvvqu/image/upload/v1789757819/harenna.png",
+    "alt": {
+      "en": "Dense cloud-forest canopy in the Harenna Forest",
+      "es": "Dosel denso de bosque nuboso en el bosque de Harenna",
+      "de": "Dichtes Nebelwald-Kronendach im Harenna-Wald",
+      "fr": "Canopée dense de forêt de nuages dans la forêt de Harenna"
+    }
   }
 }
