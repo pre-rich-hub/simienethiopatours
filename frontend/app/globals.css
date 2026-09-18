@@ -1766,6 +1766,7 @@ a.assistant-chat__chip { display: inline-block; }
 .ethiopia-destination-card__body > p:not(.eyebrow):not(.ethiopia-destination-card__location) { display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
 .ethiopia-destination-card__location { font-size:13px; opacity:.75; }
 .ethiopia-destination-card__footer { display: flex; justify-content: center; margin-top: auto; padding-top: 12px; }
+#examples .ethiopia-destination-card:hover { border-color: rgba(23,25,22,.16); }
 .ethiopia-mobile-groups { padding:8px 0 20px 28px; }
 .mobile-menu nav .ethiopia-mobile-groups a { display:block; font-size:16px; padding:10px 0; color: rgba(250,248,241,.72); }
 @media(max-width:1100px) { .ethiopia-destination-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
