@@ -3,7 +3,7 @@ import { photographs, type Photograph } from "@/lib/gallery-data";
 export type GalleryCaption = Pick<Photograph, "title" | "location" | "category" | "alt" | "story" | "link">;
 type CaptionLocale = "es" | "de" | "fr";
 
-/** Titles and alt text follow the supplied gallery1–gallery33 order. */
+/** Titles and alt text follow the gallery collection order. */
 const translatedPhotos: Record<CaptionLocale, readonly (readonly [title: string, alt: string])[]> = {
   es: [
     ["Una bienvenida compartida","Viajeros juntos con camisetas verdes y amarillas a juego"],
@@ -39,6 +39,15 @@ const translatedPhotos: Record<CaptionLocale, readonly (readonly [title: string,
     ["Un encuentro por la tarde","Un grupo de adultos y niños reunidos al aire libre"],
     ["Color y tradición","Retrato de una persona con pelo trenzado, collares de cuentas y una cinta decorada en la cabeza"],
     ["Luz de montaña compartida","Cuatro caminantes descansan juntos con crestas montañosas al fondo"],
+    ["Mirando al cañón","Una caminante con mochila naranja contempla un profundo cañón del Simien"],
+    ["Sentada con la vista","Una viajera sentada en el borde de un acantilado rocoso sobre un cañón"],
+    ["Terrazas abajo","Una caminante contempla valles aterrazados desde una cresta rocosa"],
+    ["Borde de la meseta","Una meseta plana que termina en un acantilado vertical sobre valles verdes"],
+    ["Pausa al atardecer","Una viajera sentada en un saliente rocoso sobre los cañones del Simien"],
+    ["Por el camino de altura","Una persona camina por un sendero de tierra entre campos bordeados de arbustos rosados"],
+    ["Pilares de roca","Pilares de acantilado que se alzan sobre un asentamiento en un valle verde"],
+    ["Piedra erguida","Un alto pilar de arenisca frente a crestas montañosas bajo un cielo azul"],
+    ["Al borde","Una caminante de pie en el borde de un acantilado sobre paredes de cañón estratificadas"],
   ],
   de: [
     ["Ein gemeinsamer Empfang","Reisende stehen in passenden grünen und gelben Trikots zusammen"],
@@ -74,6 +83,15 @@ const translatedPhotos: Record<CaptionLocale, readonly (readonly [title: string,
     ["Ein Treffen am Nachmittag","Eine Gruppe von Erwachsenen und Kindern steht im Freien zusammen"],
     ["Farbe und Tradition","Porträt einer Person mit geflochtenem Haar, Perlenketten und verziertem Stirnband"],
     ["Gemeinsames Berglicht","Vier Wanderer rasten gemeinsam vor Bergkämmen"],
+    ["Blick in den Canyon","Eine Wanderin mit orangefarbenem Rucksack blickt in einen tiefen Simien-Canyon"],
+    ["Mit dem Blick sitzen","Eine Reisende sitzt am Rand einer Felsklippe über einem Canyon"],
+    ["Terrassen darunter","Eine Wanderin blickt von einem Felskamm auf terrassierte Hochlandtäler"],
+    ["Plateaurand","Ein flaches Plateau, das in einer steilen Klippe über grünen Tälern endet"],
+    ["Pause im Abendlicht","Eine Reisende sitzt auf einem Felsvorsprung über den Simien-Canyons"],
+    ["Auf dem Hochlandweg","Eine Person geht einen Feldweg entlang, gesäumt von rosa getönten Büschen"],
+    ["Felssäulen","Steile Felssäulen erheben sich über einer Siedlung im grünen Tal"],
+    ["Aufrechter Stein","Eine hohe Sandsteinsäule vor Bergkämmen unter blauem Himmel"],
+    ["Am Abgrund","Eine Wanderin steht am Rand einer Felsklippe über geschichteten Canyonwänden"],
   ],
   fr: [
     ["Un accueil partagé","Des voyageurs réunis en maillots verts et jaunes assortis"],
@@ -109,6 +127,15 @@ const translatedPhotos: Record<CaptionLocale, readonly (readonly [title: string,
     ["Une rencontre l’après-midi","Un groupe d’adultes et d’enfants réunis en plein air"],
     ["Couleur et tradition","Portrait d’une personne aux cheveux tressés portant des colliers de perles et un bandeau décoré"],
     ["La lumière des montagnes en partage","Quatre randonneurs se reposent ensemble devant des crêtes montagneuses"],
+    ["Regard vers le canyon","Une randonneuse au sac orange contemple un profond canyon du Simien"],
+    ["Assise face à la vue","Une voyageuse assise au bord d’une falaise rocheuse au-dessus d’un canyon"],
+    ["Terrasses en contrebas","Une randonneuse contemple des vallées en terrasses depuis une crête rocheuse"],
+    ["Bord du plateau","Un plateau plat qui s’achève en falaise abrupte au-dessus de vallées vertes"],
+    ["Pause à l’heure dorée","Une voyageuse assise sur un rebord rocheux au-dessus des canyons du Simien"],
+    ["Sur le chemin des hauts plateaux","Une personne marche sur un sentier de terre entre des champs bordés de buissons rosés"],
+    ["Piliers de roche","Des piliers de falaise s’élèvent au-dessus d’un hameau dans une vallée verte"],
+    ["Pierre dressée","Un haut pilier de grès devant des crêtes montagneuses sous un ciel bleu"],
+    ["Au bord du vide","Une randonneuse debout au bord d’une falaise au-dessus de parois de canyon stratifiées"],
   ],
 };
 

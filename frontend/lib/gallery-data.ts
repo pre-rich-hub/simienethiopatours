@@ -19,7 +19,9 @@ const themes = {
   culture: { category: "Culture & life", story: "People, heritage and everyday encounters are part of the journey. Make time for conversation and ask permission before photographing people.", href: "/explore-ethiopia", link: "Explore Ethiopia" },
 } as const;
 
-const collection: readonly [theme: keyof typeof themes, title: string, alt: string, location: string][] = [
+type GalleryEntry = readonly [theme: keyof typeof themes, title: string, alt: string, location: string, src?: string];
+
+const collection: readonly GalleryEntry[] = [
   ["culture","A shared welcome","Travellers standing together in matching green and yellow shirts","Ethiopia"],
   ["landscapes","Above the valleys","A traveller with raised arms overlooking layered mountain valleys","Simien Mountains"],
   ["culture","At the doorway","Visitors and local hosts gathered at the doorway of a house","Ethiopia"],
@@ -53,12 +55,21 @@ const collection: readonly [theme: keyof typeof themes, title: string, alt: stri
   ["culture","An afternoon gathering","A group of adults and children standing together outdoors","Ethiopia"],
   ["culture","Colour and tradition","Portrait of a person with braided hair, beaded necklaces and a decorated headband","Ethiopia"],
   ["trail","Shared mountain light","Four hikers resting together with mountain ridges behind them","Simien Mountains"],
+  ["trail","Looking into the canyon","A hiker with an orange backpack overlooking a deep Simien canyon","Simien Mountains","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758515/FB_IMG_1789438209431.jpg.jpg"],
+  ["trail","Sitting with the view","A traveller sitting on a rocky cliff edge above a canyon","Simien Mountains","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758515/FB_IMG_1789438214732.jpg.jpg"],
+  ["trail","Terraces below","A hiker overlooking terraced highland valleys from a rocky ridge","Simien Mountains","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758516/FB_IMG_1789438216976.jpg.jpg"],
+  ["landscapes","Plateau edge","A flat-topped plateau ending in a sheer cliff above green valleys","Simien Mountains","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758518/FB_IMG_1789438212022.jpg.jpg"],
+  ["trail","Golden hour pause","A traveller sitting on a rocky ledge above the Simien canyons","Simien Mountains","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758522/FB_IMG_1789438231822.jpg.jpg"],
+  ["culture","Along the highland path","A person walking a dirt path through fields edged with pink-tipped bushes","Ethiopian highlands","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758523/FB_IMG_1789438228576.jpg.jpg"],
+  ["landscapes","Pillars of rock","Sheer cliff pillars rising above a green valley settlement","Simien Mountains","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758528/FB_IMG_1789438246599.jpg.jpg"],
+  ["landscapes","Standing stone","A tall sandstone pillar against mountain ridges under blue sky","Simien Mountains","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758529/FB_IMG_1789438240866.jpg.jpg"],
+  ["trail","At the brink","A hiker standing on a rocky cliff edge above layered canyon walls","Simien Mountains","https://res.cloudinary.com/ps4gvvqu/image/upload/v1789758533/FB_IMG_1789438243507.jpg.jpg"],
 ];
 
-/** Client-selected collection in the supplied gallery1–gallery33 order. */
-export const photographs: readonly Photograph[] = collection.map(([theme, title, alt, location], index) => ({
+/** Client-selected gallery collection (gallery1–gallery33, then additional Cloudinary uploads). */
+export const photographs: readonly Photograph[] = collection.map(([theme, title, alt, location, src], index) => ({
   ...themes[theme],
-  src: galleryImageUrl(index + 1),
+  src: src ?? galleryImageUrl(index + 1),
   title,
   alt,
   location,
