@@ -1756,7 +1756,6 @@ a.assistant-chat__chip { display: inline-block; }
 .ethiopia-group-links a { display:inline-flex; align-items:center; gap:8px; border-bottom:1px solid currentColor; padding-bottom:5px; }
 .ethiopia-destination-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; }
 .ethiopia-destination-card { display:flex; flex-direction:column; border:1px solid rgba(23,25,22,.16); background:var(--color-ivory, #faf8f2); color:inherit; text-decoration:none; }
-.ethiopia-destination-card:hover { border-color:var(--color-copper, #9e5b38); }
 .ethiopia-destination-card:focus-visible { outline:3px solid var(--color-copper, #9e5b38); outline-offset:4px; }
 .ethiopia-destination-card__photo { position:relative; aspect-ratio: 3 / 2; overflow:hidden; }
 .ethiopia-destination-card__photo img { object-fit:cover; }
@@ -1766,7 +1765,6 @@ a.assistant-chat__chip { display: inline-block; }
 .ethiopia-destination-card__body > p:not(.eyebrow):not(.ethiopia-destination-card__location) { display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
 .ethiopia-destination-card__location { font-size:13px; opacity:.75; }
 .ethiopia-destination-card__footer { display: flex; justify-content: center; margin-top: auto; padding-top: 12px; }
-#examples .ethiopia-destination-card:hover { border-color: rgba(23,25,22,.16); }
 .ethiopia-mobile-groups { padding:8px 0 20px 28px; }
 .mobile-menu nav .ethiopia-mobile-groups a { display:block; font-size:16px; padding:10px 0; color: rgba(250,248,241,.72); }
 @media(max-width:1100px) { .ethiopia-destination-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
