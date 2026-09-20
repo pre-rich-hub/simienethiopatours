@@ -8,8 +8,7 @@ export const site = {
   email: "info@gondersimientours.com",
   address: "Fasil Castle Street, Gondar, Ethiopia",
   whatsapp: "https://wa.me/251956616969",
-  tripadvisor:
-    "https://www.tripadvisor.com/Attraction_Review-g317059-d32805557-Reviews-Tesema_Travels-Gonder_Amhara_Region.html",
+  tripadvisor: "http://www.tripadvisor.com/UserReviewEdit-d34693935?m=68676",
   googleReview: "https://g.page/r/CR_0RgIfgR4ZEBM/review",
   operatorSite: "https://simienethiotours.com/",
   brand: {
