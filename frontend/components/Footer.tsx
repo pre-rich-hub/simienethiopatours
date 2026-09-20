@@ -9,7 +9,7 @@ import { site, verifiedSocialLinks, type SocialNetwork } from "@/lib/site";
 
 const trustedPlatforms = [
   { name: "Viator", src: "/images/partners/viator.png", width: 340, height: 145 },
-  { name: "Tripadvisor", src: "/images/partners/tripadvisor.png", width: 428, height: 397 },
+  { name: "Tripadvisor", src: "/images/partners/tripadvisor.png", width: 428, height: 397, href: site.tripadvisor },
   { name: "SafariBookings", src: "/images/partners/safaribookings.png", width: 440, height: 170 },
   { name: "GetYourGuide", src: "/images/partners/getyourguide.png", width: 170, height: 152 },
 ];
@@ -97,11 +97,9 @@ export async function Footer() {
             <p className="m-0 mt-1.5 text-[14px] leading-[1.5] whitespace-nowrap text-[rgba(250,248,241,.6)] max-[720px]:whitespace-normal">{t("trustedSubtitle")}</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            {trustedPlatforms.map((platform) => (
-              <span
-                key={platform.name}
-                className="flex h-[52px] w-[110px] items-center justify-center rounded-xl bg-[#faf8f1] px-4 py-2.5 shadow-[0_6px_18px_rgba(0,0,0,.18)] transition-transform duration-300 hover:-translate-y-[3px]"
-              >
+            {trustedPlatforms.map((platform) => {
+              const badgeClassName = "flex h-[52px] w-[110px] items-center justify-center rounded-xl bg-[#faf8f1] px-4 py-2.5 shadow-[0_6px_18px_rgba(0,0,0,.18)] transition-transform duration-300 hover:-translate-y-[3px]";
+              const image = (
                 <Image
                   src={platform.src}
                   alt={platform.name}
@@ -109,8 +107,17 @@ export async function Footer() {
                   height={platform.height}
                   className="h-full w-full object-contain"
                 />
-              </span>
-            ))}
+              );
+              return platform.href ? (
+                <a key={platform.name} className={badgeClassName} href={platform.href} target="_blank" rel="noreferrer">
+                  {image}
+                </a>
+              ) : (
+                <span key={platform.name} className={badgeClassName}>
+                  {image}
+                </span>
+              );
+            })}
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-end gap-x-16 gap-y-3 py-5 max-[720px]:flex-col max-[720px]:items-start max-[720px]:justify-start max-[720px]:gap-y-4 max-[720px]:py-5">
