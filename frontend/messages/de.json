@@ -100,7 +100,7 @@
   "language": {
     "choose": "Sprache wählen",
     "label": "Sprache",
-    "note": "Einige Reise- und Ortsdetails bleiben auf Englisch."
+    "note": "Ortsnamen bleiben in allen Sprachen gleich."
   },
   "newsletter": {
     "emailAria": "E-Mail-Adresse",
@@ -660,6 +660,25 @@
     "planningGuide": "Planungsleitfaden",
     "planningGuideBody": "Routenwahl, Höhe, Wetter, Packliste, Camping, Genehmigungen, Fitness und verantwortungsvolle Wildtierbeobachtung—praktische Antworten vor der Anfrage.",
     "planningGuideLink": "Simien-Planungsleitfaden lesen"
+  },
+  "gondarPage": {
+    "crumb": "Gondar",
+    "eyebrow": "Gondar-Ziele",
+    "title": "Entdecken Sie Gondar, <em>die Königsstadt.</em>",
+    "lead": "Entdecken Sie die Stadt und die umliegende Landschaft. Wählen Sie einen Ort zum Weiterlesen.",
+    "briefTag": "Kurz gesagt",
+    "briefTitle": "Die Königsstadt,",
+    "briefAccent": "und der Weg nach Norden.",
+    "who": "Wer wir sind",
+    "whoBody": "{name} hat seinen Sitz in Gondar. Tesema „Tevan“ Mulualem und das Team von {operator} planen Stadttage und die Weiterreise in die Simien Mountains.",
+    "where": "Wo das ist",
+    "whereBody": "Gondar ist die historische Königsstadt Nordäthiopiens und der übliche Ausgangspunkt für Simien-Reisen. Diese Seiten behandeln die Stadt, nahe Hochland-Aussichtspunkte wie Kosoye und nördliche Erweiterungen, die manche Reisende mit Gondar verbinden.",
+    "how": "So nutzen Sie diese Seiten",
+    "howBody": "Lesen Sie ein Ziel und planen Sie dann einen Stadttag, eine Simien-Wanderung oder eine kombinierte Reise mit dem lokalen Team.",
+    "plan": "Von Gondar aus planen",
+    "planningGuide": "Planungsleitfaden",
+    "planningGuideBody": "Stadtzeit, Umgang mit dem Erbe, Gondar mit Simien verbinden und nördliche Erweiterungen – praktische Antworten vor Ihrer Anfrage.",
+    "planningGuideLink": "Gondar-Planungsleitfaden lesen"
   },
   "trek": {
     "overview": "Überblick",

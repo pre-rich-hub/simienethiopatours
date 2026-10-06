@@ -100,7 +100,7 @@
   "language": {
     "choose": "Choisir la langue",
     "label": "Langue",
-    "note": "Certains détails de voyages et de lieux restent en anglais."
+    "note": "Les noms de lieux restent identiques d’une langue à l’autre."
   },
   "newsletter": {
     "emailAria": "Adresse e-mail",
@@ -660,6 +660,25 @@
     "planningGuide": "Guide de planification",
     "planningGuideBody": "Choix d’itinéraire, altitude, météo, bagages, camping, permis, forme physique et observation responsable—des réponses pratiques avant de nous écrire.",
     "planningGuideLink": "Lire le guide du Simien"
+  },
+  "gondarPage": {
+    "crumb": "Gondar",
+    "eyebrow": "Destinations de Gondar",
+    "title": "Explorez Gondar, <em>la ville royale.</em>",
+    "lead": "Explorez la ville et la campagne proche. Choisissez un lieu pour en savoir plus.",
+    "briefTag": "En bref",
+    "briefTitle": "La ville royale,",
+    "briefAccent": "et le chemin vers le nord.",
+    "who": "Qui nous sommes",
+    "whoBody": "{name} est basé à Gondar. Tesema « Tevan » Mulualem et l’équipe de {operator} planifient les journées en ville et le départ vers les montagnes du Simien.",
+    "where": "Où c’est",
+    "whereBody": "Gondar est la ville royale historique du nord de l’Éthiopie et le point de départ habituel des voyages dans le Simien. Ces pages couvrent la ville, les points de vue des hauts plateaux voisins comme Kosoye, et les extensions du nord que certains voyageurs combinent avec Gondar.",
+    "how": "Comment utiliser ces pages",
+    "howBody": "Lisez une destination, puis planifiez une journée en ville, une randonnée dans le Simien ou un voyage combiné avec l’équipe locale.",
+    "plan": "Planifier depuis Gondar",
+    "planningGuide": "Guide de planification",
+    "planningGuideBody": "Temps en ville, étiquette du patrimoine, combiner Gondar et le Simien, et extensions du nord — des réponses pratiques avant de nous écrire.",
+    "planningGuideLink": "Lire le guide de Gondar"
   },
   "trek": {
     "overview": "Aperçu",

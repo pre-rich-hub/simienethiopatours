@@ -100,7 +100,7 @@
   "language": {
     "choose": "Choose language",
     "label": "Language",
-    "note": "Some journey and place details remain in English."
+    "note": "Place names stay the same across languages."
   },
   "newsletter": {
     "emailAria": "Email address",
@@ -660,6 +660,25 @@
     "planningGuide": "Planning guide",
     "planningGuideBody": "Route choice, altitude, weather, packing, camping, permits, fitness and responsible wildlife viewing—practical answers before you inquire.",
     "planningGuideLink": "Read the Simien planning guide"
+  },
+  "gondarPage": {
+    "crumb": "Gondar",
+    "eyebrow": "Gondar destinations",
+    "title": "Explore Gondar, <em>the royal city.</em>",
+    "lead": "Explore the city and nearby countryside. Choose a place to read more.",
+    "briefTag": "In brief",
+    "briefTitle": "The royal city,",
+    "briefAccent": "and the way north.",
+    "who": "Who we are",
+    "whoBody": "{name} is based in Gondar. Tesema “Tevan” Mulualem and the {operator} team plan city days and onward travel into the Simien Mountains.",
+    "where": "Where this is",
+    "whereBody": "Gondar is the historic royal city of northern Ethiopia and the usual starting point for Simien journeys. These pages cover the city, nearby highland viewpoints such as Kosoye, and northern extensions some travelers combine with Gondar.",
+    "how": "How to use these pages",
+    "howBody": "Read a destination, then plan a city day, a Simien trek, or a combined journey with the local team.",
+    "plan": "Plan from Gondar",
+    "planningGuide": "Planning guide",
+    "planningGuideBody": "City time, heritage etiquette, combining Gondar with Simien, and northern extensions—practical answers before you inquire.",
+    "planningGuideLink": "Read the Gondar planning guide"
   },
   "trek": {
     "overview": "Overview",

@@ -5,7 +5,9 @@
  * Each payload is Zod-validated before upsert. Status is published with
  * reviewedAt + publishedAt set so public-catalogue merge includes them.
  *
- * Usage: npm run content:translations
+ * Usage:
+ *   npm run content:translations
+ *   npm run content:translations -- --slugs=gondar,debark
  */
 import "dotenv/config";
 import { createHash } from "node:crypto";
@@ -217,7 +219,19 @@ async function translateEntity<T>(
   }
 }
 
+function parseSlugFilter(argv: string[]): Set<string> | null {
+  const joined = argv.find((arg) => arg.startsWith("--slugs="));
+  if (!joined) return null;
+  const slugs = joined
+    .slice("--slugs=".length)
+    .split(",")
+    .map((slug) => slug.trim())
+    .filter(Boolean);
+  return slugs.length ? new Set(slugs) : null;
+}
+
 async function main(): Promise<void> {
+  const slugFilter = parseSlugFilter(process.argv.slice(2));
   await loadTranslationCache();
   let tours: TourContent[] = [];
   let destinations: DestinationContent[] = [];
@@ -234,7 +248,33 @@ async function main(): Promise<void> {
   if (!tours.length && !destinations.length) {
     throw new Error("No catalogue entities found in database or snapshot.");
   }
-  console.log(JSON.stringify({ source, tours: tours.length, destinations: destinations.length, locales }));
+  if (slugFilter) {
+    tours = tours.filter((row) => slugFilter.has(row.slug));
+    destinations = destinations.filter((row) => slugFilter.has(row.slug));
+    const found = new Set([...tours, ...destinations].map((row) => row.slug));
+    const missing = [...slugFilter].filter((slug) => !found.has(slug));
+    if (missing.length) {
+      // Local seed may omit expansion journeys; fill those slugs from the catalogue snapshot.
+      const fromSnapshot = await loadFromSnapshot();
+      const addTours = fromSnapshot.tours.filter((row) => missing.includes(row.slug));
+      const addDestinations = fromSnapshot.destinations.filter((row) => missing.includes(row.slug));
+      tours = [...tours, ...addTours];
+      destinations = [...destinations, ...addDestinations];
+      source = source === "snapshot" ? "snapshot" : "database+snapshot";
+      const foundAfter = new Set([...tours, ...destinations].map((row) => row.slug));
+      const stillMissing = missing.filter((slug) => !foundAfter.has(slug));
+      if (stillMissing.length) {
+        throw new Error(`Slug filter matched nothing for: ${stillMissing.join(", ")}`);
+      }
+    }
+  }
+  console.log(JSON.stringify({
+    source,
+    tours: tours.length,
+    destinations: destinations.length,
+    locales,
+    slugFilter: slugFilter ? [...slugFilter] : null,
+  }));
 
   const unique = new Set<string>();
   for (const tour of tours) collectTranslatableStrings(tour, undefined, unique);

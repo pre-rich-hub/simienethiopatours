@@ -238,3 +238,16 @@ These match on paper. Confirm after someone adds `backend/.env` and starts Postg
 | Booking | Inquiry-only; `/contact` → `/plan` with ContactPage JSON-LD |
 
 Production DNS, TLS, GSC/Bing, and 48-hour observation are deploy-time steps in [`cutover.md`](cutover.md).
+
+## Catalogue i18n completion (2026-10-06)
+
+| Check | Result |
+| --- | --- |
+| Plan | [`i18n.md`](i18n.md) Batches 0–11 complete |
+| UI messages | `npm run content:locale-audit` → es/de/fr 852 keys, 0 missing / 0 extra |
+| Catalogue coverage | `content:localization --strict` → en/es/de/fr **92** each, 0 entities missing locales |
+| Snapshot | `frontend/lib/generated/catalogue.json` — 34 tours × 4 locales, 58 destinations × 4 locales |
+| HTTP spot-check | Local `:3000` — Gondar hub, royal-gondar, sankaber, yeha in es/de/fr show translated body |
+| Language note | Softened; no longer claims catalogue details remain in English |
+| Reviewer | Agent + operator follow-up: human polish of machine-assisted catalogue copy still recommended |
+| Date | 2026-10-06 |

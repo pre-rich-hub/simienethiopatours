@@ -100,7 +100,7 @@
   "language": {
     "choose": "Elegir idioma",
     "label": "Idioma",
-    "note": "Algunos detalles de viajes y lugares siguen en inglés."
+    "note": "Los nombres de lugares se mantienen iguales en todos los idiomas."
   },
   "newsletter": {
     "emailAria": "Correo electrónico",
@@ -660,6 +660,25 @@
     "planningGuide": "Guía de planificación",
     "planningGuideBody": "Elección de ruta, altitud, clima, equipaje, camping, permisos, forma física y observación responsable—respuestas prácticas antes de consultar.",
     "planningGuideLink": "Leer la guía del Simien"
+  },
+  "gondarPage": {
+    "crumb": "Gondar",
+    "eyebrow": "Destinos de Gondar",
+    "title": "Explora Gondar, <em>la ciudad real.</em>",
+    "lead": "Explora la ciudad y el campo cercano. Elige un lugar para leer más.",
+    "briefTag": "En breve",
+    "briefTitle": "La ciudad real,",
+    "briefAccent": "y el camino al norte.",
+    "who": "Quiénes somos",
+    "whoBody": "{name} tiene su base en Gondar. Tesema “Tevan” Mulualem y el equipo de {operator} planifican días en la ciudad y el viaje hacia las montañas Simien.",
+    "where": "Dónde es esto",
+    "whereBody": "Gondar es la histórica ciudad real del norte de Etiopía y el punto de partida habitual de los viajes a Simien. Estas páginas cubren la ciudad, miradores de tierras altas cercanos como Kosoye y extensiones del norte que algunos viajeros combinan con Gondar.",
+    "how": "Cómo usar estas páginas",
+    "howBody": "Lee un destino y luego planifica un día en la ciudad, una caminata en Simien o un viaje combinado con el equipo local.",
+    "plan": "Planear desde Gondar",
+    "planningGuide": "Guía de planificación",
+    "planningGuideBody": "Tiempo en la ciudad, etiqueta del patrimonio, combinar Gondar con Simien y extensiones del norte: respuestas prácticas antes de consultar.",
+    "planningGuideLink": "Leer la guía de Gondar"
   },
   "trek": {
     "overview": "Resumen",

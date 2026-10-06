@@ -109,7 +109,7 @@ async function throttle(ms = 40): Promise<void> {
 }
 
 let inFlight = 0;
-const MAX_IN_FLIGHT = 6;
+const MAX_IN_FLIGHT = 3;
 const waiters: Array<() => void> = [];
 
 async function withConcurrency<T>(fn: () => Promise<T>): Promise<T> {
@@ -165,27 +165,38 @@ export async function translateText(text: string, locale: TargetLocale): Promise
 
   const { protectedText, tokens } = protectGlossary(text);
   let translated = protectedText;
-  try {
-    // Chunk long paragraphs to stay within gtx practical limits.
-    const chunks = protectedText.length > 1800
-      ? protectedText.match(/(?:.|\n){1,1600}(?:\s|$)/g) ?? [protectedText]
-      : [protectedText];
-    const parts: string[] = [];
-    for (const chunk of chunks) {
-      parts.push(await translateViaGtx(chunk, locale));
+  let transportFailed = false;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      // Chunk long paragraphs to stay within gtx practical limits.
+      const chunks = protectedText.length > 1800
+        ? protectedText.match(/(?:.|\n){1,1600}(?:\s|$)/g) ?? [protectedText]
+        : [protectedText];
+      const parts: string[] = [];
+      for (const chunk of chunks) {
+        parts.push(await translateViaGtx(chunk, locale));
+      }
+      translated = parts.join("");
+      transportFailed = false;
+      break;
+    } catch {
+      transportFailed = true;
+      // Offline / rate-limit: brief backoff, then keep glossary-protected English.
+      await new Promise((resolve) => setTimeout(resolve, 300 * (attempt + 1)));
+      translated = protectedText;
     }
-    translated = parts.join("");
-  } catch {
-    // Offline / rate-limit fallback: keep glossary-protected English rather than inventing copy.
-    translated = protectedText;
   }
 
   translated = restoreGlossary(translated, tokens);
   translated = applyPhraseEdits(translated, locale);
   // Prefer original whitespace shape for short labels.
   if (!text.startsWith(" ") && !text.endsWith(" ")) translated = translated.trim();
-  cache![key] = translated;
-  cacheDirty = true;
+  // Never cache English fallbacks for longer copy — they poison later batch runs.
+  const identity = translated === text || translated === text.trim();
+  if (!(transportFailed && identity) && !(identity && trimmed.length > 20)) {
+    cache![key] = translated;
+    cacheDirty = true;
+  }
   return translated;
 }
 
